@@ -26,9 +26,10 @@ public class BnCSignTextUtils {
                 StringBuilder text = new StringBuilder(line.getString());
                 int amplifier = Minecraft.getInstance().player.getEffect(BnCEffects.TIPSY.get()).getAmplifier() - BnCConfiguration.LEVEL_SIGN_SCRAMBLE.get();
                 int amount = (int) ((amplifier + 1) * (text.length() / (10f - BnCConfiguration.LEVEL_SIGN_SCRAMBLE.get()))) + random.nextInt(5);
+                String[] words = text.toString().split(" ");
+                if (words.length < 1) continue;
                 for (int j = 0; j < amount; j++) {
                     // pick a random word
-                    String[] words = text.toString().split(" ");
                     int wordIndex = random.nextInt(words.length);
                     String word = words[wordIndex];
                     if (word.length() < 4) continue;

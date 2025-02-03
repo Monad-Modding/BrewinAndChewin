@@ -1,2 +1,2 @@
 ## Bugfixes
-- Fixed Creamy Onion Soup appearing as Dog Food on the coaster.
+- Fixed Tipsy numbness packets being unnecessarily sent from server to client each tick, even when they have not been updated.

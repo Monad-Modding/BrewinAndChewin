@@ -68,16 +68,15 @@ public class BnCCommonEvents {
                 if (cap.getTicksUntilDamage() > 0)
                     cap.setTicksUntilDamage(cap.getTicksUntilDamage() - 1);
 
-                if (cap.getTicksUntilDamage() <= 0 || !living.hasEffect(BnCEffects.TIPSY.get())) {
+                if (cap.getTicksUntilDamage() <= 0 || !living.hasEffect(BnCEffects.TIPSY.get()) && !living.level().isClientSide) {
                     float health = living.getHealth() + living.getAbsorptionAmount();
                     int remainingHealth = Mth.ceil(Math.min(cap.getNumbedHealth() - (health % 1 > cap.getNumbedHealth() % 1 ? 1 : 0), health));
                     if (remainingHealth > 0)
                         living.hurt(living.damageSources().source(BnCDamageTypes.CARDIAC_ARREST), cap.getNumbedHealth());
                     cap.setNumbedHealth(0.0F);
+                    cap.sync();
                 }
             }
-            if (!living.level().isClientSide)
-                cap.sync();
         });
         RagingCapability.tick(living);
     }

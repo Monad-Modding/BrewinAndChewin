@@ -1,3 +1,2 @@
 ## Bugfixes
-- Fixed a crash involving Tipsy's text scrambling and empty signs.
-- Fixed Tipsy numbness packets being unnecessarily sent from server to client each tick, even when they have not been updated.
+- Fixed coaster item removals not being synced to nearby clients. ([#19](https://github.com/MerchantPug/BrewinAndChewin/issues/19))

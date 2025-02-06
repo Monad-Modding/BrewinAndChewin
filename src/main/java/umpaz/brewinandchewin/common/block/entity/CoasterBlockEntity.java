@@ -39,6 +39,7 @@ public class CoasterBlockEntity extends SyncedBlockEntity {
                 heldStack.shrink(1);
             level.playSound(null, pos, SoundEvents.WOOL_PLACE, SoundSource.BLOCKS);
             level.setBlockAndUpdate(pos, state.setValue(CoasterBlock.INVISIBLE, false));
+            inventoryChanged();
             return InteractionResult.SUCCESS;
         } if (state.getValue(CoasterBlock.SIZE) < 4 && (addItem(level, pos, state, heldStack, player.getAbilities().instabuild, state.getValue(CoasterBlock.SIZE)) || addItem(level, pos, state, offhandStack, player.getAbilities().instabuild, state.getValue(CoasterBlock.SIZE)))) {
             return InteractionResult.SUCCESS;
@@ -60,12 +61,11 @@ public class CoasterBlockEntity extends SyncedBlockEntity {
             }
             BlockState replaceWith = Blocks.AIR.defaultBlockState();
             if (!state.getValue(INVISIBLE) || count > 1) {
-                inventory.set(count - 1, ItemStack.EMPTY);
-                inventoryChanged();
-                replaceWith = state
-                        .setValue(CoasterBlock.SIZE, state.getValue(CoasterBlock.SIZE) - 1);
+                replaceWith = state.setValue(CoasterBlock.SIZE, state.getValue(CoasterBlock.SIZE) - 1);
             }
             level.setBlockAndUpdate(pos, replaceWith);
+            inventory.set(count - 1, ItemStack.EMPTY);
+            inventoryChanged();
 
             return InteractionResult.SUCCESS;
         }
@@ -86,13 +86,14 @@ public class CoasterBlockEntity extends SyncedBlockEntity {
    @Override
    public void load( CompoundTag nbt ) {
        super.load(nbt);
-       ContainerHelper.loadAllItems(nbt, this.inventory);
+       inventory.clear();
+       ContainerHelper.loadAllItems(nbt, inventory);
    }
 
    @Override
    protected void saveAdditional( CompoundTag nbt ) {
        super.saveAdditional(nbt);
-       ContainerHelper.saveAllItems(nbt, this.inventory);
+       ContainerHelper.saveAllItems(nbt, inventory);
    }
 
    @Override

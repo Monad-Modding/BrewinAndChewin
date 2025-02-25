@@ -364,7 +364,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
             if (ItemStack.isSameItem(slotIn, recipe.get().getContainer()) && // if container is same
                     recipe.get().getAmount() <= keg.fluidTank.getFluidAmount() && // the amount is LTE the fluid amount
                     (!inGui || keg.inventory.getStackInSlot(OUTPUT_SLOT).isEmpty() || ItemStack.isSameItemSameTags(resultItem, keg.inventory.getStackInSlot(OUTPUT_SLOT)))) { // the output slot can accept this item
-                int containerAmount = Mth.clamp(Math.min(slotIn.getCount(), (keg.fluidTank.getFluidAmount()) / recipe.get().getAmount()), 1, maxTakeAmount);
+                int containerAmount = Mth.clamp(Math.min(Math.min(slotIn.getCount(), recipe.get().getOutput().getMaxStackSize()), maxTakeAmount), 1, fluidTank.getCapacity() / recipe.get().getAmount());
                 keg.fluidTank.drain(new FluidStack(keg.fluidTank.getFluid(), recipe.get().getAmount() * containerAmount), IFluidHandler.FluidAction.EXECUTE);
 
                 if (!isCreative) {
@@ -382,8 +382,8 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
             } else if (recipe.filter(KegPouringRecipe::canFill).isPresent() && // if the recipe can fill
                     (recipe.get().isStrict() && ItemStack.isSameItemSameTags(resultItem, slotIn) || !recipe.get().isStrict() && ItemStack.isSameItem(slotIn, resultItem)) && // if result is same
                     (keg.fluidTank.isEmpty() || keg.fluidTank.getFluidAmount() < keg.fluidTank.getCapacity()) && // if the result can fit in the container
-                    (!inGui || keg.inventory.getStackInSlot(OUTPUT_SLOT).isEmpty() || ItemStack.isSameItemSameTags(resultItem, keg.inventory.getStackInSlot(OUTPUT_SLOT)))) { // the output slot can accept this item
-                int containerAmount = Mth.clamp(Math.min(slotIn.getCount(), (keg.fluidTank.getCapacity() - keg.fluidTank.getFluidAmount()) / recipe.get().getAmount()), 1, maxTakeAmount);
+                    (!inGui || keg.inventory.getStackInSlot(OUTPUT_SLOT).isEmpty() || ItemStack.isSameItemSameTags(recipe.get().getContainer(), keg.inventory.getStackInSlot(OUTPUT_SLOT)))) { // the output slot can accept this item
+                int containerAmount = Mth.clamp(Math.min(Math.min(slotIn.getCount(), recipe.get().getContainer().getMaxStackSize()), fluidTank.getCapacity() / recipe.get().getAmount()), 1, maxTakeAmount);
                 keg.fluidTank.fill(new FluidStack(recipe.get().getFluid(slotIn), recipe.get().getAmount() * containerAmount), IFluidHandler.FluidAction.EXECUTE);
 
                 if (!isCreative) {

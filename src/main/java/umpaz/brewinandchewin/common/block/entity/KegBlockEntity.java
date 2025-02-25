@@ -22,6 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.RecipeHolder;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
@@ -393,7 +394,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
                 fluidTank.fill(new FluidStack(recipe.get().getFluid(slotIn), recipe.get().getAmount() * containerAmount), IFluidHandler.FluidAction.EXECUTE);
 
                 if (!isCreative) {
-                    ItemStack recipeItem = recipe.get().getContainer();
+                    ItemStack recipeItem = recipe.get().getContainer(slotIn);
                     int overflow = containerAmount;
                     while (overflow > 0 && !slotIn.isEmpty()) {
                         ItemStack newResult = recipeItem.copyWithCount(Math.min(recipeItem.getMaxStackSize(), overflow));
@@ -431,7 +432,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
                 if (amount <= amountToDrain && amount > 0) {
                     fluidTank.fill(iFluidItemHandler.drain(amountToDrain, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
                     if (!isCreative) {
-                        ItemStack recipeItem = iFluidItemHandler.getContainer();
+                        ItemStack recipeItem = slotIn.getCraftingRemainingItem().isEmpty() ? iFluidItemHandler.getContainer() : slotIn.getCraftingRemainingItem();
                         int overflow = amount / fluidTank.getCapacity();
                         while (overflow > 0 && !slotIn.isEmpty()) {
                             ItemStack newResult = recipeItem.copyWithCount(Math.min(recipeItem.getMaxStackSize(), overflow));
@@ -452,20 +453,8 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
                 if (amount > 0) {
                     iFluidItemHandler.fill(fluidTank.drain(amountToDrain, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
                     if (amount <= amountToDrain) {
-                        if (!isCreative) {
-                            ItemStack recipeItem = iFluidItemHandler.getContainer();
-                            int overflow = amount / fluidTank.getCapacity();
-                            while (overflow > 0 && !slotIn.isEmpty()) {
-                                ItemStack newResult = recipeItem.copyWithCount(Math.min(recipeItem.getMaxStackSize(), overflow));
-                                outputs.add(newResult);
-                                overflow -= newResult.getCount();
-                                slotIn.shrink(newResult.getCount());
-                            }
-                        } else {
-                            outputs.add(slotIn);
-                        }
+                        outputs.add(slotIn);
                         setChanged();
-
                     }
                 }
             }

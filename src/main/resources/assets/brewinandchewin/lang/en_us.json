@@ -69,7 +69,7 @@
   "item.brewinandchewin.kombucha": "Kombucha",
 
   "effect.brewinandchewin.tipsy": "Tipsy",
-  "effect.brewinandchewin.tipsy.description": "Provides the screen with a wobble effect. At level III or higher, your mouse will have drag to it. At level IV or higher, chat sent by you, other player's chat on your end and signs will be scrambled. May delay damage, notated by orange Tipsy hearts.",  "effect.brewinandchewin.intoxication": "Intoxication",
+  "effect.brewinandchewin.tipsy.description": "Provides the screen with a wobble effect. At level III or higher, your mouse will have drag to it. At level IV or higher, chat sent by you, other player's chat on your end and signs will be scrambled. May delay damage, notated by orange Tipsy hearts.",
   "effect.brewinandchewin.intoxication": "Intoxication",
   "effect.brewinandchewin.intoxication.description": "Makes the player unable to gain Saturation from food.",
   "effect.brewinandchewin.raging": "Raging",

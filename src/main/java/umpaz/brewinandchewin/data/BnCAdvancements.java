@@ -61,7 +61,7 @@ public class BnCAdvancements implements ForgeAdvancementProvider.AdvancementGene
             BnCItems.COCOA_FUDGE.get(),
             BnCItems.VEGETABLE_OMELET.get(),
             BnCItems.CHEESY_PASTA.get(),
-            BnCItems.SCARLET_PIEROGIES.get(),
+            BnCItems.SCARLET_PIEROGI.get(),
             BnCItems.HORROR_LASAGNA.get(),
             BnCItems.PIZZA_SLICE.get(),
             BnCItems.FIERY_FONDUE.get(),

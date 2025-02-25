@@ -63,7 +63,7 @@ public class BnCCookingPotRecipes {
                 .setRecipeBookTab(CookingPotRecipeBookTab.MEALS)
                 .unlockedByItems("has_cheese", BnCItems.SCARLET_CHEESE_WEDGE.get())
                 .build(consumer);
-        BnCCookingPotRecipeBuilder.cookingPotRecipe(BnCItems.SCARLET_PIEROGIES.get(), 1, NORMAL_COOKING, MEDIUM_EXP, Items.BOWL)
+        BnCCookingPotRecipeBuilder.cookingPotRecipe(BnCItems.SCARLET_PIEROGI.get(), 1, NORMAL_COOKING, MEDIUM_EXP, Items.BOWL)
                 .addIngredient(BnCItems.SCARLET_CHEESE_WEDGE.get())
                 .addIngredient(ForgeTags.VEGETABLES_POTATO)
                 .addIngredient(ForgeTags.DOUGH)

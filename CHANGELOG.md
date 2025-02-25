@@ -1,5 +1,10 @@
 ## Features
 - Added EMI compatibility.
+- Renamed Scarlet Pierogies to Scarlet Pierogi.
+  - Items with the old ID will be converted to use the new ID.
+    - The main caveat to this rule is that modded containers *may* not work. To workaround this, you should have any Pierogi in your inventory.
+    - Do not report the above to any mod developers, it's unavoidable.
+- Introduced DFU, currently used for converting `brewinandchewin:scarlet_pierogies` items to the new name.
 
 ## Bugfixes
 - Fixed coaster item removals not being synced to nearby clients. ([#19](https://github.com/MerchantPug/BrewinAndChewin/issues/19))

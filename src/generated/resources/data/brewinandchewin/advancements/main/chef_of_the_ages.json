@@ -121,11 +121,11 @@
       },
       "trigger": "minecraft:consume_item"
     },
-    "brewinandchewin:scarlet_pierogies": {
+    "brewinandchewin:scarlet_pierogi": {
       "conditions": {
         "item": {
           "items": [
-            "brewinandchewin:scarlet_pierogies"
+            "brewinandchewin:scarlet_pierogi"
           ]
         }
       },
@@ -190,7 +190,7 @@
       "brewinandchewin:cheesy_pasta"
     ],
     [
-      "brewinandchewin:scarlet_pierogies"
+      "brewinandchewin:scarlet_pierogi"
     ],
     [
       "brewinandchewin:horror_lasagna"

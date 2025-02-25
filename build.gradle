@@ -65,6 +65,10 @@ repositories {
         url "https://maven.tterrag.com/"
     }
     maven {
+        name "createmod maven"
+        url "https://maven.createmod.net/"
+    }
+    maven {
         url "https://cursemaven.com"
         content {
             includeGroup "curse.maven"
@@ -85,9 +89,10 @@ dependencies {
 
     modImplementation("curse.maven:farmersdelight-398521:5962797")
 
-    modCompileOnly("curse.maven:farmersrespite-551453:5543547")
+    modImplementation("curse.maven:farmersrespite-551453:5543547")
     modCompileOnly("com.tterrag.registrate:Registrate:MC1.20-1.3.0")
-    modCompileOnly("curse.maven:create-328085:4835191")
+    modCompileOnly("com.simibubi.create:create-1.20.1:0.5.1.j-55:all")
+    modRuntimeOnly("curse.maven:create-328085:5838779")
 
     // compile against the JEI API but do not include it at runtime
     modCompileOnly("mezz.jei:jei-${mc_version}-common-api:${jei_version}")

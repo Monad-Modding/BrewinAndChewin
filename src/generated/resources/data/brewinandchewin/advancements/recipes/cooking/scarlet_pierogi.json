@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:cooking/scarlet_pierogies"
+        "recipe": "brewinandchewin:cooking/scarlet_pierogi"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "brewinandchewin:cooking/scarlet_pierogies"
+      "brewinandchewin:cooking/scarlet_pierogi"
     ]
   },
   "sends_telemetry_event": true

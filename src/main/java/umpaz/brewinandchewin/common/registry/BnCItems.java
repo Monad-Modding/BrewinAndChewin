@@ -85,7 +85,7 @@ public class BnCItems {
             () -> new ConsumableItem(new Item.Properties().stacksTo(16).food(BnCFoods.CHEESY_PASTA).craftRemainder(Items.BOWL), true));
     public static final RegistryObject<Item> CREAMY_ONION_SOUP = registerWithTab("creamy_onion_soup",
             () -> new ConsumableItem(new Item.Properties().stacksTo(16).food(BnCFoods.CREAMY_ONION_SOUP).craftRemainder(Items.BOWL), true));
-    public static final RegistryObject<Item> SCARLET_PIEROGIES = registerWithTab("scarlet_pierogies",
+    public static final RegistryObject<Item> SCARLET_PIEROGI = registerWithTab("scarlet_pierogi",
             () -> new ConsumableItem(new Item.Properties().stacksTo(16).food(BnCFoods.SCARLET_PIEROGIES).craftRemainder(Items.BOWL), true));
     public static final RegistryObject<Item> HORROR_LASAGNA = registerWithTab("horror_lasagna",
             () -> new ConsumableItem(new Item.Properties().stacksTo(16).food(BnCFoods.HORROR_LASAGNA).craftRemainder(Items.BOWL), true));

@@ -5,7 +5,7 @@
     "fluid": "minecraft:milk"
   },
   "experience": 1.0,
-  "fermentingtime": 200,
+  "fermentingtime": 9600,
   "ingredients": [
     {
       "tag": "forge:eggs"

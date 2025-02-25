@@ -93,7 +93,7 @@ public class KegPlaceRecipe extends ServerPlaceRecipe<KegRecipeWrapper> {
                                 }).findFirst();
                                 if (optionalData.isPresent()) {
                                     int finalI = i;
-                                    blockEntity.extractInGui(blockEntity, stack, stack.getCount()).forEach(s -> {
+                                    blockEntity.extractInGui(stack, stack.getCount()).forEach(s -> {
                                         if (!inventory.add(inventory.items.get(finalI).isEmpty() ? finalI : inventory.getSlotWithRemainingSpace(s), s))
                                             inventory.player.drop(s, false);
                                     });
@@ -140,7 +140,7 @@ public class KegPlaceRecipe extends ServerPlaceRecipe<KegRecipeWrapper> {
                             for (RecipeItem extractItem : temporaryExtracts) {
                                 inventory.items.get(extractItem.slot).shrink(extractItem.maxInsert);
                                 ItemStack copiedContainer = extractItem.container.copy();
-                                List<ItemStack> extracted = blockEntity.extractInGui(blockEntity, extractItem.container, extractItem.maxInsert);
+                                List<ItemStack> extracted = blockEntity.extractInGui(extractItem.container, extractItem.maxInsert);
                                 extractItems.addAll(extracted.stream().map(stack -> new RecipeItem(extractItem.slot, extractItem.maxInsert, extractItem.fluidAmount, copiedContainer, stack)).toList());
                             }
                             if (!extractItems.isEmpty())
@@ -188,7 +188,7 @@ public class KegPlaceRecipe extends ServerPlaceRecipe<KegRecipeWrapper> {
                             for (RecipeItem insertItem : temporaryInserts) {
                                 inventory.items.get(insertItem.slot).shrink(insertItem.maxInsert);
                                 ItemStack copiedOutput = insertItem.output.copy();
-                                List<ItemStack> inserted = blockEntity.extractInGui(blockEntity, insertItem.output, insertItem.maxInsert);
+                                List<ItemStack> inserted = blockEntity.extractInGui(insertItem.output, insertItem.maxInsert);
                                 insertItems.addAll(inserted.stream().map(stack -> new RecipeItem(insertItem.slot, insertItem.maxInsert, insertItem.fluidAmount, copiedOutput, stack)).toList());
                             }
 

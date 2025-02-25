@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public record TransferKegRecipeServerboundPacket(ResourceLocation recipeId,
-                                                 List<Pair<Integer, Integer>> resultSlots,
-                                                 List<Pair<Integer, Integer>> fluidSlots,
-                                                 List<Pair<Integer, Integer>> emptyingSlots,
-                                                 List<Integer> craftingSlots,
-                                                 List<Integer> inventorySlots,
-                                                 boolean maxTransfer) {
+public record JEITransferKegRecipeServerboundPacket(ResourceLocation recipeId,
+                                                    List<Pair<Integer, Integer>> resultSlots,
+                                                    List<Pair<Integer, Integer>> fluidSlots,
+                                                    List<Pair<Integer, Integer>> emptyingSlots,
+                                                    List<Integer> craftingSlots,
+                                                    List<Integer> inventorySlots,
+                                                    boolean maxTransfer) {
     public void encode(FriendlyByteBuf buf) {
         buf.writeResourceLocation(recipeId);
         encodeIntPairs(buf, resultSlots);
@@ -45,8 +45,8 @@ public record TransferKegRecipeServerboundPacket(ResourceLocation recipeId,
             buf.writeVarInt(slot);
     }
 
-    public static TransferKegRecipeServerboundPacket decode(FriendlyByteBuf buf) {
-        return new TransferKegRecipeServerboundPacket(
+    public static JEITransferKegRecipeServerboundPacket decode(FriendlyByteBuf buf) {
+        return new JEITransferKegRecipeServerboundPacket(
                 buf.readResourceLocation(),
                 decodeIntPairs(buf),
                 decodeIntPairs(buf),
@@ -79,7 +79,7 @@ public record TransferKegRecipeServerboundPacket(ResourceLocation recipeId,
     }
 
     public static class Handler {
-        public static void handle(TransferKegRecipeServerboundPacket packet, Supplier<NetworkEvent.Context> context) {
+        public static void handle(JEITransferKegRecipeServerboundPacket packet, Supplier<NetworkEvent.Context> context) {
             if (context.get().getDirection() != NetworkDirection.PLAY_TO_SERVER)
                 return;
             context.get().enqueueWork(() -> {

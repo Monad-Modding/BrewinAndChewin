@@ -63,7 +63,7 @@ public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
        if (level.isClientSide())
            return InteractionResult.SUCCESS;
        if (tileEntity instanceof KegBlockEntity kegBE) {
-           List<ItemStack> itms = kegBE.extractInWorld(kegBE, heldStack, 1, player.getAbilities().instabuild);
+           List<ItemStack> itms = kegBE.extractInWorld(heldStack, 1, player.getAbilities().instabuild);
            if (!itms.isEmpty()) {
                itms.forEach(itm -> {
                    if (!ItemStack.isSameItemSameTags(itm, heldStack)) {

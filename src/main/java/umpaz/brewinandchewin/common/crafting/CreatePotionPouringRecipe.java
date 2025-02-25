@@ -48,6 +48,11 @@ public class CreatePotionPouringRecipe extends KegPouringRecipe {
     }
 
     @Override
+    public boolean hasSpecialFluid() {
+        return true;
+    }
+
+    @Override
     public RecipeSerializer<?> getSerializer() {
         return BnCRecipeSerializers.CREATE_POTION_POURING.get();
     }

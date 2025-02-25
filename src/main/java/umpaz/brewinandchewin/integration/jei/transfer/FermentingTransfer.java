@@ -29,7 +29,7 @@ import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.block.entity.container.KegMenu;
 import umpaz.brewinandchewin.common.crafting.KegPouringRecipe;
 import umpaz.brewinandchewin.common.network.BnCNetworkHandler;
-import umpaz.brewinandchewin.common.network.serverbound.TransferKegRecipeServerboundPacket;
+import umpaz.brewinandchewin.common.network.serverbound.JEITransferKegRecipeServerboundPacket;
 import umpaz.brewinandchewin.common.registry.BnCMenuTypes;
 import umpaz.brewinandchewin.common.registry.BnCRecipeTypes;
 import umpaz.brewinandchewin.integration.jei.BnCJEIRecipeTypes;
@@ -174,7 +174,7 @@ public class FermentingTransfer {
             }
 
             if (doTransfer) {
-                BnCNetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(), new TransferKegRecipeServerboundPacket(
+                BnCNetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(), new JEITransferKegRecipeServerboundPacket(
                         recipe.getId(),
                         operations.results.stream().map(pair -> Pair.of(pair.getFirst().index, pair.getSecond().index)).toList(),
                         operations.fluidResults.stream().map(pair -> Pair.of(pair.getFirst().index, pair.getSecond())).toList(),

@@ -7,7 +7,9 @@ import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.network.clientbound.ClearKegFluidContainerComponentsPacket;
 import umpaz.brewinandchewin.common.network.clientbound.SyncNumbedHeartsClientboundPacket;
 import umpaz.brewinandchewin.common.network.clientbound.SyncRagingStacksClientboundPacket;
-import umpaz.brewinandchewin.common.network.serverbound.TransferKegRecipeServerboundPacket;
+import umpaz.brewinandchewin.common.network.serverbound.EMIFillFermentingRecipeServerboundPacket;
+import umpaz.brewinandchewin.common.network.serverbound.EMIFillPouringRecipeServerboundPacket;
+import umpaz.brewinandchewin.common.network.serverbound.JEITransferKegRecipeServerboundPacket;
 
 public class BnCNetworkHandler {
     private static final String PROTOCOL_VERISON = "1";
@@ -23,7 +25,9 @@ public class BnCNetworkHandler {
         INSTANCE.registerMessage(i++, SyncNumbedHeartsClientboundPacket.class, SyncNumbedHeartsClientboundPacket::encode, SyncNumbedHeartsClientboundPacket::decode, SyncNumbedHeartsClientboundPacket.Handler::handle);
         INSTANCE.registerMessage(i++, SyncRagingStacksClientboundPacket.class, SyncRagingStacksClientboundPacket::encode, SyncRagingStacksClientboundPacket::decode, SyncRagingStacksClientboundPacket.Handler::handle);
         INSTANCE.registerMessage(i++, ClearKegFluidContainerComponentsPacket.class, ClearKegFluidContainerComponentsPacket::encode, ClearKegFluidContainerComponentsPacket::decode, ClearKegFluidContainerComponentsPacket.Handler::handle);
-        INSTANCE.registerMessage(i++, TransferKegRecipeServerboundPacket.class, TransferKegRecipeServerboundPacket::encode, TransferKegRecipeServerboundPacket::decode, TransferKegRecipeServerboundPacket.Handler::handle);
+        INSTANCE.registerMessage(i++, JEITransferKegRecipeServerboundPacket.class, JEITransferKegRecipeServerboundPacket::encode, JEITransferKegRecipeServerboundPacket::decode, JEITransferKegRecipeServerboundPacket.Handler::handle);
+        INSTANCE.registerMessage(i++, EMIFillFermentingRecipeServerboundPacket.class, EMIFillFermentingRecipeServerboundPacket::encode, EMIFillFermentingRecipeServerboundPacket::decode, EMIFillFermentingRecipeServerboundPacket.Handler::handle);
+        INSTANCE.registerMessage(i++, EMIFillPouringRecipeServerboundPacket.class, EMIFillPouringRecipeServerboundPacket::encode, EMIFillPouringRecipeServerboundPacket::decode, EMIFillPouringRecipeServerboundPacket.Handler::handle);
     }
 
 }

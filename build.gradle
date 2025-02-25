@@ -70,6 +70,10 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven {
+        url "https://maven.terraformersmc.com/"
+        name "TerraformersMC"
+    }
 }
 
 sourceSets.main.resources {
@@ -90,6 +94,9 @@ dependencies {
     modCompileOnly("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
     // at runtime, use the full JEI jar for Forge
     modRuntimeOnly("mezz.jei:jei-${mc_version}-forge:${jei_version}")
+
+    modCompileOnly("dev.emi:emi-forge:${emi_version}:api")
+    modRuntimeOnly("dev.emi:emi-forge:${emi_version}")
 
     modImplementation("squeek.appleskin:appleskin-forge:${appleskin_version}")
 

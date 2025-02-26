@@ -102,7 +102,7 @@ dependencies {
 
     modCompileOnly("dev.emi:emi-forge:${emi_version}:api")
     // Uncomment the below to test EMI.
-//    modRuntimeOnly("dev.emi:emi-forge:${emi_version}")
+    modRuntimeOnly("dev.emi:emi-forge:${emi_version}")
 
     modImplementation("squeek.appleskin:appleskin-forge:${appleskin_version}")
 

@@ -253,7 +253,7 @@ public class BnCEMIRecipeFiller {
     private static boolean handleEmptyingInputs(
             KegEmiRecipeHandler handler, KegEmiRecipe recipe, EmiCraftContext<KegMenu> context, int amount,
             Map<KegEmiRecipeHandler.InputType, List<ItemStack>> desired, EmiIngredient ingredient, List<Slot> slots) {
-        if (context.getScreen().getMenu().kegTank.isEmpty() || recipe.getFluidInput() == null)
+        if (context.getScreen().getMenu().kegTank.isEmpty())
             return true;
         FluidStack fluidStack = context.getScreen().getMenu().kegTank.getFluid();
         EmiStack emiFluidStack = EmiStack.of(fluidStack.getFluid(), fluidStack.getTag(), fluidStack.getAmount());
@@ -276,17 +276,15 @@ public class BnCEMIRecipeFiller {
                     Optional<PouringEmiRecipe> potentialPouring = recipe instanceof PouringEmiRecipe pouring ? Optional.of(pouring) : EmiApi.getRecipeManager().getRecipes(BnCRecipeCategories.POURING).stream().filter(r -> {
                         if (!(r instanceof PouringEmiRecipe pouring))
                             return false;
-                        if (recipe.getFluidInput() == null)
-                            return false;
                         return pouring.getFluidInput().getEmiStacks().get(0).isEqual(emiFluidStack) && r.getInputs().get(0).getEmiStacks().get(0).isEqual(stack);
                     }).map(recipe1 -> (PouringEmiRecipe) recipe1).findFirst();
                     if (potentialPouring.isPresent()) {
-                        int consumed = (int) (Math.max(context.getScreen().getMenu().kegTank.getFluidAmount() * context.getAmount(), context.getScreen().getMenu().kegTank.getCapacity()) / potentialPouring.get().getFluidInput().getAmount());
+                        int consumed = (int) (Math.min((long)context.getScreen().getMenu().kegTank.getFluidAmount() * context.getAmount(), context.getScreen().getMenu().kegTank.getCapacity()) / potentialPouring.get().getFluidInput().getAmount());
                         if (recipe instanceof PouringEmiRecipe && consumed > context.getAmount())
                             consumed = context.getAmount();
                         if (consumed < 1)
                             continue;
-                        d.add(new DiscoveredItem(stack, ss, ss.getCount(), consumed * amount, (int) stack.getAmount()));
+                        d.add(new DiscoveredItem(stack, ss, ss.getCount(), consumed, (int) stack.getAmount()));
                         discoveredQuickRef.add(stack);
                     }
                 }

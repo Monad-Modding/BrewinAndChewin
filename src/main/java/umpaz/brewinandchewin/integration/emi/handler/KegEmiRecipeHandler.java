@@ -280,11 +280,11 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
         }))
             return null;
 
+        FluidStack stack = context.getScreenHandler().kegTank.getFluid();
         List<EmiIngredient> ingredients = new ArrayList<>(EmiApi.getRecipeManager().getRecipes(BnCRecipeCategories.POURING).stream()
                 .filter(recipe -> {
                     if (!(recipe instanceof PouringEmiRecipe pouringRecipe))
                         return false;
-                    FluidStack stack = context.getScreenHandler().kegTank.getFluid();
                     EmiStack tankEmiStack = EmiStack.of(
                             stack.getFluid(),
                             stack.getTag(),
@@ -292,7 +292,6 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
                     );
                     return pouringRecipe.getFluidInput().getEmiStacks().get(0).isEqual(tankEmiStack);
                 }).map(recipe -> {
-                    FluidStack stack = context.getScreenHandler().kegTank.getFluid();
                     PouringEmiRecipe pouringRecipe = (PouringEmiRecipe) recipe;
                     return ((PouringEmiRecipe)recipe).getItemInputs().get(0).copy().setAmount(stack.getAmount() / pouringRecipe.getFluidInput().getAmount());
                 }).toList());

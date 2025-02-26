@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(DataFixTypes.class)
 public interface DataFixTypesAccessor {
     @Accessor("type")
-    DSL.TypeReference bovinesandbuttercups$getType();
+    DSL.TypeReference brewinandchewin$getType();
 }

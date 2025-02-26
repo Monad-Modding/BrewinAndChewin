@@ -54,7 +54,7 @@ public record BnCDataFixer(DataFixer fixer) {
 
 
     public <T> Dynamic<T> updateWithFixers(DataFixTypes types, Dynamic<T> dynamic) {
-        return fixer.update(((DataFixTypesAccessor)(Object)types).bovinesandbuttercups$getType(), dynamic, getModDataVersion(dynamic), CURRENT_VERSION);
+        return fixer.update(((DataFixTypesAccessor)(Object)types).brewinandchewin$getType(), dynamic, getModDataVersion(dynamic), CURRENT_VERSION);
     }
 
     public static <T> int getModDataVersion(Dynamic<T> dynamic) {

@@ -11,7 +11,7 @@ import umpaz.brewinandchewin.common.utility.dfu.BnCDataFixer;
 @Mixin(NbtUtils.class)
 public class NbtUtilsMixin {
     @ModifyReturnValue(method = "addDataVersion", at = @At("RETURN"))
-    private static CompoundTag bovinesandbuttercups$addBovinesDataVersion(CompoundTag original) {
+    private static CompoundTag brewinandchewin$addBnCDataVersion(CompoundTag original) {
         return BnCDataFixer.setModDataVersion(original);
     }
 }

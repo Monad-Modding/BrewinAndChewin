@@ -35,16 +35,16 @@ public class KegItemHandler implements IItemHandler {
         if (this.side != null && !this.side.equals(Direction.UP)) {
            return slot == 4 ? this.itemHandler.insertItem(slot, stack, simulate) : stack;
         } else {
-            return slot < 3 ? this.itemHandler.insertItem(slot, stack, simulate) : stack;
+            return slot < 4 ? this.itemHandler.insertItem(slot, stack, simulate) : stack;
         }
     }
 
     @Nonnull
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         if (this.side != null && !this.side.equals(Direction.UP)) {
-           return slot == 4 ? this.itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
+           return slot == 5 ? this.itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
         } else {
-            return slot < 3 ? this.itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
+            return slot < 4 ? this.itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
         }
     }
 

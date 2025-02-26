@@ -15,8 +15,8 @@ import net.minecraft.util.datafix.fixes.NamespacedTypeRenameFix;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.util.datafix.schemas.NamespacedSchema;
 import umpaz.brewinandchewin.common.mixin.DataFixTypesAccessor;
+import umpaz.brewinandchewin.common.utility.dfu.schema.BnCSchemaV1;
 
-import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.BiFunction;
@@ -40,6 +40,7 @@ public record BnCDataFixer(DataFixer fixer) {
         builder.addSchema(0, (integer, schema) -> new Schema(integer, DataFixers.getDataFixer()
                 .getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion()))));
         // Rename Scarlet Pierogies to Scarlet Pierogi
+        Schema schema1 = builder.addSchema(1, BnCSchemaV1::new);
         Schema schema2 = builder.addSchema(2, SAME_NAMESPACED);
         builder.addFixer(ItemRenameFix.create(schema2, "Fix Scarlet Pierogi item name", createRenamer("brewinandchewin:scarlet_pierogies", "brewinandchewin:scarlet_pierogi")));
         builder.addFixer(new NamespacedTypeRenameFix(schema2, "Rename Scarlet Pierogi recipe", References.RECIPE, createRenamer("brewinandchewin:cooking/scarlet_pierogies", "brewinandchewin:cooking/scarlet_pierogi")));

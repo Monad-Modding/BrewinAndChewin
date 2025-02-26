@@ -87,7 +87,7 @@ public class BnCItems {
     public static final RegistryObject<Item> CREAMY_ONION_SOUP = registerWithTab("creamy_onion_soup", () -> new ConsumableItem(new Item.Properties().stacksTo(16).food(BnCFoods.CREAMY_ONION_SOUP).craftRemainder(Items.BOWL), true));
     public static final RegistryObject<Item> CHEESY_PASTA =registerWithTab("cheesy_pasta", () ->  new ConsumableItem(new Item.Properties().stacksTo(16).food(BnCFoods.CHEESY_PASTA).craftRemainder(Items.BOWL), true));
     public static final RegistryObject<Item> HORROR_LASAGNA = registerWithTab("horror_lasagna", () -> new ConsumableItem(new Item.Properties().stacksTo(16).food(BnCFoods.HORROR_LASAGNA).craftRemainder(Items.BOWL), true));
-    public static final RegistryObject<Item> SCARLET_PIEROGI = registerWithTab("scarlet_pierogi", () -> new ConsumableItem(new Item.Properties().stacksTo(16).food(BnCFoods.SCARLET_PIEROGIES).craftRemainder(Items.BOWL), true));
+    public static final RegistryObject<Item> SCARLET_PIEROGI = registerWithTab("scarlet_pierogi", () -> new ConsumableItem(new Item.Properties().stacksTo(16).food(BnCFoods.SCARLET_PIEROGI).craftRemainder(Items.BOWL), true));
 
     public static final RegistryObject<Item> FIERY_FONDUE_POT = registerWithTab("fiery_fondue_pot", () -> new BlockItem(BnCBlocks.FIERY_FONDUE_POT.get(), new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> FIERY_FONDUE = registerWithTab("fiery_fondue", () -> new ConsumableItem(new Item.Properties().stacksTo(16).food(BnCFoods.FIERY_FONDUE).craftRemainder(Items.BOWL), true));

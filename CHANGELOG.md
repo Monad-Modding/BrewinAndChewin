@@ -1,3 +1,3 @@
-## Bugfixes
-- Fixed Tipsy effect hurt logic running on the client when it's not supposed to.
-- Fixed EMI not considering a recipe with an empty fluid as craftable when you can empty the Keg's fluid contents.
+## Internal
+- Added Keg and Coaster to the datafixer, which will allow them to be datafixed.
+- Renamed Scarlet Pierogi food component to accurately match the new name.

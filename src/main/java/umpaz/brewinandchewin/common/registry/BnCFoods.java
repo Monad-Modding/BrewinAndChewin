@@ -147,7 +147,7 @@ public class BnCFoods {
     public static final FoodProperties CHEESY_PASTA = (new FoodProperties.Builder())
             .nutrition(14).saturationMod(0.75F)
             .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT.get(), 6000, 0), 1.0F).build();
-    public static final FoodProperties SCARLET_PIEROGIES = (new FoodProperties.Builder())
+    public static final FoodProperties SCARLET_PIEROGI = (new FoodProperties.Builder())
             .nutrition(12).saturationMod(1.0F)
             .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT.get(), 8400, 0), 1.0F).build();
     public static final FoodProperties HORROR_LASAGNA = (new FoodProperties.Builder())

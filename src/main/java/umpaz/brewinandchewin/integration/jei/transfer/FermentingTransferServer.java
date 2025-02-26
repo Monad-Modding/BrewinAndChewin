@@ -83,7 +83,7 @@ public class FermentingTransferServer {
         if (recipeSlotToTakenStacks.isEmpty() && fluidSlotToTakenStacks.isEmpty() && emptyingSlotToTakenStacks.isEmpty())
             return;
 
-        boolean sameFluid = recipe.getFluidIngredient().isFluidEqual(kegMenu.kegTank.getFluid());
+        boolean sameFluid = recipe.getFluidIngredient() != null && recipe.getFluidIngredient().isFluidEqual(kegMenu.kegTank.getFluid());
 
         List<ItemStack> clearedFluidItems = extractFromFluidTank(emptyingSlotToTakenStacks, kegMenu, false, null);
 

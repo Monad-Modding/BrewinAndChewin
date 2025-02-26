@@ -101,7 +101,8 @@ dependencies {
     modRuntimeOnly("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
     modCompileOnly("dev.emi:emi-forge:${emi_version}:api")
-    modRuntimeOnly("dev.emi:emi-forge:${emi_version}")
+    // Uncomment the below to test EMI.
+//    modRuntimeOnly("dev.emi:emi-forge:${emi_version}")
 
     modImplementation("squeek.appleskin:appleskin-forge:${appleskin_version}")
 

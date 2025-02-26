@@ -252,7 +252,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         if (recipe.isEmpty())
             return Optional.empty();
         if (recipe.get().getFluidIngredient() == null) { // if the recipe does not require a fluid
-            if (fluidTank.isEmpty()) // make sure the fluid is empty
+            if (!fluidTank.isEmpty()) // make sure the fluid is empty
                 return Optional.empty();
         } else {
             if (!fluidTank.getFluid().getFluid().isSame(recipe.get().getFluidIngredient().getFluid()))

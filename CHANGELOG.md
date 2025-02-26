@@ -5,6 +5,8 @@
     - The main caveat to this rule is that modded containers *may* not work. To workaround this, you should have any Pierogi in your inventory.
     - Do not report the above to any mod developers, it's unavoidable.
 - Introduced DFU, currently used for converting `brewinandchewin:scarlet_pierogies` items to the new name.
+- Re-ordered the creative menu to make more sense.
+- Kombucha will no longer show up in the creative menu if Farmer's Respite is not installed.
 
 ## Bugfixes
 - Fixed coaster item removals not being synced to nearby clients. ([#19](https://github.com/MerchantPug/BrewinAndChewin/issues/19))

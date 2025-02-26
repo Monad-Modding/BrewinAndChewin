@@ -55,10 +55,14 @@ public class TipsyNumbedHeartsCapability implements ICapabilitySerializable<Comp
     }
 
     public void syncToPlayer(ServerPlayer player) {
+        if (provider.level().isClientSide())
+            return;
         BnCNetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new SyncNumbedHeartsClientboundPacket(provider.getId(), numbedHealth, ticksUntilDamage));
     }
 
     public void sync() {
+        if (provider.level().isClientSide())
+            return;
         BnCNetworkHandler.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> provider), new SyncNumbedHeartsClientboundPacket(provider.getId(), numbedHealth, ticksUntilDamage));
     }
 

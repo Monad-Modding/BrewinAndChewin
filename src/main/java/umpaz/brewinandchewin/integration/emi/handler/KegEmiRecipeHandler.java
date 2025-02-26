@@ -262,7 +262,7 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
 
     private static boolean hasFluidOrItem(@Nullable EmiIngredient fluidIngredient, @Nullable EmiIngredient fluidItemIngredient, EmiCraftContext<KegMenu> context) {
         FluidStack stack = context.getScreenHandler().kegTank.getFluid();
-        return (fluidIngredient == null && stack.isEmpty() || fluidIngredient.getEmiStacks().stream().anyMatch(emiStack -> emiStack.isEqual(EmiStack.of(stack.getFluid(), stack.getTag(), stack.getAmount())))) ||
+        return (fluidIngredient == null && stack.isEmpty() || fluidIngredient != null && fluidIngredient.getEmiStacks().stream().anyMatch(emiStack -> emiStack.isEqual(EmiStack.of(stack.getFluid(), stack.getTag(), stack.getAmount())))) ||
                 (fluidItemIngredient != null && hasItems(List.of(fluidItemIngredient), context));
     }
 

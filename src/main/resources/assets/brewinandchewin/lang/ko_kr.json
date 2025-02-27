@@ -73,7 +73,7 @@
   "effect.brewinandchewin.intoxication": "만취",
   "effect.brewinandchewin.intoxication.description": "음식을 먹어도 포만감이 오르지 않습니다",
   "effect.brewinandchewin.raging": "분노",
-  "effect.brewinandchewin.raging.description": "근접 공격시 잠시동안 공격 속도가 5% 증가합니다. 이 효과는 4번까지 중첩된니다.",
+  "effect.brewinandchewin.raging.description": "근접 공격의 공격 속도가 레벨당 5% 증가합니다.(최대 4레벨)",
   "effect.brewinandchewin.sweet_heart": "달콤한 마음",
   "effect.brewinandchewin.sweet_heart.description": "포만감 수치에 따른 체력 회복량이 증가합니다.",
   "brewinandchewin.tooltip.dread_nog": "흉조 효과를 1단계 상승시킵니다",

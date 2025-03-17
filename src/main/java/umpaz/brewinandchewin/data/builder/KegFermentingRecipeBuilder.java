@@ -33,6 +33,7 @@ public class KegFermentingRecipeBuilder {
     private final List<Ingredient> ingredients = Lists.newArrayList();
 
     private Optional<FluidStack> fluidIngredient = Optional.empty();
+
     private Optional<Fluid> resultFluid = Optional.empty();
     private Optional<Item> resultItem = Optional.empty();
     private Optional<FermentingRecipeBookTab> tab = Optional.empty();
@@ -181,6 +182,7 @@ public class KegFermentingRecipeBuilder {
         private final List<Ingredient> ingredients;
         private final Optional<FermentingRecipeBookTab> tab;
         private final Optional<FluidStack> fluidIngredient;
+
         private final Optional<Item> resultItem;
         private final Optional<Fluid> resultFluid;
         private final int fermentingTime;
@@ -194,6 +196,7 @@ public class KegFermentingRecipeBuilder {
         public Result(ResourceLocation idIn, Optional<FluidStack> fluidIngredient, Optional<FermentingRecipeBookTab> tab, Optional<Item> resultItemIn, Optional<Fluid> resultFluidIn, int count, List<Ingredient> ingredientsIn, int fermentingTimeIn, float experienceIn, int temperatureIn, @Nullable Advancement.Builder advancement, @Nullable ResourceLocation advancementId) {
             this.id = idIn;
             this.fluidIngredient = fluidIngredient;
+            //this.fluidIngredientTag = fluidIngredientTag;
             this.tab = tab;
             this.resultItem = resultItemIn;
             this.resultFluid = resultFluidIn;
@@ -218,7 +221,7 @@ public class KegFermentingRecipeBuilder {
             JsonObject result = new JsonObject();
             if (resultItem.isPresent()) {
                 result.addProperty("item", ForgeRegistries.ITEMS.getKey(resultItem.get()).toString());
-            } else {
+            } else if (resultFluid.isPresent()){
                 result.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(resultFluid.get()).toString());
             }
             result.addProperty("count", count);

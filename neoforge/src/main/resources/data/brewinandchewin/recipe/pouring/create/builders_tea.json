@@ -10,15 +10,13 @@
   },
   "output": {
     "count": 1,
-    "id": "create:buiders_tea"
+    "id": "create:builders_tea"
   },
   "strict": false,
   "fabric:load_conditions": [
     {
       "condition": "fabric:all_mods_loaded",
-      "namespaces": [
-        "create"
-      ]
+      "namespaces": ["create"]
     }
   ],
   "neoforge:conditions": [

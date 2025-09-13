@@ -77,6 +77,7 @@ public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
                level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1, 1);
                return InteractionResult.CONSUME;
            }
+           kegBE.updateTemperature();
            NetworkHooks.openScreen((ServerPlayer) player, kegBE, pos);
        }
        return InteractionResult.CONSUME;

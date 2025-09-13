@@ -119,7 +119,7 @@ public class KegScreen extends AbstractContainerScreen<KegMenu> implements Recip
 
     private void renderTankTooltip(GuiGraphics gui, int mouseX, int mouseY) {
 
-            if ( isHovering(120, 19, 24, 28, mouseX, mouseY) && !this.menu.kegTank.isEmpty() && (!(recipeBookComponent.getGhostRecipe() instanceof KegFermentingRecipe fermentingRecipe) || fermentingRecipe.getFluidIngredient() == null || fermentingRecipe.getFluidIngredient().getFluid().isSame(menu.kegTank.getFluid().getRawFluid()))) {
+            if ( isHovering(120, 19, 24, 28, mouseX, mouseY) && !this.menu.kegTank.isEmpty() && (!(recipeBookComponent.getGhostRecipe() instanceof KegFermentingRecipe fermentingRecipe) || fermentingRecipe.getFluidIngredient() == null || fermentingRecipe.getFluidIngredient().getFluid().isSame(menu.kegTank.getFluid().getFluid()) || fermentingRecipe.getFluidIngredientTag() != null && fermentingRecipe.getFluidIngredientTag().contains(menu.kegTank.getFluid().getFluid()))) {
             Component containerComponent = (BnCTextUtils.getTranslation("container.keg.served_in", FLUID_CONTAINER_COMPONENTS.computeIfAbsent(menu.kegTank.getFluid().getFluid(), fluid -> {
                 MutableComponent component = MutableComponent.create(ComponentContents.EMPTY).withStyle(ChatFormatting.GRAY);
                 int amountAdded = 0;
@@ -196,7 +196,7 @@ public class KegScreen extends AbstractContainerScreen<KegMenu> implements Recip
         // Render temperature bars
 
         FluidStack fluidStack = this.menu.kegTank.getFluid();
-        if (!fluidStack.isEmpty() && (!(recipeBookComponent.getGhostRecipe() instanceof KegFermentingRecipe fermentingRecipe) || fermentingRecipe.getFluidIngredient() == null && menu.kegTank.isEmpty() || fermentingRecipe.getFluidIngredient() != null && fermentingRecipe.getFluidIngredient().getFluid().isSame(fluidStack.getRawFluid()))) {
+        if (!fluidStack.isEmpty() && (!(recipeBookComponent.getGhostRecipe() instanceof KegFermentingRecipe fermentingRecipe) || fermentingRecipe.getFluidIngredient() == null && menu.kegTank.isEmpty() || fermentingRecipe.getFluidIngredient() != null && fermentingRecipe.getFluidIngredient().getFluid().isSame(fluidStack.getRawFluid()) || fermentingRecipe.getFluidIngredientTag() != null && fermentingRecipe.getFluidIngredientTag().contains(menu.kegTank.getFluid().getFluid()))) {
 
             // Fluid
             if (BnCConfiguration.RENDER_FLUID_IN_KEG.get()) {

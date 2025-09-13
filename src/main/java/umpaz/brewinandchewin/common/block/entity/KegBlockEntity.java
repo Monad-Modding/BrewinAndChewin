@@ -22,7 +22,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.RecipeHolder;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
@@ -39,6 +38,7 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
 import umpaz.brewinandchewin.common.BnCConfiguration;
 import umpaz.brewinandchewin.common.block.KegBlock;
 import umpaz.brewinandchewin.common.block.entity.container.KegItemHandler;
@@ -214,16 +214,19 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         if (recipe.getFluidIngredient() == null) { // if the recipe does not require a fluid
             return keg.fluidTank.isEmpty(); // make sure the fluid is empty
         } else {
-            if (!keg.fluidTank.getFluid().getFluid().isSame(recipe.getFluidIngredient().getFluid()))
+            if (!keg.fluidTank.getFluid().getFluid().isSame(recipe.getFluidIngredient().getFluid()) && (recipe.getFluidIngredientTag() == null || !recipe.getFluidIngredientTag().contains(keg.fluidTank.getFluid().getFluid()))) {
                 return false; // make sure the fluid is the same
+            }
             return keg.fluidTank.getFluidAmount() % recipe.getFluidIngredient().getAmount() == 0; // make sure the fluid amount is a multiple of the recipe amount
         }
     }
 
-    public static void fermentingTick(Level level, BlockPos pos, BlockState state, KegBlockEntity keg) {
+    public static void fermentingTick(@NotNull Level level, BlockPos pos, BlockState state, KegBlockEntity keg) {
         boolean didInventoryChange = false;
 
-        keg.updateTemperature();
+        if (level.getGameTime() % 80 == 0) { // Every 4s
+            keg.updateTemperature();
+        }
 
         if (keg.hasInput()) {
             Optional<KegFermentingRecipe> recipe = keg.getMatchingRecipe(keg.recipeWrapper);
@@ -238,6 +241,12 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
             }
         } else if (keg.fermentTime > 0) {
             keg.fermentTime = Math.max(0, keg.fermentTime - 20);
+        }
+
+        List<ItemStack> out = keg.extractInGui(keg.inventory.getStackInSlot(CONTAINER_SLOT), keg.inventory.getSlotLimit(OUTPUT_SLOT));
+        if (!out.isEmpty()) {
+            keg.inventory.insertItem(OUTPUT_SLOT, out.get(0), false);
+            didInventoryChange = true;
         }
 
         if (didInventoryChange) {
@@ -316,7 +325,6 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
             keg.fluidTank.setFluid(new FluidStack(recipe.getResultFluid(), keg.fluidTank.getFluidAmount()));
             if (keg.level.isClientSide())
                 keg.level.playLocalSound(keg.getBlockPos(), SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1, 0.8f, true);
-
         }
 
         if (recipe.getResultItem() != null) {
@@ -493,11 +501,10 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
                 }
             }
         }
-
         int heat = states.stream().filter(s -> s.is(ModTags.HEAT_SOURCES) && s.hasProperty(BlockStateProperties.LIT)).filter(s -> s.getValue(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
         heat += states.stream().filter(s -> s.is(ModTags.HEAT_SOURCES) && !s.hasProperty(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
 
-        // Compat with mods that have lit states, such as a future Pug FD addon.
+        // Compat with mods that have lit states.
         int cold = states.stream().filter(s -> s.is(BnCTags.FREEZE_SOURCES) && s.hasProperty(BlockStateProperties.LIT)).filter(s -> s.hasProperty(BlockStateProperties.LIT)).filter(s -> s.getValue(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
         cold += states.stream().filter(s -> s.is(BnCTags.FREEZE_SOURCES) && !s.hasProperty(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
 
@@ -661,15 +668,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         return new ItemStackHandler(INVENTORY_SIZE) {
             @Override
             protected void onContentsChanged(int slot) {
-                if (slot == CONTAINER_SLOT) {
-                    List<ItemStack> out = KegBlockEntity.this.extractInGui(getStackInSlot(CONTAINER_SLOT), getSlotLimit(OUTPUT_SLOT));
-                    if (!out.isEmpty()) {
-                        insertItem(OUTPUT_SLOT, out.get(0), false);
-                    }
-                }
-                if (slot >= 0 && slot < OUTPUT_SLOT) {
-                    checkNewRecipe = true;
-                }
+                checkNewRecipe = true;
                 inventoryChanged();
             }
         };

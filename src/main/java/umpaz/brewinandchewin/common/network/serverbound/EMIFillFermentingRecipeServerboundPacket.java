@@ -58,11 +58,20 @@ public record EMIFillFermentingRecipeServerboundPacket(int syncId,
 
                 try {
                     if (packet.stacks.containsKey(KegEmiRecipeHandler.InputType.EMPTY)) {
+                        List<Slot> crafting = List.of(menu.getSlot(4));
+                        for (Slot s : crafting) {
+                            if (s != null && s.mayPickup(sender) && !s.getItem().isEmpty()) {
+                                ItemStack taken = s.getItem();
+                                rubble.add(taken.copy());
+                                s.setByPlayer(ItemStack.EMPTY);
+                                s.onTake(sender, taken);
+                            }
+                        }
                         for (ItemStack stack : packet.stacks.get(KegEmiRecipeHandler.InputType.EMPTY)) {
                             if (stack.isEmpty())
                                 continue;
 
-                            int gotten = grabMatching(kegMenu, sender, List.of(menu.getSlot(4)), rubble, stack);
+                            int gotten = grabMatching(kegMenu, sender, crafting, rubble, stack);
                             if (gotten != stack.getCount()) {
                                 if (gotten > 0) {
                                     stack.setCount(gotten);
@@ -77,11 +86,21 @@ public record EMIFillFermentingRecipeServerboundPacket(int syncId,
                     }
 
                     if (packet.stacks.containsKey(KegEmiRecipeHandler.InputType.FILL)) {
+                        List<Slot> crafting = List.of(menu.getSlot(4));
+                        for (Slot s : crafting) {
+                            if (s != null && s.mayPickup(sender) && !s.getItem().isEmpty()) {
+                                ItemStack taken = s.getItem();
+                                rubble.add(taken.copy());
+                                s.setByPlayer(ItemStack.EMPTY);
+                                s.onTake(sender, taken);
+                            }
+                        }
+
                         for (ItemStack stack : packet.stacks.get(KegEmiRecipeHandler.InputType.FILL)) {
                             if (stack.isEmpty())
                                 continue;
 
-                            int gotten = grabMatching(kegMenu, sender, List.of(menu.getSlot(4)), rubble, stack);
+                            int gotten = grabMatching(kegMenu, sender, crafting, rubble, stack);
                             if (gotten != stack.getCount()) {
                                 if (gotten > 0) {
                                     stack.setCount(gotten);
@@ -96,12 +115,22 @@ public record EMIFillFermentingRecipeServerboundPacket(int syncId,
                     }
 
                     if (packet.stacks.containsKey(KegEmiRecipeHandler.InputType.ITEM)) {
+                        List<Slot> crafting = menu.slots.subList(0, 3);
+                        for (Slot s : crafting) {
+                            if (s != null && s.mayPickup(sender) && !s.getItem().isEmpty()) {
+                                ItemStack taken = s.getItem();
+                                rubble.add(taken.copy());
+                                s.setByPlayer(ItemStack.EMPTY);
+                                s.onTake(sender, taken);
+                            }
+                        }
+
                         for (int i = 0; i < packet.stacks.get(KegEmiRecipeHandler.InputType.ITEM).size(); ++i) {
                             ItemStack stack = packet.stacks.get(KegEmiRecipeHandler.InputType.ITEM).get(i);
                             if (stack.isEmpty())
                                 continue;
 
-                            int gotten = grabMatching(kegMenu, sender, menu.slots.subList(0, 3), rubble, stack);
+                            int gotten = grabMatching(kegMenu, sender, crafting, rubble, stack);
                             if (gotten != stack.getCount()) {
                                 if (gotten > 0) {
                                     stack.setCount(gotten);
@@ -128,6 +157,7 @@ public record EMIFillFermentingRecipeServerboundPacket(int syncId,
         private static int grabMatching(KegMenu menu, Player player, List<Slot> crafting, List<ItemStack> rubble, ItemStack stack) {
             int amount = stack.getCount();
             int grabbed = 0;
+
             for (int i = 0; i < rubble.size(); i++) {
                 if (grabbed >= amount) {
                     return grabbed;

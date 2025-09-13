@@ -9,14 +9,17 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.tags.ITag;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.block.entity.container.KegStackedContents;
@@ -25,6 +28,7 @@ import umpaz.brewinandchewin.common.BnCConfiguration;
 import umpaz.brewinandchewin.common.block.entity.container.KegMenu;
 import umpaz.brewinandchewin.common.crafting.KegFermentingRecipe;
 import umpaz.brewinandchewin.common.crafting.KegPouringRecipe;
+import umpaz.brewinandchewin.common.mixin.client.GhostRecipeAccessor;
 import umpaz.brewinandchewin.common.mixin.client.RecipeBookComponentAccessor;
 import umpaz.brewinandchewin.common.registry.BnCRecipeTypes;
 import umpaz.brewinandchewin.common.utility.BnCTextUtils;
@@ -78,9 +82,11 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
                 if (!KegBlockEntity.isValidTemp(kegMenu.getKegTemperature(), fermentingRecipe.getTemperature()))
                     renderTemperatureTooltip(gui, renderX, renderY, mouseX, mouseY);
                 FluidStack fluidStack = fermentingRecipe.getFluidIngredient();
+                ITag<Fluid> fluidTag = fermentingRecipe.getFluidIngredientTag();
                 if (fluidStack == null)
                     return;
-                if (!kegMenu.kegTank.getFluid().getFluid().isSame(fluidStack.getRawFluid()))
+                Fluid tankFluid = kegMenu.kegTank.getFluid().getFluid();
+                if (!tankFluid.isSame(fluidStack.getRawFluid()) && (fluidTag == null || !fluidTag.contains(tankFluid)))
                     renderTankTooltip(gui, renderX, renderY, mouseX, mouseY, fluidStack);
             }
         }
@@ -124,9 +130,19 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
                 }
 
                 FluidStack fluidStack = fermentingRecipe.getFluidIngredient();
+                ITag<Fluid> fluidTag = fermentingRecipe.getFluidIngredientTag();
                 // Fluid
-                if (fluidStack == null && !kegMenu.kegTank.isEmpty() || fluidStack != null && !kegMenu.kegTank.getFluid().getFluid().isSame(fluidStack.getRawFluid())) {
+                if (fluidStack == null && !kegMenu.kegTank.isEmpty() || fluidStack != null &&
+                        !kegMenu.kegTank.getFluid().getFluid().isSame(fluidStack.getRawFluid()) && (fluidTag == null || !fluidTag.contains(kegMenu.kegTank.getFluid().getFluid()))) {
                     if (fluidStack != null && BnCConfiguration.RENDER_FLUID_IN_KEG.get()) {
+                        if (fluidTag != null) {
+                            fluidStack = new FluidStack(
+                                    fluidTag.stream().toList().get(Mth.floor(((GhostRecipeAccessor)ghostRecipe).brewinandchewin$getTime() / 30.0F) % fluidTag.size()),
+                                    fluidStack.getAmount(),
+                                    fluidStack.getTag()
+                            );
+                        }
+
                         IClientFluidTypeExtensions fluidTypeExtensions = IClientFluidTypeExtensions.of(fluidStack.getFluid());
                         ResourceLocation stillTexture = fluidTypeExtensions.getStillTexture(fluidStack);
                         if (stillTexture != null) {

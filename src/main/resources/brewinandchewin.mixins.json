@@ -18,7 +18,8 @@
     "ServerPlaceRecipeAccessor",
     "StackedContentsRecipePickerAccessor",
     "StoreLootParamsMixin$LootParamsBuilderMixin",
-    "StoreLootParamsMixin$LootParamsMixin"
+    "StoreLootParamsMixin$LootParamsMixin",
+    "client.GhostRecipeAccessor"
   ],
   "client": [
     "client.GuiMixin",

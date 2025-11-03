@@ -21,7 +21,7 @@
   "fluid_type.brewinandchewin.scarlet_cheese": "Қызыл ірімшік",
 
   "block.brewinandchewin.keg": "Кег",
-  "block.brewinandchewin.heating_cask": "Қыздыратқыш бөшке",
+  "block.brewinandchewin.heating_cask": "Қыздырғыш бөшке",
   "block.brewinandchewin.ice_crate": "Мұз жәшігі",
   "block.brewinandchewin.coaster": "Табақша",
 
@@ -70,7 +70,7 @@
   "item.brewinandchewin.kombucha": "Комбуча",
 
   "effect.brewinandchewin.tipsy": "Қызыңқырау",
-  "effect.brewinandchewin.tipsy.description": "Экранды шайқап тұрады. III деңгейден бастап тінтуір сүйрей бастайды. IV деңгейден бастап чатыңыз, басқа ойыншылар чаты және маңдайшалар бұзылып көрінеді. Зақым кешігуі мүмкін, сарғыш Қызыңқырау жандарымен белгіленеді.",
+  "effect.brewinandchewin.tipsy.description": "Экранды шайқап тұрады. III деңгейден бастап тінтуір сүйрей бастайды. IV деңгейден бастап чатың, басқа ойыншылар чаты және маңдайшалар бұзылып көрінеді. Зақым кешігуі мүмкін, сарғыш Қызыңқырау жандарымен белгіленеді.",
   "effect.brewinandchewin.intoxication": "Мастық",
   "effect.brewinandchewin.intoxication.description": "Ойыншы тағамнан тоюды ала алмайды.",
   "effect.brewinandchewin.raging": "Ашу",
@@ -90,7 +90,7 @@
 
   "brewinandchewin.block.feast.use_knife": "Мұны кесу үшін саған пышақ керек.",
 
-  "death.attack.brewinandchewin.cardiacArrest": "%1$s жүрегі ауырғанын есіне алды",
+  "death.attack.brewinandchewin.cardiacArrest": "%1$s жараланғанын есіне алды",
   "death.attack.brewinandchewin.cardiacArrest.player": "%2$s салдарынан %1$s -ның жүрегі тоқтап қалды",
 
   "brewinandchewin.advancement.root": "Дәм мен нәм",
@@ -99,15 +99,15 @@
   "brewinandchewin.advancement.place_keg.desc": "Кег қой",
   "brewinandchewin.advancement.place_temperature_block_near_keg": "Бөшке мен жәшік әні",
   "brewinandchewin.advancement.place_temperature_block_near_keg.desc": "Температураны өзгерту үшін кегтің жанына қыздырғыш немесе салқындатқыш қой",
-  "brewinandchewin.advancement.brew_drink": "Үйренген дәм",
+  "brewinandchewin.advancement.brew_drink": "Ұмытылмас дәм",
   "brewinandchewin.advancement.brew_drink.desc": "Кегте кез келген сусынды ашыт",
   "brewinandchewin.advancement.crafting_problem": "Жасаудағы проблема",
-  "brewinandchewin.advancement.crafting_problem.desc": "Кегтен шыққан барлық ашытылған сусынды іш. Есіңде болғанды жөн етсін",
-  "brewinandchewin.advancement.ferment_cheese": "Уақыт дәмі",
+  "brewinandchewin.advancement.crafting_problem.desc": "Кегтен шыққан барлық ашытылған сусынды іш. Санаң кірсе игі",
+  "brewinandchewin.advancement.ferment_cheese": "Уақыт өте дәмі шығар",
   "brewinandchewin.advancement.ferment_cheese.desc": "Кегте ірімшікті ашыт",
-  "brewinandchewin.advancement.cook_fiery_fondue": "Оттан тыныс алушы",
-  "brewinandchewin.advancement.cook_fiery_fondue.desc": "Қазандағы өртенген фондюны қазандықтан ал",
-  "brewinandchewin.advancement.chef_of_the_ages": "Ғасырлардың аспазы",
+  "brewinandchewin.advancement.cook_fiery_fondue": "Түтінмен тыныс алушы",
+  "brewinandchewin.advancement.cook_fiery_fondue.desc": "Қазанда піскен өртенген фондюны ал",
+  "brewinandchewin.advancement.chef_of_the_ages": "Ғасыр аспазы",
   "brewinandchewin.advancement.chef_of_the_ages.desc": "Барлық Brewin' and Chewin' тағамдарын же!",
 
   "itemGroup.brewinandchewin": "Дәм мен нәм",

@@ -6,6 +6,7 @@ import net.minecraft.recipebook.ServerPlaceRecipe;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
@@ -14,13 +15,14 @@ import umpaz.brewinandchewin.common.crafting.KegFermentingRecipe;
 import umpaz.brewinandchewin.common.crafting.KegPouringRecipe;
 import umpaz.brewinandchewin.common.mixin.ServerPlaceRecipeAccessor;
 import umpaz.brewinandchewin.common.registry.BnCRecipeTypes;
+import umpaz.brewinandchewin.common.utility.KegContainer;
 import umpaz.brewinandchewin.common.utility.KegRecipeWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class KegPlaceRecipe extends ServerPlaceRecipe<KegRecipeWrapper, KegFermentingRecipe> {
+public class KegPlaceRecipe extends ServerPlaceRecipe<KegContainer> {
     private final RecipeManager manager;
 
     public KegPlaceRecipe(KegMenu menu, RecipeManager manager) {
@@ -30,8 +32,8 @@ public class KegPlaceRecipe extends ServerPlaceRecipe<KegRecipeWrapper, KegFerme
     }
 
     @Override
-    protected void handleRecipeClicked(RecipeHolder<KegFermentingRecipe> recipe, boolean placeAll) {
-        KegFermentingRecipe fermentingRecipe = recipe.value();
+    protected void handleRecipeClicked(Recipe<KegContainer> recipe, boolean placeAll) {
+        KegFermentingRecipe fermentingRecipe = (KegFermentingRecipe) recipe;
         KegMenu menu = (KegMenu) this.menu;
         boolean flag = menu.recipeMatches(recipe);
 
@@ -63,12 +65,12 @@ public class KegPlaceRecipe extends ServerPlaceRecipe<KegRecipeWrapper, KegFerme
 
         int stackSize = placeAll ? biggestCraftableStack : !shouldHandleFluid ? getStackSize(false, biggestCraftableStack, flag) : 1;
         IntList intlist = new IntArrayList();
-        if (stackedContents.canCraft(recipe.value(), intlist, stackSize)) {
+        if (stackedContents.canCraft(recipe, intlist, stackSize)) {
             int k = stackSize;
 
             for (int l : intlist) {
                 int i1 = StackedContents.fromStackingIndex(l).getMaxStackSize();
-                if (!((KegStackedContents) stackedContents).isFluidItem(recipe.value(), l) && i1 < k) {
+                if (!((KegStackedContents) stackedContents).isFluidItem(recipe, l) && i1 < k) {
                     k = i1;
                 }
             }

@@ -1,35 +1,21 @@
 package umpaz.brewinandchewin.common.crafting;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.Unit;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import net.minecraft.network.FriendlyByteBuf;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidIngredient;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidStack;
-import umpaz.brewinandchewin.common.utility.BnCStreamCodecs;
 import umpaz.brewinandchewin.common.utility.FluidUnit;
 
 import java.util.Optional;
 
 public record FluidIngredientWithAmount(AbstractedFluidIngredient ingredient, long amount, Optional<FluidUnit> unit) {
-    public static final Codec<FluidIngredientWithAmount> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-            AbstractedFluidIngredient.CODEC.fieldOf("ingredient").forGetter(FluidIngredientWithAmount::ingredient),
-            Codec.LONG.validate(l -> {
-                if (l < 1)
-                    return DataResult.error(() -> "Fluid Ingredient amount must be at least 1.");
-                return DataResult.success(l);
-            }).optionalFieldOf("amount").forGetter(fluidIngredientWithAmount -> Optional.of(fluidIngredientWithAmount.amount())),
-            FluidUnit.CODEC.optionalFieldOf("unit").forGetter(FluidIngredientWithAmount::unit)
-    ).apply(inst, (t1, t2, t3) -> new FluidIngredientWithAmount(t1, t2.orElseGet(() -> t1.displayStacks().getFirst().amount()), t3)));
-    public static final StreamCodec<RegistryFriendlyByteBuf, FluidIngredientWithAmount> STREAM_CODEC = StreamCodec.composite(
-            AbstractedFluidIngredient.STREAM_CODEC, FluidIngredientWithAmount::ingredient,
-            BnCStreamCodecs.LONG, FluidIngredientWithAmount::amount,
-            ByteBufCodecs.optional(FluidUnit.STREAM_CODEC), FluidIngredientWithAmount::unit,
-            FluidIngredientWithAmount::new
-    );
+    public FluidIngredientWithAmount {
+        if (ingredient.matches(AbstractedFluidStack.EMPTY))
+            throw new IllegalArgumentException("Fluid Ingredient must not accept empty.");
+        if (amount <= 0)
+            throw new IllegalArgumentException("Fluid Ingredient amount must be higher than 0.");
+    }
 
     public FluidUnit getUnit() {
         return unit().orElse(FluidUnit.getLoaderUnit());
@@ -40,10 +26,33 @@ public record FluidIngredientWithAmount(AbstractedFluidIngredient ingredient, lo
         return unit.convertToLoader(amount);
     }
 
-    public FluidIngredientWithAmount {
-        if (ingredient.matches(AbstractedFluidStack.EMPTY))
-            throw new IllegalArgumentException("Fluid Ingredient must not accept empty.");
-        if (amount <= 0)
-            throw new IllegalArgumentException("Fluid Ingredient amount must be higher than 0.");
+    public static FluidIngredientWithAmount fromJson(JsonElement element) {
+        JsonObject obj = element.getAsJsonObject();
+
+        AbstractedFluidIngredient ingredient = AbstractedFluidIngredient.fromJson(obj.get("ingredient"));
+
+        long amount = obj.has("amount")
+                ? obj.get("amount").getAsLong()
+                : ingredient.displayStacks().get(0).amount();
+
+        Optional<FluidUnit> unit = obj.has("unit")
+                ? Optional.of(FluidUnit.fromJson(obj.get("unit")))
+                : Optional.empty();
+
+        return new FluidIngredientWithAmount(ingredient, amount, unit);
+    }
+
+    public void toNetwork(FriendlyByteBuf buf) {
+        ingredient.toNetwork(buf);
+        buf.writeLong(amount);
+        buf.writeBoolean(unit.isPresent());
+        unit.ifPresent(u -> u.toNetwork(buf));
+    }
+
+    public static FluidIngredientWithAmount fromNetwork(FriendlyByteBuf buf) {
+        AbstractedFluidIngredient ingredient = AbstractedFluidIngredient.fromNetwork(buf);
+        long amount = buf.readLong();
+        Optional<FluidUnit> unit = buf.readBoolean() ? Optional.of(FluidUnit.fromNetwork(buf)) : Optional.empty();
+        return new FluidIngredientWithAmount(ingredient, amount, unit);
     }
 }

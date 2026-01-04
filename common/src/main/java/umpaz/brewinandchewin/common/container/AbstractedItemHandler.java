@@ -15,8 +15,8 @@ public interface AbstractedItemHandler {
     boolean isItemValid(int slot, ItemStack stack);
     int getSlotLimit(int slot);
 
-    default void readFromNbt(CompoundTag tag, HolderLookup.Provider provider) {}
-    default CompoundTag writeToNbt(HolderLookup.Provider provider) {
+    default void readFromNbt(CompoundTag tag) {}
+    default CompoundTag writeToNbt() {
         return new CompoundTag();
     }
 }

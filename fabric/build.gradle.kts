@@ -23,6 +23,12 @@ repositories {
     maven("https://mvn.devos.one/snapshots/") {
         name = "DevOS"
     }
+    maven("https://mvn.devos.one/releases/")
+    maven("https://maven.jamieswhiteshirt.com/libs-release") {
+        content {
+            includeGroup("com.jamieswhiteshirt")
+        }
+    }
     maven("https://jitpack.io/") {
         content {
             excludeGroup("io.github.fabricators_of_create")
@@ -53,10 +59,7 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:${Versions.FABRIC_API}")
     modLocalRuntime("com.terraformersmc:modmenu:${Versions.MOD_MENU}")
 
-    modApi("house.greenhouse:greenhouseconfig:${Versions.GREENHOUSE_CONFIG}-fabric")
-    include("house.greenhouse:greenhouseconfig:${Versions.GREENHOUSE_CONFIG}-fabric")
-    api("house.greenhouse:greenhouseconfig_toml:${Versions.GREENHOUSE_CONFIG_TOML}")
-    include("house.greenhouse:greenhouseconfig_toml:${Versions.GREENHOUSE_CONFIG_TOML}")
+    modCompileOnly("io.github.fabricators_of_create.Porting-Lib:accessors:${Versions.PORTING_LIB}") { isTransitive = false }
 
     modImplementation("vectorwing:FarmersDelight:${Versions.FARMERS_DELIGHT_REFABRICATED}") {
         exclude(group = "net.fabricmc")
@@ -82,17 +85,8 @@ dependencies {
 
     modCompileOnly("com.simibubi.create:create-fabric-1.20.1:${Versions.CREATE_FABRIC}") { isTransitive = false}
     modCompileOnly("com.tterrag.registrate_fabric:Registrate:${Versions.REGISTRATE_FABRIC}") { isTransitive = false}
-    // FIXME: When Create Fabric is fully updated, delete Porting Lib as they are no longer utilising it.
-    modCompileOnly("io.github.fabricators_of_create.Porting-Lib:lazy_registration:${Versions.PORTING_LIB}") { isTransitive = false }
 
-    modCompileOnly("maven.modrinth:styled-chat:${Versions.STYLED_CHAT}")
-    modCompileOnly("eu.pb4:placeholder-api:${Versions.PB4_PLACEHOLDER_API}")
-
-    modLocalRuntime("maven.modrinth:styled-chat:${Versions.STYLED_CHAT}")
-    modLocalRuntime("eu.pb4:predicate-api:${Versions.PB4_PREDICATE_API}")
-    modLocalRuntime("eu.pb4:placeholder-api:${Versions.PB4_PLACEHOLDER_API}")
     modLocalRuntime("me.lucko:fabric-permissions-api:${Versions.PERMISSIONS_API}")
-    modLocalRuntime("eu.pb4:player-data-api:${Versions.PB4_PLAYER_DATA_API}")
 }
 
 loom {

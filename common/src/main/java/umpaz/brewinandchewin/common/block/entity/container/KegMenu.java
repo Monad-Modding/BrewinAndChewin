@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.*;
-import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -19,11 +19,11 @@ import umpaz.brewinandchewin.common.container.AbstractedItemHandler;
 import umpaz.brewinandchewin.common.crafting.KegFermentingRecipe;
 import umpaz.brewinandchewin.common.registry.BnCBlocks;
 import umpaz.brewinandchewin.common.registry.BnCMenuTypes;
-import umpaz.brewinandchewin.common.utility.KegRecipeWrapper;
+import umpaz.brewinandchewin.common.utility.KegContainer;
 
 import java.util.Objects;
 
-public class KegMenu extends RecipeBookMenu<KegRecipeWrapper, KegFermentingRecipe>
+public class KegMenu extends RecipeBookMenu<KegContainer>
 {
     public static final ResourceLocation EMPTY_CONTAINER_SLOT_TANKARD = BrewinAndChewin.asResource("item/empty_container_slot_tankard");
 
@@ -33,7 +33,7 @@ public class KegMenu extends RecipeBookMenu<KegRecipeWrapper, KegFermentingRecip
     private final ContainerData kegData;
     private final ContainerLevelAccess canInteractWithCallable;
     protected final Level level;
-    private final KegRecipeWrapper recipeWrapper;
+    private final KegContainer recipeWrapper;
 
     public KegMenu(final int windowId, final Inventory playerInventory, final BlockPos data) {
         this(windowId, playerInventory, getTileEntity(playerInventory, data), new SimpleContainerData(4));
@@ -165,12 +165,12 @@ public class KegMenu extends RecipeBookMenu<KegRecipeWrapper, KegFermentingRecip
 
     public boolean isFermenting() {
         var recipe = blockEntity.getRecipeWithoutTemperature();
-        return recipe.isPresent() && KegBlockEntity.isValidTemp(getKegTemperature(), recipe.get().value().getTemperature());
+        return recipe.isPresent() && KegBlockEntity.isValidTemp(getKegTemperature(), recipe.get().getTemperature());
     }
 
     @Override
-    public void handlePlacement(boolean placeAll, RecipeHolder<?> recipe, ServerPlayer player) {
-        RecipeHolder<KegFermentingRecipe> recipeHolder = (RecipeHolder)recipe;
+    public void handlePlacement(boolean placeAll, Recipe<?> recipe, ServerPlayer player) {
+        Recipe<KegContainer> recipeHolder = (Recipe<KegContainer>) recipe;
         this.beginPlacingRecipe();
 
         try {
@@ -195,8 +195,8 @@ public class KegMenu extends RecipeBookMenu<KegRecipeWrapper, KegFermentingRecip
     }
 
     @Override
-    public boolean recipeMatches(RecipeHolder<KegFermentingRecipe> recipe) {
-        return recipe.value().matches(recipeWrapper, level);
+    public boolean recipeMatches(Recipe<? super KegContainer> recipe) {
+        return recipe.matches(recipeWrapper, level);
     }
 
     @Override

@@ -43,7 +43,7 @@
     "minecraft": "${fabric_minecraft_version_range}",
     "java": ">=${java_version}",
     "farmersdelight": "${farmers_delight_refabricated_range}",
-    "greenhouseconfig": "${fabric_greenhouse_config_range}"
+    "yacl": "*"
   },
   "custom": {
     "modmenu": {

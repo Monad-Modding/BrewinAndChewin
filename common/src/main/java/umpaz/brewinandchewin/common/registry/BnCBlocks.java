@@ -10,38 +10,38 @@ import vectorwing.farmersdelight.common.block.PieBlock;
 
 public class BnCBlocks {
     public static final Block KEG = new KegBlock(
-            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS));
+            BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS));
 
     public static final Block HEATING_CASK = new HeatingCaskBlock(
-            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS));
+            BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS));
 
     public static final Block ICE_CRATE = new IceCrateBlock(
-            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS));
+            BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS));
 
     public static final Block COASTER = new CoasterBlock();
 
     //Cheese
     public static final Block UNRIPE_FLAXEN_CHEESE_WHEEL = new
-            UnripeCheeseWheelBlock(() -> BnCBlocks.FLAXEN_CHEESE_WHEEL, Block.Properties.ofFullCopy(Blocks.CAKE));
+            UnripeCheeseWheelBlock(() -> BnCBlocks.FLAXEN_CHEESE_WHEEL, Block.Properties.copy(Blocks.CAKE));
 
     public static final Block FLAXEN_CHEESE_WHEEL = new
-            CheeseWheelBlock(() -> BnCItems.FLAXEN_CHEESE_WEDGE, Block.Properties.ofFullCopy(Blocks.CAKE));
+            CheeseWheelBlock(() -> BnCItems.FLAXEN_CHEESE_WEDGE, Block.Properties.copy(Blocks.CAKE));
 
     public static final Block UNRIPE_SCARLET_CHEESE_WHEEL = new
-            UnripeCheeseWheelBlock(() -> BnCBlocks.SCARLET_CHEESE_WHEEL, Block.Properties.ofFullCopy(Blocks.CAKE));
+            UnripeCheeseWheelBlock(() -> BnCBlocks.SCARLET_CHEESE_WHEEL, Block.Properties.copy(Blocks.CAKE));
 
     public static final Block SCARLET_CHEESE_WHEEL = new
-            CheeseWheelBlock(() -> BnCItems.SCARLET_CHEESE_WEDGE, Block.Properties.ofFullCopy(Blocks.CAKE));
+            CheeseWheelBlock(() -> BnCItems.SCARLET_CHEESE_WEDGE, Block.Properties.copy(Blocks.CAKE));
 
     // Feasts
     public static final Block FIERY_FONDUE_POT = new
-            FieryFonduePotBlock(Block.Properties.ofFullCopy(Blocks.CAULDRON));
+            FieryFonduePotBlock(Block.Properties.copy(Blocks.CAULDRON));
 
     public static final Block PIZZA = new
-            PizzaBlock(Block.Properties.ofFullCopy(Blocks.CAKE));
+            PizzaBlock(Block.Properties.copy(Blocks.CAKE));
 
     public static final Block QUICHE = new
-            PieBlock(Block.Properties.ofFullCopy(Blocks.CAKE), () -> BnCItems.QUICHE_SLICE);
+            PieBlock(Block.Properties.copy(Blocks.CAKE), () -> BnCItems.QUICHE_SLICE);
 
 
     public static void registerAll() {

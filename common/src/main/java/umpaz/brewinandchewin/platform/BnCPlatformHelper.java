@@ -6,10 +6,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -36,6 +34,7 @@ import umpaz.brewinandchewin.common.block.entity.container.SidedKegWrapper;
 import umpaz.brewinandchewin.common.utility.BnCMenuConstructor;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidIngredient;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidStack;
+import umpaz.brewinandchewin.common.utility.KegContainer;
 import umpaz.brewinandchewin.common.utility.KegRecipeWrapper;
 
 import java.util.List;
@@ -53,15 +52,15 @@ public interface BnCPlatformHelper {
 
     boolean isDevelopmentEnvironment();
 
-    void sendClientbound(ServerPlayer player, CustomPacketPayload payload);
-    void sendClientboundTracking(Entity tracked, CustomPacketPayload payload);
-    void sendServerbound(CustomPacketPayload payload);
+    void sendClientbound(ServerPlayer player, BnCPacket payload);
+    void sendClientboundTracking(Entity tracked, BnCPacket payload);
+    void sendServerbound(BnCPacket payload);
 
     Component getFluidDisplayName(AbstractedFluidStack wrapper);
 
     void openKegMenu(Player player, KegBlockEntity blockEntity, BlockPos pos);
 
-    BlockEntityType.BlockEntitySupplier<KegBlockEntity> supplyBlockEntity();
+    BlockEntityType<KegBlockEntity> supplyBlockEntity();
     MenuType<KegMenu> createMenuType(BnCMenuConstructor<KegMenu> constructor);
 
     AbstractedItemHandler createKegInventory(int size, BiConsumer<AbstractedItemHandler, Integer> onContentsChanged);
@@ -81,17 +80,19 @@ public interface BnCPlatformHelper {
 
     Ingredient createStrictFillPickerIngredient(List<KegStackedContents.PouringEntry> fluidOutputStacks);
 
-    KegRecipeWrapper createRecipeWrapper(AbstractedItemHandler itemHandler, AbstractedFluidTank fluidTank);
+    KegContainer createRecipeWrapper(AbstractedItemHandler itemHandler, AbstractedFluidTank fluidTank);
 
     SidedKegWrapper createSidedKegWrapper(AbstractedItemHandler inventory, Direction direction);
 
     Codec<AbstractedFluidStack> getFluidStackWrapperCodec();
 
-    StreamCodec<RegistryFriendlyByteBuf, AbstractedFluidStack> getFluidStackWrapperStreamCodec();
+    void writeFluidStack(FriendlyByteBuf buf, AbstractedFluidStack stack);
+    AbstractedFluidStack readFluidStack(FriendlyByteBuf buf);
 
     Codec<AbstractedFluidIngredient> getFluidIngredientWrapperCodec();
 
-    StreamCodec<RegistryFriendlyByteBuf, AbstractedFluidIngredient> getFluidIngredientWrapperStreamCodec();
+    void writeFluidIngredient(FriendlyByteBuf buf, AbstractedFluidIngredient ingredient);
+    AbstractedFluidIngredient readFluidIngredient(FriendlyByteBuf buf);
 
     AbstractedFluidStack deserializeTankFluidStack(CompoundTag tag, HolderLookup.Provider provider);
 

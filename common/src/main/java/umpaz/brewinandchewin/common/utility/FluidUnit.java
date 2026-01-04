@@ -1,16 +1,14 @@
 package umpaz.brewinandchewin.common.utility;
 
-import com.mojang.serialization.Codec;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.ByIdMap;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.StringRepresentable;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.platform.BnCPlatform;
 
+import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.IntFunction;
 
 public enum FluidUnit implements StringRepresentable {
     LITER("liters", l -> l + " L", l -> l + " liters",1),
@@ -21,10 +19,6 @@ public enum FluidUnit implements StringRepresentable {
     private final Function<String, String> shortFormFormatFunc;
     private final Function<String, String> longFormFormatFunc;
     private final long oneL;
-
-    public static final Codec<FluidUnit> CODEC = StringRepresentable.fromEnum(FluidUnit::values);
-    public static final IntFunction<FluidUnit> BY_ID = ByIdMap.continuous(Enum::ordinal, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
-    public static final StreamCodec<ByteBuf, FluidUnit> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, Enum::ordinal);
 
     FluidUnit(String name, Function<String, String> shortFormFormatFunc, Function<String, String> longFormFormatFunc, long oneL) {
         this.name = name;
@@ -72,5 +66,37 @@ public enum FluidUnit implements StringRepresentable {
     @Override
     public String getSerializedName() {
         return name;
+    }
+
+    public static FluidUnit fromJson(JsonElement element) {
+        if (element.isJsonPrimitive()) {
+            String name = element.getAsString();
+            return fromString(name).orElseThrow(() -> new IllegalArgumentException("Unknown FluidUnit: " + name));
+        }
+        throw new IllegalArgumentException("FluidUnit must be a string in JSON");
+    }
+
+    public JsonElement toJson() {
+        return new JsonPrimitive(this.name());
+    }
+
+    public void toNetwork(FriendlyByteBuf buf) {
+        buf.writeByte(this.ordinal());
+    }
+
+    public static FluidUnit fromNetwork(FriendlyByteBuf buf) {
+        int ord = buf.readByte();
+        FluidUnit[] values = values();
+        if (ord < 0 || ord >= values.length) ord = 0;
+        return values[ord];
+    }
+
+    public static Optional<FluidUnit> fromString(String name) {
+        for (FluidUnit unit : values()) {
+            if (unit.name.equalsIgnoreCase(name) || unit.name().equalsIgnoreCase(name)) {
+                return Optional.of(unit);
+            }
+        }
+        return Optional.empty();
     }
 }

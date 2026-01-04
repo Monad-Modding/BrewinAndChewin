@@ -43,8 +43,8 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.world.inventory.Slot;
 import org.jetbrains.annotations.Nullable;
@@ -128,7 +128,8 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
         Object2LongMap<EmiStack> used = new Object2LongOpenHashMap<>();
 
         boolean failure = false;
-        root: for (EmiIngredient ingredient : ingredients) {
+        root:
+        for (EmiIngredient ingredient : ingredients) {
             if (!ingredient.isEmpty()) {
                 for (EmiStack stack : ingredient.getEmiStacks()) {
                     long desired = stack.getAmount();
@@ -221,7 +222,7 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
         RenderSystem.enableDepthTest();
         Map<EmiIngredient, Boolean> availableForCrafting = getAvailable(recipe, context);
 
-        for(Widget w : widgets) {
+        for (Widget w : widgets) {
             if (w instanceof SlotWidget sw) {
                 EmiIngredient stack = sw.getStack();
                 Bounds bounds = sw.getBounds();
@@ -248,7 +249,7 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
             if (list.size() != inputs.size()) {
                 return Map.of();
             } else {
-                for(int i = 0; i < list.size(); ++i) {
+                for (int i = 0; i < list.size(); ++i) {
                     availableForCrafting.put(inputs.get(i), list.get(i));
                 }
 
@@ -321,7 +322,7 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
                     return pouringRecipe.getFluidInput().getEmiStacks().getFirst().isEqual(tankEmiStack);
                 }).map(recipe -> {
                     PouringEmiRecipe pouringRecipe = (PouringEmiRecipe) recipe;
-                    return ((PouringEmiRecipe)recipe).getItemInputs().getFirst().copy().setAmount(stack.amount() / pouringRecipe.getFluidInput().getAmount());
+                    return ((PouringEmiRecipe) recipe).getItemInputs().getFirst().copy().setAmount(stack.amount() / pouringRecipe.getFluidInput().getAmount());
                 }).toList());
 
         if (ingredients.isEmpty())
@@ -334,7 +335,8 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
         Object2LongMap<EmiStack> used = new Object2LongOpenHashMap<>();
         List<Boolean> states = Lists.newArrayList();
 
-        root: for (EmiIngredient ingredient : recipe.getItemInputs()) {
+        root:
+        for (EmiIngredient ingredient : recipe.getItemInputs()) {
             for (EmiStack stack : ingredient.getEmiStacks()) {
                 long desired = stack.getAmount();
                 if (context.getInventory().inventory.containsKey(stack)) {

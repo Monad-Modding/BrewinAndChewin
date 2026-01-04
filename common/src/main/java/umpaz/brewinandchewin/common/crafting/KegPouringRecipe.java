@@ -5,9 +5,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
@@ -53,8 +51,7 @@ public class KegPouringRecipe implements Recipe<KegRecipeWrapper> {
         return Ingredient.of(getContainer()).test(inv.getItem(4));
     }
 
-    @Override
-    public ItemStack assemble(KegRecipeWrapper recipeWrapper, HolderLookup.Provider provider) {
+    public ItemStack assemble(KegRecipeWrapper recipeWrapper, RegistryAccess registryAccess) {
         return this.output.copy();
     }
 

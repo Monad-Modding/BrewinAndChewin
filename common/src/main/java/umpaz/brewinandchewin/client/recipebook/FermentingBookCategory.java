@@ -1,13 +1,9 @@
 package umpaz.brewinandchewin.client.recipebook;
 
-import com.mojang.serialization.Codec;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.ByIdMap;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.StringRepresentable;
 
-import java.util.function.IntFunction;
+import java.util.Arrays;
 
 public enum FermentingBookCategory implements StringRepresentable {
     MEALS("meals", 0),
@@ -15,10 +11,6 @@ public enum FermentingBookCategory implements StringRepresentable {
 
     final String name;
     final int id;
-
-    public static final Codec<FermentingBookCategory> CODEC = StringRepresentable.fromEnum(FermentingBookCategory::values);
-    public static final IntFunction<FermentingBookCategory> BY_ID = ByIdMap.continuous(FermentingBookCategory::id, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
-    public static final StreamCodec<ByteBuf, FermentingBookCategory> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, FermentingBookCategory::id);
 
     FermentingBookCategory(String name, int id) {
         this.name = name;
@@ -32,5 +24,33 @@ public enum FermentingBookCategory implements StringRepresentable {
 
     private int id() {
         return id;
+    }
+
+
+    // Lookup by id
+    public static FermentingBookCategory byId(int id) {
+        for (FermentingBookCategory cat : values()) {
+            if (cat.id == id) return cat;
+        }
+        return DRINKS; // fallback
+    }
+
+    // Lookup by name
+    public static FermentingBookCategory fromString(String name) {
+        return Arrays.stream(values())
+                .filter(cat -> cat.name.equals(name))
+                .findFirst()
+                .orElse(DRINKS);
+    }
+
+    // Write to network
+    public void write(FriendlyByteBuf buf) {
+        buf.writeVarInt(id);
+    }
+
+    // Read from network
+    public static FermentingBookCategory read(FriendlyByteBuf buf) {
+        int id = buf.readVarInt();
+        return byId(id);
     }
 }

@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
@@ -14,7 +13,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -42,12 +41,11 @@ import java.util.Optional;
 public class KegRecipeBookComponent extends RecipeBookComponent {
     private final RecipeManager recipeManager;
 
-    private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(
-            BrewinAndChewin.asResource("recipe_book/keg_filter_enabled"),
-            BrewinAndChewin.asResource("recipe_book/keg_filter_disabled"),
-            BrewinAndChewin.asResource("recipe_book/keg_filter_enabled_highlighted"),
-            BrewinAndChewin.asResource("recipe_book/keg_filter_disabled_highlighted")
-    );
+    private static final ResourceLocation FILTER_ENABLED = BrewinAndChewin.asResource("recipe_book/keg_filter_textures");
+    private static final ResourceLocation FILTER_DISABLED = BrewinAndChewin.asResource("recipe_book/keg_filter_disabled");
+    private static final ResourceLocation FILTER_ENABLED_HIGHLIGHTED = BrewinAndChewin.asResource("recipe_book/keg_filter_enabled_highlighted");
+    private static final ResourceLocation FILTER_DISABLED_HIGHLIGHTED = BrewinAndChewin.asResource("recipe_book/keg_filter_disabled_highlighted");
+
     private static final Component FILTER_NAME = Component.translatable("brewinandchewin.container.recipe_book.fermentable");
 
     public KegRecipeBookComponent(RecipeManager recipeManager) {
@@ -62,7 +60,13 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
     }
 
     protected void initFilterButtonTextures() {
-        this.filterButton.initTextureValues(FILTER_SPRITES);
+        this.filterButton.initTextureValues(
+                0,
+                0,
+                0,
+                16,
+                BrewinAndChewin.asResource("keg_filter_textures")
+        );
     }
 
     public void hide() {
@@ -70,7 +74,7 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
     }
 
     @Nullable
-    public RecipeHolder<?> getGhostRecipe() {
+    public Recipe<?> getGhostRecipe() {
         return ghostRecipe.getRecipe();
     }
 
@@ -83,8 +87,8 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
     public void renderTooltip(GuiGraphics gui, int renderX, int renderY, int mouseX, int mouseY) {
         super.renderTooltip(gui, renderX, renderY, mouseX, mouseY);
         if (this.isVisible() && this.menu instanceof KegMenu kegMenu) {
-            RecipeHolder<?> recipe = this.ghostRecipe.getRecipe();
-            if (recipe != null && recipe.value() instanceof KegFermentingRecipe fermentingRecipe) {
+            Recipe<?> recipe = this.ghostRecipe.getRecipe();
+            if (recipe != null && recipe instanceof KegFermentingRecipe fermentingRecipe) {
                 if (!KegBlockEntity.isValidTemp(kegMenu.getKegTemperature(), fermentingRecipe.getTemperature()))
                     renderTemperatureTooltip(gui, renderX, renderY, mouseX, mouseY);
                 Optional<FluidIngredientWithAmount> ingredient = fermentingRecipe.getFluidIngredient();
@@ -106,8 +110,8 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
             return;
 
         if (this.menu instanceof KegMenu kegMenu) {
-            RecipeHolder<?> recipe = this.ghostRecipe.getRecipe();
-            if (recipe.value() instanceof KegFermentingRecipe fermentingRecipe) {
+            Recipe<?> recipe = this.ghostRecipe.getRecipe();
+            if (recipe instanceof KegFermentingRecipe fermentingRecipe) {
                 if (!KegBlockEntity.isValidTemp(kegMenu.getKegTemperature(), fermentingRecipe.getTemperature())) {
                     RenderSystem.enableBlend();
                     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 0.6F);
@@ -179,8 +183,8 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
             if (minecraft.options.advancedItemTooltips) {
                 ResourceLocation fluidId = stack.fluid().builtInRegistryHolder().key().location();
                 components.add(Component.literal(fluidId.toString()).withStyle(ChatFormatting.DARK_GRAY));
-                if (!stack.components().isEmpty()) {
-                    components.add(Component.translatable("item.components", stack.components().size()).withStyle(ChatFormatting.DARK_GRAY));
+                if (!stack.isEmpty()) {
+                    components.add(Component.translatable("item.components", stack.amount()).withStyle(ChatFormatting.DARK_GRAY));
                 }
             }
             gui.renderComponentTooltip(minecraft.font, components, mouseX, mouseY);
@@ -188,7 +192,7 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
     }
 
     private void renderTemperatureTooltip(GuiGraphics gui, int renderX, int renderY, int mouseX, int mouseY) {
-        if (isHovering(34, 54, 43, 5, mouseX - renderX, mouseY - renderY) && menu instanceof KegMenu kegMenu && getGhostRecipe().value() instanceof KegFermentingRecipe fermentingRecipe && !KegBlockEntity.isValidTemp(kegMenu.getKegTemperature(), fermentingRecipe.getTemperature())) {
+        if (isHovering(34, 54, 43, 5, mouseX - renderX, mouseY - renderY) && menu instanceof KegMenu kegMenu && getGhostRecipe() instanceof KegFermentingRecipe fermentingRecipe && !KegBlockEntity.isValidTemp(kegMenu.getKegTemperature(), fermentingRecipe.getTemperature())) {
             MutableComponent key = switch (fermentingRecipe.getTemperature()) {
                 case 1 -> BnCTextUtils.getTranslation("container.keg.cold");
                 case 2 -> BnCTextUtils.getTranslation("container.keg.chilly");
@@ -208,15 +212,15 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
     }
 
     @Override
-    public void setupGhostRecipe(RecipeHolder<?> recipe, List<Slot> slots) {
-        ItemStack resultStack = recipe.value().getResultItem(this.minecraft.level.registryAccess()).copy();
+    public void setupGhostRecipe(Recipe<?> recipe, List<Slot> slots) {
+        ItemStack resultStack = recipe.getResultItem(this.minecraft.level.registryAccess()).copy();
         this.ghostRecipe.setRecipe(recipe);
         if (slots.get(5).getItem().isEmpty()) {
             this.ghostRecipe.addIngredient(Ingredient.of(resultStack), slots.get(5).x, slots.get(5).y);
         }
 
-        if (recipe.value() instanceof KegFermentingRecipe fermentingRecipe && fermentingRecipe.getResult().left().isPresent()) {
-            Optional<RecipeHolder<KegPouringRecipe>> pouringRecipe = recipeManager.getAllRecipesFor(BnCRecipeTypes.KEG_POURING).stream().filter(kegPouringRecipe -> kegPouringRecipe.value().getRawFluid().matches(fermentingRecipe.getResult().left().get())).findFirst();
+        if (recipe instanceof KegFermentingRecipe fermentingRecipe && fermentingRecipe.getResult().left().isPresent()) {
+            Optional<KegPouringRecipe> pouringRecipe = recipeManager.getAllRecipesFor(BnCRecipeTypes.KEG_POURING).stream().filter(kegPouringRecipe -> kegPouringRecipe.getRawFluid().matches(fermentingRecipe.getResult().left().get())).findFirst();
             pouringRecipe.ifPresent(kegPouringRecipe -> this.ghostRecipe.addIngredient(Ingredient.of(kegPouringRecipe.value().getContainer()), slots.get(4).x, slots.get(4).y));
         }
 

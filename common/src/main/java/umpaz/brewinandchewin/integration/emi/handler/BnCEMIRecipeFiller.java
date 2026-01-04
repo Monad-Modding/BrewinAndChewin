@@ -34,8 +34,6 @@ import dev.emi.emi.api.stack.EmiStack;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.core.component.PatchedDataComponentMap;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
@@ -99,7 +97,7 @@ public class BnCEMIRecipeFiller {
             if (handler != null) {
                 Map<KegEmiRecipeHandler.InputType, List<ItemStack>> desired = Maps.newHashMap();
                 List<Slot> slots = handler.getInputSources(menu);
-                EmiIngredient emptyingIngredient = recipe.getItemInputs().getFirst();
+                EmiIngredient emptyingIngredient = recipe.getItemInputs().get(0);
                 if (emptyingIngredient != null && !context.getScreen().getMenu().kegTank.isEmpty() && !handleEmptyingInputs(
                         handler, recipe, context, amount,
                         desired, emptyingIngredient, slots
@@ -133,7 +131,7 @@ public class BnCEMIRecipeFiller {
                     ItemStack ss = s.getItem();
                     if (EmiStack.of(s.getItem()).isEqual(stack)) {
                         for (DiscoveredItem di : d) {
-                            if (ItemStack.isSameItemSameComponents(ss, di.stack)) {
+                            if (ItemStack.isSameItemSameTags(ss, di.stack)) {
                                 di.amount += ss.getCount();
                                 continue slotLoop;
                             }
@@ -176,7 +174,7 @@ public class BnCEMIRecipeFiller {
                 continue;
             }
             for (DiscoveredItem ui : unique) {
-                if (ItemStack.isSameItemSameComponents(di.stack, ui.stack)) {
+                if (ItemStack.isSameItemSameTags(di.stack, ui.stack)) {
                     ui.consumed += di.consumed;
                     continue outer;
                 }
@@ -211,11 +209,11 @@ public class BnCEMIRecipeFiller {
     private static boolean handleFillingInputs(
             KegEmiRecipeHandler handler, FermentingEmiRecipe recipe, EmiCraftContext<KegMenu> context, int amount,
             Map<KegEmiRecipeHandler.InputType, List<ItemStack>> desired, EmiIngredient fluidIngredient, EmiIngredient itemIngredient, List<Slot> slots) {
-        if (recipe.getFluidInput() == null || fluidIngredient.getEmiStacks().stream().anyMatch(emiStack -> context.getScreen().getMenu().kegTank.getAbstractedFluid().matches(new AbstractedFluidStack((Fluid) emiStack.getKey(), (int)emiStack.getAmount(), PatchedDataComponentMap.fromPatch(DataComponentMap.EMPTY, emiStack.getComponentChanges())))) && context.getScreen().getMenu().kegTank.getFluidCapacity() == Math.min(fluidIngredient.getAmount() * context.getAmount(), context.getScreen().getMenu().kegTank.getFluidCapacity()))
+        if (recipe.getFluidInput() == null || fluidIngredient.getEmiStacks().stream().anyMatch(emiStack -> context.getScreen().getMenu().kegTank.getAbstractedFluid().matches(new AbstractedFluidStack((Fluid) emiStack.getKey(), (int)emiStack.getAmount(), null))) && context.getScreen().getMenu().kegTank.getFluidCapacity() == Math.min(fluidIngredient.getAmount() * context.getAmount(), context.getScreen().getMenu().kegTank.getFluidCapacity()))
             return true;
         EmiIngredient emiFluidIngredient = recipe.getFluidInput();
-        EmiStack emiFluidStack = recipe.getFluidInput().getEmiStacks().getFirst();
-        AbstractedFluidStack fluidStack = new AbstractedFluidStack((Fluid)emiFluidStack.getKey(), (int) emiFluidStack.getAmount(), PatchedDataComponentMap.fromPatch(DataComponentMap.EMPTY, emiFluidStack.getComponentChanges()), FluidUnit.getLoaderUnit());
+        EmiStack emiFluidStack = recipe.getFluidInput().getEmiStacks().get(0);
+        AbstractedFluidStack fluidStack = new AbstractedFluidStack((Fluid)emiFluidStack.getKey(), (int) emiFluidStack.getAmount(), null, FluidUnit.getLoaderUnit());
 
 
         List<EmiStack> discoveredQuickRef = Lists.newArrayList();
@@ -228,7 +226,7 @@ public class BnCEMIRecipeFiller {
                 ItemStack ss = s.getItem();
                 if (EmiStack.of(s.getItem()).isEqual(stack)) {
                     for (DiscoveredItem di : d) {
-                        if (ItemStack.isSameItemSameComponents(ss, di.stack) || di.amount >= di.consumed) {
+                        if (ItemStack.isSameItemSameTags(ss, di.stack) || di.amount >= di.consumed) {
                             di.amount += ss.getCount();
                             continue slotLoop;
                         }
@@ -238,7 +236,7 @@ public class BnCEMIRecipeFiller {
                             return false;
                         if (recipe.getFluidInput() == null)
                             return false;
-                        return emiFluidIngredient.getEmiStacks().stream().anyMatch(es -> pouring.getFluidInput().getEmiStacks().getFirst().isEqual(es)) && r.getOutputs().getFirst().isEqual(stack);
+                        return emiFluidIngredient.getEmiStacks().stream().anyMatch(es -> pouring.getFluidInput().getEmiStacks().get(0).isEqual(es)) && r.getOutputs().get(0).isEqual(stack);
                     }).map(recipe1 -> (PouringEmiRecipe) recipe1).findFirst();
                     if (potentialPouring.isPresent()) {
                         AbstractedFluidStack tankStack = context.getScreen().getMenu().kegTank.getAbstractedFluid();
@@ -290,7 +288,7 @@ public class BnCEMIRecipeFiller {
                 ItemStack ss = s.getItem();
                 if (EmiStack.of(s.getItem()).isEqual(stack)) {
                     for (DiscoveredItem di : d) {
-                        if (ItemStack.isSameItemSameComponents(ss, di.stack) || di.amount >= di.consumed) {
+                        if (ItemStack.isSameItemSameTags(ss, di.stack) || di.amount >= di.consumed) {
                             di.amount += ss.getCount();
                             continue slotLoop;
                         }
@@ -298,7 +296,7 @@ public class BnCEMIRecipeFiller {
                     Optional<PouringEmiRecipe> potentialPouring = recipe instanceof PouringEmiRecipe pouring ? Optional.of(pouring) : EmiApi.getRecipeManager().getRecipes(BnCRecipeCategories.POURING).stream().filter(r -> {
                         if (!(r instanceof PouringEmiRecipe pouring))
                             return false;
-                        return pouring.getFluidInput().getEmiStacks().getFirst().isEqual(emiFluidStack) && r.getInputs().getFirst().getEmiStacks().getFirst().isEqual(stack);
+                        return pouring.getFluidInput().getEmiStacks().get(0).isEqual(emiFluidStack) && r.getInputs().get(0).getEmiStacks().get(0).isEqual(stack);
                     }).map(recipe1 -> (PouringEmiRecipe) recipe1).findFirst();
                     if (potentialPouring.isPresent()) {
                         int consumed = (int) (Math.min(context.getScreen().getMenu().kegTank.getAbstractedFluid().amount() * context.getAmount(), context.getScreen().getMenu().kegTank.getFluidCapacity()) / potentialPouring.get().getFluidInput().getAmount());
@@ -358,7 +356,7 @@ public class BnCEMIRecipeFiller {
                 continue;
             }
             for (DiscoveredItem ui : unique) {
-                if (ItemStack.isSameItemSameComponents(di.stack, ui.stack)) {
+                if (ItemStack.isSameItemSameTags(di.stack, ui.stack)) {
                     ui.consumed += di.consumed;
                     continue outer;
                 }
@@ -395,7 +393,7 @@ public class BnCEMIRecipeFiller {
             return 0;
         List<ItemStack> stacks = Lists.newArrayList();
         Slot output = handler.getOutputSlot(screen.getMenu());
-        if (output != null && !output.getItem().isEmpty() && !recipe.getOutputs().isEmpty() && !ItemStack.matches(output.getItem(), recipe.getOutputs().getFirst().getItemStack()))
+        if (output != null && !output.getItem().isEmpty() && !recipe.getOutputs().isEmpty() && !ItemStack.matches(output.getItem(), recipe.getOutputs().get(0).getItemStack()))
             return 0;
         for (Slot slot : handler.getCraftingSlots(screen.getMenu())) {
             if (slot != null) {
@@ -451,7 +449,7 @@ public class BnCEMIRecipeFiller {
         }
 
         public boolean catalyst() {
-            return ingredient.getRemainder().isEqual(ingredient, COMPARISON);
+            return ingredient.getRemainder().isEqual(ingredient);
         }
     }
 }

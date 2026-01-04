@@ -1,44 +1,37 @@
 package umpaz.brewinandchewin.common.utility;
 
-import com.mojang.serialization.Codec;
-import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.core.component.PatchedDataComponentMap;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import umpaz.brewinandchewin.BrewinAndChewin;
 
+import static umpaz.brewinandchewin.BrewinAndChewin.asResource;
+
 public class AbstractedFluidStack {
-    public static final Codec<AbstractedFluidStack> CODEC = BrewinAndChewin.getHelper().getFluidStackWrapperCodec();
-    public static final StreamCodec<RegistryFriendlyByteBuf, AbstractedFluidStack> STREAM_CODEC = BrewinAndChewin.getHelper().getFluidStackWrapperStreamCodec();
-    public static final AbstractedFluidStack EMPTY = new AbstractedFluidStack(Fluids.EMPTY, 0, new PatchedDataComponentMap(DataComponentMap.EMPTY), FluidUnit.getLoaderUnit(), null);
+    public static final AbstractedFluidStack EMPTY = new AbstractedFluidStack(Fluids.EMPTY, 0, FluidUnit.getLoaderUnit(), null);
 
     private final Fluid fluid;
     private final long amount;
-    private final DataComponentPatch components;
     private final FluidUnit unit;
     private Object loaderSpecific;
 
-    public AbstractedFluidStack(Fluid fluid, long amount, DataComponentMap components, FluidUnit unit, Object loaderSpecific) {
+    public AbstractedFluidStack(Fluid fluid, long amount, FluidUnit unit, Object loaderSpecific) {
         this.fluid = fluid;
         this.amount = amount;
-        this.components = components instanceof PatchedDataComponentMap patched ? patched.asPatch() : DataComponentPatch.EMPTY;
         this.unit = unit;
         this.loaderSpecific = loaderSpecific;
     }
 
-    public AbstractedFluidStack(Fluid fluid, long amount, DataComponentMap components) {
-        this(fluid, amount, components, FluidUnit.getLoaderUnit(), null);
-    }
-
-    public AbstractedFluidStack(Fluid fluid, long amount, DataComponentMap components, FluidUnit unit) {
-        this(fluid, amount, components, unit, null);
+    public AbstractedFluidStack(Fluid fluid, long amount, FluidUnit unit) {
+        this(fluid, amount, unit, null);
     }
 
     public AbstractedFluidStack(Fluid fluid, long amount) {
-        this(fluid, amount, new PatchedDataComponentMap(DataComponentMap.EMPTY), FluidUnit.getLoaderUnit(), null);
+        this(fluid, amount, FluidUnit.getLoaderUnit(), null);
     }
 
     public boolean isEmpty() {
@@ -46,7 +39,7 @@ public class AbstractedFluidStack {
     }
 
     public boolean matches(AbstractedFluidStack other) {
-        return fluid == other.fluid && components.equals(other.components);
+        return fluid == other.fluid;
     }
 
     public Fluid fluid() {
@@ -55,14 +48,6 @@ public class AbstractedFluidStack {
 
     public long amount() {
         return isEmpty() ? 0 : amount;
-    }
-
-    public DataComponentMap components() {
-        return PatchedDataComponentMap.fromPatch(DataComponentMap.EMPTY, components);
-    }
-
-    public DataComponentPatch componentPatch() {
-        return components;
     }
 
     public FluidUnit unit() {
@@ -74,5 +59,38 @@ public class AbstractedFluidStack {
             loaderSpecific = BrewinAndChewin.getHelper().createLoaderFluidStack(this);
 
         return BrewinAndChewin.getHelper().copyLoaderFluidStack(loaderSpecific);
+    }
+
+    public static AbstractedFluidStack fromJson(JsonElement element) {
+        JsonObject obj = element.getAsJsonObject();
+
+        String fluidId = obj.get("fluid").getAsString();
+        Fluid fluid = BuiltInRegistries.FLUID.get(asResource(fluidId));
+
+        long amount = obj.has("amount") ? obj.get("amount").getAsLong() : 1;
+        FluidUnit unit = obj.has("unit") ? FluidUnit.fromJson(obj.get("unit")) : FluidUnit.getLoaderUnit();
+        return new AbstractedFluidStack(fluid, amount, unit);
+    }
+
+    public JsonObject toJson() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("fluid", BuiltInRegistries.FLUID.getKey(fluid).toString());
+        obj.addProperty("amount", amount);
+        obj.add("unit", unit.toJson());
+        return obj;
+    }
+
+    public void toNetwork(FriendlyByteBuf buf) {
+        buf.writeUtf(BuiltInRegistries.FLUID.getKey(fluid).toString());
+        buf.writeLong(amount);
+        unit.toNetwork(buf);
+    }
+
+    public static AbstractedFluidStack fromNetwork(FriendlyByteBuf buf) {
+        Fluid fluid = BuiltInRegistries.FLUID.get(asResource(buf.readUtf()));
+
+        long amount = buf.readLong();
+        FluidUnit unit = FluidUnit.fromNetwork(buf);
+        return new AbstractedFluidStack(fluid, amount, unit);
     }
 }

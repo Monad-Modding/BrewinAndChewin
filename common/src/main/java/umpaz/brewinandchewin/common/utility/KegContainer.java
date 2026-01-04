@@ -1,8 +1,8 @@
 package umpaz.brewinandchewin.common.utility;
 
-import net.minecraft.world.item.crafting.RecipeInput;
+import net.minecraft.world.Container;
 
-public interface KegRecipeWrapper extends RecipeInput {
+public interface KegContainer extends Container {
     AbstractedFluidStack getFluid();
     long getTankCapacity();
 
@@ -10,6 +10,6 @@ public interface KegRecipeWrapper extends RecipeInput {
     default boolean isEmpty() {
         if (getFluid().isEmpty())
             return false;
-        return RecipeInput.super.isEmpty();
+        return true;
     }
 }

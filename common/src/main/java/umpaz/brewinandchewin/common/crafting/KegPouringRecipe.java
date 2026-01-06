@@ -6,6 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
@@ -15,12 +16,13 @@ import umpaz.brewinandchewin.common.registry.BnCRecipeSerializers;
 import umpaz.brewinandchewin.common.registry.BnCRecipeTypes;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidStack;
 import umpaz.brewinandchewin.common.utility.FluidUnit;
+import umpaz.brewinandchewin.common.utility.KegContainer;
 import umpaz.brewinandchewin.common.utility.KegRecipeWrapper;
 
 import java.util.Objects;
 import java.util.Optional;
 
-public class KegPouringRecipe implements Recipe<KegRecipeWrapper> {
+public class KegPouringRecipe implements Recipe<KegContainer> {
     private final AbstractedFluidStack fluid;
     private final Optional<ItemStack> container;
     private final ItemStack output;
@@ -47,11 +49,11 @@ public class KegPouringRecipe implements Recipe<KegRecipeWrapper> {
     }
 
     @Override
-    public boolean matches(KegRecipeWrapper inv, Level level) {
-        return Ingredient.of(getContainer()).test(inv.getItem(4));
+    public boolean matches(KegContainer container, Level level) {
+        return Ingredient.of(getContainer()).test(container.getItem(4));
     }
 
-    public ItemStack assemble(KegRecipeWrapper recipeWrapper, RegistryAccess registryAccess) {
+    public ItemStack assemble(KegContainer container, RegistryAccess registryAccess) {
         return this.output.copy();
     }
 
@@ -89,7 +91,7 @@ public class KegPouringRecipe implements Recipe<KegRecipeWrapper> {
     }
 
     @Override
-    public ItemStack getResultItem(HolderLookup.Provider provider) {
+    public ItemStack getResultItem(RegistryAccess provider) {
         return this.output;
     }
 
@@ -102,6 +104,11 @@ public class KegPouringRecipe implements Recipe<KegRecipeWrapper> {
     }
 
     public boolean hasSpecialFluid() {
+        return false;
+    }
+
+    @Override
+    public boolean isSpecial() {
         return false;
     }
 
@@ -129,8 +136,8 @@ public class KegPouringRecipe implements Recipe<KegRecipeWrapper> {
     }
 
     @Override
-    public boolean isSpecial() {
-        return true;
+    public ResourceLocation getId() {
+        return null;
     }
 
     @Override

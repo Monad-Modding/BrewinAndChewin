@@ -1,16 +1,11 @@
 package umpaz.brewinandchewin.client.utility;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.google.gson.*;
 import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.FileToIdConverter;
@@ -21,6 +16,7 @@ import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
@@ -64,9 +60,9 @@ public class BnCFluidItemDisplays {
                             Either<TagKey<Fluid>, Fluid> either;
                             boolean isCurrentOptional = e.getValue().isJsonObject() && e.getValue().getAsJsonObject().has("optional") && e.getValue().getAsJsonObject().get("optional").getAsBoolean();
                             if (e.getKey().startsWith("#")) {
-                                either = Either.left(TagKey.create(Registries.FLUID, ResourceLocation.parse(e.getKey().substring(1))));
+                                either = Either.left(TagKey.create(Registries.FLUID, new ResourceLocation(e.getKey().substring(1))));
                             } else {
-                                ResourceLocation fluidLocation = ResourceLocation.parse(e.getKey());
+                                ResourceLocation fluidLocation = new ResourceLocation(e.getKey());
                                 if (!BuiltInRegistries.FLUID.containsKey(fluidLocation)) {
                                     if (isCurrentOptional)
                                         continue;
@@ -102,20 +98,46 @@ public class BnCFluidItemDisplays {
         }
     }
 
-    public record FluidBasedItemStack(Either<TagKey<Fluid>, Fluid> fluid, FluidItemComponentRemapper dataComponentRemapper) {
-        private static final HashMap<Pair<Fluid, DataComponentMap>, ItemStack> CACHE = new HashMap<>(32);
+    public record FluidBasedItemStack(Either<TagKey<Fluid>, Fluid> fluid, ItemStack baseItem) {
+        private static final HashMap<Fluid, ItemStack> CACHE = new HashMap<>(32);
 
         private static FluidBasedItemStack createFromJson(JsonElement json, Either<TagKey<Fluid>, Fluid> fluid) {
-            return new FluidBasedItemStack(fluid, FluidItemComponentRemapper.CODEC.decode(JsonOps.INSTANCE, json).getOrThrow().getFirst());
+            ItemStack base = ItemStack.EMPTY;
+
+            try {
+                if (json.isJsonObject()) {
+                    JsonObject obj = json.getAsJsonObject();
+
+                    // optional field is ignored here since Loader already handles skipping
+                    if (obj.has("id")) {
+                        String id = obj.get("id").getAsString();
+                        Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(id));
+                        if (item != null) {
+                            base = new ItemStack(item);
+                        }
+                    }
+                } else if (json.isJsonPrimitive()) {
+                    JsonPrimitive prim = json.getAsJsonPrimitive();
+                    String id = prim.getAsString();
+                    Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(id));
+                    if (item != null) {
+                        base = new ItemStack(item);
+                    }
+                }
+            } catch (IllegalArgumentException | JsonParseException ex) {
+                throw new IllegalArgumentException("Failed to parse fluid item display JSON", ex);
+            }
+
+            return new FluidBasedItemStack(fluid, new ItemStack(net.minecraft.world.item.Items.BUCKET));
         }
 
         private ItemStack getStack(HolderLookup.Provider lookup, AbstractedFluidStack stack) {
-            var pair = Pair.of(stack.fluid(), stack.components());
-            if (CACHE.containsKey(pair))
-                return CACHE.get(pair);
+            var fluid = stack.fluid();
+            if (CACHE.containsKey(fluid))
+                return CACHE.get(fluid);
 
-            ItemStack item = dataComponentRemapper.convert(lookup, stack);
-            CACHE.put(pair, item);
+            ItemStack item = baseItem.copy();
+            CACHE.put(fluid, item);
             return item;
         }
     }

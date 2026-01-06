@@ -1,14 +1,11 @@
 package umpaz.brewinandchewin.client.utility;
 
-import com.simibubi.create.infrastructure.ponder.scenes.MechanicalSawScenes;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.PlayerChatMessage;
-import net.minecraft.network.chat.contents.PlainTextContents;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +20,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class BnCClientTextUtils {
-    public static final ResourceKey<ChatType> STYLED_CHAT_HACK_CHAT_TYPE = ResourceKey.create(Registries.CHAT_TYPE, ResourceLocation.fromNamespaceAndPath("styled_chat", "generic_hack"));
+    //public static final ResourceKey<ChatType> STYLED_CHAT_HACK_CHAT_TYPE = ResourceKey.create(Registries.CHAT_TYPE, ResourceLocation.fromNamespaceAndPath("styled_chat", "generic_hack"));
     public static int tipsyMessageLevel = 0;
     public static boolean generatedRandom = false;
     public static int clearDelayAmount = 0;
@@ -35,9 +32,9 @@ public class BnCClientTextUtils {
 
         if (!textBuilder.isEmpty()) {
             int amplifier = tipsyMessageLevel;
-            if (Minecraft.getInstance().player.hasEffect(BnCEffects.TIPSY) && amplifier < Minecraft.getInstance().player.getEffect(BnCEffects.TIPSY).getAmplifier())
-                amplifier = Minecraft.getInstance().player.getEffect(BnCEffects.TIPSY).getAmplifier();
-            amplifier = amplifier - BnCConfiguration.COMMON_CONFIG.get().root().levelChatScramble();
+            if (Minecraft.getInstance().player.hasEffect(BnCEffects.TIPSY.value()) && amplifier < Minecraft.getInstance().player.getEffect(BnCEffects.TIPSY.value()).getAmplifier())
+                amplifier = Minecraft.getInstance().player.getEffect(BnCEffects.TIPSY.value()).getAmplifier();
+            amplifier = amplifier - 3;
             RandomSource random = RandomSource.create(randomSeed);
             int amnt = (int) ((amplifier + 1) * (textBuilder.length() / 6f)) + random.nextInt(amplifier, amplifier + 2) - 1;
 
@@ -75,8 +72,8 @@ public class BnCClientTextUtils {
     }
 
     public static void setupChatMessage(PlayerChatMessage chatMessage) {
-        if (BnCConfiguration.CLIENT_CONFIG.get().scrambleChat() && (tipsyMessageLevel > 0 ||
-                Minecraft.getInstance().player.hasEffect(BnCEffects.TIPSY) && Minecraft.getInstance().player.getEffect(BnCEffects.TIPSY).getAmplifier() >= BnCConfiguration.COMMON_CONFIG.get().root().levelChatScramble())) {
+        if ((tipsyMessageLevel > 0 ||
+                Minecraft.getInstance().player.hasEffect(BnCEffects.TIPSY.value()) && Minecraft.getInstance().player.getEffect(BnCEffects.TIPSY.value()).getAmplifier() >= 3)) {
 
             if (!generatedRandom)
                 randomSeed = Minecraft.getInstance().player.getRandom().nextLong();
@@ -97,6 +94,7 @@ public class BnCClientTextUtils {
         nextTipsyMessage = null;
     }
 
+    /* I will probably have to put this back at some point
     public static MutableComponent getStyledChatPrefix(ChatType.Bound bound, Component message) {
         if (bound.chatType().is(BnCClientTextUtils.STYLED_CHAT_HACK_CHAT_TYPE)) {
             if (message.getContents() instanceof TranslatableContents boundTranslatable &&
@@ -112,7 +110,7 @@ public class BnCClientTextUtils {
             }
         }
         return message.copy();
-    }
+    } */
 
     private static MutableComponent handleSiblings(MutableComponent newMessage, Component oldComponent, boolean originalCall) {
 
@@ -129,9 +127,9 @@ public class BnCClientTextUtils {
     }
 
     public static Component nameTagRenderer(Component original) {
-        if (BnCConfiguration.CLIENT_CONFIG.get().scrambleName())
+        if (true)
             if (Minecraft.getInstance().player != null) {
-                if (Minecraft.getInstance().player.hasEffect(BnCEffects.TIPSY) && Minecraft.getInstance().player.getEffect(BnCEffects.TIPSY).getAmplifier() >= BnCConfiguration.COMMON_CONFIG.get().root().levelNameScramble()) {
+                if (Minecraft.getInstance().player.hasEffect(BnCEffects.TIPSY.value()) && Minecraft.getInstance().player.getEffect(BnCEffects.TIPSY.value()).getAmplifier() >= 3) {
                     return modifyComponents(original, 0L);
                 }
             }
@@ -140,12 +138,12 @@ public class BnCClientTextUtils {
 
     public static SignText signRenderer(SignText signText) {
         Player player = Minecraft.getInstance().player;
-        if (!BnCConfiguration.CLIENT_CONFIG.get().scrambleSign() || player == null) {
+        if (player == null) {
             return signText;
         }
-        int minScrambleAmplifier = BnCConfiguration.COMMON_CONFIG.get().root().levelSignScramble();
+        int minScrambleAmplifier = 3;
 
-        if (player.hasEffect(BnCEffects.TIPSY) && player.getEffect(BnCEffects.TIPSY).getAmplifier() >= minScrambleAmplifier) {
+        if (player.hasEffect(BnCEffects.TIPSY.value()) && player.getEffect(BnCEffects.TIPSY.value()).getAmplifier() >= minScrambleAmplifier) {
             for (int i = 0; i < 4; i++) {
                 signText = signText.setMessage(i, modifyComponents(signText.getMessage(i, false), 0L));
             }

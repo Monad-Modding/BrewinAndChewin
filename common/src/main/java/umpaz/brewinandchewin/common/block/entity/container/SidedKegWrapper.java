@@ -6,9 +6,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.common.container.AbstractedItemHandler;
 
-/**
- * Made abstract for loader specific impl to be made.
- */
 public abstract class SidedKegWrapper implements AbstractedItemHandler {
     protected final AbstractedItemHandler itemHandler;
     protected final Direction side;

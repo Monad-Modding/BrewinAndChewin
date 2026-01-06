@@ -16,11 +16,14 @@ public class BnCTextureModifiers {
     private static final Map<ResourceLocation, MapCodec<? extends TextureModifier>> FACTORIES = new HashMap<>();
     private static final Map<MapCodec<? extends TextureModifier>, ResourceLocation> FACTORIES_TO_KEY = new HashMap<>();
 
-    public static final Codec<? extends TextureModifier> CODEC =  ResourceLocation.CODEC.comapFlatMap(key -> {
+    public static final Codec<TextureModifier> CODEC =  ResourceLocation.CODEC.comapFlatMap(key -> {
+
         if (!FACTORIES.containsKey(key))
             return DataResult.error(() -> "Could not find texture modifier type " + key);
         return DataResult.success(FACTORIES.get(key));
-    }, FACTORIES_TO_KEY::get).dispatch(textureModifier -> (MapCodec) textureModifier.codec(), mapCodec -> mapCodec);
+    }, FACTORIES_TO_KEY::get).dispatch(
+            textureModifier -> (MapCodec) textureModifier.codec(),
+            mapCodec -> mapCodec.codec());
 
     public static void register(ResourceLocation id, MapCodec<? extends TextureModifier> codec) {
         if (FACTORIES.containsKey(id)) {

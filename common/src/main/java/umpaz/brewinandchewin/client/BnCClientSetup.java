@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.particle.ParticleEngine;
@@ -50,13 +51,14 @@ public class BnCClientSetup {
         consumer.accept(BnCBlockEntityTypes.COASTER, CoasterBlockEntityRenderer::new);
     }
 
-    public static void registerParticles(BiConsumer<ParticleType<?>, ParticleEngine.SpriteParticleRegistration> consumer) {
-        consumer.accept(BnCParticleTypes.FOG, SteamParticle.Factory::new);
-        consumer.accept(BnCParticleTypes.DRUNK_BUBBLE, DrunkBubbleParticle.Factory::new);
-        consumer.accept(BnCParticleTypes.RAGING_STAGE_1, RagingParticle.Factory::new);
-        consumer.accept(BnCParticleTypes.RAGING_STAGE_2, RagingParticle.Factory::new);
-        consumer.accept(BnCParticleTypes.RAGING_STAGE_3, RagingParticle.Factory::new);
-        consumer.accept(BnCParticleTypes.RAGING_STAGE_4, RagingParticle.Factory::new);
+    public static void registerParticles() {
+
+        ParticleFactoryRegistry.getInstance().register(BnCParticleTypes.FOG, SteamParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(BnCParticleTypes.DRUNK_BUBBLE, DrunkBubbleParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(BnCParticleTypes.RAGING_STAGE_1, RagingParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(BnCParticleTypes.RAGING_STAGE_2, RagingParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(BnCParticleTypes.RAGING_STAGE_3, RagingParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(BnCParticleTypes.RAGING_STAGE_4, RagingParticle.Factory::new);
     }
 
     public static void registerReloadListeners(Consumer<IdentifiableListener> consumer) {
@@ -107,8 +109,8 @@ public class BnCClientSetup {
                         JsonElement json = JsonParser.parseReader(reader);
                         reader.close();
                         if (json instanceof JsonObject jsonObject) {
-                            ResourceLocation itemId = ResourceLocation.CODEC.decode(JsonOps.INSTANCE, jsonObject.get("item")).getOrThrow().getFirst();
-                            List<CoasterBlockEntityRenderer.ModelEntry> modelEntries = CoasterBlockEntityRenderer.ModelEntry.LIST_CODEC.decode(JsonOps.INSTANCE, jsonObject.get("models")).getOrThrow().getFirst();
+                            ResourceLocation itemId = ResourceLocation.CODEC.decode(JsonOps.INSTANCE, jsonObject.get("item")).getOrThrow(false, RuntimeException::new).getFirst();
+                            List<CoasterBlockEntityRenderer.ModelEntry> modelEntries = CoasterBlockEntityRenderer.ModelEntry.LIST_CODEC.decode(JsonOps.INSTANCE, jsonObject.get("models")).getOrThrow(false, RuntimeException::new).getFirst();
                             CoasterBlockEntityRenderer.addToModelMap(itemId, modelEntries);
                             return modelEntries.stream().map(CoasterBlockEntityRenderer.ModelEntry::model).toList();
                         }

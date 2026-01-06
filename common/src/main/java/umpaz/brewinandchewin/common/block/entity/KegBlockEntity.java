@@ -6,7 +6,6 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -23,6 +22,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.RecipeHolder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
@@ -55,7 +55,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, Nameable {
+public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, Nameable, RecipeHolder {
 
     public static final int CONTAINER_SLOT = 4;
     public static final int OUTPUT_SLOT = 5;
@@ -125,7 +125,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         checkNewRecipe = true;
     }
 
-    public static AbstractedFluidStack getMealFromItem(ItemStack kegStack, HolderLookup.Provider provider) {
+    public static AbstractedFluidStack getMealFromItem(ItemStack kegStack) {
         if (!kegStack.is(BnCItems.KEG)) {
             return AbstractedFluidStack.EMPTY;
         }
@@ -134,7 +134,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         CompoundTag tag = data.copyTag();
         if (!tag.isEmpty()) {
             if (tag.contains("FluidTank", Tag.TAG_COMPOUND)) {
-                return BrewinAndChewin.getHelper().deserializeTankFluidStack(tag.getCompound("FluidTank"), provider);
+                return BrewinAndChewin.getHelper().deserializeTankFluidStack(tag.getCompound("FluidTank"));
             }
         }
 
@@ -151,8 +151,8 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         return outputHandler;
     }
 
-    public CustomData writeMeal(CompoundTag tag, HolderLookup.Provider provider) {
-        writeDrink(tag, provider);
+    public CustomData writeMeal(CompoundTag tag) {
+        writeDrink(tag);
         return CustomData.of(tag);
     }
 
@@ -187,7 +187,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         components.set(DataComponents.CUSTOM_DATA, writeMeal(new CompoundTag(), level.registryAccess()));
     }
 
-    public CompoundTag writeDrink(CompoundTag compound, HolderLookup.Provider provider) {
+    public CompoundTag writeDrink(CompoundTag compound) {
         compound.putString("id", BnCBlockEntityTypes.KEG.builtInRegistryHolder().getRegisteredName());
         if (customName != null) {
             compound.putString("CustomName", Component.Serializer.toJson(customName));

@@ -19,19 +19,18 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.client.BrewinAndChewinClient;
-import umpaz.brewinandchewin.common.BnCConfiguration;
-import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
-import umpaz.brewinandchewin.common.block.entity.container.KegStackedContents;
 import umpaz.brewinandchewin.client.utility.BnCFluidItemDisplays;
+import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.block.entity.container.KegMenu;
+import umpaz.brewinandchewin.common.block.entity.container.KegStackedContents;
 import umpaz.brewinandchewin.common.crafting.FluidIngredientWithAmount;
 import umpaz.brewinandchewin.common.crafting.KegFermentingRecipe;
 import umpaz.brewinandchewin.common.crafting.KegPouringRecipe;
 import umpaz.brewinandchewin.common.mixin.client.GhostRecipeAccessor;
 import umpaz.brewinandchewin.common.mixin.client.RecipeBookComponentAccessor;
 import umpaz.brewinandchewin.common.registry.BnCRecipeTypes;
-import umpaz.brewinandchewin.common.utility.BnCTextUtils;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidStack;
+import umpaz.brewinandchewin.common.utility.BnCTextUtils;
 import umpaz.brewinandchewin.common.utility.FluidUnit;
 
 import java.util.ArrayList;
@@ -41,10 +40,7 @@ import java.util.Optional;
 public class KegRecipeBookComponent extends RecipeBookComponent {
     private final RecipeManager recipeManager;
 
-    private static final ResourceLocation FILTER_ENABLED = BrewinAndChewin.asResource("recipe_book/keg_filter_textures");
-    private static final ResourceLocation FILTER_DISABLED = BrewinAndChewin.asResource("recipe_book/keg_filter_disabled");
-    private static final ResourceLocation FILTER_ENABLED_HIGHLIGHTED = BrewinAndChewin.asResource("recipe_book/keg_filter_enabled_highlighted");
-    private static final ResourceLocation FILTER_DISABLED_HIGHLIGHTED = BrewinAndChewin.asResource("recipe_book/keg_filter_disabled_highlighted");
+    private static final ResourceLocation FILTER_TEXTURE = BrewinAndChewin.asResource("recipe_book/keg_filter_textures");
 
     private static final Component FILTER_NAME = Component.translatable("brewinandchewin.container.recipe_book.fermentable");
 
@@ -59,13 +55,14 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
         super.initVisuals();
     }
 
+    @Override
     protected void initFilterButtonTextures() {
         this.filterButton.initTextureValues(
                 0,
                 0,
-                0,
                 16,
-                BrewinAndChewin.asResource("keg_filter_textures")
+                16,
+                FILTER_TEXTURE
         );
     }
 
@@ -96,7 +93,7 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
                     return;
                 List<AbstractedFluidStack> ingredients = ingredient.get().ingredient().displayStacks();
                 AbstractedFluidStack fluidStack = ingredients.get(Mth.floor(((GhostRecipeAccessor)ghostRecipe).brewinandchewin$getTime() / 30.0F) % ingredients.size());
-                fluidStack = new AbstractedFluidStack(fluidStack.fluid(), ingredient.get().amount(), fluidStack.components(), ingredient.get().unit().orElse(FluidUnit.getLoaderUnit()), fluidStack.loaderSpecific());
+                fluidStack = new AbstractedFluidStack(fluidStack.fluid(), ingredient.get().amount(), ingredient.get().unit().orElse(FluidUnit.getLoaderUnit()), fluidStack.loaderSpecific());
                 if (!kegMenu.kegTank.getAbstractedFluid().fluid().isSame(fluidStack.fluid()))
                     renderTankTooltip(gui, renderX, renderY, mouseX, mouseY, fluidStack);
             }
@@ -145,9 +142,10 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
                 if (fluidIngredient.isPresent() && !fluidIngredient.get().ingredient().displayStacks().isEmpty()) {
                     var ingredients = fluidIngredient.get().ingredient().displayStacks();
                     AbstractedFluidStack fluidStack = ingredients.get(Mth.floor(((GhostRecipeAccessor)ghostRecipe).brewinandchewin$getTime() / 30.0F) % ingredients.size());
-                    fluidStack = new AbstractedFluidStack(fluidStack.fluid(), fluidIngredient.get().amount(), fluidStack.components(), fluidIngredient.get().unit().orElse(FluidUnit.getLoaderUnit()), null);
+                    fluidStack = new AbstractedFluidStack(fluidStack.fluid(), fluidIngredient.get().amount(), fluidIngredient.get().unit().orElse(FluidUnit.getLoaderUnit()), null);
                     if (kegMenu.kegTank.isEmpty() || !kegMenu.kegTank.getAbstractedFluid().fluid().isSame(fluidStack.fluid())) {
-                        if (BnCConfiguration.CLIENT_CONFIG.get().renderFluidInKeg()) {
+                        // left this because used to be a config
+                        if (true) {
                             BrewinAndChewinClient.getHelper().renderFluidInKeg(fluidStack, gui, leftPos + 120, topPos + 19, 0.6F);
                             gui.fill(RenderType.guiGhostRecipeOverlay(), leftPos + 120, topPos + 19, leftPos + 120 + 16 + 8, topPos + 31 + 16, 822083583);
                         }
@@ -174,13 +172,11 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
     private void renderTankTooltip(GuiGraphics gui, int renderX, int renderY, int mouseX, int mouseY, AbstractedFluidStack stack) {
         if (isHovering(120, 19,  24, 28, mouseX - renderX, mouseY - renderY) && menu instanceof KegMenu kegMenu && (kegMenu.kegTank.isEmpty() || !kegMenu.kegTank.getAbstractedFluid().fluid().isSame(stack.fluid()))) {
             Component component = MutableComponent.create(BrewinAndChewin.getHelper().getFluidDisplayName(stack).getContents())
-                    .append((BnCConfiguration.CLIENT_CONFIG.get().displayUnit().shortFormat(" (%s/%s") + ")").formatted(FluidUnit.convert(stack.amount(), stack.unit(), BnCConfiguration.CLIENT_CONFIG.get().displayUnit()), FluidUnit.convert(kegMenu.kegTank.getFluidCapacity(), FluidUnit.getLoaderUnit(), BnCConfiguration.CLIENT_CONFIG.get().displayUnit())));
+                    .append((FluidUnit.MILLIBUCKET.shortFormat(" (%s/%s") + ")").formatted(FluidUnit.convert(stack.amount(), stack.unit(), FluidUnit.MILLIBUCKET), FluidUnit.convert(kegMenu.kegTank.getFluidCapacity(), FluidUnit.getLoaderUnit(), FluidUnit.MILLIBUCKET)));
             List<Component> components = new ArrayList<>(List.of(component));
-            if (BnCConfiguration.CLIENT_CONFIG.get().oppositeFluidDisplay() == BnCConfiguration.Client.DisplaySettings.ADVANCED_TOOLTIPS && minecraft.options.advancedItemTooltips || BnCConfiguration.CLIENT_CONFIG.get().oppositeFluidDisplay() == BnCConfiguration.Client.DisplaySettings.ALWAYS) {
-                FluidUnit opposite = FluidUnit.getOpposite(BnCConfiguration.CLIENT_CONFIG.get().displayUnit());
-                components.add(MutableComponent.create(Component.literal((opposite.shortFormat("%s/%s")).formatted(FluidUnit.convert(stack.amount(), stack.unit(), opposite), FluidUnit.convert(kegMenu.kegTank.getFluidCapacity(), FluidUnit.getLoaderUnit(), opposite))).getContents()).withStyle(ChatFormatting.GRAY));
-            }
             if (minecraft.options.advancedItemTooltips) {
+                FluidUnit opposite = FluidUnit.getOpposite(FluidUnit.MILLIBUCKET);
+                components.add(MutableComponent.create(Component.literal((opposite.shortFormat("%s/%s")).formatted(FluidUnit.convert(stack.amount(), stack.unit(), opposite), FluidUnit.convert(kegMenu.kegTank.getFluidCapacity(), FluidUnit.getLoaderUnit(), opposite))).getContents()).withStyle(ChatFormatting.GRAY));
                 ResourceLocation fluidId = stack.fluid().builtInRegistryHolder().key().location();
                 components.add(Component.literal(fluidId.toString()).withStyle(ChatFormatting.DARK_GRAY));
                 if (!stack.isEmpty()) {
@@ -221,9 +217,9 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
 
         if (recipe instanceof KegFermentingRecipe fermentingRecipe && fermentingRecipe.getResult().left().isPresent()) {
             Optional<KegPouringRecipe> pouringRecipe = recipeManager.getAllRecipesFor(BnCRecipeTypes.KEG_POURING).stream().filter(kegPouringRecipe -> kegPouringRecipe.getRawFluid().matches(fermentingRecipe.getResult().left().get())).findFirst();
-            pouringRecipe.ifPresent(kegPouringRecipe -> this.ghostRecipe.addIngredient(Ingredient.of(kegPouringRecipe.value().getContainer()), slots.get(4).x, slots.get(4).y));
+            pouringRecipe.ifPresent(kegPouringRecipe -> this.ghostRecipe.addIngredient(Ingredient.of(kegPouringRecipe.getContainer()), slots.get(4).x, slots.get(4).y));
         }
 
-        this.placeRecipe(this.menu.getGridWidth(), this.menu.getGridHeight(), this.menu.getResultSlotIndex(), recipe, recipe.value().getIngredients().iterator(), 0);
+        this.placeRecipe(this.menu.getGridWidth(), this.menu.getGridHeight(), this.menu.getResultSlotIndex(), recipe, recipe.getIngredients().iterator(), 0);
     }
 }

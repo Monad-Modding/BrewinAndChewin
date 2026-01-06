@@ -23,8 +23,7 @@ import umpaz.brewinandchewin.common.utility.KegContainer;
 
 import java.util.Objects;
 
-public class KegMenu extends RecipeBookMenu<KegContainer>
-{
+public class KegMenu extends RecipeBookMenu<KegContainer>  {
     public static final ResourceLocation EMPTY_CONTAINER_SLOT_TANKARD = BrewinAndChewin.asResource("item/empty_container_slot_tankard");
 
     public final KegBlockEntity blockEntity;
@@ -168,17 +167,12 @@ public class KegMenu extends RecipeBookMenu<KegContainer>
         return recipe.isPresent() && KegBlockEntity.isValidTemp(getKegTemperature(), recipe.get().getTemperature());
     }
 
+    /*
     @Override
     public void handlePlacement(boolean placeAll, Recipe<?> recipe, ServerPlayer player) {
         Recipe<KegContainer> recipeHolder = (Recipe<KegContainer>) recipe;
-        this.beginPlacingRecipe();
-
-        try {
-            new KegPlaceRecipe(this, level.getRecipeManager()).recipeClicked(player, recipeHolder, placeAll);
-        } finally {
-            this.finishPlacingRecipe(recipeHolder);
-        }
-    }
+        new KegPlaceRecipe(this, level.getRecipeManager()).recipeClicked(player, recipeHolder, placeAll);
+    } */
 
     @Override
     public void fillCraftSlotsStackedContents(StackedContents helper) {

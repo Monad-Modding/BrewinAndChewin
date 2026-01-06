@@ -1,6 +1,5 @@
 package umpaz.brewinandchewin.common.mixin;
 
-import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -11,7 +10,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 import java.util.BitSet;
 import java.util.List;
 
-@Mixin(StackedContents.RecipePicker.class)
+@Mixin(targets = "net.minecraft.world.entity.player.StackedContents$RecipePicker")
 public interface StackedContentsRecipePickerAccessor {
     @Accessor("ingredients")
     List<Ingredient> brewinandchewin$getIngredients();

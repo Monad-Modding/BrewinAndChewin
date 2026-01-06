@@ -16,6 +16,7 @@ import umpaz.brewinandchewin.common.network.clientbound.SyncRagingStacksClientbo
 import umpaz.brewinandchewin.common.registry.BnCEffects;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public class RagingAttachment {
     public static final float RESET_TICK_MULTIPLIER = 2.5F;
@@ -50,7 +51,8 @@ public class RagingAttachment {
         ticksUntilReset = value;
     }
 
-    private static final ResourceLocation RAGING_ATTRIBUTE_ID = BrewinAndChewin.asResource("raging");
+    private static final UUID RAGING_ATTRIBUTE_ID =
+            UUID.fromString("3b5c1b5a-7c4b-4f67-9d42-9a8c1c7c9e21");
 
     public static void tick(LivingEntity living) {
         RagingAttachment attachment = BrewinAndChewin.getHelper().getRagingAttachment(living);
@@ -63,7 +65,7 @@ public class RagingAttachment {
                 attachment.setTicksUntilReset(Mth.ceil(RESET_TICK_MULTIPLIER * (living instanceof Player player ? player.getCurrentItemAttackStrengthDelay() : 30)));
             }
 
-            if (attachment.getStacks() <= 0 || !living.hasEffect(BnCEffects.RAGING)) {
+            if (attachment.getStacks() <= 0 || !living.hasEffect(BnCEffects.RAGING.value())) {
                 if (living.getAttributes().hasAttribute(Attributes.ATTACK_SPEED) && living.getAttributes().hasModifier(Attributes.ATTACK_SPEED, RAGING_ATTRIBUTE_ID)) {
                     living.getAttribute(Attributes.ATTACK_SPEED).removeModifier(RAGING_ATTRIBUTE_ID);
                 }
@@ -80,7 +82,7 @@ public class RagingAttachment {
             if (attachment.previousStacks != attachment.stacks) {
                 if (living.getAttributes().hasModifier(Attributes.ATTACK_SPEED, RAGING_ATTRIBUTE_ID))
                     living.getAttribute(Attributes.ATTACK_SPEED).removeModifier(RAGING_ATTRIBUTE_ID);
-                living.getAttribute(Attributes.ATTACK_SPEED).addTransientModifier(new AttributeModifier(RAGING_ATTRIBUTE_ID, Math.min(0.8, 0.05 * attachment.getStacks() + 0.025 * living.getEffect(BnCEffects.RAGING).getAmplifier() * attachment.getStacks()), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+                living.getAttribute(Attributes.ATTACK_SPEED).addTransientModifier(new AttributeModifier("raging", Math.min(0.8, 0.05 * attachment.getStacks() + 0.025 * living.getEffect(BnCEffects.RAGING.value()).getAmplifier() * attachment.getStacks()), AttributeModifier.Operation.MULTIPLY_TOTAL));
                 ((LivingEntityAccessor)living).brewinandchewin$invokeUpdateEffectVisibility();
                 BrewinAndChewin.getHelper().sendClientboundTracking(living, new SyncRagingStacksClientboundPacket(living.getId(), Optional.of(attachment.getStacks())));
             }

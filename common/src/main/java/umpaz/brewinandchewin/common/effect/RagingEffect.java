@@ -6,6 +6,6 @@ import umpaz.brewinandchewin.client.particle.RagingParticleOptions;
 
 public class RagingEffect extends MobEffect {
     public RagingEffect() {
-        super(MobEffectCategory.BENEFICIAL, 6948353, new RagingParticleOptions.StageOne(0.75F));
+        super(MobEffectCategory.BENEFICIAL, 6948353);
     }
 }

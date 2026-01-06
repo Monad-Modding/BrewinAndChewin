@@ -35,7 +35,6 @@ import umpaz.brewinandchewin.common.utility.BnCMenuConstructor;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidIngredient;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidStack;
 import umpaz.brewinandchewin.common.utility.KegContainer;
-import umpaz.brewinandchewin.common.utility.KegRecipeWrapper;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -94,7 +93,7 @@ public interface BnCPlatformHelper {
     void writeFluidIngredient(FriendlyByteBuf buf, AbstractedFluidIngredient ingredient);
     AbstractedFluidIngredient readFluidIngredient(FriendlyByteBuf buf);
 
-    AbstractedFluidStack deserializeTankFluidStack(CompoundTag tag, HolderLookup.Provider provider);
+    AbstractedFluidStack deserializeTankFluidStack(CompoundTag tag);
 
     ItemStack getCraftingRemainingItem(ItemStack stack);
 

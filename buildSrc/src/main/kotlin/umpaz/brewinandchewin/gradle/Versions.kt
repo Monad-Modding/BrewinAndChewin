@@ -28,7 +28,7 @@ object Versions {
 
     const val CREATE_FABRIC = "6.0.7.0+mc1.20.1-build.1716"
     const val REGISTRATE_FABRIC = "1.3.69-MC1.20.1"
-    const val PORTING_LIB = "2.3.8+1.20.1"
+    const val PORTING_LIB = "2.3.14+1.20.1"
 
     const val PERMISSIONS_API = "0.3.1"
 

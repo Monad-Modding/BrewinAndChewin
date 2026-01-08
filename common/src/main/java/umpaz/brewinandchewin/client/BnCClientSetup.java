@@ -48,7 +48,7 @@ import java.util.function.Consumer;
 public class BnCClientSetup {
 
     public static void registerBlockEntityRenderers(BiConsumer<BlockEntityType<?>, BlockEntityRendererProvider> consumer) {
-        consumer.accept(BnCBlockEntityTypes.COASTER, CoasterBlockEntityRenderer::new);
+        consumer.accept(BnCBlockEntityTypes.COASTER.get(), CoasterBlockEntityRenderer::new);
     }
 
     public static void registerParticles() {

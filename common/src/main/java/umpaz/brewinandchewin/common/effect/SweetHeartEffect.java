@@ -12,7 +12,7 @@ public class SweetHeartEffect extends MobEffect {
     }
 
     @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+    public boolean isDurationEffectTick(int duration, int amplifier) {
         int k = 20 >> amplifier;
         if (k > 0) {
             return duration % k == 0;
@@ -22,7 +22,7 @@ public class SweetHeartEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
+    public void applyEffectTick(LivingEntity entity, int amplifier) {
         if (entity instanceof ServerPlayer player) {
             float saturation = player.getFoodData().getSaturationLevel();
             if (saturation > 0 && player.getHealth() < player.getMaxHealth()) {
@@ -31,6 +31,5 @@ public class SweetHeartEffect extends MobEffect {
                 player.getFoodData().setSaturation(saturation - healingAmount);
             }
         }
-        return true;
     }
 }

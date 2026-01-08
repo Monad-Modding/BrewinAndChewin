@@ -37,6 +37,7 @@ import umpaz.brewinandchewin.fabric.platform.BnCPlatformHelperFabric;
 import umpaz.brewinandchewin.fabric.registry.BnCAttachments;
 import umpaz.brewinandchewin.fabric.registry.BnCFluidsImpl;
 import umpaz.brewinandchewin.fabric.registry.BnCLootModificationEvents;
+import vectorwing.farmersdelight.common.registry.ModBlockEntityTypes;
 
 import java.util.Optional;
 
@@ -90,7 +91,7 @@ public class BrewinAndChewinFabric implements ModInitializer {
     private static void registerContents() {
         BnCAttachments.registerAll();
         BnCBlocks.registerAll();
-        BnCBlockEntityTypes.registerAll();
+        ModBlockEntityTypes.TILES.register();
         BnCCreativeTabs.registerAll();
         BnCEffects.registerAll();
         BnCFluids.registerAll();

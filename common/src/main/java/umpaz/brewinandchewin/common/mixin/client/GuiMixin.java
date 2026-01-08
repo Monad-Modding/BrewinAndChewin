@@ -37,13 +37,13 @@ public class GuiMixin {
     private boolean brewinandchewin$completedAbsorption = false;
 
     // TODO: Create an event for this overlay.
-    @WrapOperation(method = "renderHearts", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;renderHeart(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/gui/Gui$HeartType;IIZZZ)V", ordinal = 3))
+    @WrapOperation(method = "renderHearts", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;renderHeart(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/gui/Gui$HeartType;IIIZZ)V", ordinal = 3))
     private void brewinandchewin$renderTipsyHearts(Gui instance,
                                                    GuiGraphics graphics,
-                                                   Gui.HeartType heartType,
+                                                   Object heartType,
                                                    int heartX,
                                                    int heartY,
-                                                   boolean hardcore,
+                                                   int hardcoreOffset,
                                                    boolean blinking,
                                                    boolean halfHeart,
                                                    Operation<Void> operation,
@@ -58,11 +58,11 @@ public class GuiMixin {
             brewinandchewin$completedAbsorption = false;
 
         TipsyHeartsAttachment attachment = BrewinAndChewin.getHelper().getTipsyHeartsAttachment(player);
-        if (!player.hasEffect(BnCEffects.TIPSY) || attachment == null || attachment.getNumbedHealth() <= 0 || absorptionAmount > 0 && brewinandchewin$completedAbsorption) {
+        if (!player.hasEffect(BnCEffects.TIPSY.value()) || attachment == null || attachment.getNumbedHealth() <= 0 || absorptionAmount > 0 && brewinandchewin$completedAbsorption) {
             brewinandchewin$remainingHealth = 0;
             brewinandchewin$numbedAlpha = 1.0F;
             brewinandchewin$increaseNumbedAlpha = true;
-            operation.call(instance, graphics, heartType, heartX, heartY, hardcore, blinking, halfHeart);
+            operation.call(instance, graphics, heartType, heartX, heartY, hardcoreOffset, blinking, halfHeart);
             return;
         }
 
@@ -79,19 +79,19 @@ public class GuiMixin {
             brewinandchewin$remainingHealth = 0;
             brewinandchewin$numbedAlpha = 1.0F;
             brewinandchewin$increaseNumbedAlpha = true;
-            operation.call(instance, graphics, heartType, heartX, heartY, hardcore, blinking, halfHeart);
+            operation.call(instance, graphics, heartType, heartX, heartY, hardcoreOffset, blinking, halfHeart);
             return;
         }
 
         if (heartIndex == healthStart && absorptionAmount <= 0)
             brewinandchewin$remainingHealth = Math.min(Mth.ceil(attachment.getNumbedHealth()) - ((float) displayHealth % 1 < attachment.getNumbedHealth() % 1 ? 1 : 0), Mth.ceil((float) displayHealth));
 
-        operation.call(instance, graphics, heartType, heartX, heartY, hardcore, blinking, halfHeart);
+        operation.call(instance, graphics, heartType, heartX, heartY, hardcoreOffset, blinking, halfHeart);
 
         if (brewinandchewin$remainingHealth <= 0)
             return;
 
-        if (BnCConfiguration.CLIENT_CONFIG.get().numbedHeartFlickering() && attachment.getNumbedHealth() > 1 && attachment.getTicksUntilDamage() < 80 && heartIndex == healthStart && absorptionAmount == 0) {
+        if (attachment.getNumbedHealth() > 1 && attachment.getTicksUntilDamage() < 80 && heartIndex == healthStart && absorptionAmount == 0) {
             if (!Minecraft.getInstance().isPaused()) {
                 float increase = Mth.lerp((float) (80 - attachment.getTicksUntilDamage()) / 80, 0.0F, 0.06F);
                 brewinandchewin$numbedAlpha = Mth.clamp(brewinandchewin$numbedAlpha + (brewinandchewin$increaseNumbedAlpha ? increase : -increase), -0.01F, 1.01F);
@@ -109,14 +109,15 @@ public class GuiMixin {
         RenderSystem.enableBlend();
         graphics.setColor(1.0F, 1.0F, 1.0F, brewinandchewin$numbedAlpha);
 
+        boolean hardcore = player.level().getLevelData().isHardcore();
         if (heartIndex == healthStart && halfHeart) {
-            graphics.blitSprite(BnCHudIcons.getTipsyHalfHeartTexture(false, hardcore), heartX, heartY, 9, 9);
+            graphics.blit(BnCHudIcons.getTipsyHalfHeartTexture(false, hardcore), heartX, heartY, 0, 0, 9, 9);
             brewinandchewin$remainingHealth -= 1;
         } else if (heartIndex == healthStart && renderHealth % 2 < 1 && brewinandchewin$remainingHealth == 1 || heartIndex == healthEnd && brewinandchewin$remainingHealth == 1) {
-            graphics.blitSprite(BnCHudIcons.getTipsyRightHeartTexture(false, hardcore), heartX, heartY, 9, 9);
+            graphics.blit(BnCHudIcons.getTipsyRightHeartTexture(false, hardcore), heartX, heartY, 0, 0, 9, 9);
             brewinandchewin$remainingHealth -= 1;
         } else {
-            graphics.blitSprite(BnCHudIcons.getTipsyFullHeartTexture(false, hardcore), heartX, heartY, 9, 9);
+            graphics.blit(BnCHudIcons.getTipsyFullHeartTexture(false, hardcore), heartX, heartY, 0, 0, 9, 9);
             brewinandchewin$remainingHealth -= 2;
         }
 
@@ -126,13 +127,13 @@ public class GuiMixin {
         graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    @WrapOperation(method = "renderHearts", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;renderHeart(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/gui/Gui$HeartType;IIZZZ)V", ordinal = 1))
+    @WrapOperation(method = "renderHearts", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;renderHeart(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/gui/Gui$HeartType;IIIZZ)V", ordinal = 1))
     private void brewinandchewin$renderAbsorbingTipsyHearts(Gui instance,
                                                             GuiGraphics graphics,
-                                                            Gui.HeartType heartType,
+                                                            Object heartType,
                                                             int heartX,
                                                             int heartY,
-                                                            boolean hardcore,
+                                                            int hardcoreOffset,
                                                             boolean blinking,
                                                             boolean halfHeart,
                                                             Operation<Void> operation,
@@ -144,11 +145,11 @@ public class GuiMixin {
                                                             @Local(ordinal = 10) int heartIndex,
                                                             @Local(ordinal = 15) int fullHeart) {
         TipsyHeartsAttachment attachment = BrewinAndChewin.getHelper().getTipsyHeartsAttachment(player);
-        if (!player.hasEffect(BnCEffects.TIPSY) || attachment == null || attachment.getNumbedHealth() <= 0) {
+        if (!player.hasEffect(BnCEffects.TIPSY.value()) || attachment == null || attachment.getNumbedHealth() <= 0) {
             brewinandchewin$remainingHealth = 0;
             brewinandchewin$numbedAlpha = 1.0F;
             brewinandchewin$increaseNumbedAlpha = true;
-            operation.call(instance, graphics, heartType, heartX, heartY, hardcore, blinking, halfHeart);
+            operation.call(instance, graphics, heartType, heartX, heartY, hardcoreOffset, blinking, halfHeart);
             return;
         }
 
@@ -165,7 +166,7 @@ public class GuiMixin {
             brewinandchewin$remainingHealth = 0;
             brewinandchewin$numbedAlpha = 1.0F;
             brewinandchewin$increaseNumbedAlpha = true;
-            operation.call(instance, graphics, heartType, heartX, heartY, hardcore, blinking, halfHeart);
+            operation.call(instance, graphics, heartType, heartX, heartY, hardcoreOffset, blinking, halfHeart);
             return;
         }
 
@@ -174,13 +175,13 @@ public class GuiMixin {
             brewinandchewin$remainingHealth = Math.min(Mth.ceil(attachment.getNumbedHealth()) - ((float) displayHealth % 1 < attachment.getNumbedHealth() % 1 ? 1 : 0), Mth.ceil((float) displayHealth));
         } else if (brewinandchewin$remainingHealth <= 0) {
             brewinandchewin$completedAbsorption = true;
-            operation.call(instance, graphics, heartType, heartX, heartY, hardcore, blinking, halfHeart);
+            operation.call(instance, graphics, heartType, heartX, heartY, hardcoreOffset, blinking, halfHeart);
             return;
         }
 
-        operation.call(instance, graphics, heartType, heartX, heartY, hardcore, blinking, halfHeart);
+        operation.call(instance, graphics, heartType, heartX, heartY, hardcoreOffset, blinking, halfHeart);
 
-        if (BnCConfiguration.CLIENT_CONFIG.get().numbedHeartFlickering() && attachment.getNumbedHealth() > 1 && attachment.getTicksUntilDamage() < 80 && heartIndex == healthStart) {
+        if (attachment.getNumbedHealth() > 1 && attachment.getTicksUntilDamage() < 80 && heartIndex == healthStart) {
             if (!Minecraft.getInstance().isPaused()) {
                 float increase = Mth.lerp((float) (80 - attachment.getTicksUntilDamage()) / 80, 0.0F, 0.08F);
                 brewinandchewin$numbedAlpha = Mth.clamp(brewinandchewin$numbedAlpha + (brewinandchewin$increaseNumbedAlpha ? increase : -increase), -0.01F, 1.01F);
@@ -198,14 +199,15 @@ public class GuiMixin {
         RenderSystem.enableBlend();
         graphics.setColor(1.0F, 1.0F, 1.0F, brewinandchewin$numbedAlpha);
 
+        boolean hardcore = player.level().getLevelData().isHardcore();
         if (heartIndex == healthStart && halfHeart) {
-            graphics.blitSprite(BnCHudIcons.getTipsyHalfHeartTexture(true, hardcore), heartX, heartY, 9, 9);
+            graphics.blit(BnCHudIcons.getTipsyHalfHeartTexture(true, hardcore), heartX, heartY, 0, 0, 9, 9);
             brewinandchewin$remainingHealth -= 1;
         } else if (heartIndex == healthStart && renderHealth % 2 < 1 && brewinandchewin$remainingHealth == 1 || heartIndex == healthEnd && brewinandchewin$remainingHealth == 1) {
-            graphics.blitSprite(BnCHudIcons.getTipsyRightHeartTexture(true, hardcore), heartX, heartY, 9, 9);
+            graphics.blit(BnCHudIcons.getTipsyRightHeartTexture(true, hardcore), heartX, heartY, 0, 0, 9, 9);
             brewinandchewin$remainingHealth -= 1;
         } else {
-            graphics.blitSprite(BnCHudIcons.getTipsyFullHeartTexture(true, hardcore), heartX, heartY, 9, 9);
+            graphics.blit(BnCHudIcons.getTipsyFullHeartTexture(true, hardcore), heartX, heartY, 0, 0, 9, 9);
             brewinandchewin$remainingHealth -= 2;
         }
 

@@ -1,5 +1,7 @@
 package umpaz.brewinandchewin.client.particle;
 
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -15,6 +17,29 @@ public class DrunkBubbleParticleOptions extends ScalableParticleOptionsBase {
            Codec.FLOAT.fieldOf("scale").forGetter(DrunkBubbleParticleOptions::getScale)
    ).apply(particle, DrunkBubbleParticleOptions::new));
 
+   public static final ParticleOptions.Deserializer<DrunkBubbleParticleOptions> DESERIALIZER = new ParticleOptions.Deserializer<>() {
+      public DrunkBubbleParticleOptions fromCommand(ParticleType<DrunkBubbleParticleOptions> particleType, StringReader stringReader) throws CommandSyntaxException {
+         stringReader.expect(' ');
+
+         // read three floats for RGB
+         float r = stringReader.readFloat();
+         stringReader.expect(' ');
+         float g = stringReader.readFloat();
+         stringReader.expect(' ');
+         float b = stringReader.readFloat();
+         stringReader.expect(' ');
+
+         // read float for size
+         float size = stringReader.readFloat();
+
+         return new DrunkBubbleParticleOptions(new Vector3f(r, g, b), size);
+      }
+
+      public DrunkBubbleParticleOptions fromNetwork(ParticleType<DrunkBubbleParticleOptions> particleType, FriendlyByteBuf friendlyByteBuf) {
+         return new DrunkBubbleParticleOptions(friendlyByteBuf.readVector3f(), friendlyByteBuf.readFloat());
+      }
+   };
+
    @Override
    public void writeToNetwork(FriendlyByteBuf buf) {
       buf.writeVector3f(this.color);
@@ -23,9 +48,7 @@ public class DrunkBubbleParticleOptions extends ScalableParticleOptionsBase {
    private final Vector3f color;
 
    public static DrunkBubbleParticleOptions fromNetwork(FriendlyByteBuf buf) {
-      Vector3f color = buf.readVector3f();
-      float scale = buf.readFloat();
-      return new DrunkBubbleParticleOptions(color, scale);
+      return new DrunkBubbleParticleOptions(buf.readVector3f(), buf.readFloat());
    }
 
    public DrunkBubbleParticleOptions(Vector3f color, float size) {

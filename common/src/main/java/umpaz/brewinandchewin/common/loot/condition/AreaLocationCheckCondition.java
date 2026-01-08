@@ -28,13 +28,8 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public class AreaLocationCheckCondition implements LootItemCondition {
-    public static final MapCodec<AreaLocationCheckCondition> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            LootItemCondition.DIRECT_CODEC.listOf().fieldOf("terms").forGetter(cond -> cond.terms),
-            ExtraCodecs.POSITIVE_INT.fieldOf("range").forGetter(cond -> cond.range)
-    ).apply(inst, AreaLocationCheckCondition::new));
-
     public static final ResourceLocation ID = BrewinAndChewin.asResource("area_location_check");
-    public static final LootItemConditionType TYPE = new LootItemConditionType(CODEC);
+    public static final LootItemConditionType TYPE = new LootItemConditionType(null);
 
     protected final List<LootItemCondition> terms;
     private final Predicate<LootContext> composedPredicate;
@@ -42,7 +37,8 @@ public class AreaLocationCheckCondition implements LootItemCondition {
 
     protected AreaLocationCheckCondition(List<LootItemCondition> predicates, int range) {
         this.terms = predicates;
-        this.composedPredicate = Util.allOf(terms);
+        this.composedPredicate = lootContext ->
+                this.terms.stream().allMatch(condition -> condition.test(lootContext));
         this.range = range;
     }
 
@@ -67,7 +63,10 @@ public class AreaLocationCheckCondition implements LootItemCondition {
                         paramBuilder.withOptionalParameter(LootContextParams.BLOCK_STATE, context.getLevel().getBlockState(BlockPos.containing(offset)));
                     if (context.hasParam(LootContextParams.BLOCK_ENTITY))
                         paramBuilder.withOptionalParameter(LootContextParams.BLOCK_ENTITY, context.getLevel().getBlockEntity(BlockPos.containing(offset)));
-                    LootContext newCtx = new LootContext.Builder(paramBuilder.create(((LootParamsParamSetAccess) originalParams).brewinandchewin$getParamSet())).create(Optional.empty());
+
+                    LootParams newParams = paramBuilder.create(((LootParamsParamSetAccess) originalParams).brewinandchewin$getParamSet());
+
+                    LootContext newCtx = new LootContext.Builder(newParams).create(ID);
                     if (composedPredicate.test(newCtx))
                         return true;
                 }

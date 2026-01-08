@@ -30,7 +30,7 @@ public class CoasterBlockEntity extends SyncedBlockEntity {
     public final NonNullList<ItemStack> inventory = NonNullList.withSize(4, ItemStack.EMPTY);
 
     public CoasterBlockEntity(BlockPos pos, BlockState state ) {
-      super(BnCBlockEntityTypes.COASTER, pos, state);
+      super(BnCBlockEntityTypes.COASTER.get(), pos, state);
    }
 
     public InteractionResult useItemOn(ItemStack stack, Level level, BlockState state, BlockPos pos, Player player, InteractionHand hand) {

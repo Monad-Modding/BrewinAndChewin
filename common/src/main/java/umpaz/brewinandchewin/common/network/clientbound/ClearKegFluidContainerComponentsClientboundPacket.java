@@ -3,30 +3,26 @@ package umpaz.brewinandchewin.common.network.clientbound;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.client.gui.KegScreen;
+import umpaz.brewinandchewin.platform.BnCPacket;
 
-public record ClearKegFluidContainerComponentsClientboundPacket() implements CustomPacketPayload {
+public record ClearKegFluidContainerComponentsClientboundPacket() implements BnCPacket {
     public static final ResourceLocation ID = BrewinAndChewin.asResource("clear_keg_fluid_container_components");
-    public static final Type<ClearKegFluidContainerComponentsClientboundPacket> TYPE = new Type<>(ID);
-    public static final StreamCodec<RegistryFriendlyByteBuf, ClearKegFluidContainerComponentsClientboundPacket> STREAM_CODEC = StreamCodec.of(ClearKegFluidContainerComponentsClientboundPacket::encode, ClearKegFluidContainerComponentsClientboundPacket::new);
 
-    public ClearKegFluidContainerComponentsClientboundPacket(RegistryFriendlyByteBuf buf) {
+    public ClearKegFluidContainerComponentsClientboundPacket(FriendlyByteBuf buf) {
         this();
     }
 
-    public static void encode(FriendlyByteBuf buf, ClearKegFluidContainerComponentsClientboundPacket packet) {}
-
     @Override
-    public Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+    public void write(FriendlyByteBuf buf) {
+
     }
 
-    public void handle() {
+    @Override
+    public void handle(ServerPlayer player) {
         Minecraft.getInstance().execute(KegScreen::clearFluidContainerComponents);
     }
 }

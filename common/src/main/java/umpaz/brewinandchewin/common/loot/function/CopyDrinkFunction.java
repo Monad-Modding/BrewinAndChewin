@@ -1,34 +1,27 @@
 package umpaz.brewinandchewin.common.loot.function;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonObject;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
+import umpaz.brewinandchewin.common.registry.BnCLootFunctions;
+import vectorwing.farmersdelight.common.registry.ModLootFunctions;
 
-import java.util.List;
-
-public class CopyDrinkFunction extends LootItemConditionalFunction
-{
-    public static final MapCodec<CopyDrinkFunction> CODEC = RecordCodecBuilder.mapCodec(inst ->
-            commonFields(inst).apply(inst, CopyDrinkFunction::new));
-
+@MethodsReturnNonnullByDefault
+public class CopyDrinkFunction extends LootItemConditionalFunction {
     public static final ResourceLocation ID = BrewinAndChewin.asResource("copy_drink");
-    public static final LootItemFunctionType<CopyDrinkFunction> TYPE = new LootItemFunctionType<>(CODEC);
 
-    private CopyDrinkFunction(List<LootItemCondition> conditions) {
+    private CopyDrinkFunction(LootItemCondition[] conditions) {
         super(conditions);
     }
 
@@ -40,30 +33,24 @@ public class CopyDrinkFunction extends LootItemConditionalFunction
     protected ItemStack run(ItemStack stack, LootContext context) {
         BlockEntity tile = context.getParamOrNull(LootContextParams.BLOCK_ENTITY);
         if (tile instanceof KegBlockEntity kegTile) {
-            CompoundTag tag = kegTile.writeDrink(stack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY).copyTag(), context.getLevel().registryAccess());
-            CustomData data = CustomData.of(tag);
+            CompoundTag tag = kegTile.writeDrink(new CompoundTag());
             if (!tag.isEmpty()) {
-                stack.set(DataComponents.BLOCK_ENTITY_DATA, data);
+                stack.addTagElement("BlockEntityTag", tag);
             }
         }
+
         return stack;
     }
 
-    @Override
-    public LootItemFunctionType<CopyDrinkFunction> getType() {
-        return TYPE;
+    public LootItemFunctionType getType() {
+        return BnCLootFunctions.COPY_DRINK.get();
     }
 
-    public static class Builder extends LootItemConditionalFunction.Builder<CopyDrinkFunction.Builder> {
-        Builder() {}
+    public static class Serializer extends LootItemConditionalFunction.Serializer<CopyDrinkFunction> {
+        public Serializer() {}
 
-        protected CopyDrinkFunction.Builder getThis() {
-            return this;
-        }
-
-        @Override
-        public LootItemFunction build() {
-            return new CopyDrinkFunction(getConditions());
+        public CopyDrinkFunction deserialize(JsonObject json, JsonDeserializationContext context, LootItemCondition[] conditions) {
+            return new CopyDrinkFunction(conditions);
         }
     }
 }

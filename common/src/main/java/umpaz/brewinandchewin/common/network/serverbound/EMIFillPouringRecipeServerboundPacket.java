@@ -1,9 +1,7 @@
 package umpaz.brewinandchewin.common.network.serverbound;
 
 import com.google.common.collect.Lists;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +12,9 @@ import net.minecraft.world.item.ItemStack;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.block.entity.container.KegMenu;
+import umpaz.brewinandchewin.platform.BnCPacket;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,28 +23,30 @@ import java.util.List;
  * EMI is licensed under the MIT license.
  * <a href="https://github.com/emilyploszaj/emi/blob/1.21/LICENSE">You may read the license here.</a>
  */
-public record EMIFillPouringRecipeServerboundPacket(int syncId, int action, List<ItemStack> stacks) implements CustomPacketPayload {
+public record EMIFillPouringRecipeServerboundPacket(int syncId, int action, List<ItemStack> stacks) implements BnCPacket {
     public static final ResourceLocation ID = BrewinAndChewin.asResource("emi_fill_pouring_recipe");
-    public static final CustomPacketPayload.Type<EMIFillPouringRecipeServerboundPacket> TYPE = new CustomPacketPayload.Type<>(ID);
-    public static final StreamCodec<RegistryFriendlyByteBuf, EMIFillPouringRecipeServerboundPacket> STREAM_CODEC = StreamCodec.of(EMIFillPouringRecipeServerboundPacket::encode, EMIFillPouringRecipeServerboundPacket::new);
 
     public EMIFillPouringRecipeServerboundPacket(KegMenu menu, int action, List<ItemStack> stacks) {
         this(menu.containerId, action, stacks);
     }
 
-    public EMIFillPouringRecipeServerboundPacket(RegistryFriendlyByteBuf buf) {
-        this(buf.readInt(), buf.readByte(), ItemStack.LIST_STREAM_CODEC.decode(buf));
+    public EMIFillPouringRecipeServerboundPacket(FriendlyByteBuf buf) {
+        this(buf.readInt(), buf.readByte(), new ArrayList<>());
+
+        int size = buf.readInt();
+        for (int i = 0; i < size; i++) {
+            this.stacks.add(buf.readItem());
+        }
     }
 
-    public static void encode(RegistryFriendlyByteBuf buf, EMIFillPouringRecipeServerboundPacket packet) {
-        buf.writeInt(packet.syncId);
-        buf.writeByte(packet.action);
-        ItemStack.LIST_STREAM_CODEC.encode(buf, packet.stacks);
-    }
+    public void write(FriendlyByteBuf buf) {
+        buf.writeInt(this.syncId);
+        buf.writeByte(this.action);
 
-    @Override
-    public Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+        buf.writeInt(this.stacks.size());
+        for (ItemStack stack : this.stacks) {
+            buf.writeItem(stack);
+        }
     }
 
     public void handle(ServerPlayer sender) {
@@ -74,7 +76,7 @@ public record EMIFillPouringRecipeServerboundPacket(int syncId, int action, List
                     } else {
                         Slot s = menu.getSlot(KegBlockEntity.OUTPUT_SLOT);
                         for (ItemStack item : kegMenu.blockEntity.extractInGui(stack, gotten)) {
-                            if ((s.getItem().isEmpty() || ItemStack.isSameItemSameComponents(item, s.getItem())) && s.getItem().getCount() < item.getMaxStackSize() && s.getItem().getCount() + item.getCount() < s.getMaxStackSize())
+                            if ((s.getItem().isEmpty() || ItemStack.isSameItemSameTags(item, s.getItem())) && s.getItem().getCount() < item.getMaxStackSize() && s.getItem().getCount() + item.getCount() < s.getMaxStackSize())
                                 s.set(item);
                             else
                                 sender.getInventory().placeItemBackInInventory(item);
@@ -102,7 +104,7 @@ public record EMIFillPouringRecipeServerboundPacket(int syncId, int action, List
                 return grabbed;
             }
             ItemStack r = rubble.get(i);
-            if (ItemStack.isSameItemSameComponents(stack, r)) {
+            if (ItemStack.isSameItemSameTags(stack, r)) {
                 int wanted = amount - grabbed;
                 if (r.getCount() <= wanted) {
                     grabbed += r.getCount();
@@ -122,7 +124,7 @@ public record EMIFillPouringRecipeServerboundPacket(int syncId, int action, List
                 continue;
             }
             ItemStack st = s.getItem();
-            if (ItemStack.isSameItemSameComponents(stack, st)) {
+            if (ItemStack.isSameItemSameTags(stack, st)) {
                 int wanted = amount - grabbed;
                 ItemStack taken = st.copy();
                 if (st.getCount() <= wanted) {

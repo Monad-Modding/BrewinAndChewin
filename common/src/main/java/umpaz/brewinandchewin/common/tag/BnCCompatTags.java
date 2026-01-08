@@ -12,6 +12,6 @@ public class BnCCompatTags {
     public static final TagKey<Item> ORIGINS_MEAT = compatItemTag("origins", "meat");
 
     private static TagKey<Item> compatItemTag(String namespace, String path) {
-        return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(namespace, path));
+        return TagKey.create(Registries.ITEM, new ResourceLocation(namespace, path));
     }
 }

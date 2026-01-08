@@ -22,12 +22,10 @@ import umpaz.brewinandchewin.client.BrewinAndChewinClient;
 import umpaz.brewinandchewin.client.utility.BnCFluidItemDisplays;
 import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.block.entity.container.KegMenu;
-import umpaz.brewinandchewin.common.block.entity.container.KegStackedContents;
 import umpaz.brewinandchewin.common.crafting.FluidIngredientWithAmount;
 import umpaz.brewinandchewin.common.crafting.KegFermentingRecipe;
 import umpaz.brewinandchewin.common.crafting.KegPouringRecipe;
 import umpaz.brewinandchewin.common.mixin.client.GhostRecipeAccessor;
-import umpaz.brewinandchewin.common.mixin.client.RecipeBookComponentAccessor;
 import umpaz.brewinandchewin.common.registry.BnCRecipeTypes;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidStack;
 import umpaz.brewinandchewin.common.utility.BnCTextUtils;
@@ -50,8 +48,10 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
 
     @Override
     public void initVisuals() {
+        /*
         if (menu instanceof KegMenu kegMenu)
             ((RecipeBookComponentAccessor)this).brewinandchewin$setStackedContents(new KegStackedContents(kegMenu, recipeManager));
+         */
         super.initVisuals();
     }
 

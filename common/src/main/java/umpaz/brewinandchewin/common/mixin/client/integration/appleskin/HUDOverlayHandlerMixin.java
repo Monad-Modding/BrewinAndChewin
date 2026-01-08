@@ -15,7 +15,7 @@ import java.util.Random;
 public class HUDOverlayHandlerMixin {
     @ModifyVariable(method = "generate", at = @At(value = "INVOKE", target = "Ljava/util/Vector;get(I)Ljava/lang/Object;", ordinal = 1), ordinal = 7)
     private int brewinandchewin$drawIntoxicationSaturationX(int x, int guiTicks, Player player, @Local(ordinal = 6) int i) {
-        if (BnCConfiguration.CLIENT_CONFIG.get().intoxicationFoodOverlay() && player.hasEffect(BnCEffects.INTOXICATION)) {
+        if (player.hasEffect(BnCEffects.INTOXICATION.value())) {
             Random rand = new Random();
             rand.setSeed(guiTicks * 312871L);
             return x + (int) (Mth.cos((guiTicks + i * 2) * 0.20F) * 2F);
@@ -25,7 +25,7 @@ public class HUDOverlayHandlerMixin {
 
     @ModifyVariable(method = "generate", at = @At(value = "INVOKE", target = "Ljava/util/Vector;get(I)Ljava/lang/Object;", ordinal = 1), ordinal = 8)
     private int brewinandchewin$drawIntoxicationSaturationY(int y, int guiTicks, Player player, @Local(ordinal = 6) int i) {
-        if (BnCConfiguration.CLIENT_CONFIG.get().intoxicationFoodOverlay() && player.hasEffect(BnCEffects.INTOXICATION)) {
+        if (player.hasEffect(BnCEffects.INTOXICATION.value())) {
             Random rand = new Random();
             rand.setSeed(guiTicks * 312871L);
             return y + (int) (Mth.sin((guiTicks + i * 2) * 0.25F) * 2F);

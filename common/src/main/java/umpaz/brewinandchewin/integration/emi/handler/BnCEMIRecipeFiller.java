@@ -240,7 +240,7 @@ public class BnCEMIRecipeFiller {
                     }).map(recipe1 -> (PouringEmiRecipe) recipe1).findFirst();
                     if (potentialPouring.isPresent()) {
                         AbstractedFluidStack tankStack = context.getScreen().getMenu().kegTank.getAbstractedFluid();
-                        EmiStack tankEmiStack = EmiStack.of(tankStack.fluid(), tankStack.componentPatch(), tankStack.amount());
+                        EmiStack tankEmiStack = EmiStack.of(tankStack.fluid(), tankStack.amount());
                         int consumed = (int) ((context.getScreen().getMenu().kegTank.getFluidCapacity() - (potentialPouring.get().getFluidInput().getEmiStacks().stream().anyMatch(emiStack -> emiStack.isEqual(tankEmiStack)) ? context.getScreen().getMenu().kegTank.getAbstractedFluid().amount() : 0)) / potentialPouring.get().getFluidInput().getAmount());
                         if (consumed < 1)
                             continue;
@@ -276,7 +276,7 @@ public class BnCEMIRecipeFiller {
         if (context.getScreen().getMenu().kegTank.isEmpty())
             return true;
         AbstractedFluidStack fluidStack = context.getScreen().getMenu().kegTank.getAbstractedFluid();
-        EmiStack emiFluidStack = EmiStack.of(fluidStack.fluid(), fluidStack.componentPatch(), fluidStack.amount());
+        EmiStack emiFluidStack = EmiStack.of(fluidStack.fluid(), fluidStack.amount());
 
         List<EmiStack> discoveredQuickRef = Lists.newArrayList();
 

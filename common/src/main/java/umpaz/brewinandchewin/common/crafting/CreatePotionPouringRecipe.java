@@ -1,21 +1,18 @@
 package umpaz.brewinandchewin.common.crafting;
 
+/*
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.*;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.registry.BnCRecipeSerializers;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidStack;
 import umpaz.brewinandchewin.common.utility.FluidUnit;
-import umpaz.brewinandchewin.common.utility.KegRecipeWrapper;
+import umpaz.brewinandchewin.common.utility.KegContainer;
 
 import java.util.Optional;
 
@@ -25,10 +22,10 @@ public class CreatePotionPouringRecipe extends KegPouringRecipe {
     }
 
     @Override
-    public ItemStack assemble(KegRecipeWrapper recipeWrapper, HolderLookup.Provider provider) {
+    public ItemStack assemble(KegContainer recipeWrapper, RegistryAccess provider) {
         ItemStack stack = super.getResultItem(provider).copy();
         AbstractedFluidStack fluidStack = recipeWrapper.getFluid();
-        if (fluidStack.components().has(DataComponents.POTION_CONTENTS) && fluidStack.components().get(DataComponents.POTION_CONTENTS) != PotionContents.EMPTY)
+        if (fluidStack.fluid() && fluidStack. != PotionContents.EMPTY)
             stack.set(DataComponents.POTION_CONTENTS, fluidStack.components().get(DataComponents.POTION_CONTENTS));
         return stack;
     }
@@ -94,4 +91,4 @@ public class CreatePotionPouringRecipe extends KegPouringRecipe {
             return STREAM_CODEC;
         }
     }
-}
+}*/

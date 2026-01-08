@@ -5,8 +5,8 @@ import umpaz.brewinandchewin.BrewinAndChewin;
 
 public class BnCFluidConstants {
     public static class Textures {
-        public static final ResourceLocation FLUID_STILL_TEXTURE = ResourceLocation.withDefaultNamespace("block/water_still"); //ResourceLocation(BrewinAndChewin.MODID, "block/honey_fluid_still");
-        public static final ResourceLocation FLUID_FLOWING_TEXTURE = ResourceLocation.withDefaultNamespace("block/water_flow"); //ResourceLocation(BrewinAndChewin.MODID, "block/honey_fluid_flow");
+        public static final ResourceLocation FLUID_STILL_TEXTURE = new ResourceLocation("block/water_still"); //ResourceLocation(BrewinAndChewin.MODID, "block/honey_fluid_still");
+        public static final ResourceLocation FLUID_FLOWING_TEXTURE = new ResourceLocation("block/water_flow"); //ResourceLocation(BrewinAndChewin.MODID, "block/honey_fluid_flow");
 
         public static final ResourceLocation FLAXEN_STILL_TEXTURE = BrewinAndChewin.asResource("block/flaxen_cheese_still");
         public static final ResourceLocation FLAXEN_FLOWING_TEXTURE = BrewinAndChewin.asResource("block/flaxen_cheese_flow");
@@ -14,8 +14,8 @@ public class BnCFluidConstants {
         public static final ResourceLocation SCARLET_STILL_TEXTURE = BrewinAndChewin.asResource("block/scarlet_cheese_still");
         public static final ResourceLocation SCARLET_FLOWING_TEXTURE = BrewinAndChewin.asResource("block/scarlet_cheese_flow");
 
-        public static final ResourceLocation HONEY_FLUID_STILL_TEXTURE = ResourceLocation.withDefaultNamespace("block/honey_block_top"); //ResourceLocation(BrewinAndChewin.MODID, "block/honey_fluid_still");
-        public static final ResourceLocation HONEY_FLUID_FLOWING_TEXTURE = ResourceLocation.withDefaultNamespace("block/honey_block_top"); //ResourceLocation(BrewinAndChewin.MODID, "block/honey_fluid_flow");
+        public static final ResourceLocation HONEY_FLUID_STILL_TEXTURE = new ResourceLocation("block/honey_block_top"); //ResourceLocation(BrewinAndChewin.MODID, "block/honey_fluid_still");
+        public static final ResourceLocation HONEY_FLUID_FLOWING_TEXTURE = new ResourceLocation("block/honey_block_top"); //ResourceLocation(BrewinAndChewin.MODID, "block/honey_fluid_flow");
     }
     
     public static class Colors {

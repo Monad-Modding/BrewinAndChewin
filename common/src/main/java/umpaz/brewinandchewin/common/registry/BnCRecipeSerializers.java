@@ -4,7 +4,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import umpaz.brewinandchewin.BrewinAndChewin;
-import umpaz.brewinandchewin.common.crafting.CreatePotionPouringRecipe;
 import umpaz.brewinandchewin.common.crafting.KegPouringRecipe;
 import umpaz.brewinandchewin.common.crafting.KegFermentingRecipe;
 
@@ -21,8 +20,9 @@ public class BnCRecipeSerializers {
     }
 
     private static RecipeSerializer<?> createCreatePotionPouringRecipe() {
+        /*
         if (BrewinAndChewin.getHelper().isModLoaded("create"))
-            return new CreatePotionPouringRecipe.Serializer();
+            return new CreatePotionPouringRecipe.Serializer(); */
         return null;
     }
 }

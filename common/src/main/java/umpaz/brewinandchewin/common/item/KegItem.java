@@ -1,12 +1,9 @@
 package umpaz.brewinandchewin.common.item;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.Block;
 import umpaz.brewinandchewin.client.gui.KegTooltip;
 import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
@@ -38,16 +35,15 @@ public class KegItem extends BlockItem {
 
    @Override
    public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
-      AbstractedFluidStack mealStack = KegBlockEntity.getMealFromItem(stack, Minecraft.getInstance().level.registryAccess());
+      AbstractedFluidStack mealStack = KegBlockEntity.getMealFromItem(stack);
       return Optional.of(new KegTooltip.KegTooltipComponent(mealStack));
    }
 
    private static long getServingCount( ItemStack stack ) {
-      CustomData nbt = stack.get(DataComponents.BLOCK_ENTITY_DATA);
-      if (nbt == null) {
+      if (!stack.hasTag()) {
          return 0;
       } else {
-         AbstractedFluidStack mealStack = KegBlockEntity.getMealFromItem(stack, Minecraft.getInstance().level.registryAccess());
+         AbstractedFluidStack mealStack = KegBlockEntity.getMealFromItem(stack);
          return mealStack.amount();
       }
    }

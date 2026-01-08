@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
+import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.utility.BnCTextUtils;
 
@@ -23,8 +24,8 @@ public class DreadNogItem extends BoozeItem {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity consumer) {
         if (!level.isClientSide) {
-            var badOmen = BrewinAndChewin.getHelper().getFoodProperties(stack, consumer).effects().stream().filter(pair -> pair.effect().getEffect() == MobEffects.BAD_OMEN).findFirst();
-            this.affectConsumerBadOmen(consumer, badOmen.map(pair -> pair.effect().getDuration()).orElse(0), badOmen.map(pair -> pair.effect().getAmplifier()).orElse(-1));
+            var badOmen = BrewinAndChewin.getHelper().getFoodProperties(stack, consumer).getEffects().stream().filter(pair -> pair.getFirst().getEffect() == MobEffects.BAD_OMEN).findFirst();
+            this.affectConsumerBadOmen(consumer, badOmen.map(pair -> pair.getFirst().getDuration()).orElse(0), badOmen.map(pair -> pair.getFirst().getAmplifier()).orElse(-1));
         }
         return super.finishUsingItem(stack, level, consumer);
     }
@@ -36,11 +37,11 @@ public class DreadNogItem extends BoozeItem {
         }
     }
 
-    public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, ctx, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flagIn) {
+        super.appendHoverText(stack, level, tooltip, flagIn);
         for (int i = 0; i < tooltip.size(); ++i) {
             Component tt = tooltip.get(i);
-            if (tt.contains(MobEffects.BAD_OMEN.value().getDisplayName()))
+            if (tt.contains(MobEffects.BAD_OMEN.getDisplayName()))
                 tooltip.set(i, BnCTextUtils.getTranslation("tooltip.dread_nog").withStyle(ChatFormatting.RED));
         }
     }

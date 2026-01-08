@@ -1,12 +1,11 @@
 package umpaz.brewinandchewin.common.crafting;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderLookup;
+import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
@@ -17,7 +16,6 @@ import umpaz.brewinandchewin.common.registry.BnCRecipeTypes;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidStack;
 import umpaz.brewinandchewin.common.utility.FluidUnit;
 import umpaz.brewinandchewin.common.utility.KegContainer;
-import umpaz.brewinandchewin.common.utility.KegRecipeWrapper;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -160,44 +158,78 @@ public class KegPouringRecipe implements Recipe<KegContainer> {
     }
 
     public static class Serializer implements RecipeSerializer<KegPouringRecipe> {
-        public static final MapCodec<KegPouringRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-                AbstractedFluidStack.CODEC.fieldOf("fluid").forGetter(KegPouringRecipe::getRawFluid),
-                ItemStack.CODEC.optionalFieldOf("container").forGetter(KegPouringRecipe::getRawContainer),
-                ItemStack.CODEC.fieldOf("output").forGetter(KegPouringRecipe::getOutput),
-                FluidUnit.CODEC.optionalFieldOf("unit").forGetter(KegPouringRecipe::getRawUnit),
-                Codec.BOOL.optionalFieldOf("strict", false).forGetter(KegPouringRecipe::isStrict),
-                Codec.BOOL.optionalFieldOf("can_fill", true).forGetter(KegPouringRecipe::canFill)
-        ).apply(inst, KegPouringRecipe::new));
-        public static final StreamCodec<RegistryFriendlyByteBuf, KegPouringRecipe> STREAM_CODEC = StreamCodec.of(KegPouringRecipe.Serializer::toNetwork, KegPouringRecipe.Serializer::fromNetwork);
+        @Override
+        public KegPouringRecipe fromJson(ResourceLocation resourceLocation, JsonObject json) {
 
-        public Serializer() {}
+            AbstractedFluidStack fluid = AbstractedFluidStack.fromJson(
+                    GsonHelper.getAsJsonObject(json, "fluid")
+            );
 
-        public MapCodec<KegPouringRecipe> codec() {
-            return CODEC;
+            // Optional container
+            Optional<ItemStack> container = Optional.empty();
+            if (json.has("container")) {
+                container = Optional.of(
+                        ShapedRecipe.itemStackFromJson(
+                                GsonHelper.getAsJsonObject(json, "container")
+                        )
+                );
+            }
+
+            // Required output
+            ItemStack output = ShapedRecipe.itemStackFromJson(
+                    GsonHelper.getAsJsonObject(json, "output")
+            );
+
+            // Optional unit
+            Optional<FluidUnit> unit = Optional.empty();
+            if (json.has("unit")) {
+                unit = Optional.of(FluidUnit.fromJson(json.get("unit")));
+            }
+
+            // Optional flags
+            boolean strict = GsonHelper.getAsBoolean(json, "strict", false);
+            boolean canFill = GsonHelper.getAsBoolean(json, "can_fill", true);
+
+            return new KegPouringRecipe(fluid, container, output, unit, strict, canFill);
         }
 
-        public StreamCodec<RegistryFriendlyByteBuf, KegPouringRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
+        @Override
+        public KegPouringRecipe fromNetwork(ResourceLocation resourceLocation, FriendlyByteBuf buf) {
+            AbstractedFluidStack fluid = AbstractedFluidStack.fromNetwork(buf);
 
-        public static void toNetwork(RegistryFriendlyByteBuf buf, KegPouringRecipe recipe) {
-            AbstractedFluidStack.STREAM_CODEC.encode(buf, recipe.getRawFluid());
-            ByteBufCodecs.optional(ItemStack.STREAM_CODEC).encode(buf, recipe.getRawContainer());
-            ItemStack.STREAM_CODEC.encode(buf, recipe.getOutput());
-            ByteBufCodecs.optional(FluidUnit.STREAM_CODEC).encode(buf, recipe.getRawUnit());
-            ByteBufCodecs.BOOL.encode(buf, recipe.isStrict());
-            ByteBufCodecs.BOOL.encode(buf, recipe.canFill());
-        }
+            Optional<ItemStack> container =
+                    buf.readBoolean() ? Optional.of(buf.readItem()) : Optional.empty();
 
-        public static KegPouringRecipe fromNetwork(RegistryFriendlyByteBuf buf) {
-            AbstractedFluidStack fluid = AbstractedFluidStack.STREAM_CODEC.decode(buf);
-            Optional<ItemStack> container = ByteBufCodecs.optional(ItemStack.STREAM_CODEC).decode(buf);
-            ItemStack output = ItemStack.STREAM_CODEC.decode(buf);
-            Optional<FluidUnit> unit = ByteBufCodecs.optional(FluidUnit.STREAM_CODEC).decode(buf);
+            ItemStack output = buf.readItem();
+
+            Optional<FluidUnit> unit =
+                    buf.readBoolean() ? Optional.of(FluidUnit.fromNetwork(buf)) : Optional.empty();
+
             boolean strict = buf.readBoolean();
             boolean canFill = buf.readBoolean();
 
             return new KegPouringRecipe(fluid, container, output, unit, strict, canFill);
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buf, KegPouringRecipe recipe) {
+            // Fluid (required)
+            recipe.getRawFluid().toNetwork(buf);
+
+            // Optional container
+            buf.writeBoolean(recipe.getRawContainer().isPresent());
+            recipe.getRawContainer().ifPresent(buf::writeItem);
+
+            // Output
+            buf.writeItem(recipe.getOutput());
+
+            // Optional unit
+            buf.writeBoolean(recipe.getRawUnit().isPresent());
+            recipe.getRawUnit().ifPresent(u -> u.toNetwork(buf));
+
+            // Flags
+            buf.writeBoolean(recipe.isStrict());
+            buf.writeBoolean(recipe.canFill());
         }
     }
 }

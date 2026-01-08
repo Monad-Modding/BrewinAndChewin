@@ -1,3 +1,5 @@
+Don't have greenhouse config so this is all just for reference
+
 package umpaz.brewinandchewin.common;
 
 import com.mojang.serialization.Codec;
@@ -301,3 +303,4 @@ public class BnCConfiguration {
         return BrewinAndChewin.getHelper().getPlatform() == BnCPlatform.NEOFORGE ? neoForge : fabric;
     }
 }
+

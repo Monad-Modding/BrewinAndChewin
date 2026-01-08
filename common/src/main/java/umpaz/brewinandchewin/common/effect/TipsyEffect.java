@@ -10,7 +10,7 @@ import umpaz.brewinandchewin.client.particle.DrunkBubbleParticleOptions;
 public class TipsyEffect extends MobEffect {
 
     public TipsyEffect() {
-        super(MobEffectCategory.NEUTRAL, 13208334, getParticle(13208334));
+        super(MobEffectCategory.NEUTRAL, 13208334);
     }
 
     public static ParticleOptions getParticle(int color) {
@@ -18,7 +18,7 @@ public class TipsyEffect extends MobEffect {
     }
 
     @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+    public boolean isDurationEffectTick(int duration, int amplifier) {
         return true;
     }
 }

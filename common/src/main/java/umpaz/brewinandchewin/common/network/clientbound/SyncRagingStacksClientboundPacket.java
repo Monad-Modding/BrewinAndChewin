@@ -15,11 +15,6 @@ import java.util.Optional;
 
 public record SyncRagingStacksClientboundPacket(int entityId, Optional<Integer> stacks) implements BnCPacket {
 
-    public SyncRagingStacksClientboundPacket(int entityId, Optional<Integer> stacks) {
-        this.entityId = entityId;
-        this.stacks = stacks;
-    }
-
     public SyncRagingStacksClientboundPacket(FriendlyByteBuf buf) {
         this(buf.readInt(), buf.readOptional(FriendlyByteBuf::readInt));
     }

@@ -1,19 +1,26 @@
 package umpaz.brewinandchewin.common.registry;
 
-import net.minecraft.core.Registry;
+import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.BrewingStandBlockEntity;
 import umpaz.brewinandchewin.BrewinAndChewin;
-import umpaz.brewinandchewin.common.block.entity.CoasterBlockEntity;
-import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
+import umpaz.brewinandchewin.common.block.entity.*;
+
+import java.util.function.Supplier;
 
 public class BnCBlockEntityTypes {
-    public static final BlockEntityType<KegBlockEntity> KEG = BlockEntityType.Builder.of(BrewinAndChewin.getHelper().supplyBlockEntity(), BnCBlocks.KEG).build(null);
-    public static final BlockEntityType<CoasterBlockEntity> COASTER = BlockEntityType.Builder.of(CoasterBlockEntity::new, BnCBlocks.COASTER).build(null);
+    //*
+    public static final LazyRegistrar<BlockEntityType<?>> TILES = LazyRegistrar.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, BrewinAndChewin.MODID);
 
-    public static void registerAll() {
-        Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BrewinAndChewin.asResource("keg"), KEG);
-        Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, BrewinAndChewin.asResource("coaster"), COASTER);
+
+    public static final Supplier<BlockEntityType<KegBlockEntity>> KEG = TILES.register("keg",
+            () -> FabricBlockEntityTypeBuilder.create(KegBlockEntity::new, BnCBlocks.KEG).build());
+    public static final Supplier<BlockEntityType<CoasterBlockEntity>> COASTER = TILES.register("coaster",
+            () -> FabricBlockEntityTypeBuilder.create(CoasterBlockEntity::new, BnCBlocks.COASTER).build(null));
+
+    public BnCBlockEntityTypes() {
     }
+
+     //*/
 }

@@ -8,7 +8,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -77,13 +77,11 @@ public class FieryFonduePotBlock extends Block {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(
-            ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
-    ) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         return this.takeServing(level, pos, state, player, hand);
     }
 
-    private ItemInteractionResult takeServing(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn) {
+    private InteractionResult takeServing(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn) {
         int servings = state.getValue(LEVEL);
         ItemStack bowl = new ItemStack(Items.BOWL);
         ItemStack fondue = new ItemStack(BnCItems.FIERY_FONDUE);
@@ -101,11 +99,11 @@ public class FieryFonduePotBlock extends Block {
                 Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.BONE));
             }
 
-            level.playSound(null, pos, SoundEvents.ARMOR_EQUIP_GENERIC.value(), SoundSource.BLOCKS, 1.0F, 1.0F);
-            return ItemInteractionResult.SUCCESS;
+            level.playSound(null, pos, SoundEvents.ARMOR_EQUIP_GENERIC, SoundSource.BLOCKS, 1.0F, 1.0F);
+            return InteractionResult.SUCCESS;
         }
         player.displayClientMessage(Component.translatable("farmersdelight.block.feast.use_container", bowl.getHoverName()), true);
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.PASS;
     }
 
     @Override

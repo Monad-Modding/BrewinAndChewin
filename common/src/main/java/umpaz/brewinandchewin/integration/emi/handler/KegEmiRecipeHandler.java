@@ -170,7 +170,7 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
                     case NONE -> destination = 0;
                     case CURSOR -> destination = 1;
                     case INVENTORY -> destination = 2;
-                    default -> throw new MatchException(null, null);
+                    default -> throw new IllegalStateException(null, null);
                 }
                 Minecraft.getInstance().setScreen(context.getScreen());
                 BrewinAndChewin.getHelper().sendServerbound(new EMIFillPouringRecipeServerboundPacket(
@@ -310,7 +310,7 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
             return null;
 
         AbstractedFluidStack stack = context.getScreenHandler().kegTank.getAbstractedFluid();
-        List<EmiIngredient> ingredients = new ArrayList<>(EmiApi.getRecipeManager().getRecipes(BnCRecipeCategories.POURING).stream()
+        List<EmiIngredient> ingredients = new List<>(EmiApi.getRecipeManager().getRecipes(BnCRecipeCategories.POURING).stream()
                 .filter(recipe -> {
                     if (!(recipe instanceof PouringEmiRecipe pouringRecipe))
                         return false;
@@ -319,10 +319,10 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
                             stack.componentPatch(),
                             stack.amount() / pouringRecipe.getFluidInput().getAmount()
                     );
-                    return pouringRecipe.getFluidInput().getEmiStacks().getFirst().isEqual(tankEmiStack);
+                    return pouringRecipe.getFluidInput().getEmiStacks().get(0).isEqual(tankEmiStack);
                 }).map(recipe -> {
                     PouringEmiRecipe pouringRecipe = (PouringEmiRecipe) recipe;
-                    return ((PouringEmiRecipe) recipe).getItemInputs().getFirst().copy().setAmount(stack.amount() / pouringRecipe.getFluidInput().getAmount());
+                    return ((PouringEmiRecipe) recipe).getItemInputs().get(0).copy().setAmount(stack.amount() / pouringRecipe.getFluidInput().getAmount());
                 }).toList());
 
         if (ingredients.isEmpty())

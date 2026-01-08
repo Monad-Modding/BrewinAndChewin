@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
 
 public class BnCTextUtils {
     public static PlayerChatMessage setupChatMessageServer(PlayerChatMessage chatMessage, ServerPlayer sender, long randomSeed) {
-        if (sender.hasEffect(BnCEffects.TIPSY) && sender.getEffect(BnCEffects.TIPSY).getAmplifier() >= BnCConfiguration.COMMON_CONFIG.get().root().levelChatScramble()) {
-            int amplifier = sender.getEffect(BnCEffects.TIPSY).getAmplifier();
-            amplifier = amplifier - BnCConfiguration.COMMON_CONFIG.get().root().levelChatScramble();
+        if (sender.hasEffect(BnCEffects.TIPSY.value()) && sender.getEffect(BnCEffects.TIPSY.value()).getAmplifier() >= 3) {
+            int amplifier = sender.getEffect(BnCEffects.TIPSY.value()).getAmplifier();
+            amplifier = amplifier - 3;
             RandomSource random = RandomSource.create(randomSeed);
 
             StringBuilder textBuilder = new StringBuilder(chatMessage.decoratedContent().getString());

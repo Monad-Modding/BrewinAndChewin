@@ -18,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
+import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.registry.BnCEffects;
 import vectorwing.farmersdelight.common.utility.TextUtils;
@@ -57,7 +58,7 @@ public class BoozeItem extends Item {
 
 
     @Override
-    public int getUseDuration(ItemStack stack, LivingEntity entity) {
+    public int getUseDuration(ItemStack stack) {
         return 32;
     }
 
@@ -74,8 +75,8 @@ public class BoozeItem extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity consumer) {
         if (!level.isClientSide) {
-            var tipsy = BrewinAndChewin.getHelper().getFoodProperties(stack, consumer).effects().stream().filter(pair -> pair.effect().getEffect() == BnCEffects.TIPSY).findFirst();
-            this.affectConsumer(consumer, tipsy.map(pair -> pair.effect().getDuration()).orElse(0), tipsy.map(pair -> pair.effect().getAmplifier()).orElse(-1));
+            var tipsy = BrewinAndChewin.getHelper().getFoodProperties(stack, consumer).getEffects().stream().filter(pair -> pair.getFirst().getEffect() == BnCEffects.TIPSY).findFirst();
+            this.affectConsumer(consumer, tipsy.map(pair -> pair.getFirst().getDuration()).orElse(0), tipsy.map(pair -> pair.getFirst().getAmplifier()).orElse(-1));
         }
         ItemStack containerStack = BrewinAndChewin.getHelper().getCraftingRemainingItem(stack);
         Player player;
@@ -113,22 +114,22 @@ public class BoozeItem extends Item {
 
     //Tipsy Stuff
     public void affectConsumer(LivingEntity consumer, int duration, int potency) {
-       if (consumer.hasEffect(BnCEffects.TIPSY)) {
-           MobEffectInstance effect = consumer.getEffect(BnCEffects.TIPSY);
-           consumer.addEffect(new MobEffectInstance(BnCEffects.TIPSY, effect.getDuration() == -1 ? -1 : effect.getDuration() + duration, Math.min(effect.getAmplifier() + potency + 1, 9), effect.isAmbient(), effect.isVisible(), effect.showIcon()));
+       if (consumer.hasEffect(BnCEffects.TIPSY.value())) {
+           MobEffectInstance effect = consumer.getEffect(BnCEffects.TIPSY.value());
+           consumer.addEffect(new MobEffectInstance(BnCEffects.TIPSY.value(), effect.getDuration() == -1 ? -1 : effect.getDuration() + duration, Math.min(effect.getAmplifier() + potency + 1, 9), effect.isAmbient(), effect.isVisible(), effect.showIcon()));
        }
     }
 
-    public static final Set<Supplier<Holder<MobEffect>>> RED_EFFECTS = Set.of(() -> BnCEffects.TIPSY, () -> MobEffects.BAD_OMEN);
+    public static final Set<Supplier<MobEffect>> RED_EFFECTS = Set.of(() -> BnCEffects.TIPSY.value(), () -> MobEffects.BAD_OMEN);
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag isAdvanced) {
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag isAdvanced) {
         if (!BrewinAndChewin.getHelper().hasFoodEffectTooltip())
             return;
-        TextUtils.addFoodEffectTooltip(stack, tooltip::add, 1.0F, context.tickRate());
+        TextUtils.addFoodEffectTooltip(stack, tooltip, 1.0F);
         for (int i = 0; i < tooltip.size(); ++i) {
             Component component = tooltip.get(i);
-            if (RED_EFFECTS.stream().anyMatch(holder -> component.contains(Component.translatable(holder.get().value().getDescriptionId())))) {
+            if (RED_EFFECTS.stream().anyMatch(holder -> component.contains(Component.translatable(holder.get().getDescriptionId())))) {
                 tooltip.set(i, component.copy().withStyle(ChatFormatting.RED));
             }
         }

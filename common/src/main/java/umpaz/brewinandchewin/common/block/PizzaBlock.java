@@ -46,7 +46,7 @@ public class PizzaBlock extends Block
     }
 
     @Override
-    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (level.isClientSide) {
             if (this.takeServing(level, pos, state, player, player.getUsedItemHand()).consumesAction()) {
                 return InteractionResult.SUCCESS;

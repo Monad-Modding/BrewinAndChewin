@@ -41,7 +41,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
-    public static final MapCodec<KegBlock> CODEC = simpleCodec(KegBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty VERTICAL = BooleanProperty.create("vertical");
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -57,20 +56,16 @@ public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
     }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
-
-    @Override
-    public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         BlockEntity tileEntity = level.getBlockEntity(pos);
+        ItemStack stack = player.getItemInHand(hand);
         if (level.isClientSide())
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         if (tileEntity instanceof KegBlockEntity kegBE) {
             List<ItemStack> itms = stack.isEmpty() ? List.of() : kegBE.extractInWorld(stack, 1, player.getAbilities().instabuild);
             if (!itms.isEmpty()) {
                 itms.forEach(itm -> {
-                    if (!ItemStack.isSameItemSameComponents(itm, stack)) {
+                    if (!ItemStack.isSameItemSameTags(itm, stack)) {
                         if (stack.isEmpty()) {
                             player.setItemInHand(hand, itm);
                         } else if (!player.getInventory().add(itm)) {
@@ -79,12 +74,12 @@ public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
                     }
                 });
                 level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1, 1);
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
             kegBE.updateTemperature();
             BrewinAndChewin.getHelper().openKegMenu(player, kegBE, pos);
         }
-        return ItemInteractionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
 
@@ -124,10 +119,8 @@ public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
-        ItemStack stack = super.getCloneItemStack(level, pos, state);
-        Optional<KegBlockEntity> kegBE = level.getBlockEntity(pos, BnCBlockEntityTypes.KEG);
-        kegBE.ifPresent(blockEntity -> stack.applyComponents(blockEntity.collectComponents()));
+    public ItemStack getCloneItemStack(BlockGetter blockGetter, BlockPos pos, BlockState state) {
+        ItemStack stack = super.getCloneItemStack(blockGetter, pos, state);
         return stack;
     }
 
@@ -174,13 +167,13 @@ public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return BnCBlockEntityTypes.KEG.create(pos, state);
+        return BnCBlockEntityTypes.KEG.get().create(pos, state);
     }
 
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntity) {
         if (level.isClientSide())
             return null;
-        return createTickerHelper(blockEntity, BnCBlockEntityTypes.KEG, KegBlockEntity::fermentingTick);
+        return createTickerHelper(blockEntity, BnCBlockEntityTypes.KEG.get(), KegBlockEntity::fermentingTick);
     }
 }

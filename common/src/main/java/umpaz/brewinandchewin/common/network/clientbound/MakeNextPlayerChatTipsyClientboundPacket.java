@@ -1,21 +1,16 @@
-
-
 package umpaz.brewinandchewin.common.network.clientbound;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.client.utility.BnCClientTextUtils;
+import umpaz.brewinandchewin.platform.BnCPacket;
 
-public record MakeNextPlayerChatTipsyClientboundPacket(int level, long randomSeed, int clearDelayAmount) implements CustomPacketPayload {
+public record MakeNextPlayerChatTipsyClientboundPacket(int level, long randomSeed, int clearDelayAmount) implements BnCPacket {
     public static final ResourceLocation ID = BrewinAndChewin.asResource("make_next_player_chat_tipsy");
-    public static final Type<MakeNextPlayerChatTipsyClientboundPacket> TYPE = new Type<>(ID);
-    public static final StreamCodec<RegistryFriendlyByteBuf, MakeNextPlayerChatTipsyClientboundPacket> STREAM_CODEC = StreamCodec.of(MakeNextPlayerChatTipsyClientboundPacket::encode, MakeNextPlayerChatTipsyClientboundPacket::new);
 
-    public MakeNextPlayerChatTipsyClientboundPacket(RegistryFriendlyByteBuf buf) {
+    public MakeNextPlayerChatTipsyClientboundPacket(FriendlyByteBuf buf) {
         this(buf.readInt(), buf.readLong(), buf.readInt());
     }
 
@@ -25,15 +20,20 @@ public record MakeNextPlayerChatTipsyClientboundPacket(int level, long randomSee
         buf.writeInt(packet.clearDelayAmount());
     }
 
-    @Override
-    public Type<? extends CustomPacketPayload> type() {
-        return TYPE;
-    }
-
     public void handle() {
         BnCClientTextUtils.tipsyMessageLevel = level();
         BnCClientTextUtils.randomSeed = randomSeed();
         BnCClientTextUtils.clearDelayAmount = clearDelayAmount();
         BnCClientTextUtils.generatedRandom = true;
+    }
+
+    @Override
+    public void write(FriendlyByteBuf buf) {
+
+    }
+
+    @Override
+    public void handle(ServerPlayer player) {
+
     }
 }

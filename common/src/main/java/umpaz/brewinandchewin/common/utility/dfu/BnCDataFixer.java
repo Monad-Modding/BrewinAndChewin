@@ -47,7 +47,7 @@ public record BnCDataFixer(DataFixer fixer) {
         // TODO: Fix 1.20.1 capabilities to attachments
         Schema schema100 = builder.addSchema(100, SAME_NAMESPACED);
 
-        return builder.build().fixer();
+        return builder.buildUnoptimized();
     }
 
     private static UnaryOperator<String> createRenamer(String original, String newName) {

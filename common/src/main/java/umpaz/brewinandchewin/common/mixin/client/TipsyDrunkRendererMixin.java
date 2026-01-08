@@ -2,7 +2,6 @@ package umpaz.brewinandchewin.common.mixin.client;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.Mth;
@@ -23,14 +22,14 @@ public class TipsyDrunkRendererMixin {
     @Shadow @Final
     Minecraft minecraft;
 
-    @ModifyVariable(method = "renderLevel", at = @At(value = "INVOKE", target = "Lorg/joml/Matrix4f;mul(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;"))
-    private PoseStack brewinandchewin$renderTipsySpin(PoseStack pose, @Local(argsOnly = true) DeltaTracker delta) {
+    @ModifyVariable(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;prepareCullFrustum(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/phys/Vec3;Lorg/joml/Matrix4f;)V"))
+    private PoseStack brewinandchewin$renderTipsySpin(PoseStack pose, @Local(argsOnly = true) float delta) {
         Player player = Minecraft.getInstance().player;
-        if (player != null && player.hasEffect(BnCEffects.TIPSY)) {
+        if (player != null && player.hasEffect(BnCEffects.TIPSY.value())) {
             float distortionScale = minecraft.options.screenEffectScale().get().floatValue();
             if (distortionScale > 0) {
-                float ticks = ((LevelRendererAccessor)minecraft.levelRenderer).brewinandchewin$getTicks() + delta.getGameTimeDeltaPartialTick(false);
-                int strength = Math.min(player.getEffect(BnCEffects.TIPSY).getAmplifier(), 11);
+                float ticks = ((LevelRendererAccessor)minecraft.levelRenderer).brewinandchewin$getTicks() + delta;
+                int strength = Math.min(player.getEffect(BnCEffects.TIPSY.value()).getAmplifier(), 11);
                 float scaledStrength = strength * distortionScale;
 
                 // left and right
@@ -47,15 +46,15 @@ public class TipsyDrunkRendererMixin {
     }
 
     @ModifyArg(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;prepareCullFrustum(Lnet/minecraft/world/phys/Vec3;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V"), index = 1)
-    private Matrix4f brewinandchewin$cullWithTipsySpin(Matrix4f original, @Local(argsOnly = true) DeltaTracker delta) {
+    private Matrix4f brewinandchewin$cullWithTipsySpin(Matrix4f original, @Local(argsOnly = true) float delta) {
         Player player = Minecraft.getInstance().player;
         // FIXME: It's not perfect, but this'll do.
-        if (player != null && player.hasEffect(BnCEffects.TIPSY)) {
+        if (player != null && player.hasEffect(BnCEffects.TIPSY.value())) {
             float distortionScale = minecraft.options.screenEffectScale().get().floatValue();
             if (distortionScale > 0) {
                 PoseStack pose = new PoseStack();
-                float ticks = ((LevelRendererAccessor)minecraft.levelRenderer).brewinandchewin$getTicks() + delta.getGameTimeDeltaPartialTick(false);
-                int strength = Math.min(player.getEffect(BnCEffects.TIPSY).getAmplifier(), 11);
+                float ticks = ((LevelRendererAccessor)minecraft.levelRenderer).brewinandchewin$getTicks() + delta;
+                int strength = Math.min(player.getEffect(BnCEffects.TIPSY.value()).getAmplifier(), 11);
                 float scaledStrength = strength * distortionScale;
 
                 // left and right

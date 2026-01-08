@@ -11,7 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.integration.emi.BnCRecipeCategories;
-import vectorwing.farmersdelight.FarmersDelight;
 
 import java.util.List;
 

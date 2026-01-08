@@ -4,16 +4,16 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-public class CheeseAgingRecipe implements Recipe<RecipeInput> {
+public class CheeseAgingRecipe implements Recipe<Container> {
     private final Item before;
     private final Item after;
 
@@ -23,12 +23,12 @@ public class CheeseAgingRecipe implements Recipe<RecipeInput> {
     }
 
     @Override
-    public boolean matches(RecipeInput recipeWrapper, Level level) {
+    public boolean matches(Container recipeWrapper, Level level) {
         return false;
     }
 
     @Override
-    public ItemStack assemble(RecipeInput input, HolderLookup.Provider registries) {
+    public ItemStack assemble(Container input, RegistryAccess registries) {
         return new ItemStack(this.after, 1);
     }
 
@@ -38,7 +38,7 @@ public class CheeseAgingRecipe implements Recipe<RecipeInput> {
     }
 
     @Override
-    public ItemStack getResultItem(HolderLookup.Provider registries) {
+    public ItemStack getResultItem(RegistryAccess registries) {
         return new ItemStack(this.after, 1);
     }
 
@@ -47,6 +47,11 @@ public class CheeseAgingRecipe implements Recipe<RecipeInput> {
         NonNullList<Ingredient> retVal = NonNullList.create();
         retVal.add(Ingredient.of(this.before));
         return retVal;
+    }
+
+    @Override
+    public ResourceLocation getId() {
+        return null;
     }
 
     @Override

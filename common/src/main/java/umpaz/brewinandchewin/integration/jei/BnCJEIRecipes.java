@@ -2,7 +2,6 @@ package umpaz.brewinandchewin.integration.jei;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import umpaz.brewinandchewin.common.crafting.KegFermentingRecipe;
 import umpaz.brewinandchewin.common.crafting.KegPouringRecipe;
@@ -29,22 +28,22 @@ public class BnCJEIRecipes {
 
     public List<KegFermentingPouringRecipe> getKegRecipes() {
 
-        List<RecipeHolder<KegFermentingRecipe>> ferms = recipeManager.getAllRecipesFor(BnCRecipeTypes.FERMENTING);
-        List<RecipeHolder<KegPouringRecipe>> pours = recipeManager.getAllRecipesFor(BnCRecipeTypes.KEG_POURING);
+        List<KegFermentingRecipe> ferms = recipeManager.getAllRecipesFor(BnCRecipeTypes.FERMENTING);
+        List<KegPouringRecipe> pours = recipeManager.getAllRecipesFor(BnCRecipeTypes.KEG_POURING);
 
         List<KegFermentingPouringRecipe> kegRecipes = new ArrayList<>();
 
         // add all of ferms
-        for (RecipeHolder<KegFermentingRecipe> fermentingRecipe : ferms) {
-            if (fermentingRecipe.value().getResult().left().isPresent()) {
-                for (RecipeHolder<KegPouringRecipe> pouringRecipe : pours) {
-                    if (pouringRecipe.value().getRawFluid().matches(fermentingRecipe.value().getResult().left().get())) {
-                        kegRecipes.add(new KegFermentingPouringRecipe(fermentingRecipe.id(), fermentingRecipe.value(), pouringRecipe.value(), Minecraft.getInstance().level.registryAccess()));
+        for (KegFermentingRecipe fermentingRecipe : ferms) {
+            if (fermentingRecipe.getResult().left().isPresent()) {
+                for (KegPouringRecipe pouringRecipe : pours) {
+                    if (pouringRecipe.getRawFluid().matches(fermentingRecipe.getResult().left().get())) {
+                        kegRecipes.add(new KegFermentingPouringRecipe(fermentingRecipe.getId(), fermentingRecipe, pouringRecipe, Minecraft.getInstance().level.registryAccess()));
                     }
                 }
             }
             else {
-                kegRecipes.add(new KegFermentingPouringRecipe(fermentingRecipe.id(), fermentingRecipe.value(), null, Minecraft.getInstance().level.registryAccess()));
+                kegRecipes.add(new KegFermentingPouringRecipe(fermentingRecipe.getId(), fermentingRecipe, null, Minecraft.getInstance().level.registryAccess()));
             }
         }
 

@@ -28,7 +28,6 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -309,7 +308,7 @@ public class FermentingTransferServer {
                 resultItemStack = itemStack;
                 result.put(slot, resultItemStack);
             } else {
-                assert ItemStack.isSameItemSameComponents(resultItemStack, itemStack);
+                assert ItemStack.isSameItemSameTags(resultItemStack, itemStack);
                 resultItemStack.grow(itemStack.getCount());
             }
             if (resultItemStack.getCount() == slot.getMaxStackSize(resultItemStack)) {
@@ -352,10 +351,10 @@ public class FermentingTransferServer {
             ItemStack stack = slotStack.copy();
 
             int fluidStackAmount = 1;
-            List<KegPouringRecipe> pouringRecipes = player.level().getRecipeManager().getAllRecipesFor(BnCRecipeTypes.KEG_POURING).stream().map(RecipeHolder::value).filter(kegPouringRecipe -> (pouringRecipeSource.left().isEmpty() || kegPouringRecipe.canFill()) && pouringRecipeSource.map(recipe -> recipe.getFluidIngredient().orElseThrow().ingredient().matches(kegPouringRecipe.getFluid(stack)), menu -> menu.kegTank.getAbstractedFluid().matches(kegPouringRecipe.getFluid(stack)))).toList();
+            List<KegPouringRecipe> pouringRecipes = player.level().getRecipeManager().getAllRecipesFor(BnCRecipeTypes.KEG_POURING).stream().filter(kegPouringRecipe -> (pouringRecipeSource.left().isEmpty() || kegPouringRecipe.canFill()) && pouringRecipeSource.map(recipe -> recipe.getFluidIngredient().orElseThrow().ingredient().matches(kegPouringRecipe.getFluid(stack)), menu -> menu.kegTank.getAbstractedFluid().matches(kegPouringRecipe.getFluid(stack)))).toList();
             Optional<KegPouringRecipe> optionalData = pouringRecipes.stream().filter(pouring -> {
                 if (pouring.isStrict())
-                    return ItemStack.isSameItemSameComponents(stack, pouringRecipeSource.map(ignored -> pouring.getOutput(), ignored -> pouring.getContainer()));
+                    return ItemStack.isSameItemSameTags(stack, pouringRecipeSource.map(ignored -> pouring.getOutput(), ignored -> pouring.getContainer()));
                 return ItemStack.isSameItem(stack, pouringRecipeSource.map(ignored -> pouring.getOutput(), ignored -> pouring.getContainer()));
             }).findFirst();
             if (optionalData.isPresent())
@@ -399,10 +398,10 @@ public class FermentingTransferServer {
 
             int toExtract = stack.getCount();
             if (recipe != null && recipe.getFluidIngredient().isPresent()) {
-                List<KegPouringRecipe> pouringRecipes = level.getRecipeManager().getAllRecipesFor(BnCRecipeTypes.KEG_POURING).stream().map(RecipeHolder::value).filter(kegPouringRecipe -> (!insert || kegPouringRecipe.canFill()) && recipe.getFluidIngredient().get().ingredient().matches(kegPouringRecipe.getFluid(stack))).toList();
+                List<KegPouringRecipe> pouringRecipes = level.getRecipeManager().getAllRecipesFor(BnCRecipeTypes.KEG_POURING).stream().filter(kegPouringRecipe -> (!insert || kegPouringRecipe.canFill()) && recipe.getFluidIngredient().get().ingredient().matches(kegPouringRecipe.getFluid(stack))).toList();
                 Optional<KegPouringRecipe> optionalData = pouringRecipes.stream().filter(pouring -> {
                     if (pouring.isStrict())
-                        return ItemStack.isSameItemSameComponents(stack, pouring.getOutput());
+                        return ItemStack.isSameItemSameTags(stack, pouring.getOutput());
                     return ItemStack.isSameItem(stack, pouring.getOutput());
                 }).findFirst();
                 if (optionalData.isPresent())
@@ -506,7 +505,7 @@ public class FermentingTransferServer {
     private static Optional<Slot> getValidatedHintSlot(Player player, ItemStack stack, Slot hint) {
         if (hint.mayPickup(player) &&
                 !hint.getItem().isEmpty() &&
-                ItemStack.isSameItemSameComponents(stack, hint.getItem())
+                ItemStack.isSameItemSameTags(stack, hint.getItem())
         ) {
             return Optional.of(hint);
         }
@@ -518,7 +517,7 @@ public class FermentingTransferServer {
         return slots.stream()
                 .filter(slot -> {
                     ItemStack slotStack = slot.getItem();
-                    return ItemStack.isSameItemSameComponents(itemStack, slotStack) &&
+                    return ItemStack.isSameItemSameTags(itemStack, slotStack) &&
                             slot.mayPickup(player);
                 })
                 .findFirst();

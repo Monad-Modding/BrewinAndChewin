@@ -4,7 +4,6 @@ import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiRenderable;
 import net.minecraft.resources.ResourceLocation;
 import umpaz.brewinandchewin.BrewinAndChewin;
-import vectorwing.farmersdelight.FarmersDelight;
 
 public class BnCRecipeCategories {
     private static final ResourceLocation SIMPLIFIED_TEXTURES = BrewinAndChewin.asResource("textures/gui/emi/simplified.png");

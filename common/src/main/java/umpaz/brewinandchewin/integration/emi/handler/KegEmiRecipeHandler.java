@@ -288,7 +288,7 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
 
     private static boolean hasFluid(@Nullable EmiIngredient fluidIngredient, EmiCraftContext<KegMenu> context) {
         AbstractedFluidStack stack = context.getScreenHandler().kegTank.getAbstractedFluid();
-        return (fluidIngredient == null && stack.isEmpty() || fluidIngredient != null && fluidIngredient.getEmiStacks().stream().anyMatch(emiStack -> emiStack.isEqual(EmiStack.of(stack.fluid(), stack.componentPatch(), stack.amount()))));
+        return (fluidIngredient == null && stack.isEmpty() || fluidIngredient != null && fluidIngredient.getEmiStacks().stream().anyMatch(emiStack -> emiStack.isEqual(EmiStack.of(stack.fluid(), stack.amount()))));
     }
 
     private static boolean hasFluidOrAssociatedItem(@Nullable EmiIngredient fluidIngredient, @Nullable EmiIngredient fluidItemIngredient, EmiCraftContext<KegMenu> context) {
@@ -300,9 +300,9 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
     public static EmiIngredient getEmptyingIngredient(KegEmiRecipe kegRecipe, EmiCraftContext<KegMenu> context) {
         if (context.getScreenHandler().kegTank.isEmpty() || kegRecipe.getFluidInput() != null && kegRecipe.getFluidInput().getEmiStacks().stream().anyMatch(emiStack -> {
             AbstractedFluidStack stack = context.getScreenHandler().kegTank.getAbstractedFluid();
+            // had a component patch
             EmiStack tankEmiStack = EmiStack.of(
                     stack.fluid(),
-                    stack.componentPatch(),
                     stack.amount() / kegRecipe.getFluidInput().getAmount()
             );
             return emiStack.isEqual(tankEmiStack);
@@ -310,13 +310,12 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
             return null;
 
         AbstractedFluidStack stack = context.getScreenHandler().kegTank.getAbstractedFluid();
-        List<EmiIngredient> ingredients = new List<>(EmiApi.getRecipeManager().getRecipes(BnCRecipeCategories.POURING).stream()
+        List<EmiIngredient> ingredients = new ArrayList<>(EmiApi.getRecipeManager().getRecipes(BnCRecipeCategories.POURING).stream()
                 .filter(recipe -> {
                     if (!(recipe instanceof PouringEmiRecipe pouringRecipe))
                         return false;
                     EmiStack tankEmiStack = EmiStack.of(
                             stack.fluid(),
-                            stack.componentPatch(),
                             stack.amount() / pouringRecipe.getFluidInput().getAmount()
                     );
                     return pouringRecipe.getFluidInput().getEmiStacks().get(0).isEqual(tankEmiStack);
@@ -376,7 +375,7 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
             for (EmiStack stack : recipe.getFluidInput().getEmiStacks()) {
                 long desired = stack.getAmount();
                 AbstractedFluidStack tankStack = context.getScreenHandler().kegTank.getAbstractedFluid();
-                EmiStack tankEmiStack = EmiStack.of(tankStack.fluid(), tankStack.componentPatch(), tankStack.amount());
+                EmiStack tankEmiStack = EmiStack.of(tankStack.fluid(), tankStack.amount());
                 if (tankStack.amount() >= desired && stack.isEqual(tankEmiStack)) {
                     success = true;
                     break;
@@ -398,7 +397,19 @@ public class KegEmiRecipeHandler implements StandardRecipeHandler<KegMenu> {
         FILL,
         EMPTY;
 
-        public static final IntFunction<InputType> BY_ID = ByIdMap.continuous(InputType::ordinal, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
-        public static final StreamCodec<ByteBuf, InputType> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, InputType::ordinal);
+        // Write to buffer
+        public void write(FriendlyByteBuf buf) {
+            buf.writeByte(this.ordinal());
+        }
+
+        // Read from buffer
+        public static InputType read(FriendlyByteBuf buf) {
+            int id = buf.readByte();
+            InputType[] values = values();
+            if (id < 0 || id >= values.length) {
+                return ITEM; // default fallback
+            }
+            return values[id];
+        }
     }
 }

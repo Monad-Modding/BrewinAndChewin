@@ -46,7 +46,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
@@ -275,10 +274,10 @@ public class FermentingTransfer {
 
 
                 if (!menu.kegTank.isEmpty() && (!maxTransfer || recipe.getFluidIngredient().isEmpty() || !recipe.getFluidIngredient().get().ingredient().matches(menu.kegTank.getAbstractedFluid()))) {
-                    List<KegPouringRecipe> pouringRecipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(BnCRecipeTypes.KEG_POURING).stream().map(RecipeHolder::value).filter(kegPouringRecipe -> kegPouringRecipe.getFluid(slotTuple.getValue()).matches(menu.kegTank.getAbstractedFluid())).toList();
+                    List<KegPouringRecipe> pouringRecipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(BnCRecipeTypes.KEG_POURING).stream().filter(kegPouringRecipe -> kegPouringRecipe.getFluid(slotTuple.getValue()).matches(menu.kegTank.getAbstractedFluid())).toList();
                     Optional<KegPouringRecipe> optionalData = pouringRecipes.stream().filter(pouring -> {
                         if (pouring.isStrict())
-                            return ItemStack.isSameItemSameComponents(slotTuple.getValue(), pouring.getContainer());
+                            return ItemStack.isSameItemSameTags(slotTuple.getValue(), pouring.getContainer());
                         return ItemStack.isSameItem(slotTuple.getValue(), pouring.getContainer());
                     }).findFirst();
                     if (optionalData.isPresent()) {
@@ -315,10 +314,10 @@ public class FermentingTransfer {
                 }
 
                 if (recipe.getFluidIngredient().isPresent() && !requiredFluidStack.isEmpty() && requiredFluidStack.getIngredients(platformFluidHelper.getFluidIngredientType()).findFirst().isPresent()) {
-                    List<KegPouringRecipe> pouringRecipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(BnCRecipeTypes.KEG_POURING).stream().map(RecipeHolder::value).filter(kegPouringRecipe -> kegPouringRecipe.canFill() && recipe.getFluidIngredient().get().ingredient().matches(kegPouringRecipe.getFluid(slotTuple.getValue()))).toList();
+                    List<KegPouringRecipe> pouringRecipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(BnCRecipeTypes.KEG_POURING).stream().filter(kegPouringRecipe -> kegPouringRecipe.canFill() && recipe.getFluidIngredient().get().ingredient().matches(kegPouringRecipe.getFluid(slotTuple.getValue()))).toList();
                     Optional<KegPouringRecipe> optionalData = pouringRecipes.stream().filter(pouring -> {
                         if (pouring.isStrict())
-                            return ItemStack.isSameItemSameComponents(slotTuple.getValue(), pouring.getOutput());
+                            return ItemStack.isSameItemSameTags(slotTuple.getValue(), pouring.getOutput());
                         return ItemStack.isSameItem(slotTuple.getValue(), pouring.getOutput());
                     }).findFirst();
                     long tankAmount = recipe.getFluidIngredient().get().ingredient().matches(menu.kegTank.getAbstractedFluid()) ? menu.kegTank.getAbstractedFluid().amount() : 0;

@@ -1,6 +1,6 @@
 package umpaz.brewinandchewin.integration.jei;
 
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -21,7 +21,7 @@ public class KegFermentingPouringRecipe extends KegFermentingRecipe {
 
     private final int catalystAmount;
 
-    KegFermentingPouringRecipe(ResourceLocation id, KegFermentingRecipe fermentingRecipe, @Nullable KegPouringRecipe pouringRecipe, HolderLookup.Provider provider) {
+    KegFermentingPouringRecipe(ResourceLocation id, KegFermentingRecipe fermentingRecipe, @Nullable KegPouringRecipe pouringRecipe, RegistryAccess registryAccess) {
         super(fermentingRecipe.getIngredients(), fermentingRecipe.getRecipeBookCategory(), fermentingRecipe.getFluidIngredient(), fermentingRecipe.getRawUnit(), fermentingRecipe.getResult(), fermentingRecipe.getExperience(), fermentingRecipe.getFermentTime(), fermentingRecipe.getTemperature());
         if (fermentingRecipe.getResult().right().isPresent()) {
             this.output = fermentingRecipe.getResult().right().get().copy();
@@ -31,7 +31,7 @@ public class KegFermentingPouringRecipe extends KegFermentingRecipe {
 
         if (pouringRecipe != null) {
             this.catalyst = pouringRecipe.getContainer();
-            this.catalystAmount = pouringRecipe.getResultItem(provider).getCount();
+            this.catalystAmount = pouringRecipe.getResultItem(registryAccess).getCount();
             this.pouringAmount = pouringRecipe.getRawFluid().amount();
             this.pouringUnit = pouringRecipe.getUnit();
         } else {

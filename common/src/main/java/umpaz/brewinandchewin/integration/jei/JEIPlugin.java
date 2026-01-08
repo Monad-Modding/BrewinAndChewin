@@ -9,8 +9,6 @@ import mezz.jei.api.ingredients.ITypedIngredient;
 import mezz.jei.api.registration.*;
 import mezz.jei.api.runtime.IClickableIngredient;
 import net.minecraft.client.renderer.Rect2i;
-import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.core.component.PatchedDataComponentMap;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import umpaz.brewinandchewin.BrewinAndChewin;
@@ -57,14 +55,12 @@ public class JEIPlugin implements IModPlugin {
             @Override
             public Optional<IClickableIngredient<?>> getClickableIngredientUnderMouse(KegScreen containerScreen, double mouseX, double mouseY) {
                 if (bounds.contains((int) mouseX - containerScreen.getRectangle().left(), (int) mouseY - containerScreen.getRectangle().top())) {
-                    return Optional.of(new IClickableIngredient<>() {
-                        @Override
+                    return Optional.of(new IClickableIngredient<Object>() {
                         public ITypedIngredient<?> getIngredient() {
-                            Optional<ITypedIngredient<Object>> aef = registration.getJeiHelpers().getIngredientManager().createTypedIngredient((IIngredientType<Object>) registration.getJeiHelpers().getPlatformFluidHelper().getFluidIngredientType(), registration.getJeiHelpers().getPlatformFluidHelper().create(containerScreen.getMenu().kegTank.getAbstractedFluid().fluid().builtInRegistryHolder(), containerScreen.getMenu().kegTank.getAbstractedFluid().amount(), containerScreen.getMenu().kegTank.getAbstractedFluid().components() instanceof PatchedDataComponentMap patched ? patched.asPatch() : DataComponentPatch.EMPTY));
+                            Optional<ITypedIngredient<Object>> aef = registration.getJeiHelpers().getIngredientManager().createTypedIngredient((IIngredientType<Object>) registration.getJeiHelpers().getPlatformFluidHelper().getFluidIngredientType(), registration.getJeiHelpers().getPlatformFluidHelper().create(containerScreen.getMenu().kegTank.getAbstractedFluid().fluid().builtInRegistryHolder().value(), containerScreen.getMenu().kegTank.getAbstractedFluid().amount()));
                             return aef.orElse(null);
                         }
 
-                        @Override
                         public IIngredientType<Object> getIngredientType() {
                             return (IIngredientType)registration.getJeiHelpers().getPlatformFluidHelper().getFluidIngredientType();
                         }

@@ -1,6 +1,5 @@
 package umpaz.brewinandchewin.integration.emi.recipe;
 
-import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
@@ -17,7 +16,6 @@ import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.utility.BnCTextUtils;
 import umpaz.brewinandchewin.integration.emi.BnCRecipeCategories;
 import umpaz.brewinandchewin.integration.emi.widget.BnCFluidWidget;
-import vectorwing.farmersdelight.common.utility.ClientRenderUtils;
 
 import java.util.*;
 
@@ -174,17 +172,20 @@ public class FermentingEmiRecipe implements KegEmiRecipe {
             public void drawBackground(GuiGraphics draw, int mouseX, int mouseY, float delta) {}
         });
     }
+    public static boolean isCursorInsideBounds(double x, double y, double width, double height, double mouseX, double mouseY) {
+        return mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
+    }
 
     public List<ClientTooltipComponent> getTooltips(double mouseX, double mouseY) {
         List<ClientTooltipComponent> tooltip = new ArrayList<>();
-        if (ClientRenderUtils.isCursorInsideBounds(68, 2, 22, 28, mouseX, mouseY)) {
+        if (isCursorInsideBounds(68, 2, 22, 28, mouseX, mouseY)) {
             if (cookTime > 0) {
                 tooltip.add(ClientTooltipComponent.create(Component.translatable("emi.cooking.time", cookTime / 20F).getVisualOrderText()));
             }
             if (experience > 0) {
                 tooltip.add(ClientTooltipComponent.create(Component.translatable("emi.cooking.experience", experience).getVisualOrderText()));
             }
-        } else if (ClientRenderUtils.isCursorInsideBounds(26, 41, 44, 5, mouseX, mouseY)) {
+        } else if (isCursorInsideBounds(26, 41, 44, 5, mouseX, mouseY)) {
             MutableComponent key = switch (temperature) {
                 case 1 -> BnCTextUtils.getTranslation("container.keg.cold");
                 case 2 -> BnCTextUtils.getTranslation("container.keg.chilly");

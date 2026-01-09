@@ -1,13 +1,12 @@
 package umpaz.brewinandchewin.fabric.client.gui;
 
+/* decided to shelve appleskin compat for now
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -16,7 +15,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
 import squeek.appleskin.client.HUDOverlayHandler;
 import umpaz.brewinandchewin.BrewinAndChewin;
-import umpaz.brewinandchewin.common.BnCConfiguration;
 import umpaz.brewinandchewin.common.registry.BnCEffects;
 import vectorwing.farmersdelight.common.registry.ModEffects;
 
@@ -24,22 +22,25 @@ import java.util.Random;
 
 public class BnCHUDOverlays {
     public static int foodIconsOffset;
-    private static final ResourceLocation NOURISHMENT_ICONS_TEXTURE = ResourceLocation.fromNamespaceAndPath("farmersdelight", "textures/gui/fd_icons.png");
+    private static final ResourceLocation NOURISHMENT_ICONS_TEXTURE = new ResourceLocation("farmersdelight", "textures/gui/fd_icons.png");
 
     public static final ResourceLocation FOOD_EMPTY_INTOXICATION_TEXTURE = BrewinAndChewin.asResource("hud/food_empty_intoxication");
     public static final ResourceLocation FOOD_HALF_INTOXICATION_TEXTURE = BrewinAndChewin.asResource("hud/food_half_intoxication");
     public static final ResourceLocation FOOD_FULL_INTOXICATION_TEXTURE = BrewinAndChewin.asResource("hud/food_full_intoxication");
 
-    private static final ResourceLocation NAUSEA_LOCATION = ResourceLocation.withDefaultNamespace("textures/misc/nausea.png");
+    private static final ResourceLocation NAUSEA_LOCATION = new ResourceLocation("textures/misc/nausea.png");
 
     private static float tipsyTransparencyModifier = 0.0F;
 
     public static void init() {
-        HudRenderCallback.EVENT.register(IntoxicationOverlay.INSTANCE::render);
+        HudRenderCallback.EVENT.register((graphics, tickDelta) -> {
+            IntoxicationOverlay.INSTANCE.render(graphics, tickDelta);
+            TipsyOverlay.INSTANCE.render(graphics, tickDelta);
+        });
     }
 
-    public abstract static class BaseOverlay implements LayeredDraw.Layer {
-        public boolean shouldRenderOverlay(Minecraft minecraft, Player player, GuiGraphics gui, DeltaTracker delta) {
+    public abstract static class BaseOverlay{
+        public boolean shouldRenderOverlay(Minecraft minecraft, Player player, GuiGraphics gui, float f) {
             return !minecraft.options.hideGui && minecraft.gameMode != null && minecraft.gameMode.canHurtPlayer();
         }
     }
@@ -49,16 +50,15 @@ public class BnCHUDOverlays {
 
         protected TipsyOverlay() {}
 
-        @Override
-        public void render(GuiGraphics gui, DeltaTracker delta) {
+        public void render(GuiGraphics gui, float f) {
             Minecraft mc = Minecraft.getInstance();
-            if (shouldRenderOverlay(mc, mc.player, gui, delta)) {
-                MobEffectInstance effect = mc.player.getEffect(BnCEffects.TIPSY);
+            if (shouldRenderOverlay(mc, mc.player, gui, f)) {
+                MobEffectInstance effect = mc.player.getEffect(BnCEffects.TIPSY.value());
                 float distortionScale = mc.options.screenEffectScale().get().floatValue();
                 float tipsyScale = Math.min((1 + effect.getAmplifier()) / 10.0F * 0.4F, 0.4F);
                 if (distortionScale < 1.0F && tipsyScale > 0.0F) {
                     renderTipsyOverlay(gui, (1.0F - distortionScale) * tipsyScale * tipsyTransparencyModifier);
-                    float partialTickModifier = delta.getGameTimeDeltaTicks() * (effect.endsWithin(60) ? -0.006F : 0.007F);
+                    float partialTickModifier = f * (effect.endsWithin(60) ? -0.006F : 0.007F);
                     tipsyTransparencyModifier = Mth.clamp(tipsyTransparencyModifier + partialTickModifier, 0.0F, 1.0F);
                 } else
                     tipsyTransparencyModifier = 0.0F;
@@ -67,8 +67,8 @@ public class BnCHUDOverlays {
         }
 
         @Override
-        public boolean shouldRenderOverlay(Minecraft minecraft, Player player, GuiGraphics gui, DeltaTracker delta) {
-            return !player.hasEffect(MobEffects.CONFUSION) && player.hasEffect(BnCEffects.TIPSY);
+        public boolean shouldRenderOverlay(Minecraft minecraft, Player player, GuiGraphics gui, float f) {
+            return !player.hasEffect(MobEffects.CONFUSION) && player.hasEffect(BnCEffects.TIPSY.value());
         }
     }
 
@@ -77,15 +77,15 @@ public class BnCHUDOverlays {
 
         protected IntoxicationOverlay() {}
 
-        @Override
-        public void render(GuiGraphics gui, DeltaTracker deltaTracker) {
-            if (!BnCConfiguration.CLIENT_CONFIG.get().intoxicationFoodOverlay())
+        public void render(GuiGraphics gui, float f) {
+            // used to be a config
+            if (!true)
                 return;
 
             Minecraft minecraft = Minecraft.getInstance();
             Player player = minecraft.player;
 
-            if (!shouldRenderOverlay(minecraft, player, gui, deltaTracker))
+            if (!shouldRenderOverlay(minecraft, player, gui, f))
                 return;
             int top = foodIconsOffset;
             int right = minecraft.getWindow().getGuiScaledWidth() / 2 + 91;
@@ -94,8 +94,8 @@ public class BnCHUDOverlays {
         }
 
         @Override
-        public boolean shouldRenderOverlay(Minecraft minecraft, Player player, GuiGraphics guiGraphics, DeltaTracker guiTicks) {
-            return super.shouldRenderOverlay(minecraft, player, guiGraphics, guiTicks) && player != null && player.hasEffect(BnCEffects.INTOXICATION);
+        public boolean shouldRenderOverlay(Minecraft minecraft, Player player, GuiGraphics guiGraphics, float f) {
+            return super.shouldRenderOverlay(minecraft, player, guiGraphics, f) && player != null && player.hasEffect(BnCEffects.INTOXICATION.value());
         }
     }
 
@@ -128,31 +128,37 @@ public class BnCHUDOverlays {
 
             float effectiveHungerOfBar = (float) player.getFoodData().getFoodLevel() / 2.0F - (float) i;
 
-            ResourceLocation texture = player.hasEffect(ModEffects.NOURISHMENT) ? NOURISHMENT_ICONS_TEXTURE : getIntoxicationSprite(effectiveHungerOfBar >= 0.5F && effectiveHungerOfBar < 1.0F);
+            ResourceLocation texture = player.hasEffect(ModEffects.NOURISHMENT.get()) ? NOURISHMENT_ICONS_TEXTURE : getIntoxicationSprite(effectiveHungerOfBar >= 0.5F && effectiveHungerOfBar < 1.0F);
 
-            if (player.hasEffect(ModEffects.NOURISHMENT)) {
+            if (player.hasEffect(ModEffects.NOURISHMENT.get())) {
                 boolean isPlayerHealingWithSaturationAndNourishment =
                                 player.level().getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION)
                                 && player.isHurt()
                                 && player.getFoodData().getFoodLevel() >= 18;
                 int naturalHealingOffset = isPlayerHealingWithSaturationAndNourishment ? 18 : 0;
 
+                RenderSystem.setShaderTexture(0, texture);
                 graphics.blit(texture, x, y, 0, 0, 9, 9);
 
                 if (effectiveHungerOfBar >= 1.0F) {
+                    RenderSystem.setShaderTexture(0, texture);
                     graphics.blit(texture, x, y, 18 + naturalHealingOffset, 0, 9, 9);
                 } else if (effectiveHungerOfBar >= 0.5F) {
+                    RenderSystem.setShaderTexture(0, texture);
                     graphics.blit(texture, x, y, 9 + naturalHealingOffset, 0, 9, 9);
                 }
                 continue;
             }
 
-            graphics.blitSprite(FOOD_EMPTY_INTOXICATION_TEXTURE, x, y, 9, 9);
+            RenderSystem.setShaderTexture(0, FOOD_EMPTY_INTOXICATION_TEXTURE);
+            graphics.blit(FOOD_EMPTY_INTOXICATION_TEXTURE, x, y, 0, 0, 9, 9);
 
             if (effectiveHungerOfBar >= 1.0F) {
-                graphics.blitSprite(texture, x, y, 9, 9);
+                RenderSystem.setShaderTexture(0, texture);
+                graphics.blit(texture, x, y, 0, 0, 9, 9);
             } else if (effectiveHungerOfBar >= 0.5F) {
-                graphics.blitSprite(texture, x, y, 9, 9);
+                RenderSystem.setShaderTexture(0, texture);
+                graphics.blit(texture, x, y, 0, 0, 9, 9);
             }
         }
 
@@ -168,3 +174,5 @@ public class BnCHUDOverlays {
         return FOOD_FULL_INTOXICATION_TEXTURE;
     }
 }
+
+ */

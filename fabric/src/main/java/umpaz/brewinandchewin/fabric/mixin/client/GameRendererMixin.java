@@ -13,7 +13,7 @@ import umpaz.brewinandchewin.fabric.client.gui.BnCHUDOverlays;
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiling/ProfilerFiller;popPush(Ljava/lang/String;)V", shift = At.Shift.AFTER))
-    private void brewinandchewin$renderScreen(DeltaTracker delta, boolean bl, CallbackInfo ci, @Local GuiGraphics gui) {
+    private void brewinandchewin$renderScreen(float f, boolean bl, CallbackInfo ci, @Local GuiGraphics gui) {
         BnCHUDOverlays.TipsyOverlay.INSTANCE.render(gui, delta);
     }
 }

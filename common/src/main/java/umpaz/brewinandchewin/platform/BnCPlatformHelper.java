@@ -75,8 +75,6 @@ public interface BnCPlatformHelper {
     }
     Slot createKegSlot(AbstractedItemHandler inventory, int slot, int x, int y, boolean canInsert, @Nullable Pair<ResourceLocation, ResourceLocation> noItemIcon);
 
-    Ingredient createStrictFillPickerIngredient(List<KegStackedContents.PouringEntry> fluidOutputStacks);
-
     KegContainer createRecipeWrapper(AbstractedItemHandler itemHandler, AbstractedFluidTank fluidTank);
 
     SidedKegWrapper createSidedKegWrapper(AbstractedItemHandler inventory, Direction direction);

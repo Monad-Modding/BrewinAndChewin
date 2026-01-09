@@ -1,19 +1,13 @@
 package umpaz.brewinandchewin.client.utility;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.PlayerChatMessage;
-import net.minecraft.network.chat.contents.TranslatableContents;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.SignText;
-import umpaz.brewinandchewin.common.BnCConfiguration;
 import umpaz.brewinandchewin.common.registry.BnCEffects;
 
 import java.util.*;

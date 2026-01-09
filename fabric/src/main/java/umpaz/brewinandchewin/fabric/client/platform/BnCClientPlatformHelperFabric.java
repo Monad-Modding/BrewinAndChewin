@@ -15,7 +15,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import umpaz.brewinandchewin.common.BnCConfiguration;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidStack;
 import umpaz.brewinandchewin.fabric.client.model.CoasterWrappedModel;
 import umpaz.brewinandchewin.platform.client.BnCClientPlatformHelper;
@@ -47,7 +46,7 @@ public class BnCClientPlatformHelperFabric implements BnCClientPlatformHelper {
             float green = ((tintColor >> 8) & 0xFF) / 255f;
             float blue = (tintColor & 0xFF) / 255f;
 
-            float capacity = Math.min(BnCConfiguration.COMMON_CONFIG.get().keg().localizedCapacity(), stack.unit().convertToLoader(stack.amount())) / (float) BnCConfiguration.COMMON_CONFIG.get().keg().localizedCapacity();
+            float capacity = Math.min(81000L, stack.unit().convertToLoader(stack.amount())) / (float) 81000L;
             if (capacity > 0.57) {
                 int y1 = y + (int) (12 * (1 - ((capacity - 0.57F) / .43F)));
                 int y2 = y + 12;

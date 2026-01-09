@@ -8,8 +8,6 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
-import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.core.component.PatchedDataComponentMap;
 import net.minecraft.world.item.ItemStack;
 import umpaz.brewinandchewin.common.container.AbstractedFluidTank;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidStack;
@@ -49,7 +47,7 @@ public class KegFluidItemStorageFabric implements AbstractedFluidTank {
         if (storage instanceof StorageView<?> view) {
             FluidVariant variant = (FluidVariant)view.getResource();
             AmountedFluidVariant amounted = new AmountedFluidVariant(variant, view.getAmount(), FluidUnit.DROPLET);
-            return new AbstractedFluidStack(variant.getFluid(), view.getAmount(), variant.getComponentMap(), FluidUnit.DROPLET, amounted);
+            return new AbstractedFluidStack(variant.getFluid(), view.getAmount(), FluidUnit.DROPLET, amounted);
         }
         return AbstractedFluidStack.EMPTY;
     }
@@ -58,7 +56,7 @@ public class KegFluidItemStorageFabric implements AbstractedFluidTank {
     public void setAbstractedFluid(AbstractedFluidStack stack) {
         if (storage.supportsInsertion()) {
             try (Transaction t = Transaction.openOuter()) {
-                FluidVariant variant = FluidVariant.of(stack.fluid(), stack.components() instanceof PatchedDataComponentMap patched ? patched.asPatch() : DataComponentPatch.EMPTY);
+                FluidVariant variant = FluidVariant.of(stack.fluid());
                 storage.insert(variant, capacity, t);
                 t.commit();
             }
@@ -69,11 +67,11 @@ public class KegFluidItemStorageFabric implements AbstractedFluidTank {
     public AbstractedFluidStack fill(AbstractedFluidStack stack, boolean simulate) {
         if (storage.supportsInsertion()) {
             try (Transaction t = Transaction.openOuter()) {
-                FluidVariant variant = FluidVariant.of(stack.fluid(), stack.components() instanceof PatchedDataComponentMap patched ? patched.asPatch() : DataComponentPatch.EMPTY);
+                FluidVariant variant = FluidVariant.of(stack.fluid());
                 long newFill = storage.insert(variant, capacity, t);
                 if (!simulate)
                     t.commit();
-                return new AbstractedFluidStack(variant.getFluid(), newFill, variant.getComponentMap(), FluidUnit.DROPLET, new AmountedFluidVariant(variant, newFill, FluidUnit.DROPLET));
+                return new AbstractedFluidStack(variant.getFluid(), newFill, FluidUnit.DROPLET, new AmountedFluidVariant(variant, newFill, FluidUnit.DROPLET));
             }
         }
         return getAbstractedFluid();
@@ -85,7 +83,7 @@ public class KegFluidItemStorageFabric implements AbstractedFluidTank {
             try (Transaction t = Transaction.openOuter()) {
                 SingleSlotStorage<FluidVariant> singleSlot = slottedStorage.getSlot(slot);
                 long extractedAmount = storage.extract(singleSlot.getResource(), unit.convertToLoader(maxDrain), t);
-                AbstractedFluidStack stack = new AbstractedFluidStack(singleSlot.getResource().getFluid(), extractedAmount, singleSlot.getResource().getComponentMap(), FluidUnit.DROPLET, new AmountedFluidVariant(singleSlot.getResource(), extractedAmount, FluidUnit.DROPLET));
+                AbstractedFluidStack stack = new AbstractedFluidStack(singleSlot.getResource().getFluid(), extractedAmount, FluidUnit.DROPLET, new AmountedFluidVariant(singleSlot.getResource(), extractedAmount, FluidUnit.DROPLET));
                 if (!simulate)
                     t.commit();
                 return stack;

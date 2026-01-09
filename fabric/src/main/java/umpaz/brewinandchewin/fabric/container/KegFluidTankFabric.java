@@ -4,8 +4,6 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.core.component.PatchedDataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.container.AbstractedFluidTank;
@@ -32,7 +30,7 @@ public class KegFluidTankFabric extends SingleFluidStorage implements Abstracted
 
     @Override
     public AbstractedFluidStack getAbstractedFluid() {
-        return new AbstractedFluidStack(variant.getFluid(), getAmount(), variant.getComponentMap(), FluidUnit.DROPLET, new AmountedFluidVariant(variant, getAmount(), FluidUnit.DROPLET));
+        return new AbstractedFluidStack(variant.getFluid(), getAmount(), FluidUnit.DROPLET, new AmountedFluidVariant(variant, getAmount(), FluidUnit.DROPLET));
     }
 
     @Override
@@ -50,12 +48,12 @@ public class KegFluidTankFabric extends SingleFluidStorage implements Abstracted
         long newAmount = fluidStack.unit().convertToLoader(fluidStack.amount());
         try {
             Transaction t = Transaction.openOuter();
-            FluidVariant variant = FluidVariant.of(fluidStack.fluid(), fluidStack.components() instanceof PatchedDataComponentMap patched ? patched.asPatch() : DataComponentPatch.EMPTY);
+            FluidVariant variant = FluidVariant.of(fluidStack.fluid());
             long newFill = insert(variant, newAmount, t);
             if (!simulate)
                 t.commit();
             t.close();
-            return new AbstractedFluidStack(variant.getFluid(), newFill, variant.getComponentMap(), FluidUnit.DROPLET, new AmountedFluidVariant(variant, newFill, FluidUnit.DROPLET));
+            return new AbstractedFluidStack(variant.getFluid(), newFill, FluidUnit.DROPLET, new AmountedFluidVariant(variant, newFill, FluidUnit.DROPLET));
         } catch (Exception e) {
             BrewinAndChewin.LOG.error("Failed to fill keg with {} of fluid {}.", fluidStack.fluid(), fluidStack.unit().shortFormat(String.valueOf(fluidStack.unit().convertToLoader(fluidStack.amount()))));
         }
@@ -68,7 +66,7 @@ public class KegFluidTankFabric extends SingleFluidStorage implements Abstracted
         try {
             Transaction t = Transaction.openOuter();
             long extractedAmount = extract(variant, newMax, t);
-            AbstractedFluidStack stack = new AbstractedFluidStack(variant.getFluid(), extractedAmount, variant.getComponentMap(), FluidUnit.DROPLET, new AmountedFluidVariant(variant, extractedAmount, FluidUnit.DROPLET));
+            AbstractedFluidStack stack = new AbstractedFluidStack(variant.getFluid(), extractedAmount, FluidUnit.DROPLET, new AmountedFluidVariant(variant, extractedAmount, FluidUnit.DROPLET));
             if (!simulate)
                 t.commit();
             t.close();
@@ -80,14 +78,14 @@ public class KegFluidTankFabric extends SingleFluidStorage implements Abstracted
     }
 
     @Override
-    public void readFromNbt(CompoundTag tag, HolderLookup.Provider provider) {
-        readNbt(tag, provider);
+    public void readFromNbt(CompoundTag tag) {
+        readNbt(tag);
     }
 
     @Override
-    public CompoundTag writeToNbt(HolderLookup.Provider provider) {
+    public CompoundTag writeToNbt() {
         CompoundTag tag = new CompoundTag();
-        writeNbt(tag, provider);
+        writeNbt(tag);
         return tag;
     }
 
@@ -103,6 +101,6 @@ public class KegFluidTankFabric extends SingleFluidStorage implements Abstracted
         if (stack.isEmpty())
             return AmountedFluidVariant.EMPTY;
 
-        return new AmountedFluidVariant(FluidVariant.of(stack.fluid(), stack.components() instanceof PatchedDataComponentMap patched ? patched.asPatch() : DataComponentPatch.EMPTY), stack.unit().convertToLoader(stack.amount()), FluidUnit.DROPLET);
+        return new AmountedFluidVariant(FluidVariant.of(stack.fluid()), stack.unit().convertToLoader(stack.amount()), FluidUnit.DROPLET);
     }
 }

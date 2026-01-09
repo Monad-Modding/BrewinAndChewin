@@ -14,6 +14,7 @@ import umpaz.brewinandchewin.platform.BnCPacket;
 import java.util.Optional;
 
 public record SyncRagingStacksClientboundPacket(int entityId, Optional<Integer> stacks) implements BnCPacket {
+    public static final ResourceLocation ID = BrewinAndChewin.asResource("sync_raging_stacks");
 
     public SyncRagingStacksClientboundPacket(FriendlyByteBuf buf) {
         this(buf.readInt(), buf.readOptional(FriendlyByteBuf::readInt));

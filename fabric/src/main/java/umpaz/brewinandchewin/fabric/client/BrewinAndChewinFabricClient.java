@@ -32,14 +32,11 @@ import umpaz.brewinandchewin.common.fluid.BnCFluidConstants;
 import umpaz.brewinandchewin.common.network.clientbound.*;
 import umpaz.brewinandchewin.common.registry.BnCFluids;
 import umpaz.brewinandchewin.common.registry.BnCMenuTypes;
-import umpaz.brewinandchewin.fabric.client.gui.BnCHUDOverlays;
 import umpaz.brewinandchewin.fabric.client.integration.IntoxicationAppleSkinCompatFabric;
 import umpaz.brewinandchewin.fabric.client.model.CoasterWrappedModel;
 import umpaz.brewinandchewin.fabric.client.platform.BnCClientPlatformHelperFabric;
 import umpaz.brewinandchewin.fabric.registry.BnCFluidsImpl;
-import umpaz.brewinandchewin.fabric.registry.BnCLootModificationEvents;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
@@ -49,7 +46,7 @@ public class BrewinAndChewinFabricClient implements ClientModInitializer {
         BrewinAndChewinClient.init(new BnCClientPlatformHelperFabric());
         BrewinAndChewin.isClient = true;
 
-        BnCHUDOverlays.init();
+        //BnCHUDOverlays.init();
         if (FabricLoader.getInstance().isModLoaded("appleskin"))
             IntoxicationAppleSkinCompatFabric.init();
 
@@ -86,7 +83,7 @@ public class BrewinAndChewinFabricClient implements ClientModInitializer {
                 return null;
             });
             context.modifyModelAfterBake().register((model, context1) -> {
-                if (context1.resourceId() != null && context1.resourceId().getPath().startsWith("brewinandchewin/coaster/") && BnCClientSetup.MODELS.contains(context1.resourceId().withPath(string -> string.substring(24)))) {
+                if (context1.id() != null && context1.id().getPath().startsWith("brewinandchewin/coaster/") && BnCClientSetup.MODELS.contains(context1.id().withPath(string -> string.substring(24)))) {
                     return new CoasterWrappedModel(model);
                 }
                 return model;
@@ -96,13 +93,13 @@ public class BrewinAndChewinFabricClient implements ClientModInitializer {
             if (chatMessage != null) {
                 BnCClientTextUtils.setupChatMessage(chatMessage);
                 PlayerChatMessage tipsyMessage = BnCClientTextUtils.getTipsyMessage();
-                if (tipsyMessage != null && bound.chatType().isBound()) {
+                if (tipsyMessage != null && bound != null) {
                     BnCClientTextUtils.clearTipsyMessage();
                     MutableComponent boundChat = BnCClientTextUtils.getStyledChatPrefix(bound, bound.decorate(Component.literal("")).copy());
-                    MutableComponent newMessage = tipsyMessage.decoratedContent().copy().withStyle(bound.chatType().value().chat().style());
+                    MutableComponent newMessage = tipsyMessage.decoratedContent().copy().withStyle(bound.chatType().chat().style());
 
-                    Minecraft.getInstance().gui.getChat().addMessage(boundChat.append(newMessage.copy().withStyle(bound.chatType().value().chat().style())), tipsyMessage.signature(), GuiMessageTag.chatModified(chatMessage.signedContent()));
-                    Minecraft.getInstance().getNarrator().sayChat(boundChat.append(newMessage.copy().withStyle(bound.chatType().value().narration().style())));
+                    Minecraft.getInstance().gui.getChat().addMessage(boundChat.append(newMessage.copy().withStyle(bound.chatType().chat().style())), tipsyMessage.signature(), GuiMessageTag.chatModified(chatMessage.signedContent()));
+                    Minecraft.getInstance().getNarrator().sayChat(boundChat.append(newMessage.copy().withStyle(bound.chatType().narration().style())));
 
                     if (BnCClientTextUtils.clearDelayAmount <= 0) {
                         BnCClientTextUtils.tipsyMessageLevel = 0;
@@ -125,11 +122,11 @@ public class BrewinAndChewinFabricClient implements ClientModInitializer {
     }
 
     private static void registerNetwork() {
-        ClientPlayNetworking.registerGlobalReceiver(ClearKegFluidContainerComponentsClientboundPacket.TYPE, (payload, context) -> payload.handle());
-        ClientPlayNetworking.registerGlobalReceiver(MakeNextPlayerChatTipsyClientboundPacket.TYPE, (payload, context) -> payload.handle());
-        ClientPlayNetworking.registerGlobalReceiver(SendRecipeBookValuesClientboundPacket.TYPE, (payload, context) -> payload.handle());
-        ClientPlayNetworking.registerGlobalReceiver(SyncNumbedHeartsClientboundPacket.TYPE, (payload, context) -> payload.handle());
-        ClientPlayNetworking.registerGlobalReceiver(SyncRagingStacksClientboundPacket.TYPE, (payload, context) -> payload.handle());
+        ClientPlayNetworking.registerGlobalReceiver(ClearKegFluidContainerComponentsClientboundPacket.ID, (payload, context) -> payload.handle());
+        ClientPlayNetworking.registerGlobalReceiver(MakeNextPlayerChatTipsyClientboundPacket.ID, (payload, context) -> payload.handle());
+        ClientPlayNetworking.registerGlobalReceiver(SendRecipeBookValuesClientboundPacket.ID, (payload, context) -> payload.handle());
+        ClientPlayNetworking.registerGlobalReceiver(SyncNumbedHeartsClientboundPacket.ID, (payload, context) -> payload.handle());
+        ClientPlayNetworking.registerGlobalReceiver(SyncRagingStacksClientboundPacket.ID, (payload, context) -> payload.handle());
     }
 
     public static void registerFluidRenderers() {

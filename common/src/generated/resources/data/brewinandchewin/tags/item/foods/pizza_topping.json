@@ -15,6 +15,10 @@
       "required": false
     },
     {
+      "id": "#c:foods/cooked_salmon",
+      "required": false
+    },
+    {
       "id": "#c:foods/cooked_cod",
       "required": false
     },
@@ -24,6 +28,10 @@
     },
     {
       "id": "#c:foods/cooked_pork",
+      "required": false
+    },
+    {
+      "id": "#c:foods/cooked_chicken",
       "required": false
     }
   ]

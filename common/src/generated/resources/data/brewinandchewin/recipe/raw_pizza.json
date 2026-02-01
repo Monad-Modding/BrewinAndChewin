@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "f": {
+      "tag": "brewinandchewin:foods/cheese_wedge"
+    },
+    "p": {
+      "tag": "brewinandchewin:foods/pizza_topping"
+    },
+    "t": {
+      "item": "farmersdelight:tomato_sauce"
+    },
+    "d": {
+      "item": "farmersdelight:wheat_dough"
+    }
+  },
+  "pattern": [
+    " f ",
+    "ptp",
+    "ddd"
+  ],
+  "result": {
+    "count": 1,
+    "id": "brewinandchewin:raw_pizza"
+  }
+}

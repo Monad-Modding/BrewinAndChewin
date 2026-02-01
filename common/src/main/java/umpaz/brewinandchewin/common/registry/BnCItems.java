@@ -88,6 +88,7 @@ public class BnCItems {
     public static final Item FIERY_FONDUE = new ConsumableItem(new Item.Properties().stacksTo(16).food(BnCFoods.FIERY_FONDUE).craftRemainder(Items.BOWL), true);
 
     public static final Item PIZZA = new BlockItem(BnCBlocks.PIZZA, new Item.Properties().stacksTo(1));
+    public static final Item RAW_PIZZA = new BlockItem(BnCBlocks.RAW_PIZZA, new Item.Properties().stacksTo(1));
     public static final Item QUICHE = new BlockItem(BnCBlocks.QUICHE, new Item.Properties());
 
     public static final Item PIZZA_SLICE = new Item(new Item.Properties().food(BnCFoods.PIZZA_SLICE));
@@ -148,6 +149,7 @@ public class BnCItems {
         registerWithTab("fiery_fondue_pot", FIERY_FONDUE_POT);
         registerWithTab("fiery_fondue", FIERY_FONDUE);
 
+        registerWithTab("raw_pizza", RAW_PIZZA);
         registerWithTab("pizza", PIZZA);
         registerWithTab("quiche", QUICHE);
 

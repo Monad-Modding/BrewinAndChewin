@@ -38,7 +38,10 @@ public class BnCBlocks {
             FieryFonduePotBlock(Block.Properties.ofFullCopy(Blocks.CAULDRON));
 
     public static final Block PIZZA = new
-            PizzaBlock(Block.Properties.ofFullCopy(Blocks.CAKE));
+            PizzaBlock(Block.Properties.ofFullCopy(Blocks.CAKE), false);
+
+    public static final Block RAW_PIZZA = new
+            PizzaBlock(Block.Properties.ofFullCopy(Blocks.CAKE), true);
 
     public static final Block QUICHE = new
             PieBlock(Block.Properties.ofFullCopy(Blocks.CAKE), () -> BnCItems.QUICHE_SLICE);
@@ -57,6 +60,7 @@ public class BnCBlocks {
 
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("fiery_fondue_pot"), FIERY_FONDUE_POT);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("pizza"), PIZZA);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("raw_pizza"), RAW_PIZZA);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("quiche"), QUICHE);
     }
 }

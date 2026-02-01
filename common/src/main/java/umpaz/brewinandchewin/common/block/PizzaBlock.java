@@ -22,11 +22,13 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import umpaz.brewinandchewin.common.registry.BnCBlocks;
 import umpaz.brewinandchewin.common.registry.BnCItems;
 
 public class PizzaBlock extends Block
 {
     public static final IntegerProperty SERVINGS = IntegerProperty.create("servings", 0, 3);
+    private final boolean is_raw;
 
     protected static final VoxelShape[] SHAPES = new VoxelShape[]{
             Block.box(0.0D, 0.0D, 0.0D, 8.0D, 2.0D, 8.0D),
@@ -35,9 +37,10 @@ public class PizzaBlock extends Block
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D),
     };
 
-    public PizzaBlock(Properties properties) {
+    public PizzaBlock(Properties properties, boolean raw) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(SERVINGS, 3));
+        this.is_raw = raw;
     }
 
     @Override
@@ -57,6 +60,8 @@ public class PizzaBlock extends Block
     }
 
     private InteractionResult takeServing(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn) {
+        if (this.is_raw) {return InteractionResult.PASS;}
+
         int servings = state.getValue(SERVINGS);
         ItemStack heldStack = player.getItemInHand(handIn);
         if (heldStack.isEmpty() || heldStack.getItem().equals(BnCItems.PIZZA_SLICE)) {

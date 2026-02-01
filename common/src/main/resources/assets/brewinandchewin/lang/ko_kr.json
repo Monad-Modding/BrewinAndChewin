@@ -56,6 +56,7 @@
   "block.brewinandchewin.scarlet_cheese_wheel": "진홍빛 치즈 덩어리",
   "item.brewinandchewin.flaxen_cheese_wedge": "노란 치즈 조각",
   "item.brewinandchewin.scarlet_cheese_wedge": "진홍빛 치즈 조각",
+  "block.brewinandchewin.raw_pizza": "원시 피자",
   "block.brewinandchewin.pizza": "피자",
   "item.brewinandchewin.pizza_slice": "피자 조각",
   "block.brewinandchewin.fiery_fondue_pot": "가마솥에 담긴 작열의 퐁듀",
@@ -170,3 +171,4 @@
 
   "tag.damage_type.brewinandchewin.triggers_raging": "Triggers Raging"
 }
+

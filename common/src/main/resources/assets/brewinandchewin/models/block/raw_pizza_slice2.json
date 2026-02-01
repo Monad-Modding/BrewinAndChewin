@@ -1,0 +1,24 @@
+{
+    "parent": "minecraft:block/block",
+	"textures": {
+		"top": "brewinandchewin:block/raw_pizza_top",
+		"inside": "brewinandchewin:block/raw_pizza_inside",
+		"side": "brewinandchewin:block/raw_pizza_side",
+		"bottom": "brewinandchewin:block/raw_pizza_bottom",
+		"particle": "brewinandchewin:block/raw_pizza_top"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 2, 8],
+			"faces": {
+				"north": {"uv": [0, 14, 16, 16], "texture": "#side"},
+				"east": {"uv": [8, 14, 16, 16], "texture": "#side"},
+				"south": {"uv": [0, 14, 16, 16], "texture": "#inside"},
+				"west": {"uv": [0, 14, 8, 16], "texture": "#side"},
+				"up": {"uv": [0, 0, 16, 8], "texture": "#top"},
+				"down": {"uv": [0, 8, 16, 16], "texture": "#bottom"}
+			}
+		}
+	]
+}

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_raw_pizza": {
+    "has_cheese": {
       "conditions": {
         "items": [
           {
-            "items": "brewinandchewin:raw_pizza"
+            "items": "brewinandchewin:flaxen_cheese_wedge"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:pizza"
+        "recipe": "brewinandchewin:raw_pizza"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,13 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_raw_pizza"
+      "has_cheese"
     ]
   ],
   "rewards": {
     "recipes": [
-      "brewinandchewin:pizza",
-      "brewinandchewin:pizza_from_campfire_cooking"
+      "brewinandchewin:raw_pizza"
     ]
   }
 }

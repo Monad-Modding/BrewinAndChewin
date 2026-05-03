@@ -57,8 +57,8 @@ public class BnCItemTags extends ItemTagsProvider {
         tag(BnCTags.Items.FOOD_PIZZA_TOPPING)
                 .add(Items.BROWN_MUSHROOM).add(Items.RED_MUSHROOM)
                 .add(Items.CARROT).add(Items.BEETROOT).add(ModItems.CABBAGE_LEAF.get()).add(ModItems.ONION.get())
-                .addOptionalTag(CommonTags.FOODS_COOKED_BACON).addOptionalTag(CommonTags.FOODS_COOKED_BEEF).addOptionalTag(CommonTags.FOODS_COOKED_COD).addOptionalTag(CommonTags.FOODS_COOKED_MUTTON).addOptionalTag(CommonTags.FOODS_COOKED_PORK);
-        tag(BnCTags.Items.FOOD_HORROR_MEAT).addOptionalTag(CommonTags.FOODS_RAW_BEEF).addOptionalTag(CommonTags.FOODS_RAW_CHICKEN);
+                .addOptionalTag(CommonTags.Items.FOODS_COOKED_BACON).addOptionalTag(CommonTags.Items.FOODS_COOKED_BEEF).addOptionalTag(CommonTags.Items.FOODS_COOKED_COD).addOptionalTag(CommonTags.Items.FOODS_COOKED_MUTTON).addOptionalTag(CommonTags.Items.FOODS_COOKED_PORK);
+        tag(BnCTags.Items.FOOD_HORROR_MEAT).addOptionalTag(CommonTags.Items.FOODS_RAW_BEEF).addOptionalTag(CommonTags.Items.FOODS_RAW_CHICKEN);
         tag(BnCTags.Items.FOOD_JERKY_MEAT).add(Items.ROTTEN_FLESH).addTag(Tags.Items.FOODS_RAW_MEAT);
         copy(BnCTags.Blocks.PLAYER_WORKSTATIONS_KEGS, BnCTags.Items.PLAYER_WORKSTATIONS_KEGS);
     }

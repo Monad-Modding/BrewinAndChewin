@@ -1,23 +1,24 @@
 {
-  "credit": "Made with Blockbench",
-  "render_type": "minecraft:cutout",
-  "parent": "block/block",
-  "textures": {
-    "tray_bottom": "farmersdelight:block/tray_bottom",
-    "tray_top": "farmersdelight:block/tray_top"
-  },
-  "elements": [
-    {
-      "from": [1, 0, 1],
-      "to": [15, 1, 15],
-      "faces": {
-        "north": {"uv": [1, 12, 15, 13], "texture": "#tray_bottom"},
-        "east": {"uv": [1, 12, 15, 13], "texture": "#tray_bottom"},
-        "south": {"uv": [1, 12, 15, 13], "texture": "#tray_bottom"},
-        "west": {"uv": [1, 12, 15, 13], "texture": "#tray_bottom"},
-        "up": {"uv": [1, 1, 15, 15], "texture": "#tray_top"},
-        "down": {"uv": [1, 1, 15, 15], "texture": "#tray_bottom", "cullface": "down"}
-      }
-    }
-  ]
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"render_type": "minecraft:cutout",
+	"textures": {
+		"tray_bottom": "farmersdelight:block/tray_bottom",
+		"tray_top": "farmersdelight:block/tray"
+	},
+	"elements": [
+		{
+			"from": [1, 0, 1],
+			"to": [15, 1, 15],
+			"faces": {
+				"north": {"uv": [1, 12, 15, 13], "texture": "#tray_bottom"},
+				"east": {"uv": [1, 12, 15, 13], "texture": "#tray_bottom"},
+				"south": {"uv": [1, 12, 15, 13], "texture": "#tray_bottom"},
+				"west": {"uv": [1, 12, 15, 13], "texture": "#tray_bottom"},
+				"up": {"uv": [1, 0, 15, 14], "texture": "#tray_top"},
+				"down": {"uv": [1, 1, 15, 15], "texture": "#tray_bottom", "cullface": "down"}
+			}
+		}
+	]
 }

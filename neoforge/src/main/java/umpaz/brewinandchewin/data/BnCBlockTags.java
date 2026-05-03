@@ -36,7 +36,7 @@ public class BnCBlockTags extends BlockTagsProvider
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
                 BnCBlocks.FIERY_FONDUE_POT
         );
-        tag(ModTags.MINEABLE_WITH_KNIFE).add(
+        tag(ModTags.Blocks.MINEABLE_WITH_KNIFE).add(
                 BnCBlocks.COASTER,
                 BnCBlocks.UNRIPE_FLAXEN_CHEESE_WHEEL,
                 BnCBlocks.FLAXEN_CHEESE_WHEEL,
@@ -65,7 +65,7 @@ public class BnCBlockTags extends BlockTagsProvider
         tag(BnCTags.Blocks.PLAYER_WORKSTATIONS_KEGS)
                 .add(BnCBlocks.KEG);
 
-        tag(ModTags.HEAT_SOURCES).add(
+        tag(ModTags.Blocks.HEAT_SOURCES).add(
                 BnCBlocks.FIERY_FONDUE_POT,
                 BnCBlocks.HEATING_CASK
         );

@@ -498,13 +498,35 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
             }
         }
 
-        int heat = states.stream().filter(s -> s.is(ModTags.HEAT_SOURCES) && s.hasProperty(BlockStateProperties.LIT)).filter(s -> s.getValue(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
-        heat += states.stream().filter(s -> s.is(ModTags.HEAT_SOURCES) && !s.hasProperty(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
-
+        int heat = 0;
+        try {
+            heat += states.stream().filter(s -> s.is(ModTags.HEAT_SOURCES) && s.hasProperty(BlockStateProperties.LIT)).filter(s -> s.getValue(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
+        }
+        catch(NullPointerException e) {
+            heat += 0;
+        }
+        try {
+            heat += states.stream().filter(s -> s.is(ModTags.HEAT_SOURCES) && !s.hasProperty(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
+        }
+        catch(NullPointerException e) {
+            heat += 0;
+        }
+        
         // Compat with mods that have lit states, such as a future Pug FD addon.
-        int cold = states.stream().filter(s -> s.is(BnCTags.Blocks.FREEZE_SOURCES) && s.hasProperty(BlockStateProperties.LIT)).filter(s -> s.hasProperty(BlockStateProperties.LIT)).filter(s -> s.getValue(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
-        cold += states.stream().filter(s -> s.is(BnCTags.Blocks.FREEZE_SOURCES) && !s.hasProperty(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
-
+        int cold = 0;
+        try {
+            cold = states.stream().filter(s -> s.is(BnCTags.Blocks.FREEZE_SOURCES) && s.hasProperty(BlockStateProperties.LIT)).filter(s -> s.hasProperty(BlockStateProperties.LIT)).filter(s -> s.getValue(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
+        }
+        catch(NullPointerException e) {
+            cold += 0;
+        }
+        try {
+             cold += states.stream().filter(s -> s.is(BnCTags.Blocks.FREEZE_SOURCES) && !s.hasProperty(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
+        }
+        catch(NullPointerException e) {
+            cold += 0;
+        }
+        
         if (BnCConfiguration.COMMON_CONFIG.get().keg().biomeTemp()) {
             Holder<Biome> biome = level.getBiome(worldPosition);
             if (biome.isBound()) {

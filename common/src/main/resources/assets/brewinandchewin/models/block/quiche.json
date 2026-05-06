@@ -1,5 +1,5 @@
 {
-  "parent": "farmersdelight:block/pie",
+  "parent": "farmersdelight:block/template_pie",
   "textures": {
     "particle": "brewinandchewin:block/quiche_top",
     "bottom": "farmersdelight:block/pie_bottom",

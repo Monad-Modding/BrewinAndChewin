@@ -1,7 +1,7 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "block/block",
 	"render_type": "minecraft:cutout",
+  "parent": "block/block",
 	"textures": {
 		"tray_bottom": "farmersdelight:block/tray_bottom",
 		"tray_top": "farmersdelight:block/tray"

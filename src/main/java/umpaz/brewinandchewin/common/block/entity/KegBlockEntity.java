@@ -339,8 +339,8 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
             if (slotStack.hasCraftingRemainingItem()) {
                 ejectIngredientRemainder(slotStack.getCraftingRemainingItem());
             }
-            if (!slotStack.isEmpty())
-                slotStack.shrink(1);
+
+            inventory.extractItem(i, 1, false);
         }
         return true;
     }

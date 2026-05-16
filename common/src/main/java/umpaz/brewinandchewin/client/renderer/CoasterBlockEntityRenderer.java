@@ -194,8 +194,8 @@ public class CoasterBlockEntityRenderer implements BlockEntityRenderer<CoasterBl
         ).apply(inst, ModelEntry::new));
         public static final Codec<List<ModelEntry>> LIST_CODEC = Codec.either(ResourceLocation.CODEC, DIRECT_CODEC.listOf())
                 .xmap(either -> either.map(resourceLocation -> List.of(new ModelEntry(resourceLocation, List.of())), Function.identity()), modelEntry -> {
-                    if (modelEntry.size() == 1 && modelEntry.get(0).modifiers().isEmpty())
-                        return Either.left(modelEntry.get(0).model());
+                    if (modelEntry.size() == 1 && modelEntry.getFirst().modifiers().isEmpty())
+                        return Either.left(modelEntry.getFirst().model());
                     return Either.right(modelEntry);
                 });
     }

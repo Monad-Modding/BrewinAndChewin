@@ -43,11 +43,11 @@ public class FieryFonduePotBlock extends Block {
 
     public FieryFonduePotBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(LEVEL, Integer.valueOf(3)).setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(LEVEL, 3).setValue(FACING, Direction.NORTH));
     }
 
     protected double getContentHeight(BlockState state) {
-        return (6.0D + (double)state.getValue(LEVEL).intValue() * 3.0D) / 16.0D;
+        return (6.0D + (double) state.getValue(LEVEL) * 3.0D) / 16.0D;
     }
 
     public boolean isEntityInsideContent(BlockState state, BlockPos pos, Entity entity) {

@@ -660,7 +660,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
             if (!getLevel().isClientSide() && !currentlyOperating && !deferFluidExtraction) {
                 List<ItemStack> out = KegBlockEntity.this.extractInGui(handler.getStackInSlot(CONTAINER_SLOT), handler.getSlotLimit(OUTPUT_SLOT));
                 if (!out.isEmpty())
-                    handler.insertItem(OUTPUT_SLOT, out.get(0), false);
+                    handler.insertItem(OUTPUT_SLOT, out.getFirst(), false);
             }
             inventoryChanged();
             checkNewRecipe = true;

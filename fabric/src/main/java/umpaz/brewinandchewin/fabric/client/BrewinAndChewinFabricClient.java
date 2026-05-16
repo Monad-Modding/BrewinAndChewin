@@ -62,19 +62,17 @@ public class BrewinAndChewinFabricClient implements ClientModInitializer {
             }
             return null;
         });
-        BnCClientSetup.registerReloadListeners(preparableReloadListener -> {
-            ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(new IdentifiableResourceReloadListener() {
-                @Override
-                public ResourceLocation getFabricId() {
-                    return preparableReloadListener.getId();
-                }
+        BnCClientSetup.registerReloadListeners(preparableReloadListener -> ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(new IdentifiableResourceReloadListener() {
+            @Override
+            public ResourceLocation getFabricId() {
+                return preparableReloadListener.getId();
+            }
 
-                @Override
-                public CompletableFuture<Void> reload(PreparationBarrier preparationBarrier, ResourceManager resourceManager, ProfilerFiller profilerFiller, ProfilerFiller profilerFiller2, Executor executor, Executor executor2) {
-                    return preparableReloadListener.reload(preparationBarrier, resourceManager, profilerFiller, profilerFiller2, executor, executor2);
-                }
-            });
-        });
+            @Override
+            public CompletableFuture<Void> reload(PreparationBarrier preparationBarrier, ResourceManager resourceManager, ProfilerFiller profilerFiller, ProfilerFiller profilerFiller2, Executor executor, Executor executor2) {
+                return preparableReloadListener.reload(preparationBarrier, resourceManager, profilerFiller, profilerFiller2, executor, executor2);
+            }
+        }));
         BnCClientSetup.registerColorHandlers(ColorProviderRegistry.BLOCK::register);
         PreparableModelLoadingPlugin.register(BnCClientSetup::getModels, (data, context) -> {
             context.addModels(data.stream().map(resourceLocation -> resourceLocation.withPath(path -> "brewinandchewin/coaster/" + path)).toList());

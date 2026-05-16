@@ -103,7 +103,7 @@ public class BnCPlatformHelperNeoForge implements BnCPlatformHelper {
 
     @Override
     public Component getFluidDisplayName(AbstractedFluidStack wrapper) {
-        return wrapper.loaderSpecific() instanceof FluidStack fluidStack ? fluidStack.getHoverName() : Component.translatable("");
+        return wrapper.loaderSpecific() instanceof FluidStack fluidStack ? fluidStack.getHoverName() : Component.empty();
     }
 
     @Override

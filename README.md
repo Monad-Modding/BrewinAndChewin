@@ -7,7 +7,7 @@
   <img alt="Discord" src="https://img.shields.io/discord/855495317298741248?color=brightgreen&label=Discord">
 </a>
 <br>
-<img src="https://i.imgur.com/EFkjwBq.png" width="50%">
+<img alt="Brewin' And Chewin' Logo" src="https://i.imgur.com/EFkjwBq.png" width="50%">
 
 ### Overview
 

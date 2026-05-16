@@ -24,7 +24,7 @@ import java.time.Instant;
 public class ChatListenerMixin {
     @Shadow @Final private Minecraft minecraft;
 
-    @ModifyVariable(method = "showMessageToPlayer", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/multiplayer/chat/ChatListener;evaluateTrustLevel(Lnet/minecraft/network/chat/PlayerChatMessage;Lnet/minecraft/network/chat/Component;Ljava/time/Instant;)Lnet/minecraft/client/multiplayer/chat/ChatTrustLevel;"))
+    @ModifyVariable(method = "showMessageToPlayer", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/multiplayer/chat/ChatListener;evaluateTrustLevel(Lnet/minecraft/network/chat/PlayerChatMessage;Lnet/minecraft/network/chat/Component;Ljava/time/Instant;)Lnet/minecraft/client/multiplayer/chat/ChatTrustLevel;"), name = "chattrustlevel")
     public ChatTrustLevel brewinandchewin$setTipsyChatToModified(ChatTrustLevel original, @Local(argsOnly = true) PlayerChatMessage chatMessage, @Local(argsOnly = true) boolean onlyShowSecureChat) {
         if (!(onlyShowSecureChat && !original.isNotSecure()) && !this.minecraft.isBlocked(chatMessage.sender()) && !chatMessage.isFullyFiltered()) {
             BnCClientTextUtils.setupChatMessage(chatMessage);

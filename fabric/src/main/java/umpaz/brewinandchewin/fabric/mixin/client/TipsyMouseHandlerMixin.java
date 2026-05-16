@@ -36,7 +36,7 @@ public class TipsyMouseHandlerMixin {
         }
     }
 
-    @ModifyVariable(method = "turnPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/tutorial/Tutorial;onMouse(DD)V"), ordinal = 1)
+    @ModifyVariable(method = "turnPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/tutorial/Tutorial;onMouse(DD)V"), name = "j")
     private double brewinandchewin$smoothCameraMovementX(double original, @Local(argsOnly = true) double movementTime, @Local(ordinal = 4) double f, @Local(ordinal = 5) double g) {
         if (minecraft.player != null && !minecraft.player.isSpectator() && !minecraft.options.smoothCamera) {
             if (minecraft.player.hasEffect(BnCEffects.TIPSY) && minecraft.player.getEffect(BnCEffects.TIPSY).getAmplifier() > 1) {
@@ -52,7 +52,7 @@ public class TipsyMouseHandlerMixin {
         return original;
     }
 
-    @ModifyVariable(method = "turnPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/tutorial/Tutorial;onMouse(DD)V"), ordinal = 2)
+    @ModifyVariable(method = "turnPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/tutorial/Tutorial;onMouse(DD)V"), name = "k")
     private double brewinandchewin$smoothCameraMovementY(double original, @Local(argsOnly = true) double movementTime, @Local(ordinal = 4) double f, @Local(ordinal = 5) double g) {
         if (minecraft.player != null && !minecraft.player.isSpectator() && !minecraft.options.smoothCamera) {
             if (minecraft.player.hasEffect(BnCEffects.TIPSY) && minecraft.player.getEffect(BnCEffects.TIPSY).getAmplifier() > 1) {

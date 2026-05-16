@@ -11,7 +11,7 @@ import umpaz.brewinandchewin.client.utility.BnCClientTextUtils;
 
 @Mixin(ChatListener.class)
 public class ChatListenerMixin {
-    @ModifyVariable(method = "showMessageToPlayer", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/multiplayer/chat/ChatTrustLevel;createTag(Lnet/minecraft/network/chat/PlayerChatMessage;)Lnet/minecraft/client/GuiMessageTag;"))
+    @ModifyVariable(method = "showMessageToPlayer", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/multiplayer/chat/ChatTrustLevel;createTag(Lnet/minecraft/network/chat/PlayerChatMessage;)Lnet/minecraft/client/GuiMessageTag;"), name = "guimessagetag")
     public GuiMessageTag brewinandchewin$setTipsyChatToModified(GuiMessageTag original, @Local(argsOnly = true) PlayerChatMessage chatMessage, @Local(argsOnly = true) boolean onlyShowSecureChat) {
         BnCClientTextUtils.setupChatMessage(chatMessage);
         if (BnCClientTextUtils.getTipsyMessage() != null) {

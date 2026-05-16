@@ -58,7 +58,7 @@ public class KegFermentingRecipes {
               .addFluidIngredient(Tags.Fluids.MILK, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Tags.Items.EGGS)
-              .addIngredient(CommonTags.CROPS_CABBAGE)
+              .addIngredient(CommonTags.Items.CROPS_CABBAGE)
               .addIngredient(Items.SUGAR)
               .unlockedByItems("has_tankard", BnCItems.TANKARD)
               .build(output);
@@ -74,7 +74,7 @@ public class KegFermentingRecipes {
       KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.RICE_WINE, 1000, NORMAL_FERMENTING, MEDIUM_EXP)
               .addFluidIngredient(Tags.Fluids.WATER, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
-              .addIngredient(CommonTags.CROPS_RICE)
+              .addIngredient(CommonTags.Items.CROPS_RICE)
               .addIngredient(Items.BROWN_MUSHROOM)
               .unlockedByItems("has_tankard", BnCItems.TANKARD)
               .build(output);
@@ -131,8 +131,8 @@ public class KegFermentingRecipes {
       KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.BLOODY_MARY, 1000, FAST_FERMENTING, MEDIUM_EXP, 4)
               .addFluidIngredient(BnCTags.Fluids.VODKA, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
-              .addIngredient(CommonTags.CROPS_TOMATO)
-              .addIngredient(CommonTags.CROPS_CABBAGE)
+              .addIngredient(CommonTags.Items.CROPS_TOMATO)
+              .addIngredient(CommonTags.Items.CROPS_CABBAGE)
               .addIngredient(Items.SWEET_BERRIES)
               .unlockedByItems("has_vodka", BnCItems.VODKA)
               .build(output);
@@ -182,17 +182,17 @@ public class KegFermentingRecipes {
 
 
       KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCItems.KIMCHI, 2, NORMAL_FERMENTING, MEDIUM_EXP, 4)
-              .addIngredient(CommonTags.CROPS_CABBAGE)
+              .addIngredient(CommonTags.Items.CROPS_CABBAGE)
               .addIngredient(Tags.Items.FOODS_VEGETABLE)
               .addIngredient(Items.KELP)
               .unlockedByItems("has_kelp", Items.KELP)
               .build(output);
 
       KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCItems.KIPPERS, 2, NORMAL_FERMENTING, MEDIUM_EXP, 4)
-              .addIngredient(CommonTags.FOODS_SAFE_RAW_FISH)
-              .addIngredient(CommonTags.FOODS_SAFE_RAW_FISH)
+              .addIngredient(CommonTags.Items.FOODS_SAFE_RAW_FISH)
+              .addIngredient(CommonTags.Items.FOODS_SAFE_RAW_FISH)
               .addIngredient(Items.DRIED_KELP)
-              .unlockedBy("has_fish", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(CommonTags.FOODS_SAFE_RAW_FISH).build()))
+              .unlockedBy("has_fish", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(CommonTags.Items.FOODS_SAFE_RAW_FISH).build()))
               .build(output);
 
       KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCItems.PICKLED_PICKLES, 2, NORMAL_FERMENTING, MEDIUM_EXP, 2)

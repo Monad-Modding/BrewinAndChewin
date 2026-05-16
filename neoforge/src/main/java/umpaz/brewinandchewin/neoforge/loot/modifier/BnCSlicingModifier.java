@@ -48,7 +48,7 @@ public class BnCSlicingModifier extends LootModifier
             }
             else if (targetBlock instanceof CheeseWheelBlock) {
                     int servings = state.getValue(CheeseWheelBlock.SERVINGS);
-                if (servings == 3 && !context.getParam(LootContextParams.TOOL).is(CommonTags.TOOLS_KNIFE)) {
+                if (servings == 3 && !context.getParam(LootContextParams.TOOL).is(CommonTags.Items.TOOLS_KNIFE)) {
                     generatedLoot.add(new ItemStack(targetBlock.asItem()));
                 }
                 else {

@@ -3,8 +3,8 @@
   "render_type": "minecraft:cutout",
   "parent": "block/block",
   "textures": {
-    "tray_bottom": "farmersdelight:block/tray_bottom",
-    "tray_top": "farmersdelight:block/tray_top"
+    "tray_bottom": "brewinandchewin:block/tray_bottom",
+    "tray_top": "brewinandchewin:block/tray_top"
   },
   "elements": [
     {

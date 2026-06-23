@@ -14,13 +14,13 @@ public class BnCCuttingBoardRecipes {
     }
 
     private static void cuttingRecipes(RecipeOutput consumer) {
-        BnCCuttingRecipeBuilder.cuttingRecipe(Ingredient.of(BnCItems.FLAXEN_CHEESE_WHEEL), Ingredient.of(CommonTags.TOOLS_KNIFE), BnCItems.FLAXEN_CHEESE_WEDGE, 4)
+        BnCCuttingRecipeBuilder.cuttingRecipe(Ingredient.of(BnCItems.FLAXEN_CHEESE_WHEEL), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), BnCItems.FLAXEN_CHEESE_WEDGE, 4)
                 .build(consumer);
-        BnCCuttingRecipeBuilder.cuttingRecipe(Ingredient.of(BnCItems.SCARLET_CHEESE_WHEEL), Ingredient.of(CommonTags.TOOLS_KNIFE), BnCItems.SCARLET_CHEESE_WEDGE, 4)
+        BnCCuttingRecipeBuilder.cuttingRecipe(Ingredient.of(BnCItems.SCARLET_CHEESE_WHEEL), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), BnCItems.SCARLET_CHEESE_WEDGE, 4)
                 .build(consumer);
-        BnCCuttingRecipeBuilder.cuttingRecipe(Ingredient.of(BnCItems.QUICHE), Ingredient.of(CommonTags.TOOLS_KNIFE), BnCItems.QUICHE_SLICE, 4)
+        BnCCuttingRecipeBuilder.cuttingRecipe(Ingredient.of(BnCItems.QUICHE), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), BnCItems.QUICHE_SLICE, 4)
                 .build(consumer);
-        BnCCuttingRecipeBuilder.cuttingRecipe(Ingredient.of(BnCItems.PIZZA), Ingredient.of(CommonTags.TOOLS_KNIFE), BnCItems.PIZZA_SLICE, 4)
+        BnCCuttingRecipeBuilder.cuttingRecipe(Ingredient.of(BnCItems.PIZZA), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), BnCItems.PIZZA_SLICE, 4)
                 .build(consumer);
     }
 }

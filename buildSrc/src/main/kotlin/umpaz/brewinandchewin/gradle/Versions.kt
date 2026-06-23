@@ -1,7 +1,7 @@
 package umpaz.brewinandchewin.gradle
 
 object Versions {
-    const val MOD = "4.4.2"
+    const val MOD = "4.4.3"
 
     const val MINECRAFT = "1.21.1"
     const val PARCHMENT_MINECRAFT = "1.21.1"
@@ -15,7 +15,7 @@ object Versions {
     const val FABRIC_MINECRAFT_RANGE = "1.21.1"
     const val FABRIC_ASM = "v2.3"
 
-    const val NEOFORGE = "21.1.136"
+    const val NEOFORGE = "21.1.219"
     const val NEOFORGE_LOADER_RANGE = "[4,)"
     const val NEOFORGE_MINECRAFT_RANGE = "[1.21,1.21.2)"
 
@@ -29,8 +29,8 @@ object Versions {
     const val APPLESKIN = "mc1.21-3.0.5"
     const val CLOTH_CONFIG = "15.0.140"
 
-    const val FARMERS_DELIGHT = "1.21.1-1.2.6"
-    const val FARMERS_DELIGHT_RANGE = "[1.2.6,)"
+    const val FARMERS_DELIGHT = "1.21.1-1.3.2"
+    const val FARMERS_DELIGHT_RANGE = "[1.3.2,)"
 
     const val FARMERS_DELIGHT_REFABRICATED = "1.21.1-3.1.0+refabricated"
     const val FARMERS_DELIGHT_REFABRICATED_RANGE = ">=1.21.1-3.1.0"

@@ -1,9 +1,7 @@
 ## Bugfixes
-- Fixed the container slot being consumed whenever a liquid is finished fermenting. [#64](https://github.com/ChrysanthCow/BrewinAndChewin/issues/64)
-- Updated Greenhouse Config. Fixes an uncommon crash when launching the game on NeoForge. [#75](https://github.com/ChrysanthCow/BrewinAndChewin/issues/75)
-- Fixed a crash when an entity does not have an attack speed modifier and has Raging. [#80](https://github.com/MerchantCalico/BrewinAndChewin/issues/80)
-
+- Updated knife tool tag which causes a catastrophic crash when breaking any type of cheese [unknown](unknown)
+- Updated recipe tags to be compliant with Farmer's Delight 1.3.2, this includes fixes to recipes such as fiery fondue and quiche [unknown](unknown)
+- Fixed a lack of textures on the coaster tray. [#128](https://github.com/ChrysanthCow/BrewinAndChewin/issues/128)
+- The keg ticking block entity crash has become obsolete with Farmer's Delight 1.3.2 [#120,#121,#124](https://github.com/ChrysanthCow/BrewinAndChewin/issues/120,https://github.com/ChrysanthCow/BrewinAndChewin/issues/121,https://github.com/ChrysanthCow/BrewinAndChewin/issues/124)
 ## Translation
-- Added Traditional Chinese translation [#73](https://github.com/ChrysanthCow/BrewinAndChewin/pull/73) - DEEMsss
-- Added Korean translation [#85](https://github.com/ChrysanthCow/BrewinAndChewin/pull/85) - wqesadxzc12369-ctrl
-- Added Kazakh translation [#96](https://github.com/ChrysanthCow/BrewinAndChewin/pull/96) - ninsent
+- Null

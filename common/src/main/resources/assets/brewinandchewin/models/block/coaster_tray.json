@@ -4,7 +4,7 @@
   "parent": "block/block",
   "textures": {
     "tray_bottom": "farmersdelight:block/tray_bottom",
-    "tray_top": "farmersdelight:block/tray_top"
+    "tray_top": "brewinandchewin:block/tray_top"
   },
   "elements": [
     {

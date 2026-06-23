@@ -4,6 +4,7 @@ import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.common.Tags;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.registry.BnCItems;
 import umpaz.brewinandchewin.common.tag.BnCTags;
@@ -42,8 +43,8 @@ public class BnCCraftingRecipes {
                 .pattern("mcm")
                 .pattern("eCe")
                 .define('b', ModItems.COOKED_BACON.get())
-                .define('l', CommonTags.CROPS_CABBAGE)
-                .define('m', CommonTags.FOODS_MILK)
+                .define('l', CommonTags.Items.CROPS_CABBAGE)
+                .define('m', Tags.Items.DRINKS_MILK)
                 .define('c', BnCTags.Items.FOOD_CHEESE_WEDGE)
                 .define('e', Items.EGG)
                 .define('C', ModItems.PIE_CRUST.get())
@@ -55,7 +56,7 @@ public class BnCCraftingRecipes {
                 .pattern("eCe")
                 .define('b', Items.BROWN_MUSHROOM)
                 .define('l', ModItems.CABBAGE_LEAF.get())
-                .define('m', CommonTags.FOODS_MILK)
+                .define('m', Tags.Items.DRINKS_MILK)
                 .define('c', BnCTags.Items.FOOD_CHEESE_WEDGE)
                 .define('e', Items.EGG)
                 .define('C', ModItems.PIE_CRUST.get())

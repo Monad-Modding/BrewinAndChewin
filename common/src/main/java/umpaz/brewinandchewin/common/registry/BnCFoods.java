@@ -25,13 +25,13 @@ public class BnCFoods {
     public static final FoodProperties RICE_WINE = (new FoodProperties.Builder())
             .effect(new MobEffectInstance(BnCEffects.TIPSY, 2400, 0), 1.0F)
             .effect(new MobEffectInstance(BnCEffects.INTOXICATION, 1800, 0, false, false), 1.0F)
-            .effect(new MobEffectInstance(ModEffects.COMFORT, 1200, 0), 1.0F)
+            .effect(new MobEffectInstance(ModEffects.NOURISHMENT, 1200, 0), 1.0F)
             .alwaysEdible()
             .build();
     public static final FoodProperties PALE_JANE = (new FoodProperties.Builder())
             .effect(new MobEffectInstance(BnCEffects.TIPSY, 3600, 0), 1.0F)
             .effect(new MobEffectInstance(BnCEffects.INTOXICATION, 3000, 0, false, false), 1.0F)
-            .effect(new MobEffectInstance(ModEffects.COMFORT, 2400, 0, false, false), 1.0F)
+            .effect(new MobEffectInstance(ModEffects.NOURISHMENT, 2400, 0, false, false), 1.0F)
             .alwaysEdible()
             .build();
     public static final FoodProperties EGG_GROG = (new FoodProperties.Builder())
@@ -117,7 +117,7 @@ public class BnCFoods {
             .effect(new MobEffectInstance(ModEffects.NOURISHMENT, 3600, 0, false, false), 1.0F).build();
     public static final FoodProperties CREAMY_ONION_SOUP = (new FoodProperties.Builder())
             .nutrition(12).saturationModifier(0.8F)
-            .effect(new MobEffectInstance(ModEffects.COMFORT, 3600, 0, false, false), 1.0F).build();
+            .effect(new MobEffectInstance(ModEffects.NOURISHMENT, 3600, 0, false, false), 1.0F).build();
     public static final FoodProperties CHEESY_PASTA = (new FoodProperties.Builder())
             .nutrition(14).saturationModifier(0.75F)
             .effect(new MobEffectInstance(ModEffects.NOURISHMENT, 6000, 0, false, false), 1.0F).build();
@@ -129,7 +129,7 @@ public class BnCFoods {
             .effect(new MobEffectInstance(ModEffects.NOURISHMENT, 8400, 0, false, false), 1.0F).build();
     public static final FoodProperties FIERY_FONDUE = (new FoodProperties.Builder())
             .nutrition(14).saturationModifier(0.75f)
-            .effect(new MobEffectInstance(ModEffects.COMFORT, 8400, 0, false, false), 1.0F).build();
+            .effect(new MobEffectInstance(ModEffects.NOURISHMENT, 8400, 0, false, false), 1.0F).build();
 
     public static final FoodProperties PIZZA_SLICE = (new FoodProperties.Builder())
             .nutrition(5).saturationModifier(1.0F).build();

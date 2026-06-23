@@ -23,8 +23,8 @@ import java.util.List;
 public class BnCRecipeBookNeoForge {
     @SubscribeEvent
     public static void registerRecipeBooks(RegisterRecipeBookCategoriesEvent event) {
-        event.registerBookCategories(BnCRecipeBookTypes.FERMENTING, ImmutableList.of(BnCRecipeBookCategories.FERMENTING_SEARCH, BnCRecipeBookCategories.FERMENTING_DRINKS, BnCRecipeBookCategories.FERMENTING_MEALS));
-        event.registerAggregateCategory(BnCRecipeBookCategories.FERMENTING_SEARCH, ImmutableList.of(BnCRecipeBookCategories.FERMENTING_DRINKS, BnCRecipeBookCategories.FERMENTING_MEALS));
+        event.registerBookCategories(BnCRecipeBookTypes.FERMENTING, ImmutableList.of(BnCRecipeBookCategories.FERMENTING_SEARCH, BnCRecipeBookCategories.FERMENTING_DRINKS, BnCRecipeBookCategories.FERMENTING_MEALS, BnCRecipeBookCategories.FERMENTING_MISC));
+        event.registerAggregateCategory(BnCRecipeBookCategories.FERMENTING_SEARCH, ImmutableList.of(BnCRecipeBookCategories.FERMENTING_DRINKS, BnCRecipeBookCategories.FERMENTING_MEALS, BnCRecipeBookCategories.FERMENTING_MISC));
         event.registerRecipeCategoryFinder(BnCRecipeTypes.FERMENTING, recipe ->
         {
             if (recipe.value() instanceof KegFermentingRecipe fermentingRecipe) {
@@ -33,6 +33,7 @@ public class BnCRecipeBookNeoForge {
                     return switch (tab) {
                         case MEALS -> BnCRecipeBookCategories.FERMENTING_MEALS;
                         case DRINKS -> BnCRecipeBookCategories.FERMENTING_DRINKS;
+                        case MISC -> BnCRecipeBookCategories.FERMENTING_MISC;
                     };
                 }
             }
@@ -50,5 +51,9 @@ public class BnCRecipeBookNeoForge {
     }
     public static Object getMealsRecipeCategoryItemStacks(int idx, Class<?> type) {
         return Lazy.of(() -> List.of(new ItemStack(BnCItems.UNRIPE_FLAXEN_CHEESE_WHEEL)));
+    }
+
+    public static Object getMiscRecipeCategoryItemStacks(int idx, Class<?> type) {
+        return Lazy.of(() -> List.of(new ItemStack(BnCItems.KIMCHI)));
     }
 }

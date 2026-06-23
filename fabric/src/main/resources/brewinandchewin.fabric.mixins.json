@@ -9,7 +9,8 @@
     "PlayerMixin",
     "PreventTaggedEffectRemovalMixin$HotCocoa",
     "PreventTaggedEffectRemovalMixin$MilkBottle",
-    "RecipeBookSettingsMixin"
+    "RecipeBookSettingsMixin",
+    "RecipeBookTypeMixin"
   ],
   "client": [
     "client.ClientRecipeBookMixin",

@@ -32,6 +32,15 @@
         "class": "umpaz/brewinandchewin/neoforge/client/BnCRecipeBookNeoForge",
         "method": "getMealsRecipeCategoryItemStacks"
       }
+    },
+    {
+      "enum": "net/minecraft/client/RecipeBookCategories",
+      "name": "BREWINANDCHEWIN_FERMENTING_MISC",
+      "constructor": "(Ljava/util/function/Supplier;)V",
+      "parameters": {
+        "class": "umpaz/brewinandchewin/neoforge/client/BnCRecipeBookNeoForge",
+        "method": "getMiscRecipeCategoryItemStacks"
+      }
     }
   ]
 }

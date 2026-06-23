@@ -11,7 +11,8 @@ import java.util.function.IntFunction;
 
 public enum FermentingBookCategory implements StringRepresentable {
     MEALS("meals", 0),
-    DRINKS("drinks", 1);
+    DRINKS("drinks", 1),
+    MISC("misc", 2);
 
     final String name;
     final int id;

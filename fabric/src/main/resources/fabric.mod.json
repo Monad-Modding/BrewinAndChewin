@@ -22,9 +22,6 @@
     "client": [
       "umpaz.brewinandchewin.fabric.client.BrewinAndChewinFabricClient"
     ],
-    "mm:early_risers": [
-      "umpaz.brewinandchewin.fabric.BrewinAndChewinASM"
-    ],
     "jei_mod_plugin": [
       "umpaz.brewinandchewin.integration.jei.JEIPlugin"
     ],
@@ -36,7 +33,7 @@
     "${mod_id}.mixins.json",
     "${mod_id}.fabric.mixins.json"
   ],
-  "accessWidener": "${mod_id}.accesswidener",
+  "accessWidener": "${mod_id}.classtweaker",
   "depends": {
     "fabricloader": "${fabric_loader_range}",
     "fabric-api": "*",

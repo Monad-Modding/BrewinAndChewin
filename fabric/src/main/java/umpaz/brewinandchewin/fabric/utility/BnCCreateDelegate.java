@@ -1,10 +1,9 @@
 package umpaz.brewinandchewin.fabric.utility;
 
-import com.simibubi.create.AllFluids;
 import net.minecraft.world.level.material.Fluid;
 
 public class BnCCreateDelegate {
     public static Fluid getPotionSource() {
-        return AllFluids.POTION.getSource();
+        throw new IllegalStateException("Create has not been ported to Fabric 1.21.1");
     }
 }

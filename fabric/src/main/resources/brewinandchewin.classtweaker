@@ -1,4 +1,4 @@
-accessWidener v2 named
+classTweaker v2 named
 accessible class net/minecraft/client/gui/Gui$HeartType
 accessible method net/minecraft/client/gui/GuiGraphics innerBlit (Lnet/minecraft/resources/ResourceLocation;IIIIIFFFFFFFF)V
 accessible class net/minecraft/client/particle/ParticleEngine$SpriteParticleRegistration
@@ -7,3 +7,9 @@ mutable field net/minecraft/client/renderer/block/model/BakedQuad tintIndex I
 accessible method net/minecraft/core/particles/SimpleParticleType <init> (Z)V
 accessible class net/minecraft/world/entity/player/StackedContents$RecipePicker
 accessible class net/minecraft/stats/RecipeBookSettings$TypeSettings
+
+transitive-extend-enum net/minecraft/world/inventory/RecipeBookType BREWINANDCHEWIN_FERMENTING
+transitive-extend-enum net/minecraft/client/RecipeBookCategories BREWINANDCHEWIN_FERMENTING_SEARCH
+transitive-extend-enum net/minecraft/client/RecipeBookCategories BREWINANDCHEWIN_FERMENTING_DRINKS
+transitive-extend-enum net/minecraft/client/RecipeBookCategories BREWINANDCHEWIN_FERMENTING_MEALS
+transitive-extend-enum net/minecraft/client/RecipeBookCategories BREWINANDCHEWIN_FERMENTING_MISC

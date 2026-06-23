@@ -1,25 +1,24 @@
 package umpaz.brewinandchewin.gradle
 
 object Versions {
-    const val MOD = "4.4.3"
+    const val MOD = "4.5.0"
 
     const val MINECRAFT = "1.21.1"
     const val PARCHMENT_MINECRAFT = "1.21.1"
     const val NEOFORM = "$MINECRAFT-20240808.144430"
     const val PARCHMENT = "2024.11.17"
 
-    const val FABRIC_API = "0.115.0+1.21.1"
-    const val FABRIC_LOADER = "0.16.10"
+    const val FABRIC_API = "0.116.2+1.21.1"
+    const val FABRIC_LOADER = "0.19.2"
     const val MOD_MENU = "11.0.3"
-    const val FABRIC_LOADER_RANGE = ">=0.15"
+    const val FABRIC_LOADER_RANGE = ">=0.19"
     const val FABRIC_MINECRAFT_RANGE = "1.21.1"
-    const val FABRIC_ASM = "v2.3"
 
     const val NEOFORGE = "21.1.219"
     const val NEOFORGE_LOADER_RANGE = "[4,)"
     const val NEOFORGE_MINECRAFT_RANGE = "[1.21,1.21.2)"
 
-    const val GREENHOUSE_CONFIG = "2.2.3+1.21.1"
+    const val GREENHOUSE_CONFIG = "2.2.3+1.21.1" // TODO: Backport Modern Greenhouse Config when I get to finishing it.
     const val GREENHOUSE_CONFIG_TOML = "1.1.0"
     const val GREENHOUSE_CONFIG_NEOFORGE_RANGE = "[2.2.3,)"
     const val GREENHOUSE_CONFIG_FABRIC_RANGE = ">=2.2.3"
@@ -32,8 +31,8 @@ object Versions {
     const val FARMERS_DELIGHT = "1.21.1-1.3.2"
     const val FARMERS_DELIGHT_RANGE = "[1.3.2,)"
 
-    const val FARMERS_DELIGHT_REFABRICATED = "1.21.1-3.1.0+refabricated"
-    const val FARMERS_DELIGHT_REFABRICATED_RANGE = ">=1.21.1-3.1.0"
+    const val FARMERS_DELIGHT_REFABRICATED = "1.21.1-3.3.3+refabricated"
+    const val FARMERS_DELIGHT_REFABRICATED_RANGE = ">=1.21.1-3.3.0"
 
     const val FABRIC_MIXIN = "0.15.5+mixin.0.8.7"
     const val MIXIN_EXTRAS = "0.4.1"

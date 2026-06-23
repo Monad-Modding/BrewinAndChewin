@@ -1,6 +1,5 @@
 import umpaz.brewinandchewin.gradle.Properties
 import umpaz.brewinandchewin.gradle.Versions
-import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.jvm.tasks.Jar
 
 plugins {
@@ -69,6 +68,7 @@ dependencies {
 
     modCompileOnly("squeek.appleskin:appleskin-fabric:${Versions.APPLESKIN}")
     modLocalRuntime("squeek.appleskin:appleskin-fabric:${Versions.APPLESKIN}")
+
     modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${Versions.CLOTH_CONFIG}") {
         exclude(group = "net.fabricmc.fabric-api")
     }
@@ -76,14 +76,10 @@ dependencies {
         exclude(group = "net.fabricmc.fabric-api")
     }
 
-    modImplementation("com.github.Chocohead:Fabric-ASM:${Versions.FABRIC_ASM}") {
-        exclude(group = "net.fabricmc.fabric-api")
-    }
-
-    modCompileOnly("com.simibubi.create:create-fabric-1.20.1:${Versions.CREATE_FABRIC}") { isTransitive = false}
-    modCompileOnly("com.tterrag.registrate_fabric:Registrate:${Versions.REGISTRATE_FABRIC}") { isTransitive = false}
-    // FIXME: When Create Fabric is fully updated, delete Porting Lib as they are no longer utilising it.
-    modCompileOnly("io.github.fabricators_of_create.Porting-Lib:lazy_registration:${Versions.PORTING_LIB}") { isTransitive = false }
+    // Create Fabric is not updating to 1.21.1.
+//    modCompileOnly("com.simibubi.create:create-fabric-1.20.1:${Versions.CREATE_FABRIC}") { isTransitive = false}
+//    modCompileOnly("com.tterrag.registrate_fabric:Registrate:${Versions.REGISTRATE_FABRIC}") { isTransitive = false}
+//    modCompileOnly("io.github.fabricators_of_create.Porting-Lib:lazy_registration:${Versions.PORTING_LIB}") { isTransitive = false }
 
     modCompileOnly("maven.modrinth:styled-chat:${Versions.STYLED_CHAT}")
     modCompileOnly("eu.pb4:placeholder-api:${Versions.PB4_PLACEHOLDER_API}")
@@ -96,9 +92,9 @@ dependencies {
 }
 
 loom {
-    val aw = file("src/main/resources/${Properties.MOD_ID}.accesswidener");
-    if (aw.exists())
-        accessWidenerPath.set(aw)
+    val ct = file("src/main/resources/${Properties.MOD_ID}.classtweaker");
+    if (ct.exists())
+        accessWidenerPath.set(ct)
     mixin {
         defaultRefmapName.set("${Properties.MOD_ID}.refmap.json")
     }

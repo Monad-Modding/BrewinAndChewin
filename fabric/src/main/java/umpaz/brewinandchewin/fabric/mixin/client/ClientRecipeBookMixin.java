@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 public class ClientRecipeBookMixin {
     @Inject(method = "setupCollections", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/ImmutableMap;copyOf(Ljava/util/Map;)Lcom/google/common/collect/ImmutableMap;"))
     private void brewinandchewin$setupAggregateCategories(Iterable<RecipeHolder<?>> iterable, RegistryAccess registryAccess, CallbackInfo ci, @Local(ordinal = 1) Map<RecipeBookCategories, List<RecipeCollection>> aggregateCategories) {
-        aggregateCategories.put(BnCRecipeBookCategories.FERMENTING_SEARCH, Stream.of(BnCRecipeBookCategories.FERMENTING_MEALS, BnCRecipeBookCategories.FERMENTING_DRINKS)
+        aggregateCategories.put(BnCRecipeBookCategories.FERMENTING_SEARCH, Stream.of(BnCRecipeBookCategories.FERMENTING_DRINKS, BnCRecipeBookCategories.FERMENTING_MEALS, BnCRecipeBookCategories.FERMENTING_MISC)
                 .flatMap(categories -> aggregateCategories.getOrDefault(categories, List.of()).stream())
                 .toList()
         );
@@ -37,6 +37,7 @@ public class ClientRecipeBookMixin {
                 cir.setReturnValue(switch (tab) {
                     case MEALS -> BnCRecipeBookCategories.FERMENTING_MEALS;
                     case DRINKS -> BnCRecipeBookCategories.FERMENTING_DRINKS;
+                    case MISC -> BnCRecipeBookCategories.FERMENTING_MISC;
                 });
             }
         }

@@ -1,9 +1,6 @@
 package umpaz.brewinandchewin.fabric.loot.modifier;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -40,7 +37,7 @@ public class BnCSlicingModifier extends LootModifier
                 generatedLoot.add(new ItemStack(slice, servings + 1));
             } else if (targetBlock instanceof CheeseWheelBlock) {
                 int servings = state.getValue(CheeseWheelBlock.SERVINGS);
-                if (servings == 3 && !context.getParam(LootContextParams.TOOL).is(CommonTags.TOOLS_KNIFE)) {
+                if (servings == 3 && !context.getParam(LootContextParams.TOOL).is(CommonTags.Items.TOOLS_KNIFE)) {
                     generatedLoot.add(new ItemStack(targetBlock.asItem()));
                 } else {
                     generatedLoot.add(new ItemStack(slice, servings + 1));

@@ -11,7 +11,6 @@ import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes;
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -314,6 +313,6 @@ public class BnCPlatformHelperFabric implements BnCPlatformHelper {
 
     @Override
     public boolean hasFoodEffectTooltip() {
-        return Configuration.FOOD_EFFECT_TOOLTIP.get();
+        return Configuration.ENABLE_FOOD_EFFECT_TOOLTIP.get();
     }
 }

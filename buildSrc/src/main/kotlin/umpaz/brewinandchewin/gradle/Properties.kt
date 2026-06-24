@@ -13,6 +13,6 @@ object Properties {
     const val CURSEFORGE_PROJECT_ID = "637808"
     const val MODRINTH_PAGE = "https://modrinth.com/mod/brewin-and-chewin/"
     const val MODRINTH_PROJECT_ID = "hIu9KJTT"
-    const val GITHUB_REPO = "MerchantCalico/BrewinAndChewin"
+    const val GITHUB_REPO = "ChefsDelights/BrewinAndChewin"
     const val GITHUB_COMMITISH = Versions.MINECRAFT
 }

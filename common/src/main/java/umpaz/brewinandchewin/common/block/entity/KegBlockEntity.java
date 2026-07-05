@@ -252,6 +252,18 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         if (didInventoryChange) {
             keg.inventoryChanged();
         }
+        if (keg.isFermenting()) {
+            keg.bubbleTickCounter++;
+            // Every 10 ticks/0.5 seconds, this has been done to keep TPS lightweight
+            //while initially this was set to 60 it appeared to be not very visible
+            if (keg.bubbleTickCounter >= 15) {
+                keg.bubbleTickCounter = 0;
+                level.sendBlockUpdated(pos, state, state, 3);
+            }
+        } else {
+            keg.bubbleTickCounter = 0;
+        }
+
     }
 
     public Optional<RecipeHolder<KegFermentingRecipe>> getRecipeWithoutTemperature() {
@@ -691,5 +703,10 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
                 return 3;
             }
         };
+    }
+    private int bubbleTickCounter = 0;
+
+    public boolean isFermenting() {
+        return fermentTime > 0 && fermentTime < fermentTimeTotal;
     }
 }

@@ -3,8 +3,11 @@ package umpaz.brewinandchewin.common.block;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -33,10 +36,13 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 import umpaz.brewinandchewin.BrewinAndChewin;
+import umpaz.brewinandchewin.client.particle.DrunkBubbleParticleOptions;
 import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.container.AbstractedItemHandler;
 import umpaz.brewinandchewin.common.registry.BnCBlockEntityTypes;
+import umpaz.brewinandchewin.common.registry.BnCParticleTypes;
 import umpaz.brewinandchewin.common.utility.BnCMathUtils;
 
 import java.util.List;
@@ -105,6 +111,7 @@ public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
         }
         return SHAPE_Z;
     }
+
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
@@ -194,5 +201,41 @@ public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        BlockEntity be = level.getBlockEntity(pos);
+        if (!(be instanceof KegBlockEntity keg)) return;
+        if (!keg.isFermenting()) return;
+        if (random.nextInt(15) == 0) {
+            Direction facing = state.getValue(FACING);
+            boolean vertical = state.getValue(VERTICAL);
+
+            // Base pixel offsets, all values are divided by 16 to match with block size.
+            double xOffset = 8 / 16.0; // X = 8 px
+            double yOffset = vertical ? -1 / 16.0 : 2 / 16.0; // Y = -1 px if vertical, else 2 px, particles spawn for some reason 2 px higher than desired
+            double zOffset = vertical ? 0 / 16.0 : -1 / 16.0; // Z = 0 px if vertical, else -1 px, a little offseted up front to make the particles appear visually more.
+
+            // Rotate offsets based on facing
+            Vec3 offset = switch (facing) {
+                case NORTH -> new Vec3(xOffset, yOffset, zOffset);
+                case SOUTH -> new Vec3(xOffset, yOffset, 1.0 - zOffset);
+                case WEST -> new Vec3(zOffset, yOffset, xOffset);
+                case EAST -> new Vec3(1.0 - zOffset, yOffset, xOffset);
+                default -> Vec3.ZERO;
+            };
+
+            // Slight randomisation for natural bubbling
+            double dx = (random.nextDouble() - 0.5) * 0.02;
+            double dy = random.nextDouble() * 0.02;
+            double dz = (random.nextDouble() - 0.5) * 0.02;
+
+            level.addParticle(new DrunkBubbleParticleOptions(new Vector3f(0.8784f, 0.5725f, 0.1921f), 0.25f),
+                    pos.getX() + offset.x + dx,
+                    pos.getY() + offset.y + dy,
+                    pos.getZ() + offset.z + dz,
+                    0.0, 0.02, 0.0);
+        }
     }
 }

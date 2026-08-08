@@ -1,0 +1,16 @@
+{
+  "type": "brewinandchewin:keg_pouring",
+  "container": {
+    "count": 1,
+    "id": "minecraft:glass_bottle"
+  },
+  "fluid": {
+    "amount": 250,
+    "id": "brewinandchewin:verruca_wine"
+  },
+  "output": {
+    "count": 1,
+    "id": "brewinandchewin:verruca_wine"
+  },
+  "unit": "millibuckets"
+}

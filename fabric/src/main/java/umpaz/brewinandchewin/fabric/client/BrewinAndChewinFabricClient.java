@@ -9,6 +9,8 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -25,6 +27,8 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.client.BnCClientSetup;
 import umpaz.brewinandchewin.client.BrewinAndChewinClient;
+import umpaz.brewinandchewin.client.gui.AgingCaskScreen;
+import umpaz.brewinandchewin.client.gui.DistilleryScreen;
 import umpaz.brewinandchewin.client.gui.KegScreen;
 import umpaz.brewinandchewin.client.gui.KegTooltip;
 import umpaz.brewinandchewin.client.utility.BnCClientTextUtils;
@@ -54,7 +58,12 @@ public class BrewinAndChewinFabricClient implements ClientModInitializer {
             IntoxicationAppleSkinCompatFabric.init();
 
         MenuScreens.register(BnCMenuTypes.KEG, KegScreen::new);
+        MenuScreens.register(BnCMenuTypes.DISTILLERY, DistilleryScreen::new);
+        MenuScreens.register(BnCMenuTypes.AGING_CASK, AgingCaskScreen::new);
         BnCClientSetup.registerBlockEntityRenderers(BlockEntityRenderers::register);
+        BnCClientSetup.registerItemProperties();
+        BnCClientSetup.registerRenderTypes(BlockRenderLayerMap.INSTANCE::putBlock);
+        ItemTooltipCallback.EVENT.register((stack, context, type, lines) -> BnCClientSetup.appendLabelTooltip(stack, lines));
         BnCClientSetup.registerParticles((particleType, spriteParticleRegistration) -> ParticleFactoryRegistry.getInstance().register(particleType, provider -> spriteParticleRegistration.create(provider)));
         TooltipComponentCallback.EVENT.register(data -> {
             if (KegTooltip.KegTooltipComponent.class.isAssignableFrom(data.getClass())) {
@@ -76,9 +85,11 @@ public class BrewinAndChewinFabricClient implements ClientModInitializer {
             });
         });
         BnCClientSetup.registerColorHandlers(ColorProviderRegistry.BLOCK::register);
+        BnCClientSetup.registerItemColorHandlers(ColorProviderRegistry.ITEM::register);
         PreparableModelLoadingPlugin.register(BnCClientSetup::getModels, (data, context) -> {
             context.addModels(data.stream().map(resourceLocation -> resourceLocation.withPath(path -> "brewinandchewin/coaster/" + path)).toList());
             context.addModels(BrewinAndChewin.asResource("block/coaster"), BrewinAndChewin.asResource("block/coaster_tray"));
+            context.addModels(BnCClientSetup.getBottleRackModels());
             context.resolveModel().register(context1 -> {
                 if (context1.id().getPath().startsWith("brewinandchewin/coaster/") && BnCClientSetup.MODELS.contains(context1.id().withPath(string -> string.substring(24)))) {
                     return context1.getOrLoadModel(context1.id().withPath(string -> string.substring(24)));
@@ -156,6 +167,12 @@ public class BrewinAndChewinFabricClient implements ClientModInitializer {
         FluidRenderHandlerRegistry.INSTANCE.register(BnCFluids.BLOODY_MARY, BnCFluids.FLOWING_BLOODY_MARY, createWaterExtension(BnCFluidConstants.Colors.BLOODY_MARY));
         FluidRenderHandlerRegistry.INSTANCE.register(BnCFluids.RED_RUM, BnCFluids.FLOWING_RED_RUM, createWaterExtension(BnCFluidConstants.Colors.RED_RUM));
         FluidRenderHandlerRegistry.INSTANCE.register(BnCFluids.WITHERING_DROSS, BnCFluids.FLOWING_WITHERING_DROSS, createWaterExtension(BnCFluidConstants.Colors.WITHERING_DROSS));
+
+        FluidRenderHandlerRegistry.INSTANCE.register(BnCFluids.RED_WINE, BnCFluids.FLOWING_RED_WINE, createWaterExtension(BnCFluidConstants.Colors.RED_WINE));
+        FluidRenderHandlerRegistry.INSTANCE.register(BnCFluids.WHITE_WINE, BnCFluids.FLOWING_WHITE_WINE, createWaterExtension(BnCFluidConstants.Colors.WHITE_WINE));
+        FluidRenderHandlerRegistry.INSTANCE.register(BnCFluids.CURRANT_WINE, BnCFluids.FLOWING_CURRANT_WINE, createWaterExtension(BnCFluidConstants.Colors.CURRANT_WINE));
+        FluidRenderHandlerRegistry.INSTANCE.register(BnCFluids.VERRUCA_WINE, BnCFluids.FLOWING_VERRUCA_WINE, createWaterExtension(BnCFluidConstants.Colors.VERRUCA_WINE));
+        FluidRenderHandlerRegistry.INSTANCE.register(BnCFluids.TWISTED_WINE, BnCFluids.FLOWING_TWISTED_WINE, createWaterExtension(BnCFluidConstants.Colors.TWISTED_WINE));
 
         FluidRenderHandlerRegistry.INSTANCE.register(BnCFluids.FLAXEN_CHEESE, BnCFluids.FLOWING_FLAXEN_CHEESE,
                 new SimpleFluidRenderHandler(

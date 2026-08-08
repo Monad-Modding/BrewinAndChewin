@@ -136,5 +136,22 @@ public class BnCCraftingRecipes {
                 .unlockedBy("has_ice", InventoryChangeTrigger.TriggerInstance.hasItems(Items.PACKED_ICE))
                 .save(consumer, BrewinAndChewin.asResource("ice_crate"));
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, BnCItems.LABEL, 3)
+                .requires(Items.PAPER)
+                .requires(Items.PAPER)
+                .requires(Items.PAPER)
+                .requires(Items.HONEYCOMB)
+                .unlockedBy("has_honeycomb", InventoryChangeTrigger.TriggerInstance.hasItems(Items.HONEYCOMB))
+                .save(consumer, BrewinAndChewin.asResource("label"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, BnCItems.RED_GRAPE_SEEDS, 1)
+                .requires(BnCItems.RED_GRAPES)
+                .unlockedBy("has_red_grapes", InventoryChangeTrigger.TriggerInstance.hasItems(BnCItems.RED_GRAPES))
+                .save(consumer, BrewinAndChewin.asResource("red_grape_seeds"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, BnCItems.WHITE_GRAPE_SEEDS, 1)
+                .requires(BnCItems.WHITE_GRAPES)
+                .unlockedBy("has_white_grapes", InventoryChangeTrigger.TriggerInstance.hasItems(BnCItems.WHITE_GRAPES))
+                .save(consumer, BrewinAndChewin.asResource("white_grape_seeds"));
     }
 }

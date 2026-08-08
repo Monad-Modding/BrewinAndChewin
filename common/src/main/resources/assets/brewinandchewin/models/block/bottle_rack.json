@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "brewinandchewin:block/bottle_rack_front",
+    "back": "brewinandchewin:block/bottle_rack_back",
+    "front": "brewinandchewin:block/bottle_rack_front",
+    "side": "brewinandchewin:block/bottle_rack_side",
+    "topbottom": "brewinandchewin:block/bottle_rack_topbottom"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 8],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": {
+          "uv": [0, 0, 16, 16],
+          "texture": "#front"
+        },
+        "east": {
+          "uv": [0, 0, 8, 16],
+          "texture": "#side"
+        },
+        "south": {
+          "uv": [0, 0, 16, 16],
+          "texture": "#back"
+        },
+        "west": {
+          "uv": [8, 0, 0, 16],
+          "texture": "#side"
+        },
+        "up": {
+          "uv": [0, 0, 16, 8],
+          "texture": "#topbottom"
+        },
+        "down": {
+          "uv": [0, 8, 16, 16],
+          "texture": "#topbottom"
+        }
+      }
+    }
+  ]
+}

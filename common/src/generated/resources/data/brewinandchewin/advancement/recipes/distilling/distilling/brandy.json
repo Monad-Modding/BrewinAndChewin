@@ -1,0 +1,32 @@
+{
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "brewinandchewin:distilling/brandy"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "brewinandchewin:red_wine"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_wine",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "brewinandchewin:distilling/brandy"
+    ]
+  },
+  "sends_telemetry_event": true
+}

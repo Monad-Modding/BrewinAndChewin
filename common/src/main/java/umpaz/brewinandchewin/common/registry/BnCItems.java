@@ -5,13 +5,19 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.item.BoozeItem;
+import umpaz.brewinandchewin.common.item.DistillateItem;
 import umpaz.brewinandchewin.common.item.DreadNogItem;
 import umpaz.brewinandchewin.common.item.JamJarItem;
 import umpaz.brewinandchewin.common.item.KegItem;
+import umpaz.brewinandchewin.common.item.LabelItem;
+import umpaz.brewinandchewin.common.item.WineItem;
+import umpaz.brewinandchewin.common.item.WineType;
 import vectorwing.farmersdelight.common.item.ConsumableItem;
 
 import java.util.LinkedHashSet;
@@ -34,7 +40,31 @@ public class BnCItems {
     public static final Item ICE_CRATE = new BlockItem(BnCBlocks.ICE_CRATE, new Item.Properties());
     public static final Item COASTER = new BlockItem(BnCBlocks.COASTER, new Item.Properties());
 
+    public static final Item AGING_CASK = new BlockItem(BnCBlocks.AGING_CASK, new Item.Properties());
+    public static final Item BOTTLE_RACK = new BlockItem(BnCBlocks.BOTTLE_RACK, new Item.Properties());
+    public static final Item DISTILLERY = new BlockItem(BnCBlocks.DISTILLERY, new Item.Properties());
+
     public static final Item TANKARD = new Item(new Item.Properties());
+
+    public static final Item RED_GRAPES = new Item(new Item.Properties().food(BnCFoods.GRAPES));
+    public static final Item WHITE_GRAPES = new Item(new Item.Properties().food(BnCFoods.GRAPES));
+    public static final Item RED_GRAPE_SEEDS = new ItemNameBlockItem(BnCBlocks.RED_GRAPE_VINE, new Item.Properties());
+    public static final Item WHITE_GRAPE_SEEDS = new ItemNameBlockItem(BnCBlocks.WHITE_GRAPE_VINE, new Item.Properties());
+
+    public static final Item RED_WINE = new WineItem(WineType.RED, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
+    public static final Item WHITE_WINE = new WineItem(WineType.WHITE, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
+    public static final Item CURRANT_WINE = new WineItem(WineType.CURRANT, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
+    public static final Item VERRUCA_WINE = new WineItem(WineType.VERRUCA, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
+    public static final Item TWISTED_WINE = new WineItem(WineType.TWISTED, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
+    public static final Item RICE_WINE = new WineItem(WineType.RICE, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
+    public static final Item OLD_WINE = new WineItem(WineType.OLD, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE).rarity(Rarity.UNCOMMON));
+
+    public static final Item BRANDY = new DistillateItem(2, 4800, false, false, new Item.Properties().stacksTo(16));
+    public static final Item AQUA_VITAE = new DistillateItem(5, 6000, false, false, new Item.Properties().stacksTo(16));
+    public static final Item SICKENING_TINCTURE = new DistillateItem(0, 0, true, false, new Item.Properties().stacksTo(16));
+    public static final Item DELICIOUS_TINCTURE = new DistillateItem(0, 0, false, true, new Item.Properties().stacksTo(16));
+
+    public static final Item LABEL = new LabelItem(new Item.Properties());
 
     public static final Item BEER = new BoozeItem(() -> BnCFluids.BEER, new Item.Properties()
             .stacksTo(16).craftRemainder(BnCItems.TANKARD).food(BnCFoods.BEER));
@@ -42,8 +72,6 @@ public class BnCItems {
             .stacksTo(16).craftRemainder(BnCItems.TANKARD).food(BnCFoods.VODKA));
     public static final Item MEAD = new BoozeItem(() -> BnCFluids.MEAD, new Item.Properties()
             .stacksTo(16).craftRemainder(BnCItems.TANKARD).food(BnCFoods.MEAD));
-    public static final Item RICE_WINE = new BoozeItem(() -> BnCFluids.RICE_WINE, new Item.Properties()
-            .stacksTo(16).craftRemainder(BnCItems.TANKARD).food(BnCFoods.RICE_WINE));
     public static final Item PALE_JANE = new BoozeItem(() -> BnCFluids.PALE_JANE, new Item.Properties()
             .stacksTo(16).craftRemainder(BnCItems.TANKARD).food(BnCFoods.PALE_JANE));
     public static final Item EGG_GROG = new BoozeItem(() -> BnCFluids.EGG_GROG, new Item.Properties()
@@ -110,13 +138,35 @@ public class BnCItems {
         registerWithTab("heating_cask", HEATING_CASK);
         registerWithTab("ice_crate", ICE_CRATE);
         registerWithTab("coaster", COASTER);
+        registerWithTab("aging_cask", AGING_CASK);
+        registerWithTab("bottle_rack", BOTTLE_RACK);
+        registerWithTab("distillery", DISTILLERY);
 
         registerWithTab("tankard", TANKARD);
+
+        registerWithTab("red_grapes", RED_GRAPES);
+        registerWithTab("white_grapes", WHITE_GRAPES);
+        registerWithTab("red_grape_seeds", RED_GRAPE_SEEDS);
+        registerWithTab("white_grape_seeds", WHITE_GRAPE_SEEDS);
+
+        registerWithTab("red_wine", RED_WINE);
+        registerWithTab("white_wine", WHITE_WINE);
+        registerWithTab("currant_wine", CURRANT_WINE);
+        registerWithTab("verruca_wine", VERRUCA_WINE);
+        registerWithTab("twisted_wine", TWISTED_WINE);
+        registerWithTab("rice_wine", RICE_WINE);
+        registerWithTab("old_wine", OLD_WINE);
+
+        registerWithTab("brandy", BRANDY);
+        registerWithTab("aqua_vitae", AQUA_VITAE);
+        registerWithTab("sickening_tincture", SICKENING_TINCTURE);
+        registerWithTab("delicious_tincture", DELICIOUS_TINCTURE);
+
+        registerWithTab("label", LABEL);
 
         registerWithTab("beer", BEER);
         registerWithTab("vodka", VODKA);
         registerWithTab("mead", MEAD);
-        registerWithTab("rice_wine", RICE_WINE);
         registerWithTab("pale_jane", PALE_JANE);
         registerWithTab("egg_grog", EGG_GROG);
         registerWithTab("glittering_grenadine", GLITTERING_GRENADINE);

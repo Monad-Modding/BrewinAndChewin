@@ -1,0 +1,19 @@
+{
+  "textures": {
+    "particle": "brewinandchewin:block/bottle_rack_labels",
+    "label": "brewinandchewin:block/bottle_rack_labels"
+  },
+  "elements": [
+    {
+      "from": [0, -2, 2.98],
+      "to": [2, -1, 3],
+      "faces": {
+        "north": {
+          "uv": [2, 15, 4, 16],
+          "texture": "#label",
+          "tintindex": 3
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,occupied=false": {
+      "model": "brewinandchewin:block/aging_cask"
+    },
+    "facing=north,occupied=true": {
+      "model": "brewinandchewin:block/aging_cask"
+    },
+    "facing=east,occupied=false": {
+      "model": "brewinandchewin:block/aging_cask",
+      "y": 90
+    },
+    "facing=east,occupied=true": {
+      "model": "brewinandchewin:block/aging_cask",
+      "y": 90
+    },
+    "facing=south,occupied=false": {
+      "model": "brewinandchewin:block/aging_cask",
+      "y": 180
+    },
+    "facing=south,occupied=true": {
+      "model": "brewinandchewin:block/aging_cask",
+      "y": 180
+    },
+    "facing=west,occupied=false": {
+      "model": "brewinandchewin:block/aging_cask",
+      "y": 270
+    },
+    "facing=west,occupied=true": {
+      "model": "brewinandchewin:block/aging_cask",
+      "y": 270
+    }
+  }
+}

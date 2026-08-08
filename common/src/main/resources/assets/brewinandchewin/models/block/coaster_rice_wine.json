@@ -1,7 +1,0 @@
-{
-  "parent": "brewinandchewin:block/coaster_tankard",
-  "textures": {
-    "particle": "brewinandchewin:block/rice_wine",
-    "tankard": "brewinandchewin:block/rice_wine"
-  }
-}

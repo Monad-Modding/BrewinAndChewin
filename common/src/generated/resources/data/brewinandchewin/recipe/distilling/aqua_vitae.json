@@ -1,0 +1,13 @@
+{
+  "type": "brewinandchewin:distilling",
+  "distilling_time": 800,
+  "experience": 1.0,
+  "ingredient": {
+    "item": "brewinandchewin:brandy"
+  },
+  "result": {
+    "count": 1,
+    "id": "brewinandchewin:aqua_vitae"
+  },
+  "water_cost": 3
+}

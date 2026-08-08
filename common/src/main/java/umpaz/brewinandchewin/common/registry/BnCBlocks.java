@@ -20,6 +20,22 @@ public class BnCBlocks {
 
     public static final Block COASTER = new CoasterBlock();
 
+    public static final Block AGING_CASK = new AgingCaskBlock(
+            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).noOcclusion());
+
+    public static final Block BOTTLE_RACK = new BottleRackBlock(
+            BlockBehaviour.Properties.ofFullCopy(Blocks.CHISELED_BOOKSHELF).noOcclusion());
+
+    public static final Block DISTILLERY = new DistilleryBlock(
+            BlockBehaviour.Properties.ofFullCopy(Blocks.BLAST_FURNACE).noOcclusion()
+                    .lightLevel(state -> state.getValue(DistilleryBlock.LIT) ? 13 : 0));
+
+    public static final Block RED_GRAPE_VINE = new GrapeVineBlock(
+            () -> BnCItems.RED_GRAPES, BlockBehaviour.Properties.ofFullCopy(Blocks.VINE).randomTicks());
+
+    public static final Block WHITE_GRAPE_VINE = new GrapeVineBlock(
+            () -> BnCItems.WHITE_GRAPES, BlockBehaviour.Properties.ofFullCopy(Blocks.VINE).randomTicks());
+
     //Cheese
     public static final Block UNRIPE_FLAXEN_CHEESE_WHEEL = new
             UnripeCheeseWheelBlock(() -> BnCBlocks.FLAXEN_CHEESE_WHEEL, Block.Properties.ofFullCopy(Blocks.CAKE));
@@ -49,6 +65,12 @@ public class BnCBlocks {
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("heating_cask"), HEATING_CASK);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("ice_crate"), ICE_CRATE);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("coaster"), COASTER);
+
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("aging_cask"), AGING_CASK);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("bottle_rack"), BOTTLE_RACK);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("distillery"), DISTILLERY);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("red_grape_vine"), RED_GRAPE_VINE);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("white_grape_vine"), WHITE_GRAPE_VINE);
 
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("unripe_flaxen_cheese_wheel"), UNRIPE_FLAXEN_CHEESE_WHEEL);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("flaxen_cheese_wheel"), FLAXEN_CHEESE_WHEEL);

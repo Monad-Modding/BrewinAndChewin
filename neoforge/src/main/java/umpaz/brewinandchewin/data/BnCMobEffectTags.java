@@ -6,6 +6,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.registry.BnCEffects;
@@ -28,5 +29,36 @@ public class BnCMobEffectTags extends IntrinsicHolderTagsProvider<MobEffect>
     protected void registerModTags() {
         tag(BnCTags.Effects.MILK_BOTTLE_LOW_PRIORITY)
                 .add(BnCEffects.TIPSY.value());
+        tag(BnCTags.Effects.TWISTED_WINE_AFFLICTIONS)
+                .add(MobEffects.MOVEMENT_SLOWDOWN.value())
+                .add(MobEffects.WEAKNESS.value())
+                .add(MobEffects.POISON.value())
+                .add(MobEffects.INFESTED.value())
+                .add(MobEffects.OOZING.value())
+                .add(MobEffects.DIG_SLOWDOWN.value())
+                .add(MobEffects.INVISIBILITY.value())
+                .add(MobEffects.GLOWING.value());
+        tag(BnCTags.Effects.OLD_WINE_EFFECTS)
+                .add(MobEffects.MOVEMENT_SPEED.value())
+                .add(MobEffects.DIG_SPEED.value())
+                .add(MobEffects.DAMAGE_BOOST.value())
+                .add(MobEffects.JUMP.value())
+                .add(MobEffects.REGENERATION.value())
+                .add(MobEffects.DAMAGE_RESISTANCE.value())
+                .add(MobEffects.FIRE_RESISTANCE.value())
+                .add(MobEffects.WATER_BREATHING.value())
+                .add(MobEffects.NIGHT_VISION.value())
+                .add(MobEffects.ABSORPTION.value())
+                .add(MobEffects.MOVEMENT_SLOWDOWN.value())
+                .add(MobEffects.DIG_SLOWDOWN.value())
+                .add(MobEffects.CONFUSION.value())
+                .add(MobEffects.BLINDNESS.value())
+                .add(MobEffects.HUNGER.value())
+                .add(MobEffects.WEAKNESS.value())
+                .add(MobEffects.POISON.value())
+                .add(MobEffects.WITHER.value())
+                .add(MobEffects.LEVITATION.value())
+                .add(MobEffects.GLOWING.value())
+                .add(MobEffects.LUCK.value());
     }
 }

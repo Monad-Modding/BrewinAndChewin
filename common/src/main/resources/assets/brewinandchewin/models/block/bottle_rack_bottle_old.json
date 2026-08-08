@@ -1,0 +1,44 @@
+{
+  "textures": {
+    "particle": "brewinandchewin:block/bottle_rack_wine_old",
+    "bottle": "brewinandchewin:block/bottle_rack_wine_old"
+  },
+  "elements": [
+    {
+      "from": [-1, -1, 2.98],
+      "to": [3, 3, 3],
+      "faces": {
+        "north": {
+          "uv": [1, 1, 5, 5],
+          "texture": "#bottle"
+        }
+      }
+    },
+    {
+      "from": [0, 0, 0],
+      "to": [2, 2, 3],
+      "faces": {
+        "north": {
+          "uv": [10, 4, 12, 6],
+          "texture": "#bottle"
+        },
+        "east": {
+          "uv": [7, 4, 10, 6],
+          "texture": "#bottle"
+        },
+        "west": {
+          "uv": [12, 4, 15, 6],
+          "texture": "#bottle"
+        },
+        "up": {
+          "uv": [10, 1, 12, 4],
+          "texture": "#bottle"
+        },
+        "down": {
+          "uv": [12, 1, 14, 4],
+          "texture": "#bottle"
+        }
+      }
+    }
+  ]
+}

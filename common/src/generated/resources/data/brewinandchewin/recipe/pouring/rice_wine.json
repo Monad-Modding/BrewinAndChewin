@@ -1,5 +1,9 @@
 {
   "type": "brewinandchewin:keg_pouring",
+  "container": {
+    "count": 1,
+    "id": "minecraft:glass_bottle"
+  },
   "fluid": {
     "amount": 250,
     "id": "brewinandchewin:rice_wine"

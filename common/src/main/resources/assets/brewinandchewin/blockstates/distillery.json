@@ -1,0 +1,208 @@
+{
+  "variants": {
+    "facing=north,lit=false,mirrored=false,part=burner": {
+      "model": "brewinandchewin:block/distillery"
+    },
+    "facing=north,lit=false,mirrored=false,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=north,lit=false,mirrored=false,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=north,lit=false,mirrored=false,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=north,lit=true,mirrored=false,part=burner": {
+      "model": "brewinandchewin:block/distillery"
+    },
+    "facing=north,lit=true,mirrored=false,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=north,lit=true,mirrored=false,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=north,lit=true,mirrored=false,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=north,lit=false,mirrored=true,part=burner": {
+      "model": "brewinandchewin:block/distillery_mirrored"
+    },
+    "facing=north,lit=false,mirrored=true,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=north,lit=false,mirrored=true,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=north,lit=false,mirrored=true,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=north,lit=true,mirrored=true,part=burner": {
+      "model": "brewinandchewin:block/distillery_mirrored"
+    },
+    "facing=north,lit=true,mirrored=true,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=north,lit=true,mirrored=true,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=north,lit=true,mirrored=true,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=east,lit=false,mirrored=false,part=burner": {
+      "model": "brewinandchewin:block/distillery",
+      "y": 90
+    },
+    "facing=east,lit=false,mirrored=false,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=east,lit=false,mirrored=false,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=east,lit=false,mirrored=false,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=east,lit=true,mirrored=false,part=burner": {
+      "model": "brewinandchewin:block/distillery",
+      "y": 90
+    },
+    "facing=east,lit=true,mirrored=false,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=east,lit=true,mirrored=false,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=east,lit=true,mirrored=false,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=east,lit=false,mirrored=true,part=burner": {
+      "model": "brewinandchewin:block/distillery_mirrored",
+      "y": 90
+    },
+    "facing=east,lit=false,mirrored=true,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=east,lit=false,mirrored=true,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=east,lit=false,mirrored=true,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=east,lit=true,mirrored=true,part=burner": {
+      "model": "brewinandchewin:block/distillery_mirrored",
+      "y": 90
+    },
+    "facing=east,lit=true,mirrored=true,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=east,lit=true,mirrored=true,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=east,lit=true,mirrored=true,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=south,lit=false,mirrored=false,part=burner": {
+      "model": "brewinandchewin:block/distillery",
+      "y": 180
+    },
+    "facing=south,lit=false,mirrored=false,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=south,lit=false,mirrored=false,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=south,lit=false,mirrored=false,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=south,lit=true,mirrored=false,part=burner": {
+      "model": "brewinandchewin:block/distillery",
+      "y": 180
+    },
+    "facing=south,lit=true,mirrored=false,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=south,lit=true,mirrored=false,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=south,lit=true,mirrored=false,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=south,lit=false,mirrored=true,part=burner": {
+      "model": "brewinandchewin:block/distillery_mirrored",
+      "y": 180
+    },
+    "facing=south,lit=false,mirrored=true,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=south,lit=false,mirrored=true,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=south,lit=false,mirrored=true,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=south,lit=true,mirrored=true,part=burner": {
+      "model": "brewinandchewin:block/distillery_mirrored",
+      "y": 180
+    },
+    "facing=south,lit=true,mirrored=true,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=south,lit=true,mirrored=true,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=south,lit=true,mirrored=true,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=west,lit=false,mirrored=false,part=burner": {
+      "model": "brewinandchewin:block/distillery",
+      "y": 270
+    },
+    "facing=west,lit=false,mirrored=false,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=west,lit=false,mirrored=false,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=west,lit=false,mirrored=false,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=west,lit=true,mirrored=false,part=burner": {
+      "model": "brewinandchewin:block/distillery",
+      "y": 270
+    },
+    "facing=west,lit=true,mirrored=false,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=west,lit=true,mirrored=false,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=west,lit=true,mirrored=false,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=west,lit=false,mirrored=true,part=burner": {
+      "model": "brewinandchewin:block/distillery_mirrored",
+      "y": 270
+    },
+    "facing=west,lit=false,mirrored=true,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=west,lit=false,mirrored=true,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=west,lit=false,mirrored=true,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=west,lit=true,mirrored=true,part=burner": {
+      "model": "brewinandchewin:block/distillery_mirrored",
+      "y": 270
+    },
+    "facing=west,lit=true,mirrored=true,part=condenser": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=west,lit=true,mirrored=true,part=burner_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    },
+    "facing=west,lit=true,mirrored=true,part=condenser_top": {
+      "model": "brewinandchewin:block/distillery_empty"
+    }
+  }
+}

@@ -21,6 +21,9 @@ public class BnCTags {
         public static final TagKey<Item> FOOD_JERKY_MEAT = modItemTag("foods/jerky_meat");
         public static final TagKey<Item> FOOD_PIZZA_TOPPING = modItemTag("foods/pizza_topping");
         public static final TagKey<Item> PLAYER_WORKSTATIONS_KEGS = modItemTag("player_workstations/kegs");
+        public static final TagKey<Item> GRAPES = modItemTag("grapes");
+        public static final TagKey<Item> WINES = modItemTag("wines");
+        public static final TagKey<Item> DISTILLATES = modItemTag("distillates");
 
         private static TagKey<Item> modItemTag(String path) {
             return TagKey.create(Registries.ITEM, BrewinAndChewin.asResource(path));
@@ -64,6 +67,12 @@ public class BnCTags {
         public static final TagKey<Fluid> WITHERING_DROSS = modFluidTag("withering_dross");
         public static final TagKey<Fluid> KOMBUCHA = modFluidTag("kombucha");
 
+        public static final TagKey<Fluid> RED_WINE = modFluidTag("red_wine");
+        public static final TagKey<Fluid> WHITE_WINE = modFluidTag("white_wine");
+        public static final TagKey<Fluid> CURRANT_WINE = modFluidTag("currant_wine");
+        public static final TagKey<Fluid> VERRUCA_WINE = modFluidTag("verruca_wine");
+        public static final TagKey<Fluid> TWISTED_WINE = modFluidTag("twisted_wine");
+
         public static final TagKey<Fluid> FLAXEN_CHEESE = modFluidTag("flaxen_cheese");
         public static final TagKey<Fluid> SCARLET_CHEESE = modFluidTag("scarlet_cheese");
 
@@ -75,6 +84,8 @@ public class BnCTags {
     public static class Effects {
         public static final TagKey<MobEffect> MILK_BOTTLE_LOW_PRIORITY = modEffectTag("low_priority/milk_bottle");
         public static final TagKey<MobEffect> HOT_COCOA_LOW_PRIORITY = modEffectTag("low_priority/hot_cocoa");
+        public static final TagKey<MobEffect> TWISTED_WINE_AFFLICTIONS = modEffectTag("twisted_wine_afflictions");
+        public static final TagKey<MobEffect> OLD_WINE_EFFECTS = modEffectTag("old_wine_effects");
 
         private static TagKey<MobEffect> modEffectTag(String path) {
             return TagKey.create(Registries.MOB_EFFECT, BrewinAndChewin.asResource(path));

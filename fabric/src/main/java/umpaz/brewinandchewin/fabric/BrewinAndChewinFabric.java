@@ -18,9 +18,11 @@ import umpaz.brewinandchewin.common.network.clientbound.*;
 import umpaz.brewinandchewin.common.network.serverbound.EMIFillFermentingRecipeServerboundPacket;
 import umpaz.brewinandchewin.common.network.serverbound.EMIFillPouringRecipeServerboundPacket;
 import umpaz.brewinandchewin.common.network.serverbound.JEITransferKegRecipeServerboundPacket;
+import umpaz.brewinandchewin.common.network.serverbound.SetLabelContentsServerboundPacket;
 import umpaz.brewinandchewin.common.registry.BnCBlockEntityTypes;
 import umpaz.brewinandchewin.common.registry.BnCBlocks;
 import umpaz.brewinandchewin.common.registry.BnCCreativeTabs;
+import umpaz.brewinandchewin.common.registry.BnCDataComponents;
 import umpaz.brewinandchewin.common.registry.BnCEffects;
 import umpaz.brewinandchewin.common.registry.BnCFluids;
 import umpaz.brewinandchewin.common.registry.BnCItems;
@@ -92,6 +94,7 @@ public class BrewinAndChewinFabric implements ModInitializer {
         BnCBlocks.registerAll();
         BnCBlockEntityTypes.registerAll();
         BnCCreativeTabs.registerAll();
+        BnCDataComponents.registerAll();
         BnCEffects.registerAll();
         BnCFluids.registerAll();
         BnCItems.registerAll();
@@ -117,10 +120,12 @@ public class BrewinAndChewinFabric implements ModInitializer {
         PayloadTypeRegistry.playC2S().register(JEITransferKegRecipeServerboundPacket.TYPE, JEITransferKegRecipeServerboundPacket.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(EMIFillFermentingRecipeServerboundPacket.TYPE, EMIFillFermentingRecipeServerboundPacket.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(EMIFillPouringRecipeServerboundPacket.TYPE, EMIFillPouringRecipeServerboundPacket.STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(SetLabelContentsServerboundPacket.TYPE, SetLabelContentsServerboundPacket.STREAM_CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(JEITransferKegRecipeServerboundPacket.TYPE, (payload, context) -> payload.handle(context.player()));
         ServerPlayNetworking.registerGlobalReceiver(EMIFillFermentingRecipeServerboundPacket.TYPE, (payload, context) -> payload.handle(context.player()));
         ServerPlayNetworking.registerGlobalReceiver(EMIFillPouringRecipeServerboundPacket.TYPE, (payload, context) -> payload.handle(context.player()));
+        ServerPlayNetworking.registerGlobalReceiver(SetLabelContentsServerboundPacket.TYPE, (payload, context) -> payload.handle(context.player()));
     }
 
     private static void registerCompostables() {
@@ -128,6 +133,10 @@ public class BrewinAndChewinFabric implements ModInitializer {
         ComposterBlock.COMPOSTABLES.put(BnCItems.PICKLED_PICKLES, 0.5F);
         ComposterBlock.COMPOSTABLES.put(BnCItems.QUICHE_SLICE, 0.85F);
         ComposterBlock.COMPOSTABLES.put(BnCItems.QUICHE, 1.0F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.RED_GRAPES, 0.65F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.WHITE_GRAPES, 0.65F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.RED_GRAPE_SEEDS, 0.3F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.WHITE_GRAPE_SEEDS, 0.3F);
     }
 
     private static void registerFluidAttributeHandlers() {
@@ -168,6 +177,17 @@ public class BrewinAndChewinFabric implements ModInitializer {
         FluidVariantAttributes.register(BnCFluids.FLOWING_WITHERING_DROSS, BnCFluidVariantAttributeHandler.INSTANCE);
         FluidVariantAttributes.register(BnCFluids.KOMBUCHA, BnCFluidVariantAttributeHandler.INSTANCE);
         FluidVariantAttributes.register(BnCFluids.FLOWING_KOMBUCHA, BnCFluidVariantAttributeHandler.INSTANCE);
+
+        FluidVariantAttributes.register(BnCFluids.RED_WINE, BnCFluidVariantAttributeHandler.INSTANCE);
+        FluidVariantAttributes.register(BnCFluids.FLOWING_RED_WINE, BnCFluidVariantAttributeHandler.INSTANCE);
+        FluidVariantAttributes.register(BnCFluids.WHITE_WINE, BnCFluidVariantAttributeHandler.INSTANCE);
+        FluidVariantAttributes.register(BnCFluids.FLOWING_WHITE_WINE, BnCFluidVariantAttributeHandler.INSTANCE);
+        FluidVariantAttributes.register(BnCFluids.CURRANT_WINE, BnCFluidVariantAttributeHandler.INSTANCE);
+        FluidVariantAttributes.register(BnCFluids.FLOWING_CURRANT_WINE, BnCFluidVariantAttributeHandler.INSTANCE);
+        FluidVariantAttributes.register(BnCFluids.VERRUCA_WINE, BnCFluidVariantAttributeHandler.INSTANCE);
+        FluidVariantAttributes.register(BnCFluids.FLOWING_VERRUCA_WINE, BnCFluidVariantAttributeHandler.INSTANCE);
+        FluidVariantAttributes.register(BnCFluids.TWISTED_WINE, BnCFluidVariantAttributeHandler.INSTANCE);
+        FluidVariantAttributes.register(BnCFluids.FLOWING_TWISTED_WINE, BnCFluidVariantAttributeHandler.INSTANCE);
 
         FluidVariantAttributes.register(BnCFluids.FLAXEN_CHEESE, BnCFluidVariantAttributeHandler.INSTANCE);
         FluidVariantAttributes.register(BnCFluids.FLOWING_FLAXEN_CHEESE, BnCFluidVariantAttributeHandler.INSTANCE);

@@ -4,6 +4,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
@@ -38,7 +39,6 @@ public class BnCItemTags extends ItemTagsProvider {
                 .add(BnCItems.BEER)
                 .add(BnCItems.VODKA)
                 .add(BnCItems.MEAD)
-                .add(BnCItems.RICE_WINE)
                 .add(BnCItems.EGG_GROG)
                 .add(BnCItems.STRONGROOT_ALE)
                 .add(BnCItems.SACCHARINE_RUM)
@@ -61,9 +61,33 @@ public class BnCItemTags extends ItemTagsProvider {
         tag(BnCTags.Items.FOOD_HORROR_MEAT).addOptionalTag(CommonTags.Items.FOODS_RAW_BEEF).addOptionalTag(CommonTags.Items.FOODS_RAW_CHICKEN);
         tag(BnCTags.Items.FOOD_JERKY_MEAT).add(Items.ROTTEN_FLESH).addTag(Tags.Items.FOODS_RAW_MEAT);
         copy(BnCTags.Blocks.PLAYER_WORKSTATIONS_KEGS, BnCTags.Items.PLAYER_WORKSTATIONS_KEGS);
+        tag(BnCTags.Items.GRAPES)
+                .add(BnCItems.RED_GRAPES)
+                .add(BnCItems.WHITE_GRAPES);
+        tag(BnCTags.Items.WINES)
+                .add(BnCItems.RED_WINE)
+                .add(BnCItems.WHITE_WINE)
+                .add(BnCItems.CURRANT_WINE)
+                .add(BnCItems.VERRUCA_WINE)
+                .add(BnCItems.TWISTED_WINE)
+                .add(BnCItems.RICE_WINE)
+                .add(BnCItems.OLD_WINE);
+        tag(BnCTags.Items.DISTILLATES)
+                .add(BnCItems.BRANDY)
+                .add(BnCItems.AQUA_VITAE)
+                .add(BnCItems.SICKENING_TINCTURE)
+                .add(BnCItems.DELICIOUS_TINCTURE)
+                .add(Items.POTION)
+                .add(Items.SPLASH_POTION)
+                .add(Items.LINGERING_POTION);
     }
 
     private void registerConventionalTags() {
+        tag(ItemTags.DYEABLE)
+                .add(BnCItems.LABEL);
+        tag(Tags.Items.FOODS_FRUIT)
+                .add(BnCItems.RED_GRAPES)
+                .add(BnCItems.WHITE_GRAPES);
         tag(Tags.Items.FOODS)
                 .add(BnCItems.KIMCHI)
                 .add(BnCItems.JERKY)

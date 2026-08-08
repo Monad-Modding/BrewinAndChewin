@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "brewinandchewin:item/wine/wine_white",
+    "layer1": "brewinandchewin:item/wine/wine_white_label"
+  }
+}

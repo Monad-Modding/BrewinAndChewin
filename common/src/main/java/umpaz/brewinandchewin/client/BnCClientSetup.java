@@ -5,18 +5,23 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.client.color.block.BlockColor;
+import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -25,16 +30,24 @@ import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.client.gui.KegTooltip;
 import umpaz.brewinandchewin.client.particle.DrunkBubbleParticle;
 import umpaz.brewinandchewin.client.particle.RagingParticle;
+import umpaz.brewinandchewin.client.renderer.BottleRackBlockEntityRenderer;
 import umpaz.brewinandchewin.client.renderer.CoasterBlockEntityRenderer;
 import umpaz.brewinandchewin.client.renderer.texture.BnCTextureModifiers;
 import umpaz.brewinandchewin.client.renderer.texture.modifier.TextureModifier;
 import umpaz.brewinandchewin.client.utility.IdentifiableListener;
+import umpaz.brewinandchewin.common.block.entity.BottleRackBlockEntity;
 import umpaz.brewinandchewin.common.block.entity.CoasterBlockEntity;
+import umpaz.brewinandchewin.common.item.WineItem;
+import umpaz.brewinandchewin.common.item.WineType;
 import umpaz.brewinandchewin.common.mixin.client.ModelBakeryAccessor;
 import umpaz.brewinandchewin.common.registry.BnCBlockEntityTypes;
 import umpaz.brewinandchewin.common.registry.BnCBlocks;
+import umpaz.brewinandchewin.common.registry.BnCItems;
 import umpaz.brewinandchewin.client.utility.BnCFluidItemDisplays;
 import umpaz.brewinandchewin.common.registry.BnCParticleTypes;
+import umpaz.brewinandchewin.common.utility.BnCLabelUtils;
+import umpaz.brewinandchewin.common.utility.BnCWineUtils;
+import umpaz.brewinandchewin.platform.client.BnCClientPlatformHelper;
 import vectorwing.farmersdelight.client.particle.SteamParticle;
 
 import java.io.Reader;
@@ -48,6 +61,64 @@ public class BnCClientSetup {
 
     public static void registerBlockEntityRenderers(BiConsumer<BlockEntityType<?>, BlockEntityRendererProvider> consumer) {
         consumer.accept(BnCBlockEntityTypes.COASTER, CoasterBlockEntityRenderer::new);
+        consumer.accept(BnCBlockEntityTypes.BOTTLE_RACK, BottleRackBlockEntityRenderer::new);
+    }
+
+    public static void appendLabelTooltip(ItemStack stack, List<Component> tooltip) {
+        BnCLabelUtils.appendLabelTooltip(stack, tooltip);
+    }
+
+    public static List<ResourceLocation> getBottleRackModels() {
+        List<ResourceLocation> models = new ArrayList<>();
+        for (Item item : BnCItems.CREATIVE_TAB_ITEMS) {
+            if (!(item instanceof WineItem wine))
+                continue;
+            models.add(BottleRackBlockEntityRenderer.bottleModel(wine, false));
+            models.add(BottleRackBlockEntityRenderer.bottleModel(wine, true));
+        }
+        for (int slot = 0; slot < BottleRackBlockEntity.SLOT_COUNT; ++slot) {
+            models.add(BottleRackBlockEntityRenderer.labelModel(slot));
+        }
+        return models;
+    }
+
+    public static final ResourceLocation WINE_FOAM_PROPERTY = BrewinAndChewin.asResource("foam");
+    public static final ResourceLocation WINE_LABELLED_PROPERTY = BrewinAndChewin.asResource("labelled");
+    public static final ResourceLocation WINE_FINELY_AGED_PROPERTY = BrewinAndChewin.asResource("finely_aged");
+    public static final ResourceLocation WINE_VARIANT_PROPERTY = BrewinAndChewin.asResource("variant");
+
+    public static void registerItemProperties() {
+        BnCClientPlatformHelper helper = BrewinAndChewinClient.getHelper();
+        for (Item item : BnCItems.CREATIVE_TAB_ITEMS) {
+            if (!(item instanceof WineItem wine))
+                continue;
+            helper.registerItemProperty(item, WINE_FOAM_PROPERTY,
+                    (stack, level, entity, seed) -> BnCWineUtils.getContents(stack).hasFoam() ? 1.0F : 0.0F);
+            helper.registerItemProperty(item, WINE_LABELLED_PROPERTY,
+                    (stack, level, entity, seed) -> BnCLabelUtils.getLabel(stack).isPresent() ? 1.0F : 0.0F);
+            helper.registerItemProperty(item, WINE_FINELY_AGED_PROPERTY,
+                    (stack, level, entity, seed) -> BnCWineUtils.getContents(stack).isFinelyAged(wine.getWineType()) ? 1.0F : 0.0F);
+            helper.registerItemProperty(item, WINE_VARIANT_PROPERTY,
+                    (stack, level, entity, seed) -> BnCWineUtils.getContents(stack).variant() / (float) (WineType.OLD_WINE_VARIANTS - 1));
+        }
+    }
+
+    public static void registerItemColorHandlers(BiConsumer<ItemColor, ItemLike> consumer) {
+        ItemColor labelTint = (stack, tintIndex) ->
+                tintIndex == 1 && BnCLabelUtils.getLabel(stack).isPresent() ? BnCLabelUtils.getLabelColor(stack) : -1;
+        for (Item item : BnCItems.CREATIVE_TAB_ITEMS) {
+            if (item instanceof WineItem)
+                consumer.accept(labelTint, item);
+        }
+        consumer.accept((stack, tintIndex) -> tintIndex == 0 ? BnCLabelUtils.getDyeColor(stack) : -1, BnCItems.LABEL);
+    }
+
+    public static void registerRenderTypes(BiConsumer<Block, RenderType> consumer) {
+        consumer.accept(BnCBlocks.AGING_CASK, RenderType.cutout());
+        consumer.accept(BnCBlocks.BOTTLE_RACK, RenderType.cutout());
+        consumer.accept(BnCBlocks.DISTILLERY, RenderType.cutout());
+        consumer.accept(BnCBlocks.RED_GRAPE_VINE, RenderType.cutout());
+        consumer.accept(BnCBlocks.WHITE_GRAPE_VINE, RenderType.cutout());
     }
 
     public static void registerParticles(BiConsumer<ParticleType<?>, ParticleEngine.SpriteParticleRegistration> consumer) {
@@ -92,6 +163,12 @@ public class BnCClientSetup {
             }
             return -1;
         }, BnCBlocks.COASTER);
+
+        consumer.accept((state, level, pos, tintIndex) -> {
+            if (level == null || pos == null || !(level.getBlockEntity(pos) instanceof BottleRackBlockEntity rack))
+                return -1;
+            return BnCLabelUtils.getLabelColor(rack.getItem(tintIndex));
+        }, BnCBlocks.BOTTLE_RACK);
     }
 
     public static final Set<ResourceLocation> MODELS = new HashSet<>();

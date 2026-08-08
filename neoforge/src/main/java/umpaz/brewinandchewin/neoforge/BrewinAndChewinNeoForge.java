@@ -19,6 +19,7 @@ import umpaz.brewinandchewin.common.network.clientbound.*;
 import umpaz.brewinandchewin.common.network.serverbound.EMIFillFermentingRecipeServerboundPacket;
 import umpaz.brewinandchewin.common.network.serverbound.EMIFillPouringRecipeServerboundPacket;
 import umpaz.brewinandchewin.common.network.serverbound.JEITransferKegRecipeServerboundPacket;
+import umpaz.brewinandchewin.common.network.serverbound.SetLabelContentsServerboundPacket;
 import umpaz.brewinandchewin.common.registry.*;
 import umpaz.brewinandchewin.common.registry.BnCCreativeTabs;
 import umpaz.brewinandchewin.neoforge.container.KegFluidTankNeoForge;
@@ -50,6 +51,7 @@ public class BrewinAndChewinNeoForge {
             register(event, Registries.BLOCK, BnCBlocks::registerAll);
             register(event, Registries.BLOCK_ENTITY_TYPE, BnCBlockEntityTypes::registerAll);
             register(event, Registries.CREATIVE_MODE_TAB, BnCCreativeTabs::registerAll);
+            register(event, Registries.DATA_COMPONENT_TYPE, BnCDataComponents::registerAll);
             register(event, Registries.FLUID, BnCFluids::registerAll);
             register(event, NeoForgeRegistries.Keys.FLUID_TYPES, BnCFluidTypes::registerAll);
 
@@ -75,7 +77,8 @@ public class BrewinAndChewinNeoForge {
                     .playToClient(SyncRagingStacksClientboundPacket.TYPE, SyncRagingStacksClientboundPacket.STREAM_CODEC, (payload, context) -> payload.handle())
                     .playToServer(JEITransferKegRecipeServerboundPacket.TYPE, JEITransferKegRecipeServerboundPacket.STREAM_CODEC, (payload, context) -> payload.handle((ServerPlayer) context.player()))
                     .playToServer(EMIFillFermentingRecipeServerboundPacket.TYPE, EMIFillFermentingRecipeServerboundPacket.STREAM_CODEC, (payload, context) -> payload.handle((ServerPlayer) context.player()))
-                    .playToServer(EMIFillPouringRecipeServerboundPacket.TYPE, EMIFillPouringRecipeServerboundPacket.STREAM_CODEC, (payload, context) -> payload.handle((ServerPlayer) context.player()));
+                    .playToServer(EMIFillPouringRecipeServerboundPacket.TYPE, EMIFillPouringRecipeServerboundPacket.STREAM_CODEC, (payload, context) -> payload.handle((ServerPlayer) context.player()))
+                    .playToServer(SetLabelContentsServerboundPacket.TYPE, SetLabelContentsServerboundPacket.STREAM_CODEC, (payload, context) -> payload.handle((ServerPlayer) context.player()));
         }
 
         public static <T> void register(RegisterEvent event, ResourceKey<Registry<T>> registry, Runnable registerMethod) {

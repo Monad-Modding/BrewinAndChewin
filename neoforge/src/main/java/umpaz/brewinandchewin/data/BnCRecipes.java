@@ -5,6 +5,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import umpaz.brewinandchewin.data.recipe.BnCCookingPotRecipes;
 import umpaz.brewinandchewin.data.recipe.BnCCraftingRecipes;
 import umpaz.brewinandchewin.data.recipe.BnCCuttingBoardRecipes;
+import umpaz.brewinandchewin.data.recipe.DistillingRecipes;
 import umpaz.brewinandchewin.data.recipe.KegFermentingRecipes;
 import umpaz.brewinandchewin.data.recipe.KegPouringRecipes;
 import net.minecraft.data.PackOutput;
@@ -22,6 +23,7 @@ public class BnCRecipes extends RecipeProvider
     protected void buildRecipes(RecipeOutput output, HolderLookup.Provider provider) {
         KegFermentingRecipes.register(output, provider);
         KegPouringRecipes.register(output);
+        DistillingRecipes.register(output);
         BnCCookingPotRecipes.register(output);
         BnCCraftingRecipes.register(output);
         BnCCuttingBoardRecipes.register(output);

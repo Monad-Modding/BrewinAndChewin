@@ -24,7 +24,41 @@ public class KegFermentingRecipes {
 
    public static void register(RecipeOutput output, HolderLookup.Provider provider) {
       fermentingDrinks(output, provider);
+      fermentingWines(output, provider);
       fermentingMeals(output, provider);
+   }
+
+   private static void fermentingWines(RecipeOutput output, HolderLookup.Provider provider) {
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.RED_WINE, 1000, NORMAL_FERMENTING, MEDIUM_EXP)
+              .addFluidIngredient(Tags.Fluids.WATER, 1000, FluidUnit.MILLIBUCKET)
+              .setFluidUnit(FluidUnit.MILLIBUCKET)
+              .addIngredient(BnCItems.RED_GRAPES, 3)
+              .unlockedByItems("has_red_grapes", BnCItems.RED_GRAPES)
+              .build(output);
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.WHITE_WINE, 1000, NORMAL_FERMENTING, MEDIUM_EXP)
+              .addFluidIngredient(Tags.Fluids.WATER, 1000, FluidUnit.MILLIBUCKET)
+              .setFluidUnit(FluidUnit.MILLIBUCKET)
+              .addIngredient(BnCItems.WHITE_GRAPES, 3)
+              .unlockedByItems("has_white_grapes", BnCItems.WHITE_GRAPES)
+              .build(output);
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.CURRANT_WINE, 1000, NORMAL_FERMENTING, MEDIUM_EXP)
+              .addFluidIngredient(Tags.Fluids.WATER, 1000, FluidUnit.MILLIBUCKET)
+              .setFluidUnit(FluidUnit.MILLIBUCKET)
+              .addIngredient(Items.SWEET_BERRIES, 3)
+              .unlockedByItems("has_sweet_berries", Items.SWEET_BERRIES)
+              .build(output);
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.VERRUCA_WINE, 1000, NORMAL_FERMENTING, MEDIUM_EXP, 5)
+              .addFluidIngredient(Tags.Fluids.WATER, 1000, FluidUnit.MILLIBUCKET)
+              .setFluidUnit(FluidUnit.MILLIBUCKET)
+              .addIngredient(Items.NETHER_WART, 3)
+              .unlockedByItems("has_nether_wart", Items.NETHER_WART)
+              .build(output);
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.TWISTED_WINE, 1000, NORMAL_FERMENTING, MEDIUM_EXP, 5)
+              .addFluidIngredient(Tags.Fluids.WATER, 1000, FluidUnit.MILLIBUCKET)
+              .setFluidUnit(FluidUnit.MILLIBUCKET)
+              .addIngredient(Items.WARPED_FUNGUS, 3)
+              .unlockedByItems("has_warped_fungus", Items.WARPED_FUNGUS)
+              .build(output);
    }
 
    private static void fermentingDrinks(RecipeOutput output, HolderLookup.Provider provider) {
@@ -118,7 +152,7 @@ public class KegFermentingRecipes {
               .addIngredient(ModItems.TREE_BARK.get())
               .addIngredient(Items.LILY_OF_THE_VALLEY)
               .addIngredient(Items.SUGAR)
-              .unlockedByItems("has_rice_wine", BnCItems.RICE_WINE)
+              .unlockedByItems("has_tankard", BnCItems.TANKARD)
               .build(output);
       KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.SALTY_FOLLY, 1000, FAST_FERMENTING, MEDIUM_EXP, 2)
               .addFluidIngredient(BnCTags.Fluids.VODKA, 1000, FluidUnit.MILLIBUCKET)

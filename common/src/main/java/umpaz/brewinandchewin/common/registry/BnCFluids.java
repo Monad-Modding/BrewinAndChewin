@@ -57,6 +57,22 @@ public class BnCFluids {
     public static FlowingFluid KOMBUCHA;
     public static FlowingFluid FLOWING_KOMBUCHA;
     
+
+    public static FlowingFluid RED_WINE;
+    public static FlowingFluid FLOWING_RED_WINE;
+
+    public static FlowingFluid WHITE_WINE;
+    public static FlowingFluid FLOWING_WHITE_WINE;
+
+    public static FlowingFluid CURRANT_WINE;
+    public static FlowingFluid FLOWING_CURRANT_WINE;
+
+    public static FlowingFluid VERRUCA_WINE;
+    public static FlowingFluid FLOWING_VERRUCA_WINE;
+
+    public static FlowingFluid TWISTED_WINE;
+    public static FlowingFluid FLOWING_TWISTED_WINE;
+
     public static FlowingFluid FLAXEN_CHEESE;
     public static FlowingFluid FLOWING_FLAXEN_CHEESE;
   
@@ -116,6 +132,17 @@ public class BnCFluids {
 
         Registry.register(BuiltInRegistries.FLUID, BrewinAndChewin.asResource("kombucha"), KOMBUCHA);
         Registry.register(BuiltInRegistries.FLUID, BrewinAndChewin.asResource("flowing_kombucha"), FLOWING_KOMBUCHA);
+
+        Registry.register(BuiltInRegistries.FLUID, BrewinAndChewin.asResource("red_wine"), RED_WINE);
+        Registry.register(BuiltInRegistries.FLUID, BrewinAndChewin.asResource("flowing_red_wine"), FLOWING_RED_WINE);
+        Registry.register(BuiltInRegistries.FLUID, BrewinAndChewin.asResource("white_wine"), WHITE_WINE);
+        Registry.register(BuiltInRegistries.FLUID, BrewinAndChewin.asResource("flowing_white_wine"), FLOWING_WHITE_WINE);
+        Registry.register(BuiltInRegistries.FLUID, BrewinAndChewin.asResource("currant_wine"), CURRANT_WINE);
+        Registry.register(BuiltInRegistries.FLUID, BrewinAndChewin.asResource("flowing_currant_wine"), FLOWING_CURRANT_WINE);
+        Registry.register(BuiltInRegistries.FLUID, BrewinAndChewin.asResource("verruca_wine"), VERRUCA_WINE);
+        Registry.register(BuiltInRegistries.FLUID, BrewinAndChewin.asResource("flowing_verruca_wine"), FLOWING_VERRUCA_WINE);
+        Registry.register(BuiltInRegistries.FLUID, BrewinAndChewin.asResource("twisted_wine"), TWISTED_WINE);
+        Registry.register(BuiltInRegistries.FLUID, BrewinAndChewin.asResource("flowing_twisted_wine"), FLOWING_TWISTED_WINE);
 
         Registry.register(BuiltInRegistries.FLUID, BrewinAndChewin.asResource("flaxen_cheese"), FLAXEN_CHEESE);
         Registry.register(BuiltInRegistries.FLUID, BrewinAndChewin.asResource("flowing_flaxen_cheese"), FLOWING_FLAXEN_CHEESE);

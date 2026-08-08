@@ -309,6 +309,11 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
     private boolean processFermenting(KegFermentingRecipe recipe, KegBlockEntity keg) {
         if (level == null) return false;
 
+        if (recipe.getResult().right().isPresent()
+                && !keg.inventory.insertItem(OUTPUT_SLOT, recipe.getResult().right().get().copy(), true).isEmpty()) {
+            return false;
+        }
+
         ++fermentTime;
         fermentTimeTotal = recipe.getFermentTime();
         if (fermentTime < fermentTimeTotal) {

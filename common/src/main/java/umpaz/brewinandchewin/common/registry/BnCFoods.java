@@ -22,12 +22,6 @@ public class BnCFoods {
             .effect(new MobEffectInstance(BnCEffects.SWEET_HEART, 2400, 0, false, false), 1.0F)
             .alwaysEdible()
             .build();
-    public static final FoodProperties RICE_WINE = (new FoodProperties.Builder())
-            .effect(new MobEffectInstance(BnCEffects.TIPSY, 2400, 0), 1.0F)
-            .effect(new MobEffectInstance(BnCEffects.INTOXICATION, 1800, 0, false, false), 1.0F)
-            .effect(new MobEffectInstance(ModEffects.NOURISHMENT, 1200, 0), 1.0F)
-            .alwaysEdible()
-            .build();
     public static final FoodProperties PALE_JANE = (new FoodProperties.Builder())
             .effect(new MobEffectInstance(BnCEffects.TIPSY, 3600, 0), 1.0F)
             .effect(new MobEffectInstance(BnCEffects.INTOXICATION, 3000, 0, false, false), 1.0F)
@@ -106,6 +100,9 @@ public class BnCFoods {
             .effect(new MobEffectInstance(MobEffects.DIG_SPEED, 1200, 1), 1.0F)
             .alwaysEdible()
             .build();
+
+    public static final FoodProperties GRAPES = (new FoodProperties.Builder())
+            .nutrition(2).saturationModifier(0.3F).fast().build();
 
     public static final FoodProperties FLAXEN_CHEESE = (new FoodProperties.Builder())
             .nutrition(4).saturationModifier(1.0F).build();

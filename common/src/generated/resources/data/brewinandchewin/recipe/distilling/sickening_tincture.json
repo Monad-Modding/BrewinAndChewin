@@ -1,0 +1,12 @@
+{
+  "type": "brewinandchewin:distilling",
+  "distilling_time": 200,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "minecraft:fermented_spider_eye"
+  },
+  "result": {
+    "count": 1,
+    "id": "brewinandchewin:sickening_tincture"
+  }
+}

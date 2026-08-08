@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_rice_wine": {
+    "has_tankard": {
       "conditions": {
         "items": [
           {
-            "items": "brewinandchewin:rice_wine"
+            "items": "brewinandchewin:tankard"
           }
         ]
       },
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "has_rice_wine",
+      "has_tankard",
       "has_the_recipe"
     ]
   ],

@@ -1,0 +1,535 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "brewinandchewin:item/wine/wine_old_0"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.9375,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_8_foam_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.9375,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_8_foam_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.9375,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_8_foam_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.9375,
+        "brewinandchewin:foam": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_8_foam"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.9375,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_8_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.9375,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_8_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.9375,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_8_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.9375
+      },
+      "model": "brewinandchewin:item/wine/old_wine_8"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.8125,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_7_foam_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.8125,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_7_foam_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.8125,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_7_foam_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.8125,
+        "brewinandchewin:foam": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_7_foam"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.8125,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_7_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.8125,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_7_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.8125,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_7_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.8125
+      },
+      "model": "brewinandchewin:item/wine/old_wine_7"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.6875,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_6_foam_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.6875,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_6_foam_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.6875,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_6_foam_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.6875,
+        "brewinandchewin:foam": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_6_foam"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.6875,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_6_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.6875,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_6_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.6875,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_6_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.6875
+      },
+      "model": "brewinandchewin:item/wine/old_wine_6"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.5625,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_5_foam_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.5625,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_5_foam_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.5625,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_5_foam_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.5625,
+        "brewinandchewin:foam": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_5_foam"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.5625,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_5_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.5625,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_5_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.5625,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_5_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.5625
+      },
+      "model": "brewinandchewin:item/wine/old_wine_5"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.4375,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_4_foam_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.4375,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_4_foam_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.4375,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_4_foam_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.4375,
+        "brewinandchewin:foam": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_4_foam"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.4375,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_4_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.4375,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_4_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.4375,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_4_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.4375
+      },
+      "model": "brewinandchewin:item/wine/old_wine_4"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.3125,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_3_foam_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.3125,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_3_foam_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.3125,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_3_foam_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.3125,
+        "brewinandchewin:foam": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_3_foam"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.3125,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_3_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.3125,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_3_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.3125,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_3_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.3125
+      },
+      "model": "brewinandchewin:item/wine/old_wine_3"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.1875,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_2_foam_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.1875,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_2_foam_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.1875,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_2_foam_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.1875,
+        "brewinandchewin:foam": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_2_foam"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.1875,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_2_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.1875,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_2_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.1875,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_2_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.1875
+      },
+      "model": "brewinandchewin:item/wine/old_wine_2"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.0625,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_1_foam_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.0625,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_1_foam_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.0625,
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_1_foam_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.0625,
+        "brewinandchewin:foam": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_1_foam"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.0625,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_1_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.0625,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_1_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.0625,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_1_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:variant": 0.0625
+      },
+      "model": "brewinandchewin:item/wine/old_wine_1"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_0_foam_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_0_foam_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_0_foam_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:foam": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_0_foam"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_0_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_0_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/old_wine_0_fine"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "type": "brewinandchewin:fermenting",
+  "base_fluid": {
+    "amount": 1000,
+    "ingredient": {
+      "tag": "#c:water"
+    },
+    "unit": "millibuckets"
+  },
+  "experience": 1.0,
+  "ingredients": [
+    {
+      "item": "brewinandchewin:white_grapes"
+    },
+    {
+      "item": "brewinandchewin:white_grapes"
+    },
+    {
+      "item": "brewinandchewin:white_grapes"
+    },
+    []
+  ],
+  "result": {
+    "amount": 1000,
+    "id": "brewinandchewin:white_wine"
+  },
+  "unit": "millibuckets"
+}

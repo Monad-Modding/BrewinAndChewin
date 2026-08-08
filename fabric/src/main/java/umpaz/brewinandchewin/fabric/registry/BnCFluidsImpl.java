@@ -51,6 +51,16 @@ public class BnCFluidsImpl {
         BnCFluids.FLOWING_WITHERING_DROSS = new BnCFluidFabric.Flowing(() -> BnCFluids.WITHERING_DROSS);
         BnCFluids.KOMBUCHA = new BnCFluidFabric.Source(() -> BnCFluids.FLOWING_KOMBUCHA);
         BnCFluids.FLOWING_KOMBUCHA = new BnCFluidFabric.Flowing(() -> BnCFluids.KOMBUCHA);
+        BnCFluids.RED_WINE = new BnCFluidFabric.Source(() -> BnCFluids.FLOWING_RED_WINE);
+        BnCFluids.FLOWING_RED_WINE = new BnCFluidFabric.Flowing(() -> BnCFluids.RED_WINE);
+        BnCFluids.WHITE_WINE = new BnCFluidFabric.Source(() -> BnCFluids.FLOWING_WHITE_WINE);
+        BnCFluids.FLOWING_WHITE_WINE = new BnCFluidFabric.Flowing(() -> BnCFluids.WHITE_WINE);
+        BnCFluids.CURRANT_WINE = new BnCFluidFabric.Source(() -> BnCFluids.FLOWING_CURRANT_WINE);
+        BnCFluids.FLOWING_CURRANT_WINE = new BnCFluidFabric.Flowing(() -> BnCFluids.CURRANT_WINE);
+        BnCFluids.VERRUCA_WINE = new BnCFluidFabric.Source(() -> BnCFluids.FLOWING_VERRUCA_WINE);
+        BnCFluids.FLOWING_VERRUCA_WINE = new BnCFluidFabric.Flowing(() -> BnCFluids.VERRUCA_WINE);
+        BnCFluids.TWISTED_WINE = new BnCFluidFabric.Source(() -> BnCFluids.FLOWING_TWISTED_WINE);
+        BnCFluids.FLOWING_TWISTED_WINE = new BnCFluidFabric.Flowing(() -> BnCFluids.TWISTED_WINE);
         BnCFluids.FLAXEN_CHEESE = new BnCFluidFabric.Source(() -> BnCFluids.FLOWING_FLAXEN_CHEESE);
         BnCFluids.FLOWING_FLAXEN_CHEESE = new BnCFluidFabric.Flowing(() -> BnCFluids.FLAXEN_CHEESE);
         BnCFluids.SCARLET_CHEESE = new BnCFluidFabric.Source(() -> BnCFluids.FLOWING_SCARLET_CHEESE);

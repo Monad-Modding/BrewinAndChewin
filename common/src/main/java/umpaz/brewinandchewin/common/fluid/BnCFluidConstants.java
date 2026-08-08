@@ -37,5 +37,11 @@ public class BnCFluidConstants {
         public static final int BLOODY_MARY = 0xFF84160D;
         public static final int RED_RUM = 0xFF521810;
         public static final int WITHERING_DROSS = 0xFF191411;
+
+        public static final int RED_WINE = 0xFF7B1E2B;
+        public static final int WHITE_WINE = 0xFFE9DFA8;
+        public static final int CURRANT_WINE = 0xFF6E2A55;
+        public static final int VERRUCA_WINE = 0xFF8E2F2F;
+        public static final int TWISTED_WINE = 0xFF2F8F86;
     }
 }

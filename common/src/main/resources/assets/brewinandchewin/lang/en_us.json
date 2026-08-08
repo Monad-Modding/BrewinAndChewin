@@ -19,12 +19,10 @@
   "fluid_type.brewinandchewin.withering_dross": "Withering Dross",
   "fluid_type.brewinandchewin.flaxen_cheese": "Flaxen Cheese",
   "fluid_type.brewinandchewin.scarlet_cheese": "Scarlet Cheese",
-
   "block.brewinandchewin.keg": "Keg",
   "block.brewinandchewin.heating_cask": "Heating Cask",
   "block.brewinandchewin.ice_crate": "Ice Crate",
   "block.brewinandchewin.coaster": "Coaster",
-
   "item.brewinandchewin.tankard": "Tankard",
   "item.brewinandchewin.beer": "Beer",
   "item.brewinandchewin.vodka": "Vodka",
@@ -68,7 +66,6 @@
   "item.brewinandchewin.apple_jelly": "Apple Jelly",
   "item.brewinandchewin.dread_nog": "Dread Nog",
   "item.brewinandchewin.kombucha": "Kombucha",
-
   "effect.brewinandchewin.tipsy": "Tipsy",
   "effect.brewinandchewin.tipsy.description": "Provides the screen with a wobble effect. At level III or higher, your mouse will have drag to it. At level IV or higher, chat sent by you, other player's chat on your end and signs will be scrambled. May delay damage, notated by orange Tipsy hearts.",
   "effect.brewinandchewin.intoxication": "Intoxication",
@@ -87,12 +84,9 @@
   "brewinandchewin.container.keg.normal": "Normal",
   "brewinandchewin.container.keg.warm": "Warm",
   "brewinandchewin.container.keg.hot": "Hot",
-
   "brewinandchewin.block.feast.use_knife": "You need a Knife to cut this.",
-
   "death.attack.brewinandchewin.cardiacArrest": "%1$s remembered they got hurt",
   "death.attack.brewinandchewin.cardiacArrest.player": "%1$s was sent into cardiac arrest by %2$s",
-
   "brewinandchewin.advancement.root": "Brewin' and Chewin'",
   "brewinandchewin.advancement.root.desc": "Go brew up a storm!",
   "brewinandchewin.advancement.place_keg": "Here Starts the Process",
@@ -109,7 +103,6 @@
   "brewinandchewin.advancement.cook_fiery_fondue.desc": "Obtain Fiery Fondue from a cooking pot with a cauldron",
   "brewinandchewin.advancement.chef_of_the_ages": "Chef Of The Ages",
   "brewinandchewin.advancement.chef_of_the_ages.desc": "Eat a course of every Brewin' and Chewin' meal available!",
-
   "itemGroup.brewinandchewin": "Brewin' and Chewin'",
   "brewinandchewin.jei.fermenting": "Fermenting",
   "brewinandchewin.jei.aging": "Aging",
@@ -120,7 +113,6 @@
   "brewinandchewin.jei.tooltip.error.recipe.transfer.not_enough_fluid": "Not Enough Fluid",
   "brewinandchewin.jei.tooltip.error.recipe.transfer.temperature": "Incorrect Temperature",
   "brewinandchewin.jei.tooltip.error.recipe.transfer.invalid_fluid": "Invalid Fluid Items",
-
   "emi.category.brewinandchewin.fermenting": "Fermenting",
   "emi.category.brewinandchewin.pouring": "Pouring",
   "emi.category.brewinandchewin.aging": "Aging",
@@ -129,14 +121,11 @@
   "brewinandchewin.emi.cooler_temperature": "Requires cooler temperature",
   "brewinandchewin.emi.incorrect_fluid": "Incorrect fluid for crafting",
   "brewinandchewin.emi.cant_empty": "Can't empty existing fluid",
-
   "tag.block.brewinandchewin.cheese_wheels.unripe": "Unripe Cheese Wheels",
   "tag.block.brewinandchewin.cheese_wheels.ripe": "Cheese Wheels",
   "tag.block.brewinandchewin.freeze_sources": "Freeze Sources",
   "tag.block.brewinandchewin.player_workstations.kegs": "Kegs",
-
   "tag.entity_type.brewinandchewin.immune_to_intoxication": "Immune to Intoxication",
-
   "tag.item.brewinandchewin.cheese_wheels.unripe": "Unripe Cheese Wheels",
   "tag.item.brewinandchewin.cheese_wheels.ripe": "Cheese Wheels",
   "tag.item.brewinandchewin.fermented_drinks": "Fermented Drinks",
@@ -145,7 +134,6 @@
   "tag.item.brewinandchewin.foods.horror_meat": "Horror Meats",
   "tag.item.brewinandchewin.foods.pizza_topping": "Pizza Toppings",
   "tag.item.brewinandchewin.player_workstations.kegs": "Kegs",
-
   "tag.fluid.brewinandchewin.beer": "Beer",
   "tag.fluid.brewinandchewin.vodka": "Vodka",
   "tag.fluid.brewinandchewin.mead": "Mead",
@@ -164,9 +152,44 @@
   "tag.fluid.brewinandchewin.kombucha": "Kombucha",
   "tag.fluid.brewinandchewin.flaxen_cheese": "Flaxen Cheese",
   "tag.fluid.brewinandchewin.scarlet_cheese": "Scarlet Cheese",
-
   "tag.mob_effect.brewinandchewin.low_priority.milk_bottle": "Low Priority for Milk Bottle",
   "tag.mob_effect.brewinandchewin.low_priority.hot_cocoa": "Low Priority for Hot Cocoa",
-
-  "tag.damage_type.brewinandchewin.triggers_raging": "Triggers Raging"
+  "tag.damage_type.brewinandchewin.triggers_raging": "Triggers Raging",
+  "block.brewinandchewin.aging_cask": "Aging Cask",
+  "block.brewinandchewin.bottle_rack": "Bottle Rack",
+  "block.brewinandchewin.distillery": "Distillery",
+  "block.brewinandchewin.red_grape_vine": "Red Grape Vine",
+  "block.brewinandchewin.white_grape_vine": "White Grape Vine",
+  "item.brewinandchewin.red_grapes": "Red Grapes",
+  "item.brewinandchewin.white_grapes": "White Grapes",
+  "item.brewinandchewin.red_grape_seeds": "Red Grape Seeds",
+  "item.brewinandchewin.white_grape_seeds": "White Grape Seeds",
+  "item.brewinandchewin.red_wine": "Red Wine",
+  "item.brewinandchewin.white_wine": "White Wine",
+  "item.brewinandchewin.currant_wine": "Currant Wine",
+  "item.brewinandchewin.verruca_wine": "Verruca Wine",
+  "item.brewinandchewin.twisted_wine": "Twisted Wine",
+  "item.brewinandchewin.old_wine": "Old Wine",
+  "item.brewinandchewin.brandy": "Brandy",
+  "item.brewinandchewin.aqua_vitae": "Aqua Vitae",
+  "item.brewinandchewin.sickening_tincture": "Sickening Tincture",
+  "item.brewinandchewin.delicious_tincture": "Delicious Tincture",
+  "item.brewinandchewin.label": "Label",
+  "brewinandchewin.container.distillery": "Distillery",
+  "brewinandchewin.container.label": "Edit Label",
+  "brewinandchewin.container.label.text": "Label Text",
+  "brewinandchewin.container.label.show_author": "Show Author",
+  "brewinandchewin.container.label.show_authenticity": "Show Authenticity",
+  "brewinandchewin.label.by": "%s by %s",
+  "brewinandchewin.label.generation.0": "Original",
+  "brewinandchewin.label.generation.1": "Copy of Original",
+  "brewinandchewin.label.generation.2": "Copy of a Copy",
+  "brewinandchewin.label.generation.3": "Tattered",
+  "brewinandchewin.tooltip.distillery.water": "Water: %s/%s",
+  "brewinandchewin.container.aging_cask": "Aging Cask",
+  "fluid_type.brewinandchewin.red_wine": "Red Wine",
+  "fluid_type.brewinandchewin.white_wine": "White Wine",
+  "fluid_type.brewinandchewin.currant_wine": "Currant Wine",
+  "fluid_type.brewinandchewin.verruca_wine": "Verruca Wine",
+  "fluid_type.brewinandchewin.twisted_wine": "Twisted Wine"
 }

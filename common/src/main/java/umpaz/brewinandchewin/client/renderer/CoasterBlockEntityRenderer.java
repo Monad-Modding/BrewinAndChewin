@@ -129,7 +129,7 @@ public class CoasterBlockEntityRenderer implements BlockEntityRenderer<CoasterBl
         if (!entity.getBlockState().getValue(CoasterBlock.INVISIBLE) || count == 0) {
             poseStack.pushPose();
             ResourceLocation modelId = entity.getBlockState().getValue(CoasterBlock.SIZE) > 1 ? BrewinAndChewin.asResource("block/coaster_tray") : BrewinAndChewin.asResource("block/coaster");
-            BrewinAndChewinClient.getHelper().tesselateCoasterModel(entity.getLevel(), modelId, entity.getBlockState(), entity.getBlockPos(), poseStack, buffer, random, entity.getBlockPos().asLong(), combinedOverlay, -1, RenderType.cutout());
+            BrewinAndChewinClient.getHelper().tesselateModel(entity.getLevel(), modelId, entity.getBlockState(), entity.getBlockPos(), poseStack, buffer, random, entity.getBlockPos().asLong(), combinedOverlay, -1, RenderType.cutout());
             poseStack.popPose();
         }
 
@@ -160,7 +160,7 @@ public class CoasterBlockEntityRenderer implements BlockEntityRenderer<CoasterBl
                         ++tintIndex;
                         finalTintIndex = tintIndex;
                     }
-                    BrewinAndChewinClient.getHelper().tesselateCoasterModel(entity.getLevel(), modelPath, entity.getBlockState(), entity.getBlockPos(), poseStack, buffer, random, entity.getBlockPos().asLong(), combinedOverlay, finalTintIndex, renderType);
+                    BrewinAndChewinClient.getHelper().tesselateModel(entity.getLevel(), modelPath, entity.getBlockState(), entity.getBlockPos(), poseStack, buffer, random, entity.getBlockPos().asLong(), combinedOverlay, finalTintIndex, renderType);
                 }
             } else {
                 poseStack.translate(0.51, 0.05, 0.5);

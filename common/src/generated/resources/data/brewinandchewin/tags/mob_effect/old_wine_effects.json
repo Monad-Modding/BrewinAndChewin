@@ -1,0 +1,25 @@
+{
+  "values": [
+    "minecraft:speed",
+    "minecraft:haste",
+    "minecraft:strength",
+    "minecraft:jump_boost",
+    "minecraft:regeneration",
+    "minecraft:resistance",
+    "minecraft:fire_resistance",
+    "minecraft:water_breathing",
+    "minecraft:night_vision",
+    "minecraft:absorption",
+    "minecraft:slowness",
+    "minecraft:mining_fatigue",
+    "minecraft:nausea",
+    "minecraft:blindness",
+    "minecraft:hunger",
+    "minecraft:weakness",
+    "minecraft:poison",
+    "minecraft:wither",
+    "minecraft:levitation",
+    "minecraft:glowing",
+    "minecraft:luck"
+  ]
+}

@@ -14,8 +14,12 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import umpaz.brewinandchewin.client.BnCClientSetup;
 import umpaz.brewinandchewin.client.BrewinAndChewinClient;
+import umpaz.brewinandchewin.client.gui.AgingCaskScreen;
+import umpaz.brewinandchewin.client.gui.DistilleryScreen;
 import umpaz.brewinandchewin.client.gui.KegScreen;
 import umpaz.brewinandchewin.client.gui.KegTooltip;
 import umpaz.brewinandchewin.common.mixin.client.ModelBakeryAccessor;
@@ -39,11 +43,31 @@ public class BrewinAndChewinNeoForgeClient {
         BrewinAndChewin.isClient = true;
     }
 
+    @EventBusSubscriber(modid = BrewinAndChewin.MODID, value = Dist.CLIENT)
+    public static class GameEvents {
+        @SubscribeEvent
+        public static void onItemTooltip(ItemTooltipEvent event) {
+            BnCClientSetup.appendLabelTooltip(event.getItemStack(), event.getToolTip());
+        }
+    }
+
     @EventBusSubscriber(modid = BrewinAndChewin.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ModEvents {
         @SubscribeEvent
         public static void registerMenuScreens(RegisterMenuScreensEvent event) {
             event.register(BnCMenuTypes.KEG, KegScreen::new);
+            event.register(BnCMenuTypes.DISTILLERY, DistilleryScreen::new);
+            event.register(BnCMenuTypes.AGING_CASK, AgingCaskScreen::new);
+        }
+
+        @SubscribeEvent
+        public static void registerItemProperties(FMLClientSetupEvent event) {
+            event.enqueueWork(BnCClientSetup::registerItemProperties);
+        }
+
+        @SubscribeEvent
+        public static void registerItemColorHandlers(RegisterColorHandlersEvent.Item event) {
+            BnCClientSetup.registerItemColorHandlers(event::register);
         }
 
         @SubscribeEvent
@@ -66,6 +90,11 @@ public class BrewinAndChewinNeoForgeClient {
             event.registerFluidType(createAlcoholExtension(BnCFluidConstants.Colors.BLOODY_MARY), BnCFluidTypes.BLOODY_MARY);
             event.registerFluidType(createAlcoholExtension(BnCFluidConstants.Colors.RED_RUM), BnCFluidTypes.RED_RUM);
             event.registerFluidType(createAlcoholExtension(BnCFluidConstants.Colors.WITHERING_DROSS), BnCFluidTypes.WITHERING_DROSS);
+            event.registerFluidType(createAlcoholExtension(BnCFluidConstants.Colors.RED_WINE), BnCFluidTypes.RED_WINE);
+            event.registerFluidType(createAlcoholExtension(BnCFluidConstants.Colors.WHITE_WINE), BnCFluidTypes.WHITE_WINE);
+            event.registerFluidType(createAlcoholExtension(BnCFluidConstants.Colors.CURRANT_WINE), BnCFluidTypes.CURRANT_WINE);
+            event.registerFluidType(createAlcoholExtension(BnCFluidConstants.Colors.VERRUCA_WINE), BnCFluidTypes.VERRUCA_WINE);
+            event.registerFluidType(createAlcoholExtension(BnCFluidConstants.Colors.TWISTED_WINE), BnCFluidTypes.TWISTED_WINE);
 
             event.registerFluidType(new IClientFluidTypeExtensions() {
                 @Override
@@ -162,6 +191,9 @@ public class BrewinAndChewinNeoForgeClient {
             MODELS.addAll(BnCClientSetup.getModels(Minecraft.getInstance().getResourceManager(), Runnable::run).join());
             event.register(ModelResourceLocation.standalone(BrewinAndChewin.asResource("block/coaster")));
             event.register(ModelResourceLocation.standalone(BrewinAndChewin.asResource("block/coaster_tray")));
+            for (ResourceLocation model : BnCClientSetup.getBottleRackModels()) {
+                event.register(ModelResourceLocation.standalone(model));
+            }
         }
 
         @SubscribeEvent

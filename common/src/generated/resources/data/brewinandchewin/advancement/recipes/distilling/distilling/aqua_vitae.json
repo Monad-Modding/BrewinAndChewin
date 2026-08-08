@@ -1,0 +1,32 @@
+{
+  "criteria": {
+    "has_brandy": {
+      "conditions": {
+        "items": [
+          {
+            "items": "brewinandchewin:brandy"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "brewinandchewin:distilling/aqua_vitae"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_brandy",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "brewinandchewin:distilling/aqua_vitae"
+    ]
+  },
+  "sends_telemetry_event": true
+}

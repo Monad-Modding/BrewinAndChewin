@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=north,large=false,waterlogged=false": {
+      "model": "brewinandchewin:block/bottle_rack"
+    },
+    "facing=north,large=false,waterlogged=true": {
+      "model": "brewinandchewin:block/bottle_rack"
+    },
+    "facing=north,large=true,waterlogged=false": {
+      "model": "brewinandchewin:block/bottle_rack_large"
+    },
+    "facing=north,large=true,waterlogged=true": {
+      "model": "brewinandchewin:block/bottle_rack_large"
+    },
+    "facing=east,large=false,waterlogged=false": {
+      "model": "brewinandchewin:block/bottle_rack",
+      "y": 90
+    },
+    "facing=east,large=false,waterlogged=true": {
+      "model": "brewinandchewin:block/bottle_rack",
+      "y": 90
+    },
+    "facing=east,large=true,waterlogged=false": {
+      "model": "brewinandchewin:block/bottle_rack_large",
+      "y": 90
+    },
+    "facing=east,large=true,waterlogged=true": {
+      "model": "brewinandchewin:block/bottle_rack_large",
+      "y": 90
+    },
+    "facing=south,large=false,waterlogged=false": {
+      "model": "brewinandchewin:block/bottle_rack",
+      "y": 180
+    },
+    "facing=south,large=false,waterlogged=true": {
+      "model": "brewinandchewin:block/bottle_rack",
+      "y": 180
+    },
+    "facing=south,large=true,waterlogged=false": {
+      "model": "brewinandchewin:block/bottle_rack_large",
+      "y": 180
+    },
+    "facing=south,large=true,waterlogged=true": {
+      "model": "brewinandchewin:block/bottle_rack_large",
+      "y": 180
+    },
+    "facing=west,large=false,waterlogged=false": {
+      "model": "brewinandchewin:block/bottle_rack",
+      "y": 270
+    },
+    "facing=west,large=false,waterlogged=true": {
+      "model": "brewinandchewin:block/bottle_rack",
+      "y": 270
+    },
+    "facing=west,large=true,waterlogged=false": {
+      "model": "brewinandchewin:block/bottle_rack_large",
+      "y": 270
+    },
+    "facing=west,large=true,waterlogged=true": {
+      "model": "brewinandchewin:block/bottle_rack_large",
+      "y": 270
+    }
+  }
+}

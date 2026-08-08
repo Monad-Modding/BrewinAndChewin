@@ -23,6 +23,12 @@ public class BnCFluidsImpl {
     public static final BaseFlowingFluid.Properties WITHERING_DROSS_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.WITHERING_DROSS, () -> BnCFluids.WITHERING_DROSS, () -> BnCFluids.FLOWING_WITHERING_DROSS);
     public static final BaseFlowingFluid.Properties KOMBUCHA_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.KOMBUCHA, () -> BnCFluids.KOMBUCHA, () -> BnCFluids.FLOWING_KOMBUCHA);
 
+    public static final BaseFlowingFluid.Properties RED_WINE_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.RED_WINE, () -> BnCFluids.RED_WINE, () -> BnCFluids.FLOWING_RED_WINE);
+    public static final BaseFlowingFluid.Properties WHITE_WINE_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.WHITE_WINE, () -> BnCFluids.WHITE_WINE, () -> BnCFluids.FLOWING_WHITE_WINE);
+    public static final BaseFlowingFluid.Properties CURRANT_WINE_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.CURRANT_WINE, () -> BnCFluids.CURRANT_WINE, () -> BnCFluids.FLOWING_CURRANT_WINE);
+    public static final BaseFlowingFluid.Properties VERRUCA_WINE_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.VERRUCA_WINE, () -> BnCFluids.VERRUCA_WINE, () -> BnCFluids.FLOWING_VERRUCA_WINE);
+    public static final BaseFlowingFluid.Properties TWISTED_WINE_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.TWISTED_WINE, () -> BnCFluids.TWISTED_WINE, () -> BnCFluids.FLOWING_TWISTED_WINE);
+
     public static final BaseFlowingFluid.Properties FLAXEN_CHEESE_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.FLAXEN_CHEESE, () -> BnCFluids.FLAXEN_CHEESE, () -> BnCFluids.FLOWING_FLAXEN_CHEESE);
     public static final BaseFlowingFluid.Properties SCARLET_CHEESE_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.SCARLET_CHEESE, () -> BnCFluids.SCARLET_CHEESE, () -> BnCFluids.FLOWING_SCARLET_CHEESE);
 
@@ -61,6 +67,16 @@ public class BnCFluidsImpl {
         BnCFluids.FLOWING_WITHERING_DROSS = new BaseFlowingFluid.Flowing(BnCFluidsImpl.WITHERING_DROSS_FLUID_PROPERTIES);
         BnCFluids.KOMBUCHA = new BaseFlowingFluid.Source(BnCFluidsImpl.KOMBUCHA_FLUID_PROPERTIES);
         BnCFluids.FLOWING_KOMBUCHA = new BaseFlowingFluid.Flowing(BnCFluidsImpl.KOMBUCHA_FLUID_PROPERTIES);
+        BnCFluids.RED_WINE = new BaseFlowingFluid.Source(BnCFluidsImpl.RED_WINE_FLUID_PROPERTIES);
+        BnCFluids.FLOWING_RED_WINE = new BaseFlowingFluid.Flowing(BnCFluidsImpl.RED_WINE_FLUID_PROPERTIES);
+        BnCFluids.WHITE_WINE = new BaseFlowingFluid.Source(BnCFluidsImpl.WHITE_WINE_FLUID_PROPERTIES);
+        BnCFluids.FLOWING_WHITE_WINE = new BaseFlowingFluid.Flowing(BnCFluidsImpl.WHITE_WINE_FLUID_PROPERTIES);
+        BnCFluids.CURRANT_WINE = new BaseFlowingFluid.Source(BnCFluidsImpl.CURRANT_WINE_FLUID_PROPERTIES);
+        BnCFluids.FLOWING_CURRANT_WINE = new BaseFlowingFluid.Flowing(BnCFluidsImpl.CURRANT_WINE_FLUID_PROPERTIES);
+        BnCFluids.VERRUCA_WINE = new BaseFlowingFluid.Source(BnCFluidsImpl.VERRUCA_WINE_FLUID_PROPERTIES);
+        BnCFluids.FLOWING_VERRUCA_WINE = new BaseFlowingFluid.Flowing(BnCFluidsImpl.VERRUCA_WINE_FLUID_PROPERTIES);
+        BnCFluids.TWISTED_WINE = new BaseFlowingFluid.Source(BnCFluidsImpl.TWISTED_WINE_FLUID_PROPERTIES);
+        BnCFluids.FLOWING_TWISTED_WINE = new BaseFlowingFluid.Flowing(BnCFluidsImpl.TWISTED_WINE_FLUID_PROPERTIES);
         BnCFluids.FLAXEN_CHEESE = new BaseFlowingFluid.Source(BnCFluidsImpl.FLAXEN_CHEESE_FLUID_PROPERTIES);
         BnCFluids.FLOWING_FLAXEN_CHEESE = new BaseFlowingFluid.Flowing(BnCFluidsImpl.FLAXEN_CHEESE_FLUID_PROPERTIES);
         BnCFluids.SCARLET_CHEESE = new BaseFlowingFluid.Source(BnCFluidsImpl.SCARLET_CHEESE_FLUID_PROPERTIES);

@@ -26,6 +26,11 @@ public class BnCFluidTypes {
     public static final FluidType RED_RUM = new BnCFluidType();
     public static final FluidType WITHERING_DROSS = new BnCFluidType();
 
+    public static final FluidType RED_WINE = new BnCFluidType();
+    public static final FluidType WHITE_WINE = new BnCFluidType();
+    public static final FluidType CURRANT_WINE = new BnCFluidType();
+    public static final FluidType VERRUCA_WINE = new BnCFluidType();
+    public static final FluidType TWISTED_WINE = new BnCFluidType();
     public static final FluidType FLAXEN_CHEESE = new BnCFluidType();
     public static final FluidType SCARLET_CHEESE = new BnCFluidType();
 
@@ -49,6 +54,11 @@ public class BnCFluidTypes {
         Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("red_rum"), RED_RUM);
         Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("withering_dross"), WITHERING_DROSS);
         
+        Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("red_wine"), RED_WINE);
+        Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("white_wine"), WHITE_WINE);
+        Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("currant_wine"), CURRANT_WINE);
+        Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("verruca_wine"), VERRUCA_WINE);
+        Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("twisted_wine"), TWISTED_WINE);
         Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("flaxen_cheese"), FLAXEN_CHEESE);
         Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("scarlet_cheese"), SCARLET_CHEESE);
     }

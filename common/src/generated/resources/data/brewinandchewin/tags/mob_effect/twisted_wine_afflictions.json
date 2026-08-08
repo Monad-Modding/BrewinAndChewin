@@ -1,0 +1,12 @@
+{
+  "values": [
+    "minecraft:slowness",
+    "minecraft:weakness",
+    "minecraft:poison",
+    "minecraft:infested",
+    "minecraft:oozing",
+    "minecraft:mining_fatigue",
+    "minecraft:invisibility",
+    "minecraft:glowing"
+  ]
+}

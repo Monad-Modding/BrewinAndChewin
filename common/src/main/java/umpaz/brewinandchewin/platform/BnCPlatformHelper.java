@@ -15,6 +15,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -27,9 +28,13 @@ import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.common.attachment.RagingAttachment;
 import umpaz.brewinandchewin.common.attachment.TipsyHeartsAttachment;
+import umpaz.brewinandchewin.common.block.entity.AgingCaskBlockEntity;
+import umpaz.brewinandchewin.common.block.entity.DistilleryBlockEntity;
 import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.container.AbstractedFluidTank;
 import umpaz.brewinandchewin.common.container.AbstractedItemHandler;
+import umpaz.brewinandchewin.common.block.entity.container.AgingCaskMenu;
+import umpaz.brewinandchewin.common.block.entity.container.DistilleryMenu;
 import umpaz.brewinandchewin.common.block.entity.container.KegMenu;
 import umpaz.brewinandchewin.common.block.entity.container.KegStackedContents;
 import umpaz.brewinandchewin.common.block.entity.container.SidedKegWrapper;
@@ -61,8 +66,14 @@ public interface BnCPlatformHelper {
 
     void openKegMenu(Player player, KegBlockEntity blockEntity, BlockPos pos);
 
+    void openBlockPosMenu(Player player, MenuProvider menuProvider, BlockPos pos);
+
     BlockEntityType.BlockEntitySupplier<KegBlockEntity> supplyBlockEntity();
+    BlockEntityType.BlockEntitySupplier<DistilleryBlockEntity> supplyDistilleryBlockEntity();
+    BlockEntityType.BlockEntitySupplier<AgingCaskBlockEntity> supplyAgingCaskBlockEntity();
     MenuType<KegMenu> createMenuType(BnCMenuConstructor<KegMenu> constructor);
+    MenuType<DistilleryMenu> createDistilleryMenuType(BnCMenuConstructor<DistilleryMenu> constructor);
+    MenuType<AgingCaskMenu> createAgingCaskMenuType(BnCMenuConstructor<AgingCaskMenu> constructor);
 
     AbstractedItemHandler createKegInventory(int size, BiConsumer<AbstractedItemHandler, Integer> onContentsChanged);
 

@@ -1,0 +1,264 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "brewinandchewin:block/distillery",
+    "distillery": "brewinandchewin:block/distillery"
+  },
+  "elements": [
+    {
+      "from": [6.8571, 0.8571, 3.4286],
+      "to": [16.0, 3.7143, 12.5714],
+      "faces": {
+        "north": {
+          "uv": [2, 2, 4, 2.625],
+          "texture": "#distillery"
+        },
+        "east": {
+          "uv": [0, 2, 2, 2.625],
+          "texture": "#distillery"
+        },
+        "south": {
+          "uv": [6, 2, 8, 2.625],
+          "texture": "#distillery"
+        },
+        "west": {
+          "uv": [4, 2, 6, 2.625],
+          "texture": "#distillery"
+        },
+        "up": {
+          "uv": [4, 2, 2, 0],
+          "texture": "#distillery"
+        },
+        "down": {
+          "uv": [6, 0, 4, 2],
+          "texture": "#distillery"
+        }
+      }
+    },
+    {
+      "from": [8.0, 3.7143, 4.5714],
+      "to": [14.8571, 9.4286, 11.4286],
+      "faces": {
+        "north": {
+          "uv": [1.5, 4.125, 3, 5.375],
+          "texture": "#distillery"
+        },
+        "east": {
+          "uv": [0, 4.125, 1.5, 5.375],
+          "texture": "#distillery"
+        },
+        "south": {
+          "uv": [4.5, 4.125, 6, 5.375],
+          "texture": "#distillery"
+        },
+        "west": {
+          "uv": [3, 4.125, 4.5, 5.375],
+          "texture": "#distillery"
+        },
+        "up": {
+          "uv": [3, 4.125, 1.5, 2.625],
+          "texture": "#distillery"
+        },
+        "down": {
+          "uv": [4.5, 2.625, 3, 4.125],
+          "texture": "#distillery"
+        }
+      }
+    },
+    {
+      "from": [9.7143, 9.4286, 6.2857],
+      "to": [13.1429, 15.1429, 9.7143],
+      "faces": {
+        "north": {
+          "uv": [4.75, 7.375, 5.5, 8.625],
+          "texture": "#distillery"
+        },
+        "east": {
+          "uv": [4, 7.375, 4.75, 8.625],
+          "texture": "#distillery"
+        },
+        "south": {
+          "uv": [6.25, 7.375, 7, 8.625],
+          "texture": "#distillery"
+        },
+        "west": {
+          "uv": [5.5, 7.375, 6.25, 8.625],
+          "texture": "#distillery"
+        },
+        "up": {
+          "uv": [5.5, 7.375, 4.75, 6.625],
+          "texture": "#distillery"
+        },
+        "down": {
+          "uv": [6.25, 6.625, 5.5, 7.375],
+          "texture": "#distillery"
+        }
+      }
+    },
+    {
+      "from": [9.1429, 12.8571, 5.7143],
+      "to": [13.7143, 14.0, 10.2857],
+      "faces": {
+        "north": {
+          "uv": [5, 6.375, 6, 6.625],
+          "texture": "#distillery"
+        },
+        "east": {
+          "uv": [4, 6.375, 5, 6.625],
+          "texture": "#distillery"
+        },
+        "south": {
+          "uv": [7, 6.375, 8, 6.625],
+          "texture": "#distillery"
+        },
+        "west": {
+          "uv": [6, 6.375, 7, 6.625],
+          "texture": "#distillery"
+        },
+        "up": {
+          "uv": [6, 6.375, 5, 5.375],
+          "texture": "#distillery"
+        },
+        "down": {
+          "uv": [7, 5.375, 6, 6.375],
+          "texture": "#distillery"
+        }
+      }
+    },
+    {
+      "from": [1.7143, 14.0, 7.4286],
+      "to": [9.7143, 15.1429, 8.5714],
+      "faces": {
+        "north": {
+          "uv": [6.25, 5.125, 8, 5.375],
+          "texture": "#distillery"
+        },
+        "east": {
+          "uv": [6, 5.125, 6.25, 5.375],
+          "texture": "#distillery"
+        },
+        "south": {
+          "uv": [8.25, 5.125, 10, 5.375],
+          "texture": "#distillery"
+        },
+        "west": {
+          "uv": [8, 5.125, 8.25, 5.375],
+          "texture": "#distillery"
+        },
+        "up": {
+          "uv": [8, 5.125, 6.25, 4.875],
+          "texture": "#distillery"
+        },
+        "down": {
+          "uv": [9.75, 4.875, 8, 5.125],
+          "texture": "#distillery"
+        }
+      }
+    },
+    {
+      "from": [1.7143, 10.0, 7.4286],
+      "to": [2.8571, 14.0, 8.5714],
+      "faces": {
+        "north": {
+          "uv": [0.25, 7.125, 0.5, 8],
+          "texture": "#distillery"
+        },
+        "east": {
+          "uv": [0, 7.125, 0.25, 8],
+          "texture": "#distillery"
+        },
+        "south": {
+          "uv": [0.75, 7.125, 1, 8],
+          "texture": "#distillery"
+        },
+        "west": {
+          "uv": [0.5, 7.125, 0.75, 8],
+          "texture": "#distillery"
+        },
+        "up": {
+          "uv": [0.5, 7.125, 0.25, 6.875],
+          "texture": "#distillery"
+        },
+        "down": {
+          "uv": [0.75, 6.875, 0.5, 7.125],
+          "texture": "#distillery"
+        }
+      }
+    },
+    {
+      "from": [7.4286, 11.7143, 8.0],
+      "to": [9.7143, 14.0, 8.0],
+      "faces": {
+        "north": {
+          "uv": [1, 6.875, 1.5, 7.375],
+          "texture": "#distillery"
+        },
+        "south": {
+          "uv": [1.5, 6.875, 2, 7.375],
+          "texture": "#distillery"
+        }
+      }
+    },
+    {
+      "from": [0.5714, 3.1429, 6.2857],
+      "to": [4.0, 10.0, 9.7143],
+      "faces": {
+        "north": {
+          "uv": [6.75, 3.375, 7.5, 4.875],
+          "texture": "#distillery"
+        },
+        "east": {
+          "uv": [6, 3.375, 6.75, 4.875],
+          "texture": "#distillery"
+        },
+        "south": {
+          "uv": [8.25, 3.375, 9, 4.875],
+          "texture": "#distillery"
+        },
+        "west": {
+          "uv": [7.5, 3.375, 8.25, 4.875],
+          "texture": "#distillery"
+        },
+        "up": {
+          "uv": [7.5, 3.375, 6.75, 2.625],
+          "texture": "#distillery"
+        },
+        "down": {
+          "uv": [8.25, 2.625, 7.5, 3.375],
+          "texture": "#distillery"
+        }
+      }
+    },
+    {
+      "from": [0.0, 0.8571, 5.7143],
+      "to": [4.5714, 3.1429, 10.2857],
+      "faces": {
+        "north": {
+          "uv": [1, 6.375, 2, 6.875],
+          "texture": "#distillery"
+        },
+        "east": {
+          "uv": [0, 6.375, 1, 6.875],
+          "texture": "#distillery"
+        },
+        "south": {
+          "uv": [3, 6.375, 4, 6.875],
+          "texture": "#distillery"
+        },
+        "west": {
+          "uv": [2, 6.375, 3, 6.875],
+          "texture": "#distillery"
+        },
+        "up": {
+          "uv": [2, 6.375, 1, 5.375],
+          "texture": "#distillery"
+        },
+        "down": {
+          "uv": [3, 5.375, 2, 6.375],
+          "texture": "#distillery"
+        }
+      }
+    }
+  ]
+}

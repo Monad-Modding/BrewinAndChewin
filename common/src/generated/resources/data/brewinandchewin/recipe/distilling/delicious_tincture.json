@@ -1,0 +1,12 @@
+{
+  "type": "brewinandchewin:distilling",
+  "distilling_time": 200,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "minecraft:honey_bottle"
+  },
+  "result": {
+    "count": 1,
+    "id": "brewinandchewin:delicious_tincture"
+  }
+}

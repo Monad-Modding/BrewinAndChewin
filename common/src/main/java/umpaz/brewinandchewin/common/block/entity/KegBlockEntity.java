@@ -28,12 +28,14 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
+import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.BnCConfiguration;
@@ -204,13 +206,30 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
             default -> false;
         };
     }
-
+    private boolean inventoryContainsOnlyIngredients(KegFermentingRecipe recipe) {
+        List<Ingredient> ingredients = new ArrayList<>(recipe.getIngredients());
+        for (int i = 0; i < CONTAINER_SLOT; ++i) { // self reminder: Output slot has index number 5, container slot has index number 4, so 0,1,2,3 are the crafting grid ~Oska
+            ItemStack stack = inventory.getStackInSlot(i);
+            if (stack.isEmpty()) continue;
+            Optional<Ingredient> match = ingredients.stream()
+                    .filter(ingredient -> ingredient.test(stack))
+                    .findFirst();
+            if (match.isPresent()) {
+                ingredients.remove(match.get());
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
     protected boolean canFerment(KegFermentingRecipe recipe, KegBlockEntity keg) {
         if (!hasInput()) return false;
         if (level == null) return false;
         if (!isValidTemp(keg.getTemperature(), recipe.getTemperature()))
             return false; // make sure the temperature is valid
-
+        if (!recipe.getIngredients().isEmpty() && !inventoryContainsOnlyIngredients(recipe)){
+            return false;
+        }
 
         if (recipe.getFluidIngredient().isEmpty()) { // if the recipe does not require a fluid
             return keg.fluidTank.isEmpty(); // make sure the fluid is empty
@@ -348,9 +367,12 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
 
         for (int i = 0; i < CONTAINER_SLOT; ++i) {
             ItemStack slotStack = inventory.getStackInSlot(i);
-            if (!BrewinAndChewin.getHelper().getCraftingRemainingItem(slotStack).isEmpty())
-                ejectIngredientRemainder(BrewinAndChewin.getHelper().getCraftingRemainingItem(slotStack));
-            inventory.extractItem(i, 1, false);
+            boolean matchesIngredient = recipe.getIngredients().stream().anyMatch(ingredient -> ingredient.test(slotStack));
+            if (matchesIngredient) {
+                ItemStack remainder = BrewinAndChewin.getHelper().getCraftingRemainingItem(slotStack);
+                if (!remainder.isEmpty()) ejectIngredientRemainder(remainder);
+                inventory.extractItem(i, 1, false);
+            }
         }
         return true;
     }

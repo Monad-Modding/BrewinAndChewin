@@ -71,8 +71,10 @@ public class JEIPlugin implements IModPlugin {
 
                         @Override
                         // Not implemented because marked for removal.
+                        // As of NeoForge 1.21.1 this feature is still not deprecated and causes a crash [144](https://github.com/Alchemists-Of-Yore/BrewinAndChewin/issues/144), a hotfix has been implemented ~Oska
                         public ITypedIngredient<Object> getTypedIngredient() {
-                            throw new UnsupportedOperationException("getTypedIngredient is not implemented for KegScreen.");
+                            BrewinAndChewin.LOG.debug("JEI getTypedIngredient() called for kegscreen from issue [144], returning a null value");
+                            return null;
                         }
 
                         @Override

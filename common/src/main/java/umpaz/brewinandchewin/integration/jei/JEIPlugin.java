@@ -70,9 +70,8 @@ public class JEIPlugin implements IModPlugin {
                         }
 
                         @Override
-                        // Not implemented because marked for removal.
                         public ITypedIngredient<Object> getTypedIngredient() {
-                            throw new UnsupportedOperationException("getTypedIngredient is not implemented for KegScreen.");
+                            return null;
                         }
 
                         @Override

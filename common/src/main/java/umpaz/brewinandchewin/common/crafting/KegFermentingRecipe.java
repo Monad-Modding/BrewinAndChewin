@@ -144,7 +144,7 @@ public class KegFermentingRecipe implements Recipe<KegRecipeWrapper> {
         if (result.right().isPresent())
             return result.right().get().copy();
         if (result.left().isPresent())
-            return BnCRecipeUtils.getPouredItemFromFluid(new AbstractedFluidStack(result.left().get().fluid(), BnCConfiguration.COMMON_CONFIG.get().keg().localizedCapacity(), result.left().get().components(), BnCConfiguration.COMMON_CONFIG.get().keg().capacityUnit(), null));
+            return BnCRecipeUtils.getPouredItemFromFluid(new AbstractedFluidStack(result.left().get().fluid(), BnCConfiguration.common().keg().localizedCapacity(), result.left().get().components(), BnCConfiguration.common().keg().capacityUnit(), null));
         return ItemStack.EMPTY;
     }
 

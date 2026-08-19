@@ -91,7 +91,7 @@ public class GuiMixin {
         if (brewinandchewin$remainingHealth <= 0)
             return;
 
-        if (BnCConfiguration.CLIENT_CONFIG.get().numbedHeartFlickering() && attachment.getNumbedHealth() > 1 && attachment.getTicksUntilDamage() < 80 && heartIndex == healthStart && absorptionAmount == 0) {
+        if (BnCConfiguration.client().numbedHeartFlickering() && attachment.getNumbedHealth() > 1 && attachment.getTicksUntilDamage() < 80 && heartIndex == healthStart && absorptionAmount == 0) {
             if (!Minecraft.getInstance().isPaused()) {
                 float increase = Mth.lerp((float) (80 - attachment.getTicksUntilDamage()) / 80, 0.0F, 0.06F);
                 brewinandchewin$numbedAlpha = Mth.clamp(brewinandchewin$numbedAlpha + (brewinandchewin$increaseNumbedAlpha ? increase : -increase), -0.01F, 1.01F);
@@ -180,7 +180,7 @@ public class GuiMixin {
 
         operation.call(instance, graphics, heartType, heartX, heartY, hardcore, blinking, halfHeart);
 
-        if (BnCConfiguration.CLIENT_CONFIG.get().numbedHeartFlickering() && attachment.getNumbedHealth() > 1 && attachment.getTicksUntilDamage() < 80 && heartIndex == healthStart) {
+        if (BnCConfiguration.client().numbedHeartFlickering() && attachment.getNumbedHealth() > 1 && attachment.getTicksUntilDamage() < 80 && heartIndex == healthStart) {
             if (!Minecraft.getInstance().isPaused()) {
                 float increase = Mth.lerp((float) (80 - attachment.getTicksUntilDamage()) / 80, 0.0F, 0.08F);
                 brewinandchewin$numbedAlpha = Mth.clamp(brewinandchewin$numbedAlpha + (brewinandchewin$increaseNumbedAlpha ? increase : -increase), -0.01F, 1.01F);

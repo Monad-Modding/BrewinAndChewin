@@ -18,6 +18,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Clearable;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -62,7 +63,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, Nameable, RecipeCraftingHolder {
+public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, Nameable, RecipeCraftingHolder, Clearable {
 
     public static final int CONTAINER_SLOT = 4;
     public static final int OUTPUT_SLOT = 5;
@@ -592,7 +593,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         int cold = states.stream().filter(s -> s.is(BnCTags.Blocks.FREEZE_SOURCES) && s.hasProperty(BlockStateProperties.LIT)).filter(s -> s.hasProperty(BlockStateProperties.LIT)).filter(s -> s.getValue(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
         cold += states.stream().filter(s -> s.is(BnCTags.Blocks.FREEZE_SOURCES) && !s.hasProperty(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
 
-        if (BnCConfiguration.COMMON_CONFIG.get().keg().biomeTemp()) {
+        if (BnCConfiguration.common().keg().biomeTemp()) {
             Holder<Biome> biome = level.getBiome(worldPosition);
             if (biome.isBound()) {
                 float biomeTemperature = biome.value().getBaseTemperature();
@@ -606,7 +607,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
 
         int temp = heat - cold;
 
-        if (BnCConfiguration.COMMON_CONFIG.get().keg().dimTemp() && level.dimensionType().ultraWarm())
+        if (BnCConfiguration.common().keg().dimTemp() && level.dimensionType().ultraWarm())
             temp += 2;
 
         if (!initialisedTemperature || temp != kegTemperature) {
@@ -617,13 +618,13 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
     }
 
     public int getTemperature() {
-        if (kegTemperature <= -BnCConfiguration.COMMON_CONFIG.get().keg().cold()) {
+        if (kegTemperature <= -BnCConfiguration.common().keg().cold()) {
             return 1;
-        } else if (kegTemperature <= -BnCConfiguration.COMMON_CONFIG.get().keg().chilly()) {
+        } else if (kegTemperature <= -BnCConfiguration.common().keg().chilly()) {
             return 2;
-        } else if (kegTemperature < BnCConfiguration.COMMON_CONFIG.get().keg().warm()) {
+        } else if (kegTemperature < BnCConfiguration.common().keg().warm()) {
             return 3;
-        } else if (kegTemperature < BnCConfiguration.COMMON_CONFIG.get().keg().hot()) {
+        } else if (kegTemperature < BnCConfiguration.common().keg().hot()) {
             return 4;
         } else {
             return 5;
@@ -681,6 +682,14 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         }
 
         ExperienceOrb.award(level, pos, expTotal);
+    }
+
+    @Override
+    public void clearContent() {
+        for (int slot = 0; slot < INVENTORY_SIZE; ++slot)
+            this.inventory.setStackInSlot(slot, ItemStack.EMPTY);
+        clearFermenting();
+        inventoryChanged();
     }
 
     public AbstractedItemHandler getInventory() {
@@ -742,7 +751,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
     }
 
     private AbstractedFluidTank createFluidTank() {
-        return BrewinAndChewin.getHelper().createKegTank(BnCConfiguration.COMMON_CONFIG.get().keg().localizedCapacity(), () -> {
+        return BrewinAndChewin.getHelper().createKegTank(BnCConfiguration.common().keg().localizedCapacity(), () -> {
             AbstractedItemHandler handler = KegBlockEntity.this.inventory;
             if (!getLevel().isClientSide() && !currentlyOperating && !deferFluidExtraction) {
                 List<ItemStack> out = KegBlockEntity.this.extractInGui(handler.getStackInSlot(CONTAINER_SLOT), handler.getSlotLimit(OUTPUT_SLOT));

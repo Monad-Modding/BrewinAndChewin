@@ -62,7 +62,7 @@ public class BnCClientPlatfomHelperNeoForge implements BnCClientPlatformHelper {
         float green = ((tintColor >> 8) & 0xFF) / 255f;
         float blue = (tintColor & 0xFF) / 255f;
 
-        float capacity = Math.min(BnCConfiguration.COMMON_CONFIG.get().keg().localizedCapacity(), stack.unit().convertToLoader(stack.amount())) / (float) BnCConfiguration.COMMON_CONFIG.get().keg().localizedCapacity();
+        float capacity = Math.min(BnCConfiguration.common().keg().localizedCapacity(), stack.unit().convertToLoader(stack.amount())) / (float) BnCConfiguration.common().keg().localizedCapacity();
         if (capacity > 0.57) {
             int y1 = y + (int) (12 * (1 - ((capacity - 0.57F) / .43F)));
             int y2 = y + 12;

@@ -69,7 +69,7 @@ public class KegScreen extends AbstractContainerScreen<KegMenu> implements Recip
         this.titleLabelX = 38;
         this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, this.menu);
         this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-        if (BnCConfiguration.COMMON_CONFIG.get().recipeBook().enabled()) {
+        if (BnCConfiguration.common().recipeBook().enabled()) {
             this.addRenderableWidget(new ImageButton(this.leftPos + 5, this.height / 2 - 49, 20, 18, RecipeBookComponent.RECIPE_BUTTON_SPRITES, button -> {
                 this.recipeBookComponent.toggleVisibility();
                 this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
@@ -133,10 +133,10 @@ public class KegScreen extends AbstractContainerScreen<KegMenu> implements Recip
                 return component;
             }))).withStyle(ChatFormatting.GRAY);
             Component component = MutableComponent.create(BrewinAndChewin.getHelper().getFluidDisplayName(this.menu.kegTank.getAbstractedFluid()).getContents())
-                    .append((BnCConfiguration.CLIENT_CONFIG.get().displayUnit().shortFormat(" (%s/%s") + ")").formatted(FluidUnit.convert(menu.kegTank.getAbstractedFluid().amount(), FluidUnit.getLoaderUnit(), BnCConfiguration.CLIENT_CONFIG.get().displayUnit()), FluidUnit.convert(menu.kegTank.getFluidCapacity(), FluidUnit.getLoaderUnit(), BnCConfiguration.CLIENT_CONFIG.get().displayUnit())));
+                    .append((BnCConfiguration.client().displayUnit().shortFormat(" (%s/%s") + ")").formatted(FluidUnit.convert(menu.kegTank.getAbstractedFluid().amount(), FluidUnit.getLoaderUnit(), BnCConfiguration.client().displayUnit()), FluidUnit.convert(menu.kegTank.getFluidCapacity(), FluidUnit.getLoaderUnit(), BnCConfiguration.client().displayUnit())));
             List<Component> components = new ArrayList<>(List.of(component, containerComponent));
-            if (BnCConfiguration.CLIENT_CONFIG.get().oppositeFluidDisplay() == BnCConfiguration.Client.DisplaySettings.ADVANCED_TOOLTIPS && minecraft.options.advancedItemTooltips || BnCConfiguration.CLIENT_CONFIG.get().oppositeFluidDisplay() == BnCConfiguration.Client.DisplaySettings.ALWAYS) {
-                FluidUnit opposite = FluidUnit.getOpposite(BnCConfiguration.CLIENT_CONFIG.get().displayUnit());
+            if (BnCConfiguration.client().oppositeFluidDisplay() == BnCConfiguration.Client.DisplaySettings.ADVANCED_TOOLTIPS && minecraft.options.advancedItemTooltips || BnCConfiguration.client().oppositeFluidDisplay() == BnCConfiguration.Client.DisplaySettings.ALWAYS) {
+                FluidUnit opposite = FluidUnit.getOpposite(BnCConfiguration.client().displayUnit());
                 components.add(MutableComponent.create(Component.literal((opposite.shortFormat("%s/%s")).formatted(FluidUnit.convert(menu.kegTank.getAbstractedFluid().amount(), FluidUnit.getLoaderUnit(), opposite), FluidUnit.convert(menu.kegTank.getFluidCapacity(), FluidUnit.getLoaderUnit(), opposite))).getContents()).withStyle(ChatFormatting.GRAY));
             }
             if (minecraft.options.advancedItemTooltips) {
@@ -210,7 +210,7 @@ public class KegScreen extends AbstractContainerScreen<KegMenu> implements Recip
 
         AbstractedFluidStack fluidStack = this.menu.kegTank.getAbstractedFluid();
         if (!fluidStack.isEmpty() && (recipeBookComponent.getGhostRecipe() == null || !(recipeBookComponent.getGhostRecipe().value() instanceof KegFermentingRecipe fermentingRecipe) || fermentingRecipe.getFluidIngredient().isEmpty() && menu.kegTank.isEmpty() || fermentingRecipe.getFluidIngredient().isPresent() && fermentingRecipe.getFluidIngredient().get().ingredient().matches(fluidStack))) {
-            if (BnCConfiguration.CLIENT_CONFIG.get().renderFluidInKeg())
+            if (BnCConfiguration.client().renderFluidInKeg())
                 BrewinAndChewinClient.getHelper().renderFluidInKeg(fluidStack, gui, leftPos + 120, topPos + 19, 1.0F);
 
             ItemStack itemDisplay = BnCFluidItemDisplays.getFluidItemDisplay(Minecraft.getInstance().level.registryAccess(), fluidStack).copy();

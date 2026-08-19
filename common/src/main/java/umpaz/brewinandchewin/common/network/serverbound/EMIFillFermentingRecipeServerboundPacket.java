@@ -12,6 +12,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import umpaz.brewinandchewin.BrewinAndChewin;
+import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.block.entity.container.KegMenu;
 import umpaz.brewinandchewin.integration.emi.handler.KegEmiRecipeHandler;
 
@@ -124,7 +125,7 @@ public record EMIFillFermentingRecipeServerboundPacket(int syncId,
                 }
 
                 if (stacks.containsKey(KegEmiRecipeHandler.InputType.ITEM)) {
-                    List<Slot> crafting = menu.slots.subList(0, 3);
+                    List<Slot> crafting = menu.slots.subList(0, KegBlockEntity.CONTAINER_SLOT);
                     for (Slot s : crafting) {
                         if (s != null && s.mayPickup(sender) && !s.getItem().isEmpty()) {
                             ItemStack taken = s.getItem();
@@ -148,10 +149,14 @@ public record EMIFillFermentingRecipeServerboundPacket(int syncId,
                             break;
                         } else {
                             Slot s = menu.getSlot(i);
-                            if (s.mayPlace(stack) && stack.getCount() <= s.getMaxStackSize())
+                            if (s.mayPlace(stack)) {
+                                int limit = s.getMaxStackSize(stack);
+                                if (stack.getCount() > limit)
+                                    sender.getInventory().placeItemBackInInventory(stack.split(stack.getCount() - limit));
                                 s.setByPlayer(stack);
-                            else
+                            } else {
                                 sender.getInventory().placeItemBackInInventory(stack);
+                            }
                         }
                     }
                 }

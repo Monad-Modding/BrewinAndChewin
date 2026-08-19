@@ -143,7 +143,7 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
                     AbstractedFluidStack fluidStack = ingredients.get(Mth.floor(((GhostRecipeAccessor)ghostRecipe).brewinandchewin$getTime() / 30.0F) % ingredients.size());
                     fluidStack = new AbstractedFluidStack(fluidStack.fluid(), fluidIngredient.get().amount(), fluidStack.components(), fluidIngredient.get().unit().orElse(FluidUnit.getLoaderUnit()), null);
                     if (kegMenu.kegTank.isEmpty() || !kegMenu.kegTank.getAbstractedFluid().fluid().isSame(fluidStack.fluid())) {
-                        if (BnCConfiguration.CLIENT_CONFIG.get().renderFluidInKeg()) {
+                        if (BnCConfiguration.client().renderFluidInKeg()) {
                             BrewinAndChewinClient.getHelper().renderFluidInKeg(fluidStack, gui, leftPos + 120, topPos + 19, 0.6F);
                             gui.fill(RenderType.guiGhostRecipeOverlay(), leftPos + 120, topPos + 19, leftPos + 120 + 16 + 8, topPos + 31 + 16, 822083583);
                         }
@@ -170,10 +170,10 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
     private void renderTankTooltip(GuiGraphics gui, int renderX, int renderY, int mouseX, int mouseY, AbstractedFluidStack stack) {
         if (isHovering(120, 19,  24, 28, mouseX - renderX, mouseY - renderY) && menu instanceof KegMenu kegMenu && (kegMenu.kegTank.isEmpty() || !kegMenu.kegTank.getAbstractedFluid().fluid().isSame(stack.fluid()))) {
             Component component = MutableComponent.create(BrewinAndChewin.getHelper().getFluidDisplayName(stack).getContents())
-                    .append((BnCConfiguration.CLIENT_CONFIG.get().displayUnit().shortFormat(" (%s/%s") + ")").formatted(FluidUnit.convert(stack.amount(), stack.unit(), BnCConfiguration.CLIENT_CONFIG.get().displayUnit()), FluidUnit.convert(kegMenu.kegTank.getFluidCapacity(), FluidUnit.getLoaderUnit(), BnCConfiguration.CLIENT_CONFIG.get().displayUnit())));
+                    .append((BnCConfiguration.client().displayUnit().shortFormat(" (%s/%s") + ")").formatted(FluidUnit.convert(stack.amount(), stack.unit(), BnCConfiguration.client().displayUnit()), FluidUnit.convert(kegMenu.kegTank.getFluidCapacity(), FluidUnit.getLoaderUnit(), BnCConfiguration.client().displayUnit())));
             List<Component> components = new ArrayList<>(List.of(component));
-            if (BnCConfiguration.CLIENT_CONFIG.get().oppositeFluidDisplay() == BnCConfiguration.Client.DisplaySettings.ADVANCED_TOOLTIPS && minecraft.options.advancedItemTooltips || BnCConfiguration.CLIENT_CONFIG.get().oppositeFluidDisplay() == BnCConfiguration.Client.DisplaySettings.ALWAYS) {
-                FluidUnit opposite = FluidUnit.getOpposite(BnCConfiguration.CLIENT_CONFIG.get().displayUnit());
+            if (BnCConfiguration.client().oppositeFluidDisplay() == BnCConfiguration.Client.DisplaySettings.ADVANCED_TOOLTIPS && minecraft.options.advancedItemTooltips || BnCConfiguration.client().oppositeFluidDisplay() == BnCConfiguration.Client.DisplaySettings.ALWAYS) {
+                FluidUnit opposite = FluidUnit.getOpposite(BnCConfiguration.client().displayUnit());
                 components.add(MutableComponent.create(Component.literal((opposite.shortFormat("%s/%s")).formatted(FluidUnit.convert(stack.amount(), stack.unit(), opposite), FluidUnit.convert(kegMenu.kegTank.getFluidCapacity(), FluidUnit.getLoaderUnit(), opposite))).getContents()).withStyle(ChatFormatting.GRAY));
             }
             if (minecraft.options.advancedItemTooltips) {

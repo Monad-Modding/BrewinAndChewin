@@ -55,7 +55,7 @@ public class BnCFluidWidget extends SlotWidget {
 
         AbstractedFluidStack fluidStack = new AbstractedFluidStack((Fluid) getStack().getEmiStacks().getFirst().getKey(), getStack().getEmiStacks().getFirst().getAmount(), PatchedDataComponentMap.fromPatch(DataComponentMap.EMPTY, getStack().getEmiStacks().getFirst().getComponentChanges()), FluidUnit.getLoaderUnit());
 
-        if (BnCConfiguration.CLIENT_CONFIG.get().renderFluidInKeg())
+        if (BnCConfiguration.client().renderFluidInKeg())
             BrewinAndChewinClient.getHelper().renderFluidInKeg(fluidStack, draw, bounds.x() + 2, bounds.y() + 2, 1.0F);
     }
 
@@ -96,7 +96,7 @@ public class BnCFluidWidget extends SlotWidget {
                     return ItemStack.isSameItemSameComponents(itemDisplay, kegPouringRecipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
                 return ItemStack.isSameItem(itemDisplay, kegPouringRecipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
             }).findFirst();
-            int pourCount = pouringRecipe.map(kegPouringRecipe -> (int) (Math.min(FluidUnit.convert(BnCConfiguration.COMMON_CONFIG.get().keg().capacity(), BnCConfiguration.COMMON_CONFIG.get().keg().capacityUnit(), FluidUnit.getLoaderUnit()), fluidStack.amount()) / kegPouringRecipe.getLoaderAmount())).orElse(1);
+            int pourCount = pouringRecipe.map(kegPouringRecipe -> (int) (Math.min(FluidUnit.convert(BnCConfiguration.common().keg().capacity(), BnCConfiguration.common().keg().capacityUnit(), FluidUnit.getLoaderUnit()), fluidStack.amount()) / kegPouringRecipe.getLoaderAmount())).orElse(1);
             itemDisplay.setCount(pourCount);
             itemIngredient = EmiStack.of(itemDisplay);
             invalidateItemStack = false;

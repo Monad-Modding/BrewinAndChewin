@@ -64,8 +64,8 @@ public class BnCClientSetup {
         consumer.accept(BnCBlockEntityTypes.BOTTLE_RACK, BottleRackBlockEntityRenderer::new);
     }
 
-    public static void appendLabelTooltip(ItemStack stack, List<Component> tooltip) {
-        BnCLabelUtils.appendLabelTooltip(stack, tooltip);
+    public static void appendLabelTooltip(ItemStack stack, List<Component> tooltip, float tickRate) {
+        BnCLabelUtils.appendLabelTooltip(stack, tooltip, tickRate);
     }
 
     public static List<ResourceLocation> getBottleRackModels() {

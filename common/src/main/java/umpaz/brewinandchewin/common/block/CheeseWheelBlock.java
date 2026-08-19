@@ -30,6 +30,7 @@ import java.util.function.Supplier;
 
 public class CheeseWheelBlock extends Block {
     public static final IntegerProperty SERVINGS = IntegerProperty.create("servings", 0, 3);
+    public static final int WEDGES_PER_SERVING = 2;
     protected static final VoxelShape[] SHAPES = new VoxelShape[]{
             Block.box(2.0D, 0.0D, 2.0D, 8.0D, 6.0D, 8.0D),
             Block.box(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 8.0D),
@@ -65,7 +66,7 @@ public class CheeseWheelBlock extends Block {
         int servings = state.getValue(SERVINGS);
         if (stack.is(ModTags.Items.KNIVES)) {
             level.playSound(null, pos, SoundEvents.WOOL_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F);
-            popResource(level, pos, new ItemStack(cheeseWedgeType.get(), 1));
+            popResource(level, pos, new ItemStack(cheeseWedgeType.get(), WEDGES_PER_SERVING));
             if (servings > 0) {
                 level.setBlock(pos, state.setValue(SERVINGS, servings - 1), 3);
             } else if (servings == 0) {

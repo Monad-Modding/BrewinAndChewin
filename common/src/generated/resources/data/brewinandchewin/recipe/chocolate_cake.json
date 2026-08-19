@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "c": {
+      "item": "brewinandchewin:cocoa_fudge"
+    },
+    "m": {
+      "tag": "c:drinks/milk"
+    },
+    "s": {
+      "item": "minecraft:sweet_berries"
+    },
+    "w": {
+      "item": "minecraft:wheat"
+    }
+  },
+  "pattern": [
+    "msm",
+    "ccc",
+    "www"
+  ],
+  "result": {
+    "count": 1,
+    "id": "brewinandchewin:chocolate_cake"
+  }
+}

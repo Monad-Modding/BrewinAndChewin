@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_innards": {
+      "conditions": {
+        "items": [
+          {
+            "items": "brewinandchewin:innards"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "brewinandchewin:cooking/rennet"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_innards",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "brewinandchewin:cooking/rennet"
+    ]
+  },
+  "sends_telemetry_event": true
+}

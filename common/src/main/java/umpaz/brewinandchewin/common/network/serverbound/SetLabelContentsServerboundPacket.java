@@ -14,7 +14,7 @@ import umpaz.brewinandchewin.common.item.component.LabelContents;
 import umpaz.brewinandchewin.common.utility.BnCLabelUtils;
 
 public record SetLabelContentsServerboundPacket(boolean offhand, String text, boolean showAuthor,
-                                                boolean showAuthenticity) implements CustomPacketPayload {
+                                                boolean showAuthenticity, boolean hideEffects) implements CustomPacketPayload {
     public static final ResourceLocation ID = BrewinAndChewin.asResource("set_label_contents");
     public static final CustomPacketPayload.Type<SetLabelContentsServerboundPacket> TYPE = new CustomPacketPayload.Type<>(ID);
     public static final StreamCodec<RegistryFriendlyByteBuf, SetLabelContentsServerboundPacket> STREAM_CODEC = StreamCodec.composite(
@@ -22,6 +22,7 @@ public record SetLabelContentsServerboundPacket(boolean offhand, String text, bo
             ByteBufCodecs.stringUtf8(LabelContents.MAX_TEXT_LENGTH), SetLabelContentsServerboundPacket::text,
             ByteBufCodecs.BOOL, SetLabelContentsServerboundPacket::showAuthor,
             ByteBufCodecs.BOOL, SetLabelContentsServerboundPacket::showAuthenticity,
+            ByteBufCodecs.BOOL, SetLabelContentsServerboundPacket::hideEffects,
             SetLabelContentsServerboundPacket::new);
 
     @Override
@@ -38,7 +39,8 @@ public record SetLabelContentsServerboundPacket(boolean offhand, String text, bo
                     .withText(text())
                     .withAuthor(sender.getGameProfile().getName())
                     .withShowAuthor(showAuthor())
-                    .withShowAuthenticity(showAuthenticity());
+                    .withShowAuthenticity(showAuthenticity())
+                    .withHideEffects(hideEffects());
             BnCLabelUtils.setLabel(stack, contents);
         });
     }

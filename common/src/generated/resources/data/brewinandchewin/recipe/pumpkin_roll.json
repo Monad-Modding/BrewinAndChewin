@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "d": {
+      "item": "farmersdelight:wheat_dough"
+    },
+    "m": {
+      "tag": "c:drinks/milk"
+    },
+    "p": {
+      "item": "farmersdelight:pumpkin_slice"
+    },
+    "s": {
+      "item": "minecraft:sugar"
+    }
+  },
+  "pattern": [
+    "ppp",
+    "msm",
+    "ddd"
+  ],
+  "result": {
+    "count": 1,
+    "id": "brewinandchewin:pumpkin_roll"
+  }
+}

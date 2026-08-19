@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "d": {
+      "item": "farmersdelight:wheat_dough"
+    },
+    "e": {
+      "tag": "c:eggs"
+    }
+  },
+  "pattern": [
+    "ddd",
+    "ded"
+  ],
+  "result": {
+    "count": 5,
+    "id": "brewinandchewin:raw_croissant"
+  }
+}

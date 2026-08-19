@@ -47,7 +47,7 @@ public class BrewinAndChewinNeoForgeClient {
     public static class GameEvents {
         @SubscribeEvent
         public static void onItemTooltip(ItemTooltipEvent event) {
-            BnCClientSetup.appendLabelTooltip(event.getItemStack(), event.getToolTip());
+            BnCClientSetup.appendLabelTooltip(event.getItemStack(), event.getToolTip(), event.getContext().tickRate());
         }
     }
 

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_slice": {
+      "conditions": {
+        "items": [
+          {
+            "items": "brewinandchewin:slice_of_pumpkin_roll"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "brewinandchewin:pumpkin_roll_from_slices"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_slice"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "brewinandchewin:pumpkin_roll_from_slices"
+    ]
+  }
+}

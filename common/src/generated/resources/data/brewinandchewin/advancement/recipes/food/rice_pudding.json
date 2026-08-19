@@ -1,0 +1,38 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "nomansland"
+    }
+  ],
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "brewinandchewin:rice_pudding"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_walnuts": {
+      "conditions": {
+        "items": [
+          {
+            "items": "nomansland:walnuts"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_walnuts"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "brewinandchewin:rice_pudding"
+    ]
+  }
+}

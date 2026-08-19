@@ -8,6 +8,7 @@
     "unit": "millibuckets"
   },
   "experience": 1.0,
+  "fermenting_time": 18000,
   "ingredients": [
     {
       "item": "brewinandchewin:red_grapes"

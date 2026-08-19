@@ -59,6 +59,18 @@ public class BnCBlocks {
     public static final Block QUICHE = new
             PieBlock(Block.Properties.ofFullCopy(Blocks.CAKE), () -> BnCItems.QUICHE_SLICE);
 
+    public static final Block CHOCOLATE_CAKE = new
+            SlicedCakeBlock(Block.Properties.ofFullCopy(Blocks.CAKE), () -> BnCItems.SLICE_OF_CHOCOLATE_CAKE,
+            2.0D, 14.0D, 8.0D, 2.0D, 14.0D);
+
+    public static final Block PUMPKIN_ROLL = new
+            SlicedCakeBlock(Block.Properties.ofFullCopy(Blocks.CAKE), () -> BnCItems.SLICE_OF_PUMPKIN_ROLL,
+            4.0D, 12.0D, 6.0D, 2.0D, 14.0D);
+
+    public static final Block GLOW_BERRY_MERINGUE_PIE = new
+            PieBlock(Block.Properties.ofFullCopy(Blocks.CAKE).lightLevel(state -> 7),
+            () -> BnCItems.SLICE_OF_GLOW_BERRY_MERINGUE_PIE);
+
 
     public static void registerAll() {
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("keg"), KEG);
@@ -80,5 +92,8 @@ public class BnCBlocks {
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("fiery_fondue_pot"), FIERY_FONDUE_POT);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("pizza"), PIZZA);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("quiche"), QUICHE);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("chocolate_cake"), CHOCOLATE_CAKE);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("pumpkin_roll"), PUMPKIN_ROLL);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("glow_berry_meringue_pie"), GLOW_BERRY_MERINGUE_PIE);
     }
 }

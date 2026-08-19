@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "e": {
+      "tag": "c:eggs"
+    },
+    "g": {
+      "item": "minecraft:glow_berries"
+    },
+    "p": {
+      "item": "farmersdelight:pie_crust"
+    },
+    "s": {
+      "item": "minecraft:sugar"
+    }
+  },
+  "pattern": [
+    "ggg",
+    "sss",
+    "epe"
+  ],
+  "result": {
+    "count": 1,
+    "id": "brewinandchewin:glow_berry_meringue_pie"
+  }
+}

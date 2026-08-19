@@ -1,7 +1,7 @@
 {
   "type": "brewinandchewin:fermenting",
   "base_fluid": {
-    "amount": 500,
+    "amount": 250,
     "ingredient": {
       "tag": "#c:milk"
     },
@@ -9,6 +9,7 @@
   },
   "category": "meals",
   "experience": 1.0,
+  "fermenting_time": 18000,
   "ingredients": [
     {
       "item": "minecraft:sugar"

@@ -1,0 +1,35 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "nomansland"
+    }
+  ],
+  "type": "brewinandchewin:fermenting",
+  "base_fluid": {
+    "amount": 250,
+    "ingredient": {
+      "tag": "#c:milk"
+    },
+    "unit": "millibuckets"
+  },
+  "category": "meals",
+  "experience": 1.0,
+  "fermenting_time": 18000,
+  "ingredients": [
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "nomansland:maple_syrup_bottle"
+    },
+    [],
+    []
+  ],
+  "result": {
+    "count": 2,
+    "id": "brewinandchewin:maple_fudge"
+  },
+  "temperature": 1,
+  "unit": "millibuckets"
+}

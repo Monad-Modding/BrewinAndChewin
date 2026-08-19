@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "#c:foods/onion",
+      "required": false
+    },
+    {
+      "id": "#c:crops/potato",
+      "required": false
+    }
+  ]
+}

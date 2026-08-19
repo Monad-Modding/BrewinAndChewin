@@ -17,11 +17,11 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_wheat": {
+    "has_wheat_dough": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:wheat"
+            "items": "farmersdelight:wheat_dough"
           }
         ]
       },
@@ -31,7 +31,7 @@
   "requirements": [
     [
       "has_tankard",
-      "has_wheat",
+      "has_wheat_dough",
       "has_the_recipe"
     ]
   ],

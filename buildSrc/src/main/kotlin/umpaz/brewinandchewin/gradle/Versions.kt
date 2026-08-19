@@ -1,7 +1,7 @@
 package umpaz.brewinandchewin.gradle
 
 object Versions {
-    const val MOD = "4.5.0"
+    const val MOD = "5.0.0"
 
     const val MINECRAFT = "1.21.1"
     const val PARCHMENT_MINECRAFT = "1.21.1"
@@ -27,6 +27,9 @@ object Versions {
     const val EMI = "1.1.19+1.21.1"
     const val APPLESKIN = "mc1.21-3.0.5"
     const val CLOTH_CONFIG = "15.0.140"
+
+    const val NO_MANS_LAND = "1.5.12"
+    const val NO_MANS_LAND_RANGE = "[1.5.12,)"
 
     const val FARMERS_DELIGHT = "1.21.1-1.3.2"
     const val FARMERS_DELIGHT_RANGE = "[1.3.2,)"

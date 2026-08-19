@@ -24,6 +24,11 @@ public class BnCBlockTags extends BlockTagsProvider
     protected void addTags(HolderLookup.Provider provider) {
         this.registerModTags();
         this.registerBlockMineables();
+        this.registerFarmersDelightTags();
+    }
+
+    protected void registerFarmersDelightTags() {
+        tag(ModTags.Blocks.PIES).add(BnCBlocks.GLOW_BERRY_MERINGUE_PIE);
     }
 
     protected void registerBlockMineables() {

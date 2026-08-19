@@ -6,11 +6,35 @@
   "overrides": [
     {
       "predicate": {
-        "brewinandchewin:foam": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/currant_wine_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/currant_wine_label"
+    },
+    {
+      "predicate": {
         "brewinandchewin:labelled": 1,
         "brewinandchewin:finely_aged": 1
       },
-      "model": "brewinandchewin:item/wine/currant_wine_foam_label_fine"
+      "model": "brewinandchewin:item/wine/currant_wine_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:foam": 1
+      },
+      "model": "brewinandchewin:item/wine/currant_wine_foam"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/currant_wine_foam_fine"
     },
     {
       "predicate": {
@@ -22,34 +46,10 @@
     {
       "predicate": {
         "brewinandchewin:foam": 1,
-        "brewinandchewin:finely_aged": 1
-      },
-      "model": "brewinandchewin:item/wine/currant_wine_foam_fine"
-    },
-    {
-      "predicate": {
-        "brewinandchewin:foam": 1
-      },
-      "model": "brewinandchewin:item/wine/currant_wine_foam"
-    },
-    {
-      "predicate": {
         "brewinandchewin:labelled": 1,
         "brewinandchewin:finely_aged": 1
       },
-      "model": "brewinandchewin:item/wine/currant_wine_label_fine"
-    },
-    {
-      "predicate": {
-        "brewinandchewin:labelled": 1
-      },
-      "model": "brewinandchewin:item/wine/currant_wine_label"
-    },
-    {
-      "predicate": {
-        "brewinandchewin:finely_aged": 1
-      },
-      "model": "brewinandchewin:item/wine/currant_wine_fine"
+      "model": "brewinandchewin:item/wine/currant_wine_foam_label_fine"
     }
   ]
 }

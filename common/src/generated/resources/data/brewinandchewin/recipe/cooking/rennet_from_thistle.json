@@ -1,0 +1,34 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "nomansland"
+    }
+  ],
+  "type": "farmersdelight:cooking",
+  "experience": 0.35,
+  "ingredients": [
+    {
+      "item": "nomansland:thistle"
+    },
+    {
+      "item": "nomansland:thistle"
+    },
+    {
+      "item": "nomansland:thistle"
+    },
+    {
+      "item": "nomansland:thistle"
+    },
+    {
+      "item": "nomansland:thistle"
+    },
+    {
+      "item": "nomansland:thistle"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "brewinandchewin:rennet"
+  }
+}

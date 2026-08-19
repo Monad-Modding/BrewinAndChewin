@@ -1,0 +1,19 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "brewinandchewin:chocolate_cake"
+    }
+  ],
+  "result": [
+    {
+      "item": {
+        "count": 6,
+        "id": "brewinandchewin:slice_of_chocolate_cake"
+      }
+    }
+  ],
+  "tool": {
+    "tag": "c:tools/knife"
+  }
+}

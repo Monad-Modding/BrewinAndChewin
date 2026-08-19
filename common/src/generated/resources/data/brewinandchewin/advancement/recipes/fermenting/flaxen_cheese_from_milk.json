@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_brown_mushroom": {
+    "has_rennet": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:brown_mushroom"
+            "items": "brewinandchewin:rennet"
           }
         ]
       },
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "has_brown_mushroom",
+      "has_rennet",
       "has_the_recipe"
     ]
   ],

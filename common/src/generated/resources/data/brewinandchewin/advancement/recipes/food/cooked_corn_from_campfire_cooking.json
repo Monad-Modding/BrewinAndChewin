@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cooked_corn": {
+      "conditions": {
+        "items": [
+          {
+            "items": "brewinandchewin:corn"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "brewinandchewin:cooked_corn_from_campfire_cooking"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cooked_corn"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "brewinandchewin:cooked_corn_from_campfire_cooking"
+    ]
+  }
+}

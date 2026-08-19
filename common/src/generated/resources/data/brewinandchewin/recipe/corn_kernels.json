@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "brewinandchewin:corn"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "brewinandchewin:corn_kernels"
+  }
+}

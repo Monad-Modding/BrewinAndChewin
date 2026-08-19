@@ -1,0 +1,19 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "brewinandchewin:glow_berry_meringue_pie"
+    }
+  ],
+  "result": [
+    {
+      "item": {
+        "count": 4,
+        "id": "brewinandchewin:slice_of_glow_berry_meringue_pie"
+      }
+    }
+  ],
+  "tool": {
+    "tag": "c:tools/knife"
+  }
+}

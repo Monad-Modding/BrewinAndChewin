@@ -13,9 +13,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
+import net.minecraft.network.chat.Component;
 import umpaz.brewinandchewin.common.registry.BnCEffects;
+import umpaz.brewinandchewin.common.utility.BnCLabelUtils;
+
+import java.util.List;
 
 public class DistillateItem extends Item implements Distillate {
     public static final int DRINK_DURATION = 32;
@@ -61,6 +67,14 @@ public class DistillateItem extends Item implements Distillate {
     }
 
     @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        if (this.tipsyBonus <= 0 || BnCLabelUtils.hidesEffects(stack))
+            return;
+        List<MobEffectInstance> effects = List.of(new MobEffectInstance(BnCEffects.TIPSY, this.tipsyDuration, this.tipsyBonus - 1));
+        PotionContents.addPotionTooltip(effects, tooltip::add, 1.0F, context.tickRate());
+    }
+
+    @Override
     public UseAnim getUseAnimation(ItemStack stack) {
         return UseAnim.DRINK;
     }
@@ -76,7 +90,7 @@ public class DistillateItem extends Item implements Distillate {
             if (this.sickening) {
                 consumer.removeAllEffects();
                 consumer.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, CLEANSE_SLOWNESS_DURATION, 2));
-                WineItem.emptyStomach(consumer);
+                WineItem.emptyStomach(consumer, true);
                 level.playSound(null, consumer.blockPosition(), SoundEvents.PLAYER_BURP, SoundSource.PLAYERS, 0.8F, 0.9F);
             }
             if (this.tipsyBonus > 0) {

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:bread"
+    },
+    {
+      "item": "minecraft:cooked_porkchop"
+    },
+    {
+      "item": "minecraft:cooked_porkchop"
+    },
+    {
+      "tag": "brewinandchewin:foods/cheese_wedge"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "brewinandchewin:ham_and_cheese_sandwich"
+  }
+}

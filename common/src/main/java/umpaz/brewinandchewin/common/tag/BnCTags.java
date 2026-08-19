@@ -24,6 +24,9 @@ public class BnCTags {
         public static final TagKey<Item> GRAPES = modItemTag("grapes");
         public static final TagKey<Item> WINES = modItemTag("wines");
         public static final TagKey<Item> DISTILLATES = modItemTag("distillates");
+        public static final TagKey<Item> JAMS = modItemTag("jams");
+        public static final TagKey<Item> HAGGIS_MEAT = modItemTag("foods/haggis_meat");
+        public static final TagKey<Item> HAGGIS_VEGETABLE = modItemTag("foods/haggis_vegetable");
 
         private static TagKey<Item> modItemTag(String path) {
             return TagKey.create(Registries.ITEM, BrewinAndChewin.asResource(path));

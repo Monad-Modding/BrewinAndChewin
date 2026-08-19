@@ -57,6 +57,7 @@ import vectorwing.farmersdelight.common.tag.ModTags;
 import vectorwing.farmersdelight.common.utility.ItemUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -76,6 +77,8 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
 
     private int fermentTime;
     private int fermentTimeTotal;
+    private long fermentFluid = -1L;
+    private final int[] fermentCounts = new int[CONTAINER_SLOT];
     private Component customName;
 
     private boolean deferFluidExtraction = false;
@@ -108,6 +111,10 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         fluidTank.readFromNbt(compound.getCompound("FluidTank"), provider);
         fermentTime = compound.getInt("FermentTime");
         fermentTimeTotal = compound.getInt("FermentTimeTotal");
+        fermentFluid = compound.contains("FermentFluid", Tag.TAG_LONG) ? compound.getLong("FermentFluid") : -1L;
+        int[] storedCounts = compound.getIntArray("FermentCounts");
+        for (int i = 0; i < CONTAINER_SLOT; ++i)
+            fermentCounts[i] = i < storedCounts.length ? storedCounts[i] : 0;
         if (compound.contains("CustomName", 8)) {
             customName = Component.Serializer.fromJson(compound.getString("CustomName"), provider);
         }
@@ -159,6 +166,8 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         compound.put("FluidTank", fluidTank.writeToNbt(provider));
         compound.putInt("FermentTime", fermentTime);
         compound.putInt("FermentTimeTotal", fermentTimeTotal);
+        compound.putLong("FermentFluid", fermentFluid);
+        compound.putIntArray("FermentCounts", fermentCounts.clone());
         if (customName != null) {
             compound.putString("CustomName", Component.Serializer.toJson(customName, provider));
         }
@@ -217,7 +226,11 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         }
         if (!recipe.getFluidIngredient().get().ingredient().matches(keg.fluidTank.getAbstractedFluid()))
             return false; // make sure the fluid is the same
-        return keg.fluidTank.getAbstractedFluid().amount() % recipe.getFluidIngredient().get().amount() == 0; // make sure the fluid amount is a multiple of the recipe amount
+        AbstractedFluidStack tankFluid = keg.fluidTank.getAbstractedFluid();
+        if (FluidUnit.convertToLoader(tankFluid.amount(), tankFluid.unit()) % recipe.getLoaderFluidAmount() != 0)
+            return false; // make sure the fluid amount is a multiple of the recipe amount
+        int batches = getFluidBatches(recipe, keg);
+        return hasIngredientsForBatches(keg, batches) && resultFitsInKeg(recipe, keg, batches);
     }
 
     public static void fermentingTick(Level level, BlockPos pos, BlockState state, KegBlockEntity keg) {
@@ -233,6 +246,9 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
                 keg.inventory.insertItem(OUTPUT_SLOT, out.getFirst(), false);
         }
 
+
+        if (keg.fermentingWasDisturbed())
+            keg.clearFermenting();
 
         if (keg.hasInput()) {
             Optional<RecipeHolder<KegFermentingRecipe>> recipe = keg.getMatchingRecipe(keg.recipeWrapper);
@@ -266,7 +282,8 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         } else {
             if (!recipe.get().value().getFluidIngredient().get().ingredient().matches(fluidTank.getAbstractedFluid()))
                 return Optional.empty(); // make sure the fluid is the same
-            if (fluidTank.getAbstractedFluid().amount() % recipe.get().value().getFluidIngredient().get().amount() != 0) // make sure the fluid amount is a multiple of the recipe amount
+            AbstractedFluidStack tankFluid = fluidTank.getAbstractedFluid();
+            if (FluidUnit.convertToLoader(tankFluid.amount(), tankFluid.unit()) % recipe.get().value().getLoaderFluidAmount() != 0) // make sure the fluid amount is a multiple of the recipe amount
                 return Optional.empty();
         }
         return recipe;
@@ -306,6 +323,64 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         return false;
     }
 
+    private static int getFluidBatches(KegFermentingRecipe recipe, KegBlockEntity keg) {
+        if (recipe.getResult().left().isEmpty())
+            return 1;
+        return (int) Math.max(1L, recipe.getBatchCount(keg.fluidTank.getAbstractedFluid()));
+    }
+
+    private static boolean hasIngredientsForBatches(KegBlockEntity keg, int batches) {
+        for (int i = 0; i < CONTAINER_SLOT; ++i) {
+            ItemStack slotStack = keg.inventory.getStackInSlot(i);
+            if (!slotStack.isEmpty() && slotStack.getCount() < batches)
+                return false;
+        }
+        return true;
+    }
+
+    private static boolean resultFitsInKeg(KegFermentingRecipe recipe, KegBlockEntity keg, int batches) {
+        if (recipe.getResult().left().isEmpty())
+            return true;
+        AbstractedFluidStack result = recipe.getResult().left().get();
+        return FluidUnit.convertToLoader(result.amount() * batches, result.unit()) <= keg.fluidTank.getFluidCapacity();
+    }
+
+    private static AbstractedFluidStack scaleToBatches(KegFermentingRecipe recipe, int batches) {
+        AbstractedFluidStack result = recipe.getResult().left().get();
+        if (batches <= 1)
+            return result;
+        return new AbstractedFluidStack(result.fluid(), result.amount() * batches, result.components(), result.unit());
+    }
+
+    private long currentFluidAmount() {
+        AbstractedFluidStack tankFluid = this.fluidTank.getAbstractedFluid();
+        return tankFluid.isEmpty() ? 0L : FluidUnit.convertToLoader(tankFluid.amount(), tankFluid.unit());
+    }
+
+    private void snapshotFermenting() {
+        this.fermentFluid = currentFluidAmount();
+        for (int i = 0; i < CONTAINER_SLOT; ++i)
+            this.fermentCounts[i] = this.inventory.getStackInSlot(i).getCount();
+    }
+
+    private void clearFermenting() {
+        this.fermentTime = 0;
+        this.fermentFluid = -1L;
+        Arrays.fill(this.fermentCounts, 0);
+    }
+
+    private boolean fermentingWasDisturbed() {
+        if (this.fermentFluid < 0L)
+            return false;
+        if (currentFluidAmount() != this.fermentFluid)
+            return true;
+        for (int i = 0; i < CONTAINER_SLOT; ++i) {
+            if (this.inventory.getStackInSlot(i).getCount() < this.fermentCounts[i])
+                return true;
+        }
+        return false;
+    }
+
     private boolean processFermenting(KegFermentingRecipe recipe, KegBlockEntity keg) {
         if (level == null) return false;
 
@@ -314,18 +389,22 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
             return false;
         }
 
+        int batches = getFluidBatches(recipe, keg);
+        if (fermentTime == 0)
+            snapshotFermenting();
+
         ++fermentTime;
-        fermentTimeTotal = recipe.getFermentTime();
+        fermentTimeTotal = recipe.getFermentTime() * batches;
         if (fermentTime < fermentTimeTotal) {
             setChanged();
             return false;
         }
 
 
-        fermentTime = 0;
+        clearFermenting();
         if (recipe.getResult().left().isPresent()) {
             deferFluidExtraction = true;
-            keg.fluidTank.setAbstractedFluid(recipe.getResult().left().get());
+            keg.fluidTank.setAbstractedFluid(scaleToBatches(recipe, batches));
             if (!keg.level.isClientSide()) {
                 Vec3 center = keg.getBlockPos().getCenter();
                 keg.level.playSound(null, center.x(), center.y(), center.z(), SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 0.6f, 0.8f);
@@ -341,9 +420,12 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
 
         for (int i = 0; i < CONTAINER_SLOT; ++i) {
             ItemStack slotStack = inventory.getStackInSlot(i);
-            if (!BrewinAndChewin.getHelper().getCraftingRemainingItem(slotStack).isEmpty())
-                ejectIngredientRemainder(BrewinAndChewin.getHelper().getCraftingRemainingItem(slotStack));
-            inventory.extractItem(i, 1, false);
+            ItemStack remainder = BrewinAndChewin.getHelper().getCraftingRemainingItem(slotStack);
+            if (!remainder.isEmpty()) {
+                for (int j = 0; j < batches; ++j)
+                    ejectIngredientRemainder(remainder.copy());
+            }
+            inventory.extractItem(i, batches, false);
         }
         return true;
     }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "brewinandchewin:item/slice_of_pumpkin_roll"
+  }
+}

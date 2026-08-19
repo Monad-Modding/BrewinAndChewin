@@ -8,9 +8,10 @@
     "unit": "millibuckets"
   },
   "experience": 1.0,
+  "fermenting_time": 18000,
   "ingredients": [
     {
-      "item": "minecraft:wheat"
+      "tag": "c:foods/dough/wheat"
     },
     {
       "item": "minecraft:wheat_seeds"

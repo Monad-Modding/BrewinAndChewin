@@ -137,6 +137,18 @@ public class BrewinAndChewinFabric implements ModInitializer {
         ComposterBlock.COMPOSTABLES.put(BnCItems.WHITE_GRAPES, 0.65F);
         ComposterBlock.COMPOSTABLES.put(BnCItems.RED_GRAPE_SEEDS, 0.3F);
         ComposterBlock.COMPOSTABLES.put(BnCItems.WHITE_GRAPE_SEEDS, 0.3F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.CHOCOLATE_CAKE, 1.0F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.PUMPKIN_ROLL, 1.0F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.GLOW_BERRY_MERINGUE_PIE, 1.0F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.SLICE_OF_CHOCOLATE_CAKE, 0.85F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.SLICE_OF_GLOW_BERRY_MERINGUE_PIE, 0.85F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.SLICE_OF_PUMPKIN_ROLL, 0.85F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.CORN_BREAD, 0.85F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.CORN_MUFFIN, 0.85F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.TORTILLA, 0.85F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.CORN, 0.65F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.CORNMEAL, 0.65F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.CORN_KERNELS, 0.3F);
     }
 
     private static void registerFluidAttributeHandlers() {

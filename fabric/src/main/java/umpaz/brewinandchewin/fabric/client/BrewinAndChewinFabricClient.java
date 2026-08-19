@@ -63,7 +63,7 @@ public class BrewinAndChewinFabricClient implements ClientModInitializer {
         BnCClientSetup.registerBlockEntityRenderers(BlockEntityRenderers::register);
         BnCClientSetup.registerItemProperties();
         BnCClientSetup.registerRenderTypes(BlockRenderLayerMap.INSTANCE::putBlock);
-        ItemTooltipCallback.EVENT.register((stack, context, type, lines) -> BnCClientSetup.appendLabelTooltip(stack, lines));
+        ItemTooltipCallback.EVENT.register((stack, context, type, lines) -> BnCClientSetup.appendLabelTooltip(stack, lines, context.tickRate()));
         BnCClientSetup.registerParticles((particleType, spriteParticleRegistration) -> ParticleFactoryRegistry.getInstance().register(particleType, provider -> spriteParticleRegistration.create(provider)));
         TooltipComponentCallback.EVENT.register(data -> {
             if (KegTooltip.KegTooltipComponent.class.isAssignableFrom(data.getClass())) {

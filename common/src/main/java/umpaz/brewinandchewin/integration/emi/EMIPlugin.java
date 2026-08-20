@@ -63,7 +63,8 @@ public class EMIPlugin implements EmiPlugin {
     private EmiIngredient getFluidIngredient(RecipeHolder<KegFermentingRecipe> recipe) {
         if (recipe.value().getFluidIngredient().isEmpty())
             return null;
-        return EmiIngredient.of(recipe.value().getFluidIngredient().orElseThrow().ingredient().displayStacks().stream().map(stack -> EmiStack.of(stack.fluid(), stack.components() instanceof PatchedDataComponentMap patched ? patched.asPatch() : DataComponentPatch.EMPTY, stack.unit().convertToLoader(stack.amount()))).toList());
+        long amount = recipe.value().getFluidIngredient().orElseThrow().loaderAmount();
+        return EmiIngredient.of(recipe.value().getFluidIngredient().orElseThrow().ingredient().displayStacks().stream().map(stack -> EmiStack.of(stack.fluid(), stack.components() instanceof PatchedDataComponentMap patched ? patched.asPatch() : DataComponentPatch.EMPTY, amount)).toList());
     }
 
     private EmiIngredient getFluidItemIngredients(RecipeManager recipes, RecipeHolder<KegFermentingRecipe> recipe) {

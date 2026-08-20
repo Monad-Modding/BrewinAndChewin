@@ -40,7 +40,7 @@ public class NMLRecipes {
                 .requires(ModItems.COOKED_RICE.get())
                 .requires(BnCItems.SWEET_BERRY_JAM)
                 .requires(walnuts)
-                .requires(Items.MILK_BUCKET)
+                .requires(Tags.Items.DRINKS_MILK)
                 .unlockedBy("has_walnuts", InventoryChangeTrigger.TriggerInstance.hasItems(walnuts))
                 .save(conditional, BrewinAndChewin.asResource("rice_pudding"));
 

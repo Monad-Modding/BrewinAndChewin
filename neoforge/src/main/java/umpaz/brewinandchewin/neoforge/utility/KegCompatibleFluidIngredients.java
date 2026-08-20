@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class KegCompatibleFluidIngredients {
+    public static final int DISPLAY_AMOUNT = 1000;
     public static final Codec<AbstractedFluidIngredient> CODEC = Codec.either(Codec.either(Exact.CODEC, Tag.CODEC), NeoForgeIngredient.CODEC)
             .xmap(either -> either.map(Either::unwrap, neoForgeIngredient -> neoForgeIngredient), wrapper -> {
                 if (wrapper instanceof Exact exact)
@@ -61,7 +62,7 @@ public class KegCompatibleFluidIngredients {
         }
 
         public Exact(Fluid fluid, PatchedDataComponentMap components) {
-            displayStack = new AbstractedFluidStack(fluid, 1000, components, FluidUnit.MILLIBUCKET, new FluidStack(fluid.builtInRegistryHolder(), 1000, components.asPatch()));
+            displayStack = new AbstractedFluidStack(fluid, DISPLAY_AMOUNT, components, FluidUnit.MILLIBUCKET, new FluidStack(fluid.builtInRegistryHolder(), DISPLAY_AMOUNT, components.asPatch()));
         }
 
         public Exact(Fluid fluid, DataComponentPatch patch) {
@@ -121,7 +122,7 @@ public class KegCompatibleFluidIngredients {
         public List<AbstractedFluidStack> displayStacks() {
             if (fluidTag.size() > 0 && fluidStacks.isEmpty()) {
                 for (Holder<Fluid> fluidHolder :  fluidTag) {
-                    fluidStacks.add(new AbstractedFluidStack(fluidHolder.value(), 1000, components, FluidUnit.MILLIBUCKET, new FluidStack(fluidHolder, 1000, components.asPatch())));
+                    fluidStacks.add(new AbstractedFluidStack(fluidHolder.value(), DISPLAY_AMOUNT, components, FluidUnit.MILLIBUCKET, new FluidStack(fluidHolder, DISPLAY_AMOUNT, components.asPatch())));
                 }
             }
             return fluidStacks;
@@ -144,7 +145,7 @@ public class KegCompatibleFluidIngredients {
 
         public NeoForgeIngredient(FluidIngredient ingredient) {
             this.ingredient = ingredient;
-            displayStacks = Arrays.stream(ingredient.getStacks()).map(fluidStack -> new AbstractedFluidStack(fluidStack.getFluid(), 1000, fluidStack.getComponents(), FluidUnit.MILLIBUCKET, fluidStack)).toList();
+            displayStacks = Arrays.stream(ingredient.getStacks()).map(fluidStack -> new AbstractedFluidStack(fluidStack.getFluid(), DISPLAY_AMOUNT, fluidStack.getComponents(), FluidUnit.MILLIBUCKET, fluidStack)).toList();
         }
 
         @Override

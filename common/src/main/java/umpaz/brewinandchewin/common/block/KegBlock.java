@@ -45,7 +45,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
-    private static final float FERMENTING_PARTICLE_CHANCE = 0.25F;
+    private static final float FERMENTING_PARTICLE_CHANCE = 0.35F;
+    private static final float FERMENTING_SOUND_CHANCE = 0.02F;
     public static final MapCodec<KegBlock> CODEC = simpleCodec(KegBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty VERTICAL = BooleanProperty.create("vertical");
@@ -102,12 +103,19 @@ public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (!(level.getBlockEntity(pos) instanceof KegBlockEntity keg) || !keg.isFermenting())
             return;
-        if (random.nextFloat() > FERMENTING_PARTICLE_CHANCE)
-            return;
-        double x = pos.getX() + 0.25D + random.nextDouble() * 0.5D;
-        double y = pos.getY() + 0.9D;
-        double z = pos.getZ() + 0.25D + random.nextDouble() * 0.5D;
-        level.addParticle(ParticleTypes.BUBBLE_POP, x, y, z, 0.0D, 0.03D, 0.0D);
+
+        if (random.nextFloat() < FERMENTING_PARTICLE_CHANCE) {
+            double x = pos.getX() + 0.25D + random.nextDouble() * 0.5D;
+            double y = pos.getY() + (state.getValue(VERTICAL) ? 1.0D : 0.9D);
+            double z = pos.getZ() + 0.25D + random.nextDouble() * 0.5D;
+            level.addParticle(ParticleTypes.BUBBLE_POP, x, y, z, 0.0D, 0.02D, 0.0D);
+            level.addParticle(ParticleTypes.SPLASH, x, y, z, 0.0D, 0.0D, 0.0D);
+        }
+
+        if (random.nextFloat() < FERMENTING_SOUND_CHANCE)
+            level.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D,
+                    SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS,
+                    0.4F, 0.7F + random.nextFloat() * 0.2F, false);
     }
 
     @Override

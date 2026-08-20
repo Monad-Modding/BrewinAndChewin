@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_popped_corn": {
+      "conditions": {
+        "items": [
+          {
+            "items": "brewinandchewin:corn_kernels"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "brewinandchewin:popped_corn_from_smelting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_popped_corn"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "brewinandchewin:popped_corn_from_smelting"
+    ]
+  }
+}

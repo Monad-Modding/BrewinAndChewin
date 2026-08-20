@@ -34,6 +34,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.common.block.entity.BottleRackBlockEntity;
 import umpaz.brewinandchewin.common.registry.BnCItems;
+import umpaz.brewinandchewin.common.item.WineItem;
 import umpaz.brewinandchewin.common.tag.BnCTags;
 
 import java.util.Optional;
@@ -98,7 +99,7 @@ public class BottleRackBlock extends BaseEntityBlock implements SimpleWaterlogge
             return ItemInteractionResult.sidedSuccess(level.isClientSide());
         }
 
-        if (!stack.is(BnCTags.Items.WINES))
+        if (!(stack.getItem() instanceof WineItem))
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
         OptionalInt slot = getHitSlot(hitResult, state);

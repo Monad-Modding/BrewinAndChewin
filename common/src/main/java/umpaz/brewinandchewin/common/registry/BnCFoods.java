@@ -136,8 +136,76 @@ public class BnCFoods {
     public static final FoodProperties HAM_AND_CHEESE_SANDWICH = (new FoodProperties.Builder())
             .nutrition(9).saturationModifier(1.0F).build();
 
+    public static final FoodProperties CHOCOLATE_CAKE_SLICE = (new FoodProperties.Builder())
+            .nutrition(2).saturationModifier(0.2F).fast()
+            .effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 400, 0), 1.0F).build();
+    public static final FoodProperties GLOW_BERRY_MERINGUE_PIE_SLICE = (new FoodProperties.Builder())
+            .nutrition(3).saturationModifier(0.2F).fast()
+            .effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 600, 0), 1.0F).build();
+    public static final FoodProperties PUMPKIN_ROLL_SLICE = (new FoodProperties.Builder())
+            .nutrition(3).saturationModifier(1.0F).fast()
+            .effect(new MobEffectInstance(MobEffects.REGENERATION, 160, 0), 1.0F).build();
+    public static final FoodProperties ASPIC_CUBE = (new FoodProperties.Builder())
+            .nutrition(6).saturationModifier(0.6F).build();
+    public static final FoodProperties RICE_PUDDING = (new FoodProperties.Builder())
+            .nutrition(12).saturationModifier(1.6F)
+            .effect(new MobEffectInstance(ModEffects.NOURISHMENT, 3600, 0), 1.0F).build();
+    public static final FoodProperties GLOW_BROWNIE = (new FoodProperties.Builder())
+            .nutrition(6).saturationModifier(1.2F).fast()
+            .effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 800, 0), 1.0F).build();
+    public static final FoodProperties APPLE_TURNOVER = (new FoodProperties.Builder())
+            .nutrition(5).saturationModifier(0.6F).fast()
+            .effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 400, 0), 1.0F).build();
+    public static final FoodProperties JAM_SANDWICH = (new FoodProperties.Builder())
+            .nutrition(8).saturationModifier(1.2F).build();
+    public static final FoodProperties RAW_CROISSANT = (new FoodProperties.Builder())
+            .nutrition(2).saturationModifier(0.6F)
+            .effect(new MobEffectInstance(MobEffects.HUNGER, 600, 0), 0.5F).build();
+    public static final FoodProperties CROISSANT = (new FoodProperties.Builder())
+            .nutrition(5).saturationModifier(1.2F).build();
+    public static final FoodProperties RAW_SAUSAGE = (new FoodProperties.Builder())
+            .nutrition(3).saturationModifier(0.6F).build();
+    public static final FoodProperties COOKED_SAUSAGE = (new FoodProperties.Builder())
+            .nutrition(8).saturationModifier(1.6F).build();
+    public static final FoodProperties HAGGIS = (new FoodProperties.Builder())
+            .nutrition(8).saturationModifier(1.6F).build();
+    public static final FoodProperties CHOPPED_LIVER = (new FoodProperties.Builder())
+            .nutrition(14).saturationModifier(1.6F)
+            .effect(new MobEffectInstance(ModEffects.NOURISHMENT, 6000, 0), 1.0F).build();
+    public static final FoodProperties MAPLE_FUDGE = (new FoodProperties.Builder())
+            .nutrition(7).saturationModifier(0.8F)
+            .effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 800, 0), 1.0F).build();
+    public static final FoodProperties INNARDS = (new FoodProperties.Builder())
+            .nutrition(2).saturationModifier(0.2F)
+            .effect(new MobEffectInstance(MobEffects.HUNGER, 600, 0), 1.0F).build();
+    public static final FoodProperties RENNET = (new FoodProperties.Builder())
+            .nutrition(1).saturationModifier(0.2F).build();
+    public static final FoodProperties CORN = (new FoodProperties.Builder())
+            .nutrition(1).saturationModifier(0.6F).build();
+    public static final FoodProperties COOKED_CORN = (new FoodProperties.Builder())
+            .nutrition(5).saturationModifier(0.6F).build();
+    public static final FoodProperties POPPED_CORN = (new FoodProperties.Builder())
+            .nutrition(2).saturationModifier(1.2F).fast().build();
+    public static final FoodProperties CANDIED_CORN = (new FoodProperties.Builder())
+            .nutrition(1).saturationModifier(0.2F).fast().build();
+    public static final FoodProperties BUTTERSCOTCH_CANDY = (new FoodProperties.Builder())
+            .nutrition(1).saturationModifier(0.2F).fast().build();
+    public static final FoodProperties CORN_DOUGH = (new FoodProperties.Builder())
+            .nutrition(2).saturationModifier(0.6F)
+            .effect(new MobEffectInstance(MobEffects.HUNGER, 600, 0), 0.5F).build();
+    public static final FoodProperties RAW_MUFFIN = (new FoodProperties.Builder())
+            .nutrition(2).saturationModifier(0.6F)
+            .effect(new MobEffectInstance(MobEffects.HUNGER, 600, 0), 0.5F).build();
+    public static final FoodProperties CORN_BREAD = (new FoodProperties.Builder())
+            .nutrition(6).saturationModifier(1.0F).build();
+    public static final FoodProperties CORN_MUFFIN = (new FoodProperties.Builder())
+            .nutrition(6).saturationModifier(1.0F).build();
+    public static final FoodProperties TORTILLA = (new FoodProperties.Builder())
+            .nutrition(4).saturationModifier(1.0F).build();
+    public static final FoodProperties GRITS = (new FoodProperties.Builder())
+            .nutrition(4).saturationModifier(1.0F).build();
     public static final FoodProperties KIMCHI = (new FoodProperties.Builder())
-            .nutrition(2).saturationModifier(0.6F).build();
+            .nutrition(4).saturationModifier(0.6F).build();
     public static final FoodProperties JERKY = (new FoodProperties.Builder())
             .nutrition(3).saturationModifier(0.7F).fast().build();
     public static final FoodProperties PICKLED_PICKLES = (new FoodProperties.Builder())

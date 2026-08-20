@@ -2,6 +2,7 @@
   "type": "brewinandchewin:fermenting",
   "category": "meals",
   "experience": 1.0,
+  "fermenting_time": 18000,
   "ingredients": [
     {
       "tag": "c:foods/safe_raw_fish"

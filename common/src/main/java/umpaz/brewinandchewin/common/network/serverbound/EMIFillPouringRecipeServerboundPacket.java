@@ -74,10 +74,24 @@ public record EMIFillPouringRecipeServerboundPacket(int syncId, int action, List
                     } else {
                         Slot s = menu.getSlot(KegBlockEntity.OUTPUT_SLOT);
                         for (ItemStack item : kegMenu.blockEntity.extractInGui(stack, gotten)) {
-                            if ((s.getItem().isEmpty() || ItemStack.isSameItemSameComponents(item, s.getItem())) && s.getItem().getCount() < item.getMaxStackSize() && s.getItem().getCount() + item.getCount() < s.getMaxStackSize())
+                            ItemStack existing = s.getItem();
+                            if (existing.isEmpty()) {
+                                int limit = s.getMaxStackSize(item);
+                                if (item.getCount() > limit)
+                                    sender.getInventory().placeItemBackInInventory(item.split(item.getCount() - limit));
                                 s.set(item);
-                            else
+                            } else if (ItemStack.isSameItemSameComponents(existing, item)) {
+                                int moved = Math.min(s.getMaxStackSize(existing) - existing.getCount(), item.getCount());
+                                if (moved > 0) {
+                                    existing.grow(moved);
+                                    item.shrink(moved);
+                                    s.setChanged();
+                                }
+                                if (!item.isEmpty())
+                                    sender.getInventory().placeItemBackInInventory(item);
+                            } else {
                                 sender.getInventory().placeItemBackInInventory(item);
+                            }
                         }
                     }
                     if (action == 1) {

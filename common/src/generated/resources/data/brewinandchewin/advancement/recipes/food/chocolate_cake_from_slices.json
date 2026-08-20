@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_slice": {
+      "conditions": {
+        "items": [
+          {
+            "items": "brewinandchewin:slice_of_chocolate_cake"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "brewinandchewin:chocolate_cake_from_slices"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_slice"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "brewinandchewin:chocolate_cake_from_slices"
+    ]
+  }
+}

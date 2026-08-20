@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "farmersdelight:wheat_dough"
+    },
+    {
+      "item": "brewinandchewin:cocoa_fudge"
+    },
+    {
+      "item": "brewinandchewin:glow_berry_marmalade"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "brewinandchewin:glow_brownie"
+  }
+}

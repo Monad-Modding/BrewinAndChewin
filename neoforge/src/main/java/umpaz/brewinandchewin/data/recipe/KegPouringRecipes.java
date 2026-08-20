@@ -43,6 +43,7 @@ public class KegPouringRecipes {
                 .setFluidUnit(FluidUnit.MILLIBUCKET)
                 .build(consumer);
         KegPouringRecipeBuilder.kegPouringRecipe(BnCFluids.VODKA, 250, BnCItems.VODKA)
+                .withContainer(Items.GLASS_BOTTLE)
                 .setFluidUnit(FluidUnit.MILLIBUCKET)
                 .build(consumer);
         KegPouringRecipeBuilder.kegPouringRecipe(BnCFluids.MEAD, 250, BnCItems.MEAD)

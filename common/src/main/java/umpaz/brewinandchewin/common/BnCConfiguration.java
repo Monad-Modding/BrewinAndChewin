@@ -33,6 +33,16 @@ public class BnCConfiguration {
                     TomlLang.INSTANCE)
             .build();
 
+    public static Common common() {
+        Common config = COMMON_CONFIG.get();
+        return config != null ? config : Common.DEFAULT;
+    }
+
+    public static Client client() {
+        Client config = CLIENT_CONFIG.get();
+        return config != null ? config : Client.DEFAULT;
+    }
+
     public static void init() {}
 
     public record Common(Root root, Keg keg, RecipeBook recipeBook) {
@@ -89,7 +99,7 @@ public class BnCConfiguration {
                           boolean biomeTemp, boolean dimTemp) {
             public static final Keg DEFAULT = new Keg(
                     platformSpecificValue(FluidUnit.MILLIBUCKET, FluidUnit.DROPLET),
-                    platformSpecificValue(1000L, 81000L),
+                    platformSpecificValue(4000L, 324000L),
                     2, 1, 1, 2,
                     true, true
             );
@@ -274,7 +284,7 @@ public class BnCConfiguration {
                         DEFAULT.renderFluidInKeg(),
                         "Should kegs render the fluid texture in the background of the fluid slot?",
                         "Default: " + DEFAULT.renderFluidInKeg()
-                ).forGetter(Client::scrambleSign)
+                ).forGetter(Client::renderFluidInKeg)
         ).apply(inst, Client::new)));
 
         public enum DisplaySettings implements StringRepresentable {

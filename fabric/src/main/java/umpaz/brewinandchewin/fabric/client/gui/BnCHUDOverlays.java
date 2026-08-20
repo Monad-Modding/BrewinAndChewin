@@ -79,7 +79,7 @@ public class BnCHUDOverlays {
 
         @Override
         public void render(GuiGraphics gui, DeltaTracker deltaTracker) {
-            if (!BnCConfiguration.CLIENT_CONFIG.get().intoxicationFoodOverlay())
+            if (!BnCConfiguration.client().intoxicationFoodOverlay())
                 return;
 
             Minecraft minecraft = Minecraft.getInstance();

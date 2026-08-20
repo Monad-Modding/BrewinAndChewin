@@ -10,7 +10,55 @@
       "chance": 0.85
     },
     "brewinandchewin:quiche": {
+      "chance": 1.0
+    },
+    "brewinandchewin:red_grapes": {
+      "chance": 0.65
+    },
+    "brewinandchewin:white_grapes": {
+      "chance": 0.65
+    },
+    "brewinandchewin:red_grape_seeds": {
+      "chance": 0.3
+    },
+    "brewinandchewin:white_grape_seeds": {
+      "chance": 0.3
+    },
+    "brewinandchewin:chocolate_cake": {
+      "chance": 1.0
+    },
+    "brewinandchewin:pumpkin_roll": {
+      "chance": 1.0
+    },
+    "brewinandchewin:glow_berry_meringue_pie": {
+      "chance": 1.0
+    },
+    "brewinandchewin:slice_of_chocolate_cake": {
       "chance": 0.85
+    },
+    "brewinandchewin:slice_of_glow_berry_meringue_pie": {
+      "chance": 0.85
+    },
+    "brewinandchewin:slice_of_pumpkin_roll": {
+      "chance": 0.85
+    },
+    "brewinandchewin:corn_bread": {
+      "chance": 0.85
+    },
+    "brewinandchewin:corn_muffin": {
+      "chance": 0.85
+    },
+    "brewinandchewin:tortilla": {
+      "chance": 0.85
+    },
+    "brewinandchewin:corn": {
+      "chance": 0.65
+    },
+    "brewinandchewin:cornmeal": {
+      "chance": 0.65
+    },
+    "brewinandchewin:corn_kernels": {
+      "chance": 0.3
     }
   }
 }

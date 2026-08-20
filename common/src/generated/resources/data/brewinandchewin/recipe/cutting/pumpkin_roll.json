@@ -1,0 +1,19 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "brewinandchewin:pumpkin_roll"
+    }
+  ],
+  "result": [
+    {
+      "item": {
+        "count": 6,
+        "id": "brewinandchewin:slice_of_pumpkin_roll"
+      }
+    }
+  ],
+  "tool": {
+    "tag": "c:tools/knife"
+  }
+}

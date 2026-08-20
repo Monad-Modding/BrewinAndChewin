@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "s": {
+      "item": "brewinandchewin:slice_of_chocolate_cake"
+    }
+  },
+  "pattern": [
+    "sss",
+    "sss"
+  ],
+  "result": {
+    "count": 1,
+    "id": "brewinandchewin:chocolate_cake"
+  }
+}

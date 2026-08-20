@@ -28,6 +28,7 @@ public class BottleRackBlockEntityRenderer implements BlockEntityRenderer<Bottle
     private static final float FIRST_COLUMN = 12.0F / 16.0F;
     private static final float FIRST_ROW = 12.0F / 16.0F;
     private static final float SLOT_SPACING = 5.0F / 16.0F;
+    private static final float LABEL_DROP = 2.0F / 16.0F;
 
     private static final Map<Direction, Float> ROTATIONS = new EnumMap<>(Map.of(
             Direction.NORTH, 0.0F,
@@ -76,7 +77,10 @@ public class BottleRackBlockEntityRenderer implements BlockEntityRenderer<Bottle
             poseStack.translate(x, y, depth);
             this.tesselate(blockEntity, state, poseStack, buffer, packedOverlay, bottleModel(wine, finelyAged));
             if (BnCLabelUtils.getLabel(stack).isPresent()) {
+                poseStack.pushPose();
+                poseStack.translate(0.0F, -LABEL_DROP, 0.0F);
                 this.tesselate(blockEntity, state, poseStack, buffer, packedOverlay, labelModel(slot));
+                poseStack.popPose();
             }
             poseStack.popPose();
         }

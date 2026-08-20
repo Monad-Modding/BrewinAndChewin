@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_corn_muffin": {
+      "conditions": {
+        "items": [
+          {
+            "items": "brewinandchewin:raw_muffin"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "brewinandchewin:corn_muffin_from_smelting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_corn_muffin"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "brewinandchewin:corn_muffin_from_smelting"
+    ]
+  }
+}

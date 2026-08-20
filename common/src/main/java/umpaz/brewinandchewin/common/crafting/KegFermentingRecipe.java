@@ -87,6 +87,20 @@ public class KegFermentingRecipe implements Recipe<KegRecipeWrapper> {
         return result;
     }
 
+    public long getLoaderFluidAmount() {
+        if (this.fluidIngredient.isEmpty())
+            return 0L;
+        FluidIngredientWithAmount ingredient = this.fluidIngredient.get();
+        return FluidUnit.convertToLoader(ingredient.amount(), ingredient.unit().orElse(getUnit()));
+    }
+
+    public long getBatchCount(AbstractedFluidStack tankFluid) {
+        long required = getLoaderFluidAmount();
+        if (required <= 0L)
+            return 1L;
+        return Math.max(1L, FluidUnit.convertToLoader(tankFluid.amount(), tankFluid.unit()) / required);
+    }
+
     @Override
     public ItemStack assemble(KegRecipeWrapper inv, HolderLookup.Provider access) {
         return ItemStack.EMPTY;
@@ -117,7 +131,7 @@ public class KegFermentingRecipe implements Recipe<KegRecipeWrapper> {
         }
         CraftingInput input = CraftingInput.of(2, 2, inputs);
         return input.size() == 1 && inputItems.size() == 1 ? inputItems.getFirst().test(input.getItem(0)) : input.stackedContents().canCraft(this, null) &&
-                (fluidIngredient.isEmpty() && inv.getFluid().isEmpty() || fluidIngredient.isPresent() && !inv.getFluid().isEmpty() && fluidIngredient.get().ingredient().matches(inv.getFluid()) && inv.getFluid().amount() % fluidIngredient.get().amount() == 0);
+                (fluidIngredient.isEmpty() && inv.getFluid().isEmpty() || fluidIngredient.isPresent() && !inv.getFluid().isEmpty() && fluidIngredient.get().ingredient().matches(inv.getFluid()) && FluidUnit.convertToLoader(inv.getFluid().amount(), inv.getFluid().unit()) % getLoaderFluidAmount() == 0);
     }
 
     @Override
@@ -130,7 +144,7 @@ public class KegFermentingRecipe implements Recipe<KegRecipeWrapper> {
         if (result.right().isPresent())
             return result.right().get().copy();
         if (result.left().isPresent())
-            return BnCRecipeUtils.getPouredItemFromFluid(new AbstractedFluidStack(result.left().get().fluid(), BnCConfiguration.COMMON_CONFIG.get().keg().localizedCapacity(), result.left().get().components(), BnCConfiguration.COMMON_CONFIG.get().keg().capacityUnit(), null));
+            return BnCRecipeUtils.getPouredItemFromFluid(new AbstractedFluidStack(result.left().get().fluid(), BnCConfiguration.common().keg().localizedCapacity(), result.left().get().components(), BnCConfiguration.common().keg().capacityUnit(), null));
         return ItemStack.EMPTY;
     }
 

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "h": {
+      "item": "minecraft:honeycomb"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "p": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "ipi",
+    "php",
+    "ipi"
+  ],
+  "result": {
+    "count": 1,
+    "id": "brewinandchewin:aging_cask"
+  }
+}

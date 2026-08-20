@@ -1,0 +1,10 @@
+{
+  "parent": "farmersdelight:block/template_pie_slice3",
+  "textures": {
+    "particle": "brewinandchewin:block/glow_berry_meringue_pie_top",
+    "bottom": "farmersdelight:block/pie_bottom",
+    "side": "farmersdelight:block/pie_side",
+    "top": "brewinandchewin:block/glow_berry_meringue_pie_top",
+    "inner": "brewinandchewin:block/glow_berry_meringue_pie_inner"
+  }
+}

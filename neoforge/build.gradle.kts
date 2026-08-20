@@ -79,6 +79,8 @@ dependencies {
 
     implementation("maven.modrinth:farmers-delight:${Versions.FARMERS_DELIGHT}")
 
+    runtimeOnly("maven.modrinth:no-mans-land:${Versions.NO_MANS_LAND}")
+
     compileOnly("mezz.jei:jei-${Versions.MINECRAFT}-neoforge-api:${Versions.JEI}")
     runtimeOnly("mezz.jei:jei-${Versions.MINECRAFT}-neoforge:${Versions.JEI}")
     compileOnly("dev.emi:emi-neoforge:${Versions.EMI}:api")

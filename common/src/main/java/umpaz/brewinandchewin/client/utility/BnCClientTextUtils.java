@@ -34,7 +34,7 @@ public class BnCClientTextUtils {
             int amplifier = tipsyMessageLevel;
             if (Minecraft.getInstance().player.hasEffect(BnCEffects.TIPSY) && amplifier < Minecraft.getInstance().player.getEffect(BnCEffects.TIPSY).getAmplifier())
                 amplifier = Minecraft.getInstance().player.getEffect(BnCEffects.TIPSY).getAmplifier();
-            amplifier = amplifier - BnCConfiguration.COMMON_CONFIG.get().root().levelChatScramble();
+            amplifier = amplifier - BnCConfiguration.common().root().levelChatScramble();
             RandomSource random = RandomSource.create(randomSeed);
             int amnt = (int) ((amplifier + 1) * (textBuilder.length() / 6f)) + random.nextInt(amplifier, amplifier + 2) - 1;
 
@@ -72,8 +72,8 @@ public class BnCClientTextUtils {
     }
 
     public static void setupChatMessage(PlayerChatMessage chatMessage) {
-        if (BnCConfiguration.CLIENT_CONFIG.get().scrambleChat() && (tipsyMessageLevel > 0 ||
-                Minecraft.getInstance().player.hasEffect(BnCEffects.TIPSY) && Minecraft.getInstance().player.getEffect(BnCEffects.TIPSY).getAmplifier() >= BnCConfiguration.COMMON_CONFIG.get().root().levelChatScramble())) {
+        if (BnCConfiguration.client().scrambleChat() && (tipsyMessageLevel > 0 ||
+                Minecraft.getInstance().player.hasEffect(BnCEffects.TIPSY) && Minecraft.getInstance().player.getEffect(BnCEffects.TIPSY).getAmplifier() >= BnCConfiguration.common().root().levelChatScramble())) {
 
             if (!generatedRandom)
                 randomSeed = Minecraft.getInstance().player.getRandom().nextLong();
@@ -126,9 +126,9 @@ public class BnCClientTextUtils {
     }
 
     public static Component nameTagRenderer(Component original) {
-        if (BnCConfiguration.CLIENT_CONFIG.get().scrambleName())
+        if (BnCConfiguration.client().scrambleName())
             if (Minecraft.getInstance().player != null) {
-                if (Minecraft.getInstance().player.hasEffect(BnCEffects.TIPSY) && Minecraft.getInstance().player.getEffect(BnCEffects.TIPSY).getAmplifier() >= BnCConfiguration.COMMON_CONFIG.get().root().levelNameScramble()) {
+                if (Minecraft.getInstance().player.hasEffect(BnCEffects.TIPSY) && Minecraft.getInstance().player.getEffect(BnCEffects.TIPSY).getAmplifier() >= BnCConfiguration.common().root().levelNameScramble()) {
                     return modifyComponents(original, 0L);
                 }
             }
@@ -137,10 +137,10 @@ public class BnCClientTextUtils {
 
     public static SignText signRenderer(SignText signText) {
         Player player = Minecraft.getInstance().player;
-        if (!BnCConfiguration.CLIENT_CONFIG.get().scrambleSign() || player == null) {
+        if (!BnCConfiguration.client().scrambleSign() || player == null) {
             return signText;
         }
-        int minScrambleAmplifier = BnCConfiguration.COMMON_CONFIG.get().root().levelSignScramble();
+        int minScrambleAmplifier = BnCConfiguration.common().root().levelSignScramble();
 
         if (player.hasEffect(BnCEffects.TIPSY) && player.getEffect(BnCEffects.TIPSY).getAmplifier() >= minScrambleAmplifier) {
             for (int i = 0; i < 4; i++) {

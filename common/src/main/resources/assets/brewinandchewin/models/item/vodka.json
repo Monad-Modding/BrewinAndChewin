@@ -1,6 +1,55 @@
 {
-  "parent": "farmersdelight:item/mug",
-    "textures": {
-        "layer0": "brewinandchewin:item/vodka"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "brewinandchewin:item/vodka"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/vodka_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/vodka_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/vodka_label_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:foam": 1
+      },
+      "model": "brewinandchewin:item/wine/vodka_foam"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/vodka_foam_fine"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1
+      },
+      "model": "brewinandchewin:item/wine/vodka_foam_label"
+    },
+    {
+      "predicate": {
+        "brewinandchewin:foam": 1,
+        "brewinandchewin:labelled": 1,
+        "brewinandchewin:finely_aged": 1
+      },
+      "model": "brewinandchewin:item/wine/vodka_foam_label_fine"
     }
+  ]
 }

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_jam": {
+      "conditions": {
+        "items": [
+          {
+            "items": "brewinandchewin:sweet_berry_jam"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "brewinandchewin:jam_sandwich"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_jam"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "brewinandchewin:jam_sandwich"
+    ]
+  }
+}

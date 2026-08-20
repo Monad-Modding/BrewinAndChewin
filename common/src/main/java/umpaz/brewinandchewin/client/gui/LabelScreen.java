@@ -23,6 +23,7 @@ public class LabelScreen extends Screen {
     private EditBox textField;
     private Checkbox showAuthorBox;
     private Checkbox showAuthenticityBox;
+    private Checkbox hideEffectsBox;
 
     public LabelScreen(ItemStack stack, InteractionHand hand) {
         super(BnCTextUtils.getTranslation("container.label"));
@@ -54,8 +55,14 @@ public class LabelScreen extends Screen {
                 .build();
         this.addRenderableWidget(this.showAuthenticityBox);
 
+        this.hideEffectsBox = Checkbox.builder(BnCTextUtils.getTranslation("container.label.hide_effects"), this.font)
+                .pos(centerX - FIELD_WIDTH / 2, top + 76)
+                .selected(this.contents.hideEffects())
+                .build();
+        this.addRenderableWidget(this.hideEffectsBox);
+
         this.addRenderableWidget(Button.builder(Component.translatable("gui.done"), button -> this.onDone())
-                .bounds(centerX - 50, top + 82, 100, 20)
+                .bounds(centerX - 50, top + 106, 100, 20)
                 .build());
     }
 
@@ -64,7 +71,8 @@ public class LabelScreen extends Screen {
                 this.hand == InteractionHand.OFF_HAND,
                 this.textField.getValue(),
                 this.showAuthorBox.selected(),
-                this.showAuthenticityBox.selected()));
+                this.showAuthenticityBox.selected(),
+                this.hideEffectsBox.selected()));
         this.onClose();
     }
 

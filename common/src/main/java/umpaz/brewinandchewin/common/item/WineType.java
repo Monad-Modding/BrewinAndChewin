@@ -14,6 +14,7 @@ public enum WineType implements StringRepresentable {
     VERRUCA("verruca", 2, 2400, Integer.MAX_VALUE, 0.3F),
     TWISTED("twisted", 0, 3600, 8, 1.0F),
     RICE("rice", 1, 3600, 1, 1.4F),
+    VODKA("vodka", 1, 4800, 1, 0.8F),
     OLD("old", 2, 3600, 3, 1.2F);
 
     public static final Codec<WineType> CODEC = StringRepresentable.fromEnum(WineType::values);
@@ -46,7 +47,7 @@ public enum WineType implements StringRepresentable {
     }
 
     public String getItemName() {
-        return this.name + "_wine";
+        return this == VODKA ? this.name : this.name + "_wine";
     }
 
     public int getTipsyAmplifier() {

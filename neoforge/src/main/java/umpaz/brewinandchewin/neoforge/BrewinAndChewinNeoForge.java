@@ -27,6 +27,8 @@ import umpaz.brewinandchewin.neoforge.container.SidedKegWrapperNeoForge;
 import umpaz.brewinandchewin.neoforge.registry.BnCAttachments;
 import umpaz.brewinandchewin.neoforge.registry.BnCFluidTypes;
 import umpaz.brewinandchewin.neoforge.registry.BnCLootModifiers;
+import net.neoforged.neoforge.event.LootTableLoadEvent;
+import umpaz.brewinandchewin.common.loot.BnCInnardsDrops;
 import umpaz.brewinandchewin.neoforge.platform.BnCPlatformHelperNeoForge;
 
 @Mod(BrewinAndChewin.MODID)
@@ -84,6 +86,16 @@ public class BrewinAndChewinNeoForge {
         public static <T> void register(RegisterEvent event, ResourceKey<Registry<T>> registry, Runnable registerMethod) {
             if (event.getRegistryKey() == registry)
                 registerMethod.run();
+        }
+    }
+
+    @EventBusSubscriber(modid = BrewinAndChewin.MODID)
+    public static class GameEvents {
+        @SubscribeEvent
+        public static void onLootTableLoad(LootTableLoadEvent event) {
+            float[] innards = BnCInnardsDrops.DROPS.get(event.getName());
+            if (innards != null)
+                event.getTable().addPool(BnCInnardsDrops.pool(innards[0], innards[1]).build());
         }
     }
 

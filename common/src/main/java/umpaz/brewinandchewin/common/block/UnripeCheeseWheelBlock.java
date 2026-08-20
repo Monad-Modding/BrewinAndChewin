@@ -22,6 +22,7 @@ import java.util.function.Supplier;
 
 public class UnripeCheeseWheelBlock extends Block {
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 1);
+    public static final float RIPEN_CHANCE = 0.065F;
     protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 14.0D);
     public final Supplier<Block> ripeCheeseBlock;
 
@@ -60,7 +61,7 @@ public class UnripeCheeseWheelBlock extends Block {
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!level.isClientSide) {
-            if (level.getRandom().nextFloat() <= 0.1F) {
+            if (level.getRandom().nextFloat() <= RIPEN_CHANCE) {
                 if (state.getValue(AGE) == 0) {
                     level.setBlock(pos, state.setValue(AGE, 1), 3); // next stage
                 } else if (state.getValue(AGE) == 1) {

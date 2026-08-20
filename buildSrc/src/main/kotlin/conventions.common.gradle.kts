@@ -118,6 +118,7 @@ tasks {
         "neoforge_greenhouse_config_range" to Versions.GREENHOUSE_CONFIG_NEOFORGE_RANGE,
         "fabric_greenhouse_config_range" to Versions.GREENHOUSE_CONFIG_FABRIC_RANGE,
         "farmers_delight_range" to Versions.FARMERS_DELIGHT_RANGE,
+        "no_mans_land_range" to Versions.NO_MANS_LAND_RANGE,
         "farmers_delight_refabricated_range" to Versions.FARMERS_DELIGHT_REFABRICATED_RANGE,
         // Gradle is a bit trigger-happy...
         "HotCocoa" to "\$HotCocoa",

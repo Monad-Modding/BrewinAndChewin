@@ -21,11 +21,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import umpaz.brewinandchewin.common.item.component.WineContents;
 import umpaz.brewinandchewin.common.registry.BnCEffects;
+import umpaz.brewinandchewin.common.utility.BnCLabelUtils;
 import umpaz.brewinandchewin.common.utility.BnCWineUtils;
 
 import java.util.List;
@@ -52,6 +54,14 @@ public class WineItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         return ItemUtils.startUsingInstantly(level, player, hand);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        if (BnCLabelUtils.hidesEffects(stack))
+            return;
+        List<MobEffectInstance> effects = BnCWineUtils.getDrinkEffects(this.type, BnCWineUtils.getContents(stack));
+        PotionContents.addPotionTooltip(effects, tooltip::add, 1.0F, context.tickRate());
     }
 
     @Override
@@ -123,11 +133,11 @@ public class WineItem extends Item {
                 existing.isAmbient(), existing.isVisible(), existing.showIcon()));
     }
 
-    public static void emptyStomach(LivingEntity consumer) {
+    public static void emptyStomach(LivingEntity consumer, boolean total) {
         if (!(consumer instanceof Player player))
             return;
         FoodData food = player.getFoodData();
-        food.setFoodLevel(food.getFoodLevel() / 2);
+        food.setFoodLevel(total ? 0 : food.getFoodLevel() / 2);
         food.setSaturation(0.0F);
     }
 
@@ -150,7 +160,7 @@ public class WineItem extends Item {
 
         consumer.removeAllEffects();
         consumer.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, VOMIT_SLOWNESS_DURATION, 3));
-        emptyStomach(consumer);
+        emptyStomach(consumer, false);
         level.playSound(null, consumer.blockPosition(), SoundEvents.PLAYER_BURP, SoundSource.PLAYERS, 0.8F, 0.9F);
     }
 }

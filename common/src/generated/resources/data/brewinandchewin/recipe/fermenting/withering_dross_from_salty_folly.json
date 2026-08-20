@@ -8,6 +8,7 @@
     "unit": "millibuckets"
   },
   "experience": 2.0,
+  "fermenting_time": 18000,
   "ingredients": [
     {
       "item": "minecraft:wither_rose"

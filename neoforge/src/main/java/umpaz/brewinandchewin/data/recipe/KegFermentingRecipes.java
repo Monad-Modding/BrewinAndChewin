@@ -16,8 +16,7 @@ import vectorwing.farmersdelight.common.registry.ModItems;
 import vectorwing.farmersdelight.common.tag.CommonTags;
 
 public class KegFermentingRecipes {
-   public static final int FAST_FERMENTING = 4800;      // 4 minutes
-   public static final int NORMAL_FERMENTING = 9600;    // 8 minutes
+   public static final int FERMENTING_TIME = 18000;
 
    public static final float MEDIUM_EXP = 1.0F;
    public static final float LARGE_EXP = 2.0F;
@@ -29,31 +28,31 @@ public class KegFermentingRecipes {
    }
 
    private static void fermentingWines(RecipeOutput output, HolderLookup.Provider provider) {
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.RED_WINE, 1000, NORMAL_FERMENTING, MEDIUM_EXP)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.RED_WINE, 1000, FERMENTING_TIME, MEDIUM_EXP)
               .addFluidIngredient(Tags.Fluids.WATER, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(BnCItems.RED_GRAPES, 3)
               .unlockedByItems("has_red_grapes", BnCItems.RED_GRAPES)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.WHITE_WINE, 1000, NORMAL_FERMENTING, MEDIUM_EXP)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.WHITE_WINE, 1000, FERMENTING_TIME, MEDIUM_EXP)
               .addFluidIngredient(Tags.Fluids.WATER, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(BnCItems.WHITE_GRAPES, 3)
               .unlockedByItems("has_white_grapes", BnCItems.WHITE_GRAPES)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.CURRANT_WINE, 1000, NORMAL_FERMENTING, MEDIUM_EXP)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.CURRANT_WINE, 1000, FERMENTING_TIME, MEDIUM_EXP)
               .addFluidIngredient(Tags.Fluids.WATER, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.SWEET_BERRIES, 3)
               .unlockedByItems("has_sweet_berries", Items.SWEET_BERRIES)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.VERRUCA_WINE, 1000, NORMAL_FERMENTING, MEDIUM_EXP, 5)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.VERRUCA_WINE, 1000, FERMENTING_TIME, MEDIUM_EXP, 5)
               .addFluidIngredient(Tags.Fluids.WATER, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.NETHER_WART, 3)
               .unlockedByItems("has_nether_wart", Items.NETHER_WART)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.TWISTED_WINE, 1000, NORMAL_FERMENTING, MEDIUM_EXP, 5)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.TWISTED_WINE, 1000, FERMENTING_TIME, MEDIUM_EXP, 5)
               .addFluidIngredient(Tags.Fluids.WATER, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.WARPED_FUNGUS, 3)
@@ -62,16 +61,16 @@ public class KegFermentingRecipes {
    }
 
    private static void fermentingDrinks(RecipeOutput output, HolderLookup.Provider provider) {
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.BEER, 1000, NORMAL_FERMENTING, MEDIUM_EXP)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.BEER, 1000, FERMENTING_TIME, MEDIUM_EXP)
               .addFluidIngredient(Tags.Fluids.WATER, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
-              .addIngredient(Items.WHEAT)
+              .addIngredient(CommonTags.Items.FOODS_DOUGH_WHEAT)
               .addIngredient(Items.WHEAT_SEEDS)
               .addIngredient(Items.BROWN_MUSHROOM)
               .unlockedByItems("has_tankard", BnCItems.TANKARD)
-              .unlockedByItems("has_wheat", Items.WHEAT)
+              .unlockedByItems("has_wheat_dough", ModItems.WHEAT_DOUGH.get())
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.VODKA, 1000, NORMAL_FERMENTING, MEDIUM_EXP)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.VODKA, 1000, FERMENTING_TIME, MEDIUM_EXP)
               .addFluidIngredient(Tags.Fluids.WATER, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Tags.Items.CROPS_POTATO)
@@ -80,7 +79,7 @@ public class KegFermentingRecipes {
               .unlockedByItems("has_tankard", BnCItems.TANKARD)
               .unlockedByItems("has_potato", Items.POTATO)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.MEAD, 1000, NORMAL_FERMENTING, MEDIUM_EXP)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.MEAD, 1000, FERMENTING_TIME, MEDIUM_EXP)
               .addFluidIngredient(Tags.Fluids.HONEY, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.WHEAT)
@@ -88,7 +87,7 @@ public class KegFermentingRecipes {
               .addIngredient(Items.SWEET_BERRIES)
               .unlockedByItems("has_tankard", BnCItems.TANKARD)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.EGG_GROG, 1000, NORMAL_FERMENTING, MEDIUM_EXP)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.EGG_GROG, 1000, FERMENTING_TIME, MEDIUM_EXP)
               .addFluidIngredient(Tags.Fluids.MILK, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Tags.Items.EGGS)
@@ -96,7 +95,7 @@ public class KegFermentingRecipes {
               .addIngredient(Items.SUGAR)
               .unlockedByItems("has_tankard", BnCItems.TANKARD)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.STRONGROOT_ALE, 1000, FAST_FERMENTING, MEDIUM_EXP)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.STRONGROOT_ALE, 1000, FERMENTING_TIME, MEDIUM_EXP)
               .addFluidIngredient(BnCTags.Fluids.BEER, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Tags.Items.CROPS_BEETROOT)
@@ -105,14 +104,14 @@ public class KegFermentingRecipes {
               .addIngredient(BnCItems.JERKY)
               .unlockedByItems("has_beer", BnCItems.BEER)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.RICE_WINE, 1000, NORMAL_FERMENTING, MEDIUM_EXP)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.RICE_WINE, 1000, FERMENTING_TIME, MEDIUM_EXP)
               .addFluidIngredient(Tags.Fluids.WATER, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(CommonTags.Items.CROPS_RICE)
               .addIngredient(Items.BROWN_MUSHROOM)
               .unlockedByItems("has_tankard", BnCItems.TANKARD)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.GLITTERING_GRENADINE, 1000, NORMAL_FERMENTING, MEDIUM_EXP, 2)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.GLITTERING_GRENADINE, 1000, FERMENTING_TIME, MEDIUM_EXP, 2)
               .addFluidIngredient(Tags.Fluids.WATER, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.GLOW_BERRIES)
@@ -120,7 +119,7 @@ public class KegFermentingRecipes {
               .addIngredient(Items.GLOW_INK_SAC)
               .unlockedByItems("has_tankard", BnCItems.TANKARD)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.STEEL_TOE_STOUT, 1000, FAST_FERMENTING, MEDIUM_EXP, 1)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.STEEL_TOE_STOUT, 1000, FERMENTING_TIME, MEDIUM_EXP, 1)
               .addFluidIngredient(BnCTags.Fluids.STRONGROOT_ALE, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.IRON_INGOT)
@@ -129,7 +128,7 @@ public class KegFermentingRecipes {
               .addIngredient(Items.WHEAT)
               .unlockedByItems("has_strongroot_ale", BnCItems.STRONGROOT_ALE)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.DREAD_NOG, 1000, FAST_FERMENTING, MEDIUM_EXP, 1)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.DREAD_NOG, 1000, FERMENTING_TIME, MEDIUM_EXP, 1)
               .addFluidIngredient(BnCTags.Fluids.EGG_GROG, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.OMINOUS_BOTTLE)
@@ -137,7 +136,7 @@ public class KegFermentingRecipes {
               .addIngredient(Items.FERMENTED_SPIDER_EYE)
               .unlockedByItems("has_egg_grog", BnCItems.EGG_GROG)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.SACCHARINE_RUM, 1000, FAST_FERMENTING, MEDIUM_EXP, 4)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.SACCHARINE_RUM, 1000, FERMENTING_TIME, MEDIUM_EXP, 4)
               .addFluidIngredient(BnCTags.Fluids.MEAD, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.SWEET_BERRIES)
@@ -145,7 +144,7 @@ public class KegFermentingRecipes {
               .addIngredient(Items.MELON)
               .unlockedByItems("has_mead", BnCItems.MEAD)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.PALE_JANE, 1000, FAST_FERMENTING, MEDIUM_EXP, 4)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.PALE_JANE, 1000, FERMENTING_TIME, MEDIUM_EXP, 4)
               .addFluidIngredient(BnCTags.Fluids.RICE_WINE, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.HONEY_BOTTLE)
@@ -154,7 +153,7 @@ public class KegFermentingRecipes {
               .addIngredient(Items.SUGAR)
               .unlockedByItems("has_tankard", BnCItems.TANKARD)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.SALTY_FOLLY, 1000, FAST_FERMENTING, MEDIUM_EXP, 2)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.SALTY_FOLLY, 1000, FERMENTING_TIME, MEDIUM_EXP, 2)
               .addFluidIngredient(BnCTags.Fluids.VODKA, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.SEA_PICKLE)
@@ -162,7 +161,7 @@ public class KegFermentingRecipes {
               .addIngredient(Items.SEAGRASS)
               .unlockedByItems("has_vodka", BnCItems.VODKA)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.BLOODY_MARY, 1000, FAST_FERMENTING, MEDIUM_EXP, 4)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.BLOODY_MARY, 1000, FERMENTING_TIME, MEDIUM_EXP, 4)
               .addFluidIngredient(BnCTags.Fluids.VODKA, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(CommonTags.Items.CROPS_TOMATO)
@@ -170,7 +169,7 @@ public class KegFermentingRecipes {
               .addIngredient(Items.SWEET_BERRIES)
               .unlockedByItems("has_vodka", BnCItems.VODKA)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.RED_RUM, 1000, FAST_FERMENTING, MEDIUM_EXP, 5)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.RED_RUM, 1000, FERMENTING_TIME, MEDIUM_EXP, 5)
               .addFluidIngredient(BnCTags.Fluids.BLOODY_MARY, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.CRIMSON_FUNGUS)
@@ -179,7 +178,7 @@ public class KegFermentingRecipes {
               .addIngredient(Items.SHROOMLIGHT)
               .unlockedByItems("has_bloody_mary", BnCItems.BLOODY_MARY)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.WITHERING_DROSS, 1000, NORMAL_FERMENTING, LARGE_EXP, 5)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.DRINKS, BnCFluids.WITHERING_DROSS, 1000, FERMENTING_TIME, LARGE_EXP, 5)
               .addFluidIngredient(BnCTags.Fluids.SALTY_FOLLY, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.WITHER_ROSE)
@@ -191,23 +190,25 @@ public class KegFermentingRecipes {
    }
 
    private static void fermentingMeals(RecipeOutput output, HolderLookup.Provider provider) {
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCFluids.FLAXEN_CHEESE, 1000, NORMAL_FERMENTING, MEDIUM_EXP, 4)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCFluids.FLAXEN_CHEESE, 1000, FERMENTING_TIME, MEDIUM_EXP, 4)
               .addFluidIngredient(Tags.Fluids.MILK, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.BROWN_MUSHROOM)
               .addIngredient(Items.PUMPKIN_SEEDS)
               .addIngredient(Items.SUGAR)
-              .unlockedByItems("has_brown_mushroom", Items.BROWN_MUSHROOM)
+              .addIngredient(BnCItems.RENNET)
+              .unlockedByItems("has_rennet", BnCItems.RENNET)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCFluids.SCARLET_CHEESE, 1000, NORMAL_FERMENTING, MEDIUM_EXP, 5)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCFluids.SCARLET_CHEESE, 1000, FERMENTING_TIME, MEDIUM_EXP, 5)
               .addFluidIngredient(Tags.Fluids.MILK, 1000, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.CRIMSON_FUNGUS)
               .addIngredient(Items.NETHER_WART)
               .addIngredient(Items.SUGAR)
-              .unlockedByItems("has_crimson_fungus", Items.CRIMSON_FUNGUS)
+              .addIngredient(BnCItems.RENNET)
+              .unlockedByItems("has_rennet", BnCItems.RENNET)
               .build(output);
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCItems.JERKY, 3, NORMAL_FERMENTING, MEDIUM_EXP, 4)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCItems.JERKY, 3, FERMENTING_TIME, MEDIUM_EXP, 4)
               .addIngredient(BnCTags.Items.FOOD_JERKY_MEAT)
               .addIngredient(BnCTags.Items.FOOD_JERKY_MEAT)
               .addIngredient(BnCTags.Items.FOOD_JERKY_MEAT)
@@ -215,21 +216,21 @@ public class KegFermentingRecipes {
               .build(output);
 
 
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCItems.KIMCHI, 2, NORMAL_FERMENTING, MEDIUM_EXP, 4)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCItems.KIMCHI, 2, FERMENTING_TIME, MEDIUM_EXP, 4)
               .addIngredient(CommonTags.Items.CROPS_CABBAGE)
               .addIngredient(Tags.Items.FOODS_VEGETABLE)
               .addIngredient(Items.KELP)
               .unlockedByItems("has_kelp", Items.KELP)
               .build(output);
 
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCItems.KIPPERS, 2, NORMAL_FERMENTING, MEDIUM_EXP, 4)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCItems.KIPPERS, 2, FERMENTING_TIME, MEDIUM_EXP, 4)
               .addIngredient(CommonTags.Items.FOODS_SAFE_RAW_FISH)
               .addIngredient(CommonTags.Items.FOODS_SAFE_RAW_FISH)
               .addIngredient(Items.DRIED_KELP)
               .unlockedBy("has_fish", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(CommonTags.Items.FOODS_SAFE_RAW_FISH).build()))
               .build(output);
 
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCItems.PICKLED_PICKLES, 2, NORMAL_FERMENTING, MEDIUM_EXP, 2)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCItems.PICKLED_PICKLES, 2, FERMENTING_TIME, MEDIUM_EXP, 2)
               .addFluidIngredient(Tags.Fluids.HONEY, 250, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.SEA_PICKLE)
@@ -238,8 +239,8 @@ public class KegFermentingRecipes {
               .unlockedByItems("has_sea_pickle", Items.SEA_PICKLE)
               .build(output);
 
-      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCItems.COCOA_FUDGE, 1, NORMAL_FERMENTING, MEDIUM_EXP, 2)
-              .addFluidIngredient(Tags.Fluids.MILK, 500, FluidUnit.MILLIBUCKET)
+      KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, BnCItems.COCOA_FUDGE, 1, FERMENTING_TIME, MEDIUM_EXP, 2)
+              .addFluidIngredient(Tags.Fluids.MILK, 250, FluidUnit.MILLIBUCKET)
               .setFluidUnit(FluidUnit.MILLIBUCKET)
               .addIngredient(Items.SUGAR)
               .addIngredient(Items.COCOA_BEANS)

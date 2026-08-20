@@ -9,6 +9,7 @@
   },
   "category": "meals",
   "experience": 1.0,
+  "fermenting_time": 18000,
   "ingredients": [
     {
       "item": "minecraft:brown_mushroom"
@@ -19,7 +20,9 @@
     {
       "item": "minecraft:sugar"
     },
-    []
+    {
+      "item": "brewinandchewin:rennet"
+    }
   ],
   "result": {
     "amount": 1000,

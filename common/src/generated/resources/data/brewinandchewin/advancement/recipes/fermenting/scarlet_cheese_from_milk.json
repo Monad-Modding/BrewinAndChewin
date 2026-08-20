@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_crimson_fungus": {
+    "has_rennet": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:crimson_fungus"
+            "items": "brewinandchewin:rennet"
           }
         ]
       },
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "has_crimson_fungus",
+      "has_rennet",
       "has_the_recipe"
     ]
   ],

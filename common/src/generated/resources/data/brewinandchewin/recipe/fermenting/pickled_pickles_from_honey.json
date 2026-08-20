@@ -9,6 +9,7 @@
   },
   "category": "meals",
   "experience": 1.0,
+  "fermenting_time": 18000,
   "ingredients": [
     {
       "item": "minecraft:sea_pickle"

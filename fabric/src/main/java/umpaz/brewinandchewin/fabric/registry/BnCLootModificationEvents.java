@@ -10,6 +10,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import umpaz.brewinandchewin.BrewinAndChewin;
+import umpaz.brewinandchewin.common.loot.BnCInnardsDrops;
 
 import java.util.Set;
 
@@ -32,6 +33,11 @@ public class BnCLootModificationEvents {
             tableBuilder.withPool(LootPool.lootPool()
                     .setRolls(ConstantValue.exactly(1.0F))
                     .add(NestedLootTable.lootTableReference(ResourceKey.create(key.registryKey(), OLD_WINE_TABLE))));
+        }
+
+        float[] innards = BnCInnardsDrops.DROPS.get(key.location());
+        if (source.isBuiltin() && innards != null) {
+            tableBuilder.withPool(BnCInnardsDrops.pool(innards[0], innards[1]));
         }
     }
 }

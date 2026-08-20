@@ -3,6 +3,7 @@ package umpaz.brewinandchewin.common.block.entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.world.Clearable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -27,7 +28,7 @@ import vectorwing.farmersdelight.common.block.entity.SyncedBlockEntity;
 import static umpaz.brewinandchewin.common.block.CoasterBlock.INVISIBLE;
 import static umpaz.brewinandchewin.common.block.CoasterBlock.SIZE;
 
-public class CoasterBlockEntity extends SyncedBlockEntity {
+public class CoasterBlockEntity extends SyncedBlockEntity implements Clearable {
 
     public final NonNullList<ItemStack> inventory = NonNullList.withSize(4, ItemStack.EMPTY);
 
@@ -108,6 +109,12 @@ public class CoasterBlockEntity extends SyncedBlockEntity {
    public AABB getRenderBoundingBox() {
         BlockPos pos = getBlockPos();
         return AABB.of(BoundingBox.fromCorners(pos, pos.above()));
+   }
+
+   @Override
+   public void clearContent() {
+      this.inventory.clear();
+      this.inventoryChanged();
    }
 
    public NonNullList<ItemStack> getItems() {

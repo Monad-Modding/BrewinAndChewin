@@ -10,6 +10,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.BrewinAndChewin;
+import umpaz.brewinandchewin.common.compat.nomansland.BnCNMLItems;
+import umpaz.brewinandchewin.common.compat.nomansland.NMLIntegration;
 import umpaz.brewinandchewin.common.item.BoozeItem;
 import umpaz.brewinandchewin.common.item.DistillateItem;
 import umpaz.brewinandchewin.common.item.DreadNogItem;
@@ -46,6 +48,8 @@ public class BnCItems {
 
     public static final Item TANKARD = new Item(new Item.Properties());
 
+    public static final Item RENNET = new Item(new Item.Properties().food(BnCFoods.RENNET));
+
     public static final Item RED_GRAPES = new Item(new Item.Properties().food(BnCFoods.GRAPES));
     public static final Item WHITE_GRAPES = new Item(new Item.Properties().food(BnCFoods.GRAPES));
     public static final Item RED_GRAPE_SEEDS = new ItemNameBlockItem(BnCBlocks.RED_GRAPE_VINE, new Item.Properties());
@@ -57,6 +61,7 @@ public class BnCItems {
     public static final Item VERRUCA_WINE = new WineItem(WineType.VERRUCA, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
     public static final Item TWISTED_WINE = new WineItem(WineType.TWISTED, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
     public static final Item RICE_WINE = new WineItem(WineType.RICE, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
+    public static final Item VODKA = new WineItem(WineType.VODKA, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
     public static final Item OLD_WINE = new WineItem(WineType.OLD, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE).rarity(Rarity.UNCOMMON));
 
     public static final Item BRANDY = new DistillateItem(2, 4800, false, false, new Item.Properties().stacksTo(16));
@@ -68,8 +73,6 @@ public class BnCItems {
 
     public static final Item BEER = new BoozeItem(() -> BnCFluids.BEER, new Item.Properties()
             .stacksTo(16).craftRemainder(BnCItems.TANKARD).food(BnCFoods.BEER));
-    public static final Item VODKA = new BoozeItem(() -> BnCFluids.VODKA, new Item.Properties()
-            .stacksTo(16).craftRemainder(BnCItems.TANKARD).food(BnCFoods.VODKA));
     public static final Item MEAD = new BoozeItem(() -> BnCFluids.MEAD, new Item.Properties()
             .stacksTo(16).craftRemainder(BnCItems.TANKARD).food(BnCFoods.MEAD));
     public static final Item PALE_JANE = new BoozeItem(() -> BnCFluids.PALE_JANE, new Item.Properties()
@@ -122,6 +125,41 @@ public class BnCItems {
     public static final Item QUICHE_SLICE = new Item(new Item.Properties().food(BnCFoods.QUICHE_SLICE));
 
     public static final Item HAM_AND_CHEESE_SANDWICH = new Item(new Item.Properties().food(BnCFoods.HAM_AND_CHEESE_SANDWICH));
+
+    public static final Item CHOCOLATE_CAKE = new BlockItem(BnCBlocks.CHOCOLATE_CAKE, new Item.Properties().stacksTo(1));
+    public static final Item SLICE_OF_CHOCOLATE_CAKE = new ConsumableItem(new Item.Properties().food(BnCFoods.CHOCOLATE_CAKE_SLICE));
+    public static final Item GLOW_BERRY_MERINGUE_PIE = new BlockItem(BnCBlocks.GLOW_BERRY_MERINGUE_PIE, new Item.Properties().stacksTo(1));
+    public static final Item SLICE_OF_GLOW_BERRY_MERINGUE_PIE = new ConsumableItem(new Item.Properties().food(BnCFoods.GLOW_BERRY_MERINGUE_PIE_SLICE));
+    public static final Item PUMPKIN_ROLL = new BlockItem(BnCBlocks.PUMPKIN_ROLL, new Item.Properties().stacksTo(1));
+    public static final Item SLICE_OF_PUMPKIN_ROLL = new ConsumableItem(new Item.Properties().food(BnCFoods.PUMPKIN_ROLL_SLICE));
+
+    public static final Item ASPIC_CUBE = new ConsumableItem(new Item.Properties().food(BnCFoods.ASPIC_CUBE));
+    public static final Item CHOPPED_LIVER = new ConsumableItem(new Item.Properties().stacksTo(16).craftRemainder(Items.BOWL).food(BnCFoods.CHOPPED_LIVER), true);
+    public static final Item GRITS = new ConsumableItem(new Item.Properties().stacksTo(16).craftRemainder(Items.BOWL).food(BnCFoods.GRITS));
+
+    public static final Item GLOW_BROWNIE = new ConsumableItem(new Item.Properties().food(BnCFoods.GLOW_BROWNIE));
+    public static final Item APPLE_TURNOVER = new ConsumableItem(new Item.Properties().food(BnCFoods.APPLE_TURNOVER));
+    public static final Item JAM_SANDWICH = new Item(new Item.Properties().food(BnCFoods.JAM_SANDWICH));
+    public static final Item BUTTERSCOTCH_CANDY = new Item(new Item.Properties().food(BnCFoods.BUTTERSCOTCH_CANDY));
+
+    public static final Item RAW_CROISSANT = new ConsumableItem(new Item.Properties().food(BnCFoods.RAW_CROISSANT));
+    public static final Item CROISSANT = new Item(new Item.Properties().food(BnCFoods.CROISSANT));
+    public static final Item RAW_SAUSAGE = new Item(new Item.Properties().food(BnCFoods.RAW_SAUSAGE));
+    public static final Item COOKED_SAUSAGE = new Item(new Item.Properties().food(BnCFoods.COOKED_SAUSAGE));
+    public static final Item HAGGIS = new ConsumableItem(new Item.Properties().food(BnCFoods.HAGGIS));
+    public static final Item INNARDS = new ConsumableItem(new Item.Properties().food(BnCFoods.INNARDS));
+
+    public static final Item CORN = new Item(new Item.Properties().food(BnCFoods.CORN));
+    public static final Item COOKED_CORN = new Item(new Item.Properties().food(BnCFoods.COOKED_CORN));
+    public static final Item POPPED_CORN = new Item(new Item.Properties().food(BnCFoods.POPPED_CORN));
+    public static final Item CANDIED_CORN = new Item(new Item.Properties().food(BnCFoods.CANDIED_CORN));
+    public static final Item CORN_KERNELS = new Item(new Item.Properties());
+    public static final Item CORNMEAL = new Item(new Item.Properties());
+    public static final Item CORN_DOUGH = new ConsumableItem(new Item.Properties().food(BnCFoods.CORN_DOUGH));
+    public static final Item RAW_MUFFIN = new ConsumableItem(new Item.Properties().food(BnCFoods.RAW_MUFFIN));
+    public static final Item CORN_BREAD = new Item(new Item.Properties().food(BnCFoods.CORN_BREAD));
+    public static final Item CORN_MUFFIN = new Item(new Item.Properties().food(BnCFoods.CORN_MUFFIN));
+    public static final Item TORTILLA = new Item(new Item.Properties().food(BnCFoods.TORTILLA));
 
     public static final Item KIMCHI = new ConsumableItem(new Item.Properties().food(BnCFoods.KIMCHI));
     public static final Item JERKY = new ConsumableItem(new Item.Properties().food(BnCFoods.JERKY));
@@ -205,6 +243,46 @@ public class BnCItems {
         registerWithTab("quiche_slice", QUICHE_SLICE);
 
         registerWithTab("ham_and_cheese_sandwich", HAM_AND_CHEESE_SANDWICH);
+
+        registerWithTab("rennet", RENNET);
+
+        registerWithTab("chocolate_cake", CHOCOLATE_CAKE);
+        registerWithTab("slice_of_chocolate_cake", SLICE_OF_CHOCOLATE_CAKE);
+        registerWithTab("glow_berry_meringue_pie", GLOW_BERRY_MERINGUE_PIE);
+        registerWithTab("slice_of_glow_berry_meringue_pie", SLICE_OF_GLOW_BERRY_MERINGUE_PIE);
+        registerWithTab("pumpkin_roll", PUMPKIN_ROLL);
+        registerWithTab("slice_of_pumpkin_roll", SLICE_OF_PUMPKIN_ROLL);
+
+        registerWithTab("aspic_cube", ASPIC_CUBE);
+        registerWithTab("chopped_liver", CHOPPED_LIVER);
+        registerWithTab("grits", GRITS);
+
+        registerWithTab("glow_brownie", GLOW_BROWNIE);
+        registerWithTab("apple_turnover", APPLE_TURNOVER);
+        registerWithTab("jam_sandwich", JAM_SANDWICH);
+        registerWithTab("butterscotch_candy", BUTTERSCOTCH_CANDY);
+
+        registerWithTab("raw_croissant", RAW_CROISSANT);
+        registerWithTab("croissant", CROISSANT);
+        registerWithTab("raw_sausage", RAW_SAUSAGE);
+        registerWithTab("cooked_sausage", COOKED_SAUSAGE);
+        registerWithTab("haggis", HAGGIS);
+        registerWithTab("innards", INNARDS);
+
+        registerWithTab("corn", CORN);
+        registerWithTab("cooked_corn", COOKED_CORN);
+        registerWithTab("popped_corn", POPPED_CORN);
+        registerWithTab("candied_corn", CANDIED_CORN);
+        registerWithTab("corn_kernels", CORN_KERNELS);
+        registerWithTab("cornmeal", CORNMEAL);
+        registerWithTab("corn_dough", CORN_DOUGH);
+        registerWithTab("raw_muffin", RAW_MUFFIN);
+        registerWithTab("corn_bread", CORN_BREAD);
+        registerWithTab("corn_muffin", CORN_MUFFIN);
+        registerWithTab("tortilla", TORTILLA);
+
+        if (NMLIntegration.isLoaded())
+            BnCNMLItems.registerAll();
 
         registerWithTab("kimchi", KIMCHI);
         registerWithTab("jerky", JERKY);

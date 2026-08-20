@@ -3,6 +3,8 @@ package umpaz.brewinandchewin.data;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
+import umpaz.brewinandchewin.data.world.BnCWildCropGeneration;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
@@ -46,6 +48,9 @@ public class BnCDataGenerators {
                                 0.1F
                         ))
                 )
+                .add(Registries.CONFIGURED_FEATURE, BnCWildCropGeneration::bootstrapConfiguredFeatures)
+                .add(Registries.PLACED_FEATURE, BnCWildCropGeneration::bootstrapPlacedFeatures)
+                .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, BnCWildCropGeneration::bootstrapBiomeModifiers)
         );
         generator.addProvider(event.includeServer(), builtInEntries);
         lookupProvider = builtInEntries.getRegistryProvider();
@@ -55,6 +60,7 @@ public class BnCDataGenerators {
         generator.addProvider(event.includeServer(), new BnCMobEffectTags(output, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new BnCEntityTypeTags(output, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new BnCDamageTypeTags(output, lookupProvider, helper));
+        generator.addProvider(event.includeServer(), new BnCBiomeTags(output, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new BnCRecipes(output, lookupProvider));
         generator.addProvider(event.includeServer(), new LootTableProvider(output, Collections.emptySet(), List.of(
                 new LootTableProvider.SubProviderEntry(BnCBlockLoot::new, LootContextParamSets.BLOCK)

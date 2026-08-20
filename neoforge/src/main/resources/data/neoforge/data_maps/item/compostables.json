@@ -24,7 +24,7 @@
     "brewinandchewin:white_grape_seeds": {
       "chance": 0.3
     },
-    "brewinandchewin:chocolate_cake": {
+    "brewinandchewin:rich_chocolate_cake": {
       "chance": 1.0
     },
     "brewinandchewin:pumpkin_roll": {
@@ -33,7 +33,7 @@
     "brewinandchewin:glow_berry_meringue_pie": {
       "chance": 1.0
     },
-    "brewinandchewin:slice_of_chocolate_cake": {
+    "brewinandchewin:slice_of_rich_chocolate_cake": {
       "chance": 0.85
     },
     "brewinandchewin:slice_of_glow_berry_meringue_pie": {

@@ -30,6 +30,12 @@ public class BnCBlocks {
             BlockBehaviour.Properties.ofFullCopy(Blocks.BLAST_FURNACE).noOcclusion()
                     .lightLevel(state -> state.getValue(DistilleryBlock.LIT) ? 13 : 0));
 
+    public static final Block WILD_CORN = new WildCornBlock(
+            BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS));
+
+    public static final Block CORN_CROP = new CornCropBlock(
+            BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT));
+
     public static final Block RED_GRAPE_VINE = new GrapeVineBlock(
             () -> BnCItems.RED_GRAPES, BlockBehaviour.Properties.ofFullCopy(Blocks.VINE).randomTicks());
 
@@ -59,8 +65,8 @@ public class BnCBlocks {
     public static final Block QUICHE = new
             PieBlock(Block.Properties.ofFullCopy(Blocks.CAKE), () -> BnCItems.QUICHE_SLICE);
 
-    public static final Block CHOCOLATE_CAKE = new
-            SlicedCakeBlock(Block.Properties.ofFullCopy(Blocks.CAKE), () -> BnCItems.SLICE_OF_CHOCOLATE_CAKE,
+    public static final Block RICH_CHOCOLATE_CAKE = new
+            SlicedCakeBlock(Block.Properties.ofFullCopy(Blocks.CAKE), () -> BnCItems.SLICE_OF_RICH_CHOCOLATE_CAKE,
             2.0D, 14.0D, 8.0D, 2.0D, 14.0D);
 
     public static final Block PUMPKIN_ROLL = new
@@ -81,6 +87,8 @@ public class BnCBlocks {
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("aging_cask"), AGING_CASK);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("bottle_rack"), BOTTLE_RACK);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("distillery"), DISTILLERY);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("corn_crop"), CORN_CROP);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("wild_corn"), WILD_CORN);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("red_grape_vine"), RED_GRAPE_VINE);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("white_grape_vine"), WHITE_GRAPE_VINE);
 
@@ -92,7 +100,7 @@ public class BnCBlocks {
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("fiery_fondue_pot"), FIERY_FONDUE_POT);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("pizza"), PIZZA);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("quiche"), QUICHE);
-        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("chocolate_cake"), CHOCOLATE_CAKE);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("rich_chocolate_cake"), RICH_CHOCOLATE_CAKE);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("pumpkin_roll"), PUMPKIN_ROLL);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("glow_berry_meringue_pie"), GLOW_BERRY_MERINGUE_PIE);
     }

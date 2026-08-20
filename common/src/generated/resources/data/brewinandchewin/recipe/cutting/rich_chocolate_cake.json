@@ -2,14 +2,14 @@
   "type": "farmersdelight:cutting",
   "ingredients": [
     {
-      "item": "brewinandchewin:chocolate_cake"
+      "item": "brewinandchewin:rich_chocolate_cake"
     }
   ],
   "result": [
     {
       "item": {
         "count": 6,
-        "id": "brewinandchewin:slice_of_chocolate_cake"
+        "id": "brewinandchewin:slice_of_rich_chocolate_cake"
       }
     }
   ],

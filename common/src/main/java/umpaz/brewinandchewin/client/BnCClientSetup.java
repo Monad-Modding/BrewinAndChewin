@@ -117,6 +117,8 @@ public class BnCClientSetup {
         consumer.accept(BnCBlocks.AGING_CASK, RenderType.cutout());
         consumer.accept(BnCBlocks.BOTTLE_RACK, RenderType.cutout());
         consumer.accept(BnCBlocks.DISTILLERY, RenderType.cutout());
+        consumer.accept(BnCBlocks.CORN_CROP, RenderType.cutout());
+        consumer.accept(BnCBlocks.WILD_CORN, RenderType.cutout());
         consumer.accept(BnCBlocks.RED_GRAPE_VINE, RenderType.cutout());
         consumer.accept(BnCBlocks.WHITE_GRAPE_VINE, RenderType.cutout());
     }

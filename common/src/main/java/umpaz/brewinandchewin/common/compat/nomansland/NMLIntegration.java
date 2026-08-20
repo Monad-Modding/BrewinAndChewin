@@ -10,6 +10,8 @@ public class NMLIntegration {
     public static final ResourceLocation MAPLE_SYRUP_BOTTLE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "maple_syrup_bottle");
     public static final ResourceLocation THISTLE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "thistle");
 
+    public static final ResourceLocation PRAIRIE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "prairie");
+
     public static final ResourceLocation RICE_PUDDING_ITEM = BrewinAndChewin.asResource("rice_pudding");
     public static final ResourceLocation MAPLE_FUDGE_ITEM = BrewinAndChewin.asResource("maple_fudge");
 

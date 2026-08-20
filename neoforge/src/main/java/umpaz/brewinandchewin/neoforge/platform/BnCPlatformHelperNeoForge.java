@@ -337,6 +337,6 @@ public class BnCPlatformHelperNeoForge implements BnCPlatformHelper {
 
     @Override
     public boolean hasFoodEffectTooltip() {
-        return Configuration.FOOD_EFFECT_TOOLTIP.get();
+        return Configuration.ENABLE_FOOD_EFFECT_TOOLTIP.get();
     }
 }

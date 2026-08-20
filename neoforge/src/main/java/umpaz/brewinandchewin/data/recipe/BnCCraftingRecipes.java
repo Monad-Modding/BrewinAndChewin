@@ -20,7 +20,7 @@ public class BnCCraftingRecipes {
     }
 
     private static void recipes(RecipeOutput consumer) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, BnCItems.CHOCOLATE_CAKE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, BnCItems.RICH_CHOCOLATE_CAKE)
                 .pattern("msm")
                 .pattern("ccc")
                 .pattern("www")
@@ -30,12 +30,12 @@ public class BnCCraftingRecipes {
                 .define('w', Items.WHEAT)
                 .unlockedBy("has_cocoa_fudge", InventoryChangeTrigger.TriggerInstance.hasItems(BnCItems.COCOA_FUDGE))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, BnCItems.CHOCOLATE_CAKE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, BnCItems.RICH_CHOCOLATE_CAKE)
                 .pattern("sss")
                 .pattern("sss")
-                .define('s', BnCItems.SLICE_OF_CHOCOLATE_CAKE)
-                .unlockedBy("has_slice", InventoryChangeTrigger.TriggerInstance.hasItems(BnCItems.SLICE_OF_CHOCOLATE_CAKE))
-                .save(consumer, BrewinAndChewin.asResource("chocolate_cake_from_slices"));
+                .define('s', BnCItems.SLICE_OF_RICH_CHOCOLATE_CAKE)
+                .unlockedBy("has_slice", InventoryChangeTrigger.TriggerInstance.hasItems(BnCItems.SLICE_OF_RICH_CHOCOLATE_CAKE))
+                .save(consumer, BrewinAndChewin.asResource("rich_chocolate_cake_from_slices"));
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, BnCItems.PUMPKIN_ROLL)
                 .pattern("ppp")
                 .pattern("msm")

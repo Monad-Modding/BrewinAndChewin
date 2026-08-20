@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "brewinandchewin:slice_of_chocolate_cake"
+            "items": "brewinandchewin:slice_of_rich_chocolate_cake"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:chocolate_cake_from_slices"
+        "recipe": "brewinandchewin:rich_chocolate_cake_from_slices"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "brewinandchewin:chocolate_cake_from_slices"
+      "brewinandchewin:rich_chocolate_cake_from_slices"
     ]
   }
 }

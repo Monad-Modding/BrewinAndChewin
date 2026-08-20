@@ -15,6 +15,17 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import umpaz.brewinandchewin.common.block.CornCropBlock;
+import vectorwing.farmersdelight.common.registry.ModItems;
+import vectorwing.farmersdelight.common.tag.ModTags;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.predicates.AnyOfCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import umpaz.brewinandchewin.common.block.CoasterBlock;
 import umpaz.brewinandchewin.common.block.DistilleryBlock;
 import umpaz.brewinandchewin.common.block.DistilleryPart;
@@ -53,8 +64,65 @@ public class BnCBlockLoot extends BlockLootSubProvider {
                 LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(BnCItems.DISTILLERY))
                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DistilleryBlock.PART, DistilleryPart.BURNER))))));
+        add(BnCBlocks.CORN_CROP, this::createCornCropDrops);
+        add(BnCBlocks.WILD_CORN, this::createWildCornDrops);
         add(BnCBlocks.RED_GRAPE_VINE, (block) -> this.createGrapeVineDrops(block, BnCItems.RED_GRAPES, BnCItems.RED_GRAPE_SEEDS));
         add(BnCBlocks.WHITE_GRAPE_VINE, (block) -> this.createGrapeVineDrops(block, BnCItems.WHITE_GRAPES, BnCItems.WHITE_GRAPE_SEEDS));
+    }
+
+    private static final float WILD_CORN_DROP_CHANCE = 0.25F;
+    private static final int CORN_HARVESTABLE_AGE = 5;
+    private static final float[] CORN_SECOND_DROP_CHANCE = {1.0F / 3.0F, 2.0F / 3.0F, 1.0F};
+
+    private LootItemCondition.Builder cornAgeIs(Block block, int age) {
+        return LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                .setProperties(StatePropertiesPredicate.Builder.properties()
+                        .hasProperty(CornCropBlock.AGE, age)
+                        .hasProperty(CornCropBlock.SECTION, 0));
+    }
+
+    private LootTable.Builder createWildCornDrops(Block block) {
+        LootItemCondition.Builder lowerHalf = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER));
+        return LootTable.lootTable()
+                .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(BnCItems.CORN_KERNELS).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+                        .when(lowerHalf)))
+                .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(BnCItems.CORN))
+                        .when(lowerHalf)
+                        .when(LootItemRandomChanceCondition.randomChance(WILD_CORN_DROP_CHANCE))));
+    }
+
+    private LootTable.Builder createCornCropDrops(Block block) {
+        AnyOfCondition.Builder unripe = AnyOfCondition.anyOf();
+        AnyOfCondition.Builder harvestable = AnyOfCondition.anyOf();
+        for (int age = 0; age < CORN_HARVESTABLE_AGE; ++age)
+            unripe = unripe.or(cornAgeIs(block, age));
+        for (int age = CORN_HARVESTABLE_AGE; age <= CornCropBlock.MAX_AGE; ++age)
+            harvestable = harvestable.or(cornAgeIs(block, age));
+
+        LootPool.Builder secondCorn = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F));
+        for (int age = CORN_HARVESTABLE_AGE; age <= CornCropBlock.MAX_AGE; ++age) {
+            float chance = CORN_SECOND_DROP_CHANCE[age - CORN_HARVESTABLE_AGE];
+            LootPoolSingletonContainer.Builder<?> entry = LootItem.lootTableItem(BnCItems.CORN).when(cornAgeIs(block, age));
+            if (chance < 1.0F)
+                entry = entry.when(LootItemRandomChanceCondition.randomChance(chance));
+            secondCorn = secondCorn.add(entry);
+        }
+
+        return LootTable.lootTable()
+                .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(BnCItems.CORN_KERNELS))
+                        .when(unripe)))
+                .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(BnCItems.CORN))
+                        .when(harvestable)))
+                .withPool(this.applyExplosionDecay(block, secondCorn))
+                .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(ModItems.STRAW.get()))
+                        .when(cornAgeIs(block, CornCropBlock.MAX_AGE))
+                        .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ModTags.Items.STRAW_HARVESTERS)))));
     }
 
     private LootTable.Builder createGrapeVineDrops(Block block, Item grapes, Item seeds) {

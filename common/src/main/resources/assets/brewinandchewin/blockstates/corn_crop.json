@@ -1,0 +1,76 @@
+{
+  "variants": {
+    "age=0,section=0": {
+      "model": "brewinandchewin:block/corn_crop_0"
+    },
+    "age=0,section=1": {
+      "model": "brewinandchewin:block/corn_crop_0"
+    },
+    "age=0,section=2": {
+      "model": "brewinandchewin:block/corn_crop_0"
+    },
+    "age=1,section=0": {
+      "model": "brewinandchewin:block/corn_crop_1"
+    },
+    "age=1,section=1": {
+      "model": "brewinandchewin:block/corn_crop_1"
+    },
+    "age=1,section=2": {
+      "model": "brewinandchewin:block/corn_crop_1"
+    },
+    "age=2,section=0": {
+      "model": "brewinandchewin:block/corn_crop_2"
+    },
+    "age=2,section=1": {
+      "model": "brewinandchewin:block/corn_crop_2"
+    },
+    "age=2,section=2": {
+      "model": "brewinandchewin:block/corn_crop_2"
+    },
+    "age=3,section=0": {
+      "model": "brewinandchewin:block/corn_crop_3_bottom"
+    },
+    "age=3,section=1": {
+      "model": "brewinandchewin:block/corn_crop_3_top"
+    },
+    "age=3,section=2": {
+      "model": "brewinandchewin:block/corn_crop_3_bottom"
+    },
+    "age=4,section=0": {
+      "model": "brewinandchewin:block/corn_crop_4_bottom"
+    },
+    "age=4,section=1": {
+      "model": "brewinandchewin:block/corn_crop_4_middle"
+    },
+    "age=4,section=2": {
+      "model": "brewinandchewin:block/corn_crop_4_top"
+    },
+    "age=5,section=0": {
+      "model": "brewinandchewin:block/corn_crop_5_bottom"
+    },
+    "age=5,section=1": {
+      "model": "brewinandchewin:block/corn_crop_5_middle"
+    },
+    "age=5,section=2": {
+      "model": "brewinandchewin:block/corn_crop_5_top"
+    },
+    "age=6,section=0": {
+      "model": "brewinandchewin:block/corn_crop_6_bottom"
+    },
+    "age=6,section=1": {
+      "model": "brewinandchewin:block/corn_crop_6_middle"
+    },
+    "age=6,section=2": {
+      "model": "brewinandchewin:block/corn_crop_6_top"
+    },
+    "age=7,section=0": {
+      "model": "brewinandchewin:block/corn_crop_7_bottom"
+    },
+    "age=7,section=1": {
+      "model": "brewinandchewin:block/corn_crop_7_middle"
+    },
+    "age=7,section=2": {
+      "model": "brewinandchewin:block/corn_crop_7_top"
+    }
+  }
+}

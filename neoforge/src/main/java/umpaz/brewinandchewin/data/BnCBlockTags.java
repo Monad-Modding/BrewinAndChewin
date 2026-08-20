@@ -29,6 +29,8 @@ public class BnCBlockTags extends BlockTagsProvider
 
     protected void registerFarmersDelightTags() {
         tag(ModTags.Blocks.PIES).add(BnCBlocks.GLOW_BERRY_MERINGUE_PIE);
+        tag(BlockTags.CROPS).add(BnCBlocks.CORN_CROP);
+        tag(BlockTags.MAINTAINS_FARMLAND).add(BnCBlocks.CORN_CROP);
     }
 
     protected void registerBlockMineables() {

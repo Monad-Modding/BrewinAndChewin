@@ -2,6 +2,8 @@ package umpaz.brewinandchewin.common.block;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -43,6 +45,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+    private static final float FERMENTING_PARTICLE_CHANCE = 0.25F;
     public static final MapCodec<KegBlock> CODEC = simpleCodec(KegBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty VERTICAL = BooleanProperty.create("vertical");
@@ -93,6 +96,18 @@ public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
     @Override
     public RenderShape getRenderShape(BlockState pState) {
         return RenderShape.MODEL;
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (!(level.getBlockEntity(pos) instanceof KegBlockEntity keg) || !keg.isFermenting())
+            return;
+        if (random.nextFloat() > FERMENTING_PARTICLE_CHANCE)
+            return;
+        double x = pos.getX() + 0.25D + random.nextDouble() * 0.5D;
+        double y = pos.getY() + 0.9D;
+        double z = pos.getZ() + 0.25D + random.nextDouble() * 0.5D;
+        level.addParticle(ParticleTypes.BUBBLE_POP, x, y, z, 0.0D, 0.03D, 0.0D);
     }
 
     @Override

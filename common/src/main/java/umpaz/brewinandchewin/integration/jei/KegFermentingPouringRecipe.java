@@ -22,7 +22,7 @@ public class KegFermentingPouringRecipe extends KegFermentingRecipe {
     private final int catalystAmount;
 
     KegFermentingPouringRecipe(ResourceLocation id, KegFermentingRecipe fermentingRecipe, @Nullable KegPouringRecipe pouringRecipe, HolderLookup.Provider provider) {
-        super(fermentingRecipe.getIngredients(), fermentingRecipe.getRecipeBookCategory(), fermentingRecipe.getFluidIngredient(), fermentingRecipe.getRawUnit(), fermentingRecipe.getResult(), fermentingRecipe.getExperience(), fermentingRecipe.getFermentTime(), fermentingRecipe.getTemperature());
+        super(fermentingRecipe.getIngredients(), fermentingRecipe.getRecipeBookCategory(), fermentingRecipe.getFluidIngredient(), fermentingRecipe.getRawUnit(), fermentingRecipe.getResult(), fermentingRecipe.getExperience(), fermentingRecipe.getTemperature());
         if (fermentingRecipe.getResult().right().isPresent()) {
             this.output = fermentingRecipe.getResult().right().get().copy();
         } else if (pouringRecipe != null) {

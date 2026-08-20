@@ -23,7 +23,7 @@ public class BnCCuttingBoardRecipes {
                 .build(consumer);
         BnCCuttingRecipeBuilder.cuttingRecipe(Ingredient.of(BnCItems.PIZZA), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), BnCItems.PIZZA_SLICE, 4)
                 .build(consumer);
-        BnCCuttingRecipeBuilder.cuttingRecipe(Ingredient.of(BnCItems.CHOCOLATE_CAKE), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), BnCItems.SLICE_OF_CHOCOLATE_CAKE, 6)
+        BnCCuttingRecipeBuilder.cuttingRecipe(Ingredient.of(BnCItems.RICH_CHOCOLATE_CAKE), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), BnCItems.SLICE_OF_RICH_CHOCOLATE_CAKE, 6)
                 .build(consumer);
         BnCCuttingRecipeBuilder.cuttingRecipe(Ingredient.of(BnCItems.GLOW_BERRY_MERINGUE_PIE), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), BnCItems.SLICE_OF_GLOW_BERRY_MERINGUE_PIE, 4)
                 .build(consumer);

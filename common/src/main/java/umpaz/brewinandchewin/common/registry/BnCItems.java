@@ -126,8 +126,8 @@ public class BnCItems {
 
     public static final Item HAM_AND_CHEESE_SANDWICH = new Item(new Item.Properties().food(BnCFoods.HAM_AND_CHEESE_SANDWICH));
 
-    public static final Item CHOCOLATE_CAKE = new BlockItem(BnCBlocks.CHOCOLATE_CAKE, new Item.Properties().stacksTo(1));
-    public static final Item SLICE_OF_CHOCOLATE_CAKE = new ConsumableItem(new Item.Properties().food(BnCFoods.CHOCOLATE_CAKE_SLICE));
+    public static final Item RICH_CHOCOLATE_CAKE = new BlockItem(BnCBlocks.RICH_CHOCOLATE_CAKE, new Item.Properties().stacksTo(1));
+    public static final Item SLICE_OF_RICH_CHOCOLATE_CAKE = new ConsumableItem(new Item.Properties().food(BnCFoods.RICH_CHOCOLATE_CAKE_SLICE));
     public static final Item GLOW_BERRY_MERINGUE_PIE = new BlockItem(BnCBlocks.GLOW_BERRY_MERINGUE_PIE, new Item.Properties().stacksTo(1));
     public static final Item SLICE_OF_GLOW_BERRY_MERINGUE_PIE = new ConsumableItem(new Item.Properties().food(BnCFoods.GLOW_BERRY_MERINGUE_PIE_SLICE));
     public static final Item PUMPKIN_ROLL = new BlockItem(BnCBlocks.PUMPKIN_ROLL, new Item.Properties().stacksTo(1));
@@ -153,7 +153,8 @@ public class BnCItems {
     public static final Item COOKED_CORN = new Item(new Item.Properties().food(BnCFoods.COOKED_CORN));
     public static final Item POPPED_CORN = new Item(new Item.Properties().food(BnCFoods.POPPED_CORN));
     public static final Item CANDIED_CORN = new Item(new Item.Properties().food(BnCFoods.CANDIED_CORN));
-    public static final Item CORN_KERNELS = new Item(new Item.Properties());
+    public static final Item CORN_KERNELS = new ItemNameBlockItem(BnCBlocks.CORN_CROP, new Item.Properties());
+    public static final Item WILD_CORN = new BlockItem(BnCBlocks.WILD_CORN, new Item.Properties());
     public static final Item CORNMEAL = new Item(new Item.Properties());
     public static final Item CORN_DOUGH = new ConsumableItem(new Item.Properties().food(BnCFoods.CORN_DOUGH));
     public static final Item RAW_MUFFIN = new ConsumableItem(new Item.Properties().food(BnCFoods.RAW_MUFFIN));
@@ -246,8 +247,8 @@ public class BnCItems {
 
         registerWithTab("rennet", RENNET);
 
-        registerWithTab("chocolate_cake", CHOCOLATE_CAKE);
-        registerWithTab("slice_of_chocolate_cake", SLICE_OF_CHOCOLATE_CAKE);
+        registerWithTab("rich_chocolate_cake", RICH_CHOCOLATE_CAKE);
+        registerWithTab("slice_of_rich_chocolate_cake", SLICE_OF_RICH_CHOCOLATE_CAKE);
         registerWithTab("glow_berry_meringue_pie", GLOW_BERRY_MERINGUE_PIE);
         registerWithTab("slice_of_glow_berry_meringue_pie", SLICE_OF_GLOW_BERRY_MERINGUE_PIE);
         registerWithTab("pumpkin_roll", PUMPKIN_ROLL);
@@ -274,6 +275,7 @@ public class BnCItems {
         registerWithTab("popped_corn", POPPED_CORN);
         registerWithTab("candied_corn", CANDIED_CORN);
         registerWithTab("corn_kernels", CORN_KERNELS);
+        registerWithTab("wild_corn", WILD_CORN);
         registerWithTab("cornmeal", CORNMEAL);
         registerWithTab("corn_dough", CORN_DOUGH);
         registerWithTab("raw_muffin", RAW_MUFFIN);

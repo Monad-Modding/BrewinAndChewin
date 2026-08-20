@@ -11,6 +11,10 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.ComposterBlock;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import umpaz.brewinandchewin.common.world.BnCBiomeFeatures;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.attachment.RagingAttachment;
 import umpaz.brewinandchewin.common.attachment.TipsyHeartsAttachment;
@@ -51,6 +55,7 @@ public class BrewinAndChewinFabric implements ModInitializer {
         registerContents();
         registerNetwork();
         registerCompostables();
+        registerWorldGeneration();
         registerFluidAttributeHandlers();
         ServerLifecycleEvents.SERVER_STARTING.register(server -> {
             BrewinAndChewinFabric.server = server;
@@ -128,6 +133,11 @@ public class BrewinAndChewinFabric implements ModInitializer {
         ServerPlayNetworking.registerGlobalReceiver(SetLabelContentsServerboundPacket.TYPE, (payload, context) -> payload.handle(context.player()));
     }
 
+    private static void registerWorldGeneration() {
+        BiomeModifications.addFeature(BiomeSelectors.tag(BnCBiomeFeatures.HAS_WILD_CORN),
+                GenerationStep.Decoration.VEGETAL_DECORATION, BnCBiomeFeatures.PLACED_WILD_CORN);
+    }
+
     private static void registerCompostables() {
         ComposterBlock.COMPOSTABLES.put(BnCItems.KIMCHI, 0.5F);
         ComposterBlock.COMPOSTABLES.put(BnCItems.PICKLED_PICKLES, 0.5F);
@@ -137,10 +147,10 @@ public class BrewinAndChewinFabric implements ModInitializer {
         ComposterBlock.COMPOSTABLES.put(BnCItems.WHITE_GRAPES, 0.65F);
         ComposterBlock.COMPOSTABLES.put(BnCItems.RED_GRAPE_SEEDS, 0.3F);
         ComposterBlock.COMPOSTABLES.put(BnCItems.WHITE_GRAPE_SEEDS, 0.3F);
-        ComposterBlock.COMPOSTABLES.put(BnCItems.CHOCOLATE_CAKE, 1.0F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.RICH_CHOCOLATE_CAKE, 1.0F);
         ComposterBlock.COMPOSTABLES.put(BnCItems.PUMPKIN_ROLL, 1.0F);
         ComposterBlock.COMPOSTABLES.put(BnCItems.GLOW_BERRY_MERINGUE_PIE, 1.0F);
-        ComposterBlock.COMPOSTABLES.put(BnCItems.SLICE_OF_CHOCOLATE_CAKE, 0.85F);
+        ComposterBlock.COMPOSTABLES.put(BnCItems.SLICE_OF_RICH_CHOCOLATE_CAKE, 0.85F);
         ComposterBlock.COMPOSTABLES.put(BnCItems.SLICE_OF_GLOW_BERRY_MERINGUE_PIE, 0.85F);
         ComposterBlock.COMPOSTABLES.put(BnCItems.SLICE_OF_PUMPKIN_ROLL, 0.85F);
         ComposterBlock.COMPOSTABLES.put(BnCItems.CORN_BREAD, 0.85F);

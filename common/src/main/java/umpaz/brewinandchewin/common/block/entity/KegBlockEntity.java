@@ -395,7 +395,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
             snapshotFermenting();
 
         ++fermentTime;
-        fermentTimeTotal = recipe.getFermentTime() * batches;
+        fermentTimeTotal = recipe.getFermentTime(batches);
         if (fermentTime < fermentTimeTotal) {
             setChanged();
             return false;
@@ -690,6 +690,10 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
             this.inventory.setStackInSlot(slot, ItemStack.EMPTY);
         clearFermenting();
         inventoryChanged();
+    }
+
+    public boolean isFermenting() {
+        return this.fermentTime > 0;
     }
 
     public AbstractedItemHandler getInventory() {

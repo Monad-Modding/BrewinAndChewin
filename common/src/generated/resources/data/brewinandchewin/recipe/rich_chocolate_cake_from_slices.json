@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "s": {
-      "item": "brewinandchewin:slice_of_chocolate_cake"
+      "item": "brewinandchewin:slice_of_rich_chocolate_cake"
     }
   },
   "pattern": [
@@ -12,6 +12,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "brewinandchewin:chocolate_cake"
+    "id": "brewinandchewin:rich_chocolate_cake"
   }
 }

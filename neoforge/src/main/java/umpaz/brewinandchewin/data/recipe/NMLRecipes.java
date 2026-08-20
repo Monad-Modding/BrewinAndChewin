@@ -44,8 +44,7 @@ public class NMLRecipes {
                 .unlockedBy("has_walnuts", InventoryChangeTrigger.TriggerInstance.hasItems(walnuts))
                 .save(conditional, BrewinAndChewin.asResource("rice_pudding"));
 
-        KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, item(NMLIntegration.MAPLE_FUDGE_ITEM), 2,
-                        KegFermentingRecipes.FERMENTING_TIME, KegFermentingRecipes.MEDIUM_EXP, COLD_TIER)
+        KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, item(NMLIntegration.MAPLE_FUDGE_ITEM), 2, KegFermentingRecipes.MEDIUM_EXP, COLD_TIER)
                 .addFluidIngredient(Tags.Fluids.MILK, BOTTLE, FluidUnit.MILLIBUCKET)
                 .setFluidUnit(FluidUnit.MILLIBUCKET)
                 .addIngredient(Items.SUGAR)

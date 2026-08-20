@@ -99,9 +99,9 @@ public class BnCItemTags extends ItemTagsProvider {
         tag(ModTags.Items.PIES)
                 .add(BnCItems.GLOW_BERRY_MERINGUE_PIE);
         tag(ModTags.Items.SWEETS)
-                .add(BnCItems.CHOCOLATE_CAKE)
+                .add(BnCItems.RICH_CHOCOLATE_CAKE)
                 .add(BnCItems.PUMPKIN_ROLL)
-                .add(BnCItems.SLICE_OF_CHOCOLATE_CAKE)
+                .add(BnCItems.SLICE_OF_RICH_CHOCOLATE_CAKE)
                 .add(BnCItems.SLICE_OF_GLOW_BERRY_MERINGUE_PIE)
                 .add(BnCItems.SLICE_OF_PUMPKIN_ROLL)
                 .add(BnCItems.GLOW_BROWNIE)
@@ -144,7 +144,7 @@ public class BnCItemTags extends ItemTagsProvider {
                 .add(BnCItems.GLOW_BERRY_MARMALADE)
                 .add(BnCItems.APPLE_JELLY)
                 .addTag(BnCTags.Items.FOOD_CHEESE_WEDGE)
-                .add(BnCItems.SLICE_OF_CHOCOLATE_CAKE)
+                .add(BnCItems.SLICE_OF_RICH_CHOCOLATE_CAKE)
                 .add(BnCItems.SLICE_OF_GLOW_BERRY_MERINGUE_PIE)
                 .add(BnCItems.SLICE_OF_PUMPKIN_ROLL)
                 .add(BnCItems.ASPIC_CUBE)
@@ -164,7 +164,7 @@ public class BnCItemTags extends ItemTagsProvider {
                 .add(BnCItems.FIERY_FONDUE_POT)
                 .add(BnCItems.PIZZA)
                 .add(BnCItems.QUICHE)
-                .add(BnCItems.CHOCOLATE_CAKE)
+                .add(BnCItems.RICH_CHOCOLATE_CAKE)
                 .add(BnCItems.PUMPKIN_ROLL)
                 .add(BnCItems.GLOW_BERRY_MERINGUE_PIE);
         tag(Tags.Items.FOODS)
@@ -180,6 +180,8 @@ public class BnCItemTags extends ItemTagsProvider {
                 .add(BnCItems.CROISSANT);
         tag(Tags.Items.FOODS_DOUGH)
                 .add(BnCItems.CORN_DOUGH);
+        tag(Tags.Items.CROPS)
+                .add(BnCItems.CORN);
         tag(Tags.Items.FOODS_VEGETABLE)
                 .add(BnCItems.CORN)
                 .add(BnCItems.COOKED_CORN);

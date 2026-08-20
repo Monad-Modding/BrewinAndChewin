@@ -1,0 +1,206 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:any_of",
+          "terms": [
+            {
+              "block": "brewinandchewin:corn_crop",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "0",
+                "section": "0"
+              }
+            },
+            {
+              "block": "brewinandchewin:corn_crop",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "1",
+                "section": "0"
+              }
+            },
+            {
+              "block": "brewinandchewin:corn_crop",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "2",
+                "section": "0"
+              }
+            },
+            {
+              "block": "brewinandchewin:corn_crop",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "3",
+                "section": "0"
+              }
+            },
+            {
+              "block": "brewinandchewin:corn_crop",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "4",
+                "section": "0"
+              }
+            }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "brewinandchewin:corn_kernels"
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:explosion_decay"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:any_of",
+          "terms": [
+            {
+              "block": "brewinandchewin:corn_crop",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "5",
+                "section": "0"
+              }
+            },
+            {
+              "block": "brewinandchewin:corn_crop",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "6",
+                "section": "0"
+              }
+            },
+            {
+              "block": "brewinandchewin:corn_crop",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "7",
+                "section": "0"
+              }
+            }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "brewinandchewin:corn"
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:explosion_decay"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "brewinandchewin:corn_crop",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "5",
+                "section": "0"
+              }
+            },
+            {
+              "chance": 0.33333334,
+              "condition": "minecraft:random_chance"
+            }
+          ],
+          "name": "brewinandchewin:corn"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "brewinandchewin:corn_crop",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "6",
+                "section": "0"
+              }
+            },
+            {
+              "chance": 0.6666667,
+              "condition": "minecraft:random_chance"
+            }
+          ],
+          "name": "brewinandchewin:corn"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "brewinandchewin:corn_crop",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "7",
+                "section": "0"
+              }
+            }
+          ],
+          "name": "brewinandchewin:corn"
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:explosion_decay"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "brewinandchewin:corn_crop",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "age": "7",
+            "section": "0"
+          }
+        },
+        {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "items": "#farmersdelight:straw_harvesters"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "farmersdelight:straw"
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:explosion_decay"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "brewinandchewin:blocks/corn_crop"
+}

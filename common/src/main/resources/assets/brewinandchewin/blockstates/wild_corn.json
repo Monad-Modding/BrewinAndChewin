@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "brewinandchewin:block/wild_corn_lower"
+    },
+    "half=upper": {
+      "model": "brewinandchewin:block/wild_corn_upper"
+    }
+  }
+}

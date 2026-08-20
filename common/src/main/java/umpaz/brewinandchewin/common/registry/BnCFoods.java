@@ -136,7 +136,7 @@ public class BnCFoods {
     public static final FoodProperties HAM_AND_CHEESE_SANDWICH = (new FoodProperties.Builder())
             .nutrition(9).saturationModifier(1.0F).build();
 
-    public static final FoodProperties CHOCOLATE_CAKE_SLICE = (new FoodProperties.Builder())
+    public static final FoodProperties RICH_CHOCOLATE_CAKE_SLICE = (new FoodProperties.Builder())
             .nutrition(2).saturationModifier(0.2F).fast()
             .effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 400, 0), 1.0F).build();
     public static final FoodProperties GLOW_BERRY_MERINGUE_PIE_SLICE = (new FoodProperties.Builder())

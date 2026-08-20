@@ -22,6 +22,8 @@ public abstract class ServerGamePacketListenerImplMixin {
     @ModifyVariable(method = "broadcastChatMessage", at = @At("HEAD"), argsOnly = true, order = 1500) // Run after other chat message modifications, to make sure we don't screw with them.
     public PlayerChatMessage brewinandchewin$modifyChatMessageForServer(PlayerChatMessage message) {
         ServerPlayer sender = player.getServer().getPlayerList().getPlayer(message.sender());
+        if (sender == null)
+            return message;
         if (sender.hasEffect(BnCEffects.TIPSY) && sender.getEffect(BnCEffects.TIPSY).getAmplifier() >= BnCConfiguration.common().root().levelChatScramble()) {
             ((ChatPlayerListAccess)player.getServer().getPlayerList()).brewinandchewin$setOriginalMessage(message.decoratedContent());
             long randomSeed = player.getRandom().nextLong();

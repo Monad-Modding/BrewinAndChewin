@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "brewinandchewin:item/chocolate_cake"
+    "layer0": "brewinandchewin:block/wild_corn_top"
   }
 }

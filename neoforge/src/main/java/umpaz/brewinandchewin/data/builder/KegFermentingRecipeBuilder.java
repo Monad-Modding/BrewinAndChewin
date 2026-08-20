@@ -41,42 +41,39 @@ public class KegFermentingRecipeBuilder {
     private Optional<FluidIngredientWithAmount> fluidIngredient = Optional.empty();
     private Optional<FluidUnit> unit = Optional.empty();
     private Either<AbstractedFluidStack, ItemStack> result = null;
-
-    private final int fermentingTime;
     private final float experience;
     private final int temperature;
     private final int amount;
 
     private final Advancement.Builder advancement = Advancement.Builder.advancement();
 
-    private KegFermentingRecipeBuilder(FermentingBookCategory tab, int amount, int fermentingTime, float experience, int temperature) {
-        this.fermentingTime = fermentingTime;
+    private KegFermentingRecipeBuilder(FermentingBookCategory tab, int amount, float experience, int temperature) {
         this.tab = tab;
         this.experience = experience;
         this.temperature = temperature;
         this.amount = amount;
     }
 
-    public static KegFermentingRecipeBuilder kegFermentingRecipe(FermentingBookCategory tab, Item item, int amount, int fermentingTime, float experience, int temperature) {
-        KegFermentingRecipeBuilder i = new KegFermentingRecipeBuilder(tab, amount, fermentingTime, experience, temperature);
+    public static KegFermentingRecipeBuilder kegFermentingRecipe(FermentingBookCategory tab, Item item, int amount, float experience, int temperature) {
+        KegFermentingRecipeBuilder i = new KegFermentingRecipeBuilder(tab, amount, experience, temperature);
         i.setResult(item);
         return i;
     }
 
-    public static KegFermentingRecipeBuilder kegFermentingRecipe(FermentingBookCategory tab, Fluid fluid, int amount, int fermentingTime, float experience, int temperature) {
-        KegFermentingRecipeBuilder i = new KegFermentingRecipeBuilder(tab, amount, fermentingTime, experience, temperature);
+    public static KegFermentingRecipeBuilder kegFermentingRecipe(FermentingBookCategory tab, Fluid fluid, int amount, float experience, int temperature) {
+        KegFermentingRecipeBuilder i = new KegFermentingRecipeBuilder(tab, amount, experience, temperature);
         i.setResult(fluid);
         return i;
     }
 
-    public static KegFermentingRecipeBuilder kegFermentingRecipe(FermentingBookCategory tab, Item item, int amount, int fermentingTime, float experience) {
-        KegFermentingRecipeBuilder i = new KegFermentingRecipeBuilder(tab, amount, fermentingTime, experience, 3);
+    public static KegFermentingRecipeBuilder kegFermentingRecipe(FermentingBookCategory tab, Item item, int amount, float experience) {
+        KegFermentingRecipeBuilder i = new KegFermentingRecipeBuilder(tab, amount, experience, 3);
         i.setResult(item);
         return i;
     }
 
-    public static KegFermentingRecipeBuilder kegFermentingRecipe(FermentingBookCategory tab, Fluid fluid, int amount, int fermentingTime, float experience) {
-        KegFermentingRecipeBuilder i = new KegFermentingRecipeBuilder(tab, amount, fermentingTime, experience, 3);
+    public static KegFermentingRecipeBuilder kegFermentingRecipe(FermentingBookCategory tab, Fluid fluid, int amount, float experience) {
+        KegFermentingRecipeBuilder i = new KegFermentingRecipeBuilder(tab, amount, experience, 3);
         i.setResult(fluid);
         return i;
     }
@@ -237,7 +234,7 @@ public class KegFermentingRecipeBuilder {
             builtAdvancement = advancement.build(advancementId);
         } else
             builtAdvancement = null;
-        consumerIn.accept(id, new KegFermentingRecipe(ingredients, tab, fluidIngredient, unit, result, experience, fermentingTime, temperature), builtAdvancement);
+        consumerIn.accept(id, new KegFermentingRecipe(ingredients, tab, fluidIngredient, unit, result, experience, temperature), builtAdvancement);
     }
 
 }

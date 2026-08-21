@@ -1,0 +1,37 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"2": "grapevine_red_0",
+		"particle": "trellis_middle"
+	},
+	"elements": [
+		{
+			"name": "grapevine_front",
+			"from": [0, 0, 7.75],
+			"to": [16, 16, 7.75],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 5.75]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#2"}
+			}
+		},
+		{
+			"name": "grapevine_back",
+			"from": [0, 0, 8.25],
+			"to": [16, 16, 8.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 6.25]},
+			"faces": {
+				"south": {"uv": [16, 0, 0, 16], "texture": "#2"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "group",
+			"origin": [8, 8, 8],
+			"scope": 0,
+			"color": 0,
+			"children": [0, 1]
+		}
+	]
+}

@@ -1,5 +1,6 @@
 package umpaz.brewinandchewin.integration.jei.category;
 
+import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IIngredientAcceptor;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -110,7 +111,7 @@ public class FermentingRecipeCategory implements IRecipeCategory<KegFermentingPo
         if (recipe.getFluidIngredient().isPresent()) {
             if (BnCConfiguration.client().renderFluidInKeg()) {
                 IRecipeSlotBuilder recipeSlot = builder.addSlot(RecipeIngredientRole.INPUT, 0, 2)
-                        .setFluidRenderer(BnCConfiguration.common().keg().localizedCapacity(), false, 26, 30)
+                        .setFluidRenderer(KegBlockEntity.localizedCapacity(), false, 26, 30)
                         .setOverlay(kegOverlay, 0, 0);
                 recipeSlot.addIngredients((IIngredientType) fluidHelper.getFluidIngredientType(), recipe.getFluidIngredient().get().ingredient().displayStacks().stream().map(abstractedFluidStack -> fluidHelper.create(abstractedFluidStack.fluid().builtInRegistryHolder(), recipe.getFluidIngredient().get().loaderAmount(), abstractedFluidStack.componentPatch())).toList());
             } else {
@@ -126,7 +127,7 @@ public class FermentingRecipeCategory implements IRecipeCategory<KegFermentingPo
                         return ItemStack.isSameItemSameComponents(itemDisplay, kegPouringRecipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
                     return ItemStack.isSameItem(itemDisplay, kegPouringRecipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
                 }).findFirst();
-                int pourCount = pouringRecipe.map(kegPouringRecipe -> (int)(Math.min(BnCConfiguration.common().keg().localizedCapacity(), recipe.getFluidIngredient().get().loaderAmount()) / kegPouringRecipe.getLoaderAmount())).orElse(1);
+                int pourCount = pouringRecipe.map(kegPouringRecipe -> (int)(Math.min(KegBlockEntity.localizedCapacity(), recipe.getFluidIngredient().get().loaderAmount()) / kegPouringRecipe.getLoaderAmount())).orElse(1);
                 itemDisplay.setCount(pourCount);
                 if (!itemDisplay.isEmpty()) {
                     itemSlot.addItemStack(itemDisplay);
@@ -152,7 +153,7 @@ public class FermentingRecipeCategory implements IRecipeCategory<KegFermentingPo
             if (BnCConfiguration.client().renderFluidInKeg()) {
                 builder.addSlot(RecipeIngredientRole.OUTPUT, 100, 2)
                         .addFluidStack(result.fluid(), recipe.getUnit().convertToLoader(result.amount()), result.components() instanceof PatchedDataComponentMap patched ? patched.asPatch() : DataComponentPatch.EMPTY)
-                        .setFluidRenderer(BnCConfiguration.common().keg().localizedCapacity(), false, 26, 30)
+                        .setFluidRenderer(KegBlockEntity.localizedCapacity(), false, 26, 30)
                         .setOverlay(kegOverlay, 0, 0);
             } else
                 builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT)
@@ -164,7 +165,7 @@ public class FermentingRecipeCategory implements IRecipeCategory<KegFermentingPo
                     return ItemStack.isSameItemSameComponents(itemDisplay, kegPouringRecipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
                 return ItemStack.isSameItem(itemDisplay, kegPouringRecipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
             }).findFirst();
-            int pourCount = pouringRecipe.map(kegPouringRecipe -> (int)(Math.min(BnCConfiguration.common().keg().localizedCapacity(), recipe.getFluidIngredient().get().loaderAmount()) / kegPouringRecipe.getLoaderAmount())).orElse(1);
+            int pourCount = pouringRecipe.map(kegPouringRecipe -> (int)(Math.min(KegBlockEntity.localizedCapacity(), recipe.getFluidIngredient().get().loaderAmount()) / kegPouringRecipe.getLoaderAmount())).orElse(1);
             itemDisplay.setCount(pourCount);
             if (!itemDisplay.isEmpty())
                 builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 105, 5)

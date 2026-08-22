@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "sss",
+    "s s",
+    "sss"
+  ],
+  "result": {
+    "count": 4,
+    "id": "brewinandchewin:trellis"
+  }
+}

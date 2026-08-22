@@ -1,0 +1,848 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "north",
+        "part": "single"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_single"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "single"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_single",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "single"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_single",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "single"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_single",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "bottom"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_bottom"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "bottom"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_bottom",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "bottom"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_bottom",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "bottom"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_bottom",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "middle"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_middle"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "middle"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_middle",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "middle"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_middle",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "middle"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_middle",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "part": "top"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_top"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "top"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_top",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "top"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_top",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "top"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_top",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_front": "red",
+        "age_front": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_0_front"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_front": "red",
+        "age_front": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_0_front",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_front": "red",
+        "age_front": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_0_front",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_front": "red",
+        "age_front": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_0_front",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_front": "red",
+        "age_front": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_1_front"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_front": "red",
+        "age_front": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_1_front",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_front": "red",
+        "age_front": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_1_front",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_front": "red",
+        "age_front": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_1_front",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_front": "red",
+        "age_front": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_2_front"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_front": "red",
+        "age_front": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_2_front",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_front": "red",
+        "age_front": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_2_front",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_front": "red",
+        "age_front": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_2_front",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_front": "red",
+        "age_front": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_3_front"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_front": "red",
+        "age_front": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_3_front",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_front": "red",
+        "age_front": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_3_front",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_front": "red",
+        "age_front": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_3_front",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_front": "white",
+        "age_front": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_0_front"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_front": "white",
+        "age_front": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_0_front",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_front": "white",
+        "age_front": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_0_front",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_front": "white",
+        "age_front": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_0_front",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_front": "white",
+        "age_front": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_1_front"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_front": "white",
+        "age_front": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_1_front",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_front": "white",
+        "age_front": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_1_front",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_front": "white",
+        "age_front": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_1_front",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_front": "white",
+        "age_front": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_2_front"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_front": "white",
+        "age_front": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_2_front",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_front": "white",
+        "age_front": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_2_front",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_front": "white",
+        "age_front": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_2_front",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_front": "white",
+        "age_front": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_3_front"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_front": "white",
+        "age_front": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_3_front",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_front": "white",
+        "age_front": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_3_front",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_front": "white",
+        "age_front": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_3_front",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_back": "red",
+        "age_back": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_0_back"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_back": "red",
+        "age_back": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_0_back",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_back": "red",
+        "age_back": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_0_back",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_back": "red",
+        "age_back": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_0_back",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_back": "red",
+        "age_back": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_1_back"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_back": "red",
+        "age_back": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_1_back",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_back": "red",
+        "age_back": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_1_back",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_back": "red",
+        "age_back": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_1_back",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_back": "red",
+        "age_back": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_2_back"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_back": "red",
+        "age_back": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_2_back",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_back": "red",
+        "age_back": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_2_back",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_back": "red",
+        "age_back": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_2_back",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_back": "red",
+        "age_back": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_3_back"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_back": "red",
+        "age_back": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_3_back",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_back": "red",
+        "age_back": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_3_back",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_back": "red",
+        "age_back": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_red_3_back",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_back": "white",
+        "age_back": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_0_back"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_back": "white",
+        "age_back": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_0_back",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_back": "white",
+        "age_back": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_0_back",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_back": "white",
+        "age_back": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_0_back",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_back": "white",
+        "age_back": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_1_back"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_back": "white",
+        "age_back": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_1_back",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_back": "white",
+        "age_back": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_1_back",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_back": "white",
+        "age_back": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_1_back",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_back": "white",
+        "age_back": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_2_back"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_back": "white",
+        "age_back": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_2_back",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_back": "white",
+        "age_back": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_2_back",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_back": "white",
+        "age_back": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_2_back",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "vine_back": "white",
+        "age_back": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_3_back"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "vine_back": "white",
+        "age_back": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_3_back",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "vine_back": "white",
+        "age_back": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_3_back",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "vine_back": "white",
+        "age_back": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/trellis_vines_white_3_back",
+        "y": 270
+      }
+    }
+  ]
+}

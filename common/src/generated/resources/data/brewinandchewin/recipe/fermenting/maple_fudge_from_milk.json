@@ -20,9 +20,11 @@
       "item": "minecraft:sugar"
     },
     {
+      "item": "minecraft:sugar"
+    },
+    {
       "item": "nomansland:maple_syrup_bottle"
     },
-    [],
     []
   ],
   "result": {

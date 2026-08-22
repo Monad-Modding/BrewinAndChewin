@@ -27,9 +27,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCon
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import umpaz.brewinandchewin.common.block.CoasterBlock;
-import umpaz.brewinandchewin.common.block.DistilleryBlock;
-import umpaz.brewinandchewin.common.block.DistilleryPart;
-import umpaz.brewinandchewin.common.block.GrapeVineBlock;
+import umpaz.brewinandchewin.common.block.GrapeBushBlock;
 import umpaz.brewinandchewin.common.registry.BnCBlocks;
 import umpaz.brewinandchewin.common.registry.BnCItems;
 import umpaz.brewinandchewin.common.loot.function.CopyDrinkFunction;
@@ -49,6 +47,8 @@ public class BnCBlockLoot extends BlockLootSubProvider {
     protected void generate() {
         add(BnCBlocks.KEG, (block) -> LootTable.lootTable().withPool(this.applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block)
                 .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY)).apply(CopyDrinkFunction.builder())))));
+        dropSelf(BnCBlocks.TRELLIS);
+        add(BnCBlocks.TRELLIS_GRAPE, noDrop());
         dropSelf(BnCBlocks.HEATING_CASK);
         dropSelf(BnCBlocks.ICE_CRATE);
         dropSelf(BnCBlocks.UNRIPE_FLAXEN_CHEESE_WHEEL);
@@ -60,14 +60,14 @@ public class BnCBlockLoot extends BlockLootSubProvider {
 
         dropSelf(BnCBlocks.AGING_CASK);
         dropSelf(BnCBlocks.BOTTLE_RACK);
-        add(BnCBlocks.DISTILLERY, (block) -> LootTable.lootTable().withPool(this.applyExplosionCondition(block,
-                LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(BnCItems.DISTILLERY))
-                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DistilleryBlock.PART, DistilleryPart.BURNER))))));
         add(BnCBlocks.CORN_CROP, this::createCornCropDrops);
         add(BnCBlocks.WILD_CORN, this::createWildCornDrops);
-        add(BnCBlocks.RED_GRAPE_VINE, (block) -> this.createGrapeVineDrops(block, BnCItems.RED_GRAPES, BnCItems.RED_GRAPE_SEEDS));
-        add(BnCBlocks.WHITE_GRAPE_VINE, (block) -> this.createGrapeVineDrops(block, BnCItems.WHITE_GRAPES, BnCItems.WHITE_GRAPE_SEEDS));
+        add(BnCBlocks.RED_GRAPE_BUSH, (block) -> this.createGrapeBushDrops(block, BnCItems.RED_GRAPE_SEEDS));
+        add(BnCBlocks.WHITE_GRAPE_BUSH, (block) -> this.createGrapeBushDrops(block, BnCItems.WHITE_GRAPE_SEEDS));
+        add(BnCBlocks.RED_ROPE_GRAPE, noDrop());
+        add(BnCBlocks.WHITE_ROPE_GRAPE, noDrop());
+        add(BnCBlocks.RED_GRAPE_STEM, noDrop());
+        add(BnCBlocks.WHITE_GRAPE_STEM, noDrop());
     }
 
     private static final float WILD_CORN_DROP_CHANCE = 0.25F;
@@ -125,14 +125,10 @@ public class BnCBlockLoot extends BlockLootSubProvider {
                         .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ModTags.Items.STRAW_HARVESTERS)))));
     }
 
-    private LootTable.Builder createGrapeVineDrops(Block block, Item grapes, Item seeds) {
+    private LootTable.Builder createGrapeBushDrops(Block block, Item seeds) {
         return LootTable.lootTable()
                 .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(seeds))))
-                .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(grapes).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
-                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(GrapeVineBlock.AGE, GrapeVineBlock.MAX_AGE)))));
+                        .add(LootItem.lootTableItem(seeds))));
     }
 
     @Override

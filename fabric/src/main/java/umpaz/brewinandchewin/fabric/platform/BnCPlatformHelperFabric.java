@@ -43,19 +43,16 @@ import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.common.attachment.RagingAttachment;
 import umpaz.brewinandchewin.common.attachment.TipsyHeartsAttachment;
 import umpaz.brewinandchewin.common.block.entity.AgingCaskBlockEntity;
-import umpaz.brewinandchewin.common.block.entity.DistilleryBlockEntity;
 import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.container.AbstractedFluidTank;
 import umpaz.brewinandchewin.common.container.AbstractedItemHandler;
 import umpaz.brewinandchewin.common.block.entity.container.AgingCaskMenu;
-import umpaz.brewinandchewin.common.block.entity.container.DistilleryMenu;
 import umpaz.brewinandchewin.common.block.entity.container.KegMenu;
 import umpaz.brewinandchewin.common.block.entity.container.KegStackedContents;
 import umpaz.brewinandchewin.common.block.entity.container.SidedKegWrapper;
 import umpaz.brewinandchewin.common.utility.*;
 import umpaz.brewinandchewin.fabric.BrewinAndChewinFabric;
 import umpaz.brewinandchewin.fabric.block.entity.AgingCaskBlockEntityFabric;
-import umpaz.brewinandchewin.fabric.block.entity.DistilleryBlockEntityFabric;
 import umpaz.brewinandchewin.fabric.block.entity.KegBlockEntityFabric;
 import umpaz.brewinandchewin.fabric.container.KegFluidItemStorageFabric;
 import umpaz.brewinandchewin.fabric.container.KegFluidTankFabric;
@@ -135,10 +132,6 @@ public class BnCPlatformHelperFabric implements BnCPlatformHelper {
         return KegBlockEntityFabric::new;
     }
 
-    @Override
-    public BlockEntityType.BlockEntitySupplier<DistilleryBlockEntity> supplyDistilleryBlockEntity() {
-        return DistilleryBlockEntityFabric::new;
-    }
 
     @Override
     public BlockEntityType.BlockEntitySupplier<AgingCaskBlockEntity> supplyAgingCaskBlockEntity() {
@@ -150,10 +143,6 @@ public class BnCPlatformHelperFabric implements BnCPlatformHelper {
         return new ExtendedScreenHandlerType<>(KegMenu::new, BlockPos.STREAM_CODEC);
     }
 
-    @Override
-    public MenuType<DistilleryMenu> createDistilleryMenuType(BnCMenuConstructor<DistilleryMenu> constructor) {
-        return new ExtendedScreenHandlerType<>(DistilleryMenu::new, BlockPos.STREAM_CODEC);
-    }
 
     @Override
     public MenuType<AgingCaskMenu> createAgingCaskMenuType(BnCMenuConstructor<AgingCaskMenu> constructor) {

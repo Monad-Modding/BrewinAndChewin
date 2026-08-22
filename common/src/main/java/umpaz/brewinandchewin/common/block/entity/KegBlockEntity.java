@@ -65,6 +65,8 @@ import java.util.Optional;
 
 public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, Nameable, RecipeCraftingHolder, Clearable {
 
+    public static final long FLUID_CAPACITY = 4000L;
+
     public static final int CONTAINER_SLOT = 4;
     public static final int OUTPUT_SLOT = 5;
     public static final int INVENTORY_SIZE = OUTPUT_SLOT + 1;
@@ -692,6 +694,10 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         inventoryChanged();
     }
 
+    public static long localizedCapacity() {
+        return FluidUnit.convert(FLUID_CAPACITY, FluidUnit.MILLIBUCKET, FluidUnit.getLoaderUnit());
+    }
+
     public boolean isFermenting() {
         return this.fermentTime > 0;
     }
@@ -755,7 +761,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
     }
 
     private AbstractedFluidTank createFluidTank() {
-        return BrewinAndChewin.getHelper().createKegTank(BnCConfiguration.common().keg().localizedCapacity(), () -> {
+        return BrewinAndChewin.getHelper().createKegTank(localizedCapacity(), () -> {
             AbstractedItemHandler handler = KegBlockEntity.this.inventory;
             if (!getLevel().isClientSide() && !currentlyOperating && !deferFluidExtraction) {
                 List<ItemStack> out = KegBlockEntity.this.extractInGui(handler.getStackInSlot(CONTAINER_SLOT), handler.getSlotLimit(OUTPUT_SLOT));

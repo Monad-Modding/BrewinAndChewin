@@ -17,6 +17,7 @@
     "NbtUtilsMixin",
     "PlayerListMixin",
     "PlayerMixin",
+    "RopeBlockMixin",
     "ServerGamePacketListenerImplMixin",
     "ServerPlaceRecipeAccessor",
     "ServerRecipeBookMixin",

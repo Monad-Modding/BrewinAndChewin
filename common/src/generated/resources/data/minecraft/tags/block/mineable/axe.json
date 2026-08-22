@@ -1,8 +1,12 @@
 {
   "values": [
+    "brewinandchewin:trellis",
+    "brewinandchewin:trellis_grape",
     "brewinandchewin:keg",
     "brewinandchewin:heating_cask",
     "brewinandchewin:ice_crate",
-    "brewinandchewin:coaster"
+    "brewinandchewin:coaster",
+    "brewinandchewin:aging_cask",
+    "brewinandchewin:bottle_rack"
   ]
 }

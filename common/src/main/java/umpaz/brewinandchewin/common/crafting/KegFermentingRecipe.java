@@ -1,5 +1,6 @@
 package umpaz.brewinandchewin.common.crafting;
 
+import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -163,7 +164,7 @@ public class KegFermentingRecipe implements Recipe<KegRecipeWrapper> {
         if (result.right().isPresent())
             return result.right().get().copy();
         if (result.left().isPresent())
-            return BnCRecipeUtils.getPouredItemFromFluid(new AbstractedFluidStack(result.left().get().fluid(), BnCConfiguration.common().keg().localizedCapacity(), result.left().get().components(), BnCConfiguration.common().keg().capacityUnit(), null));
+            return BnCRecipeUtils.getPouredItemFromFluid(new AbstractedFluidStack(result.left().get().fluid(), KegBlockEntity.localizedCapacity(), result.left().get().components(), FluidUnit.MILLIBUCKET, null));
         return ItemStack.EMPTY;
     }
 

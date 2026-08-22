@@ -1,0 +1,295 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "farmersdelight:block/rope_post"
+      }
+    },
+    {
+      "when": {
+        "axis": "z"
+      },
+      "apply": {
+        "model": "farmersdelight:block/rope_side"
+      }
+    },
+    {
+      "when": {
+        "axis": "z"
+      },
+      "apply": {
+        "model": "farmersdelight:block/rope_side_alt"
+      }
+    },
+    {
+      "when": {
+        "axis": "x"
+      },
+      "apply": {
+        "model": "farmersdelight:block/rope_side",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x"
+      },
+      "apply": {
+        "model": "farmersdelight:block/rope_side_alt",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "part": "stem",
+        "age": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_stem_red_0"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "part": "stem",
+        "age": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_stem_red_0",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "part": "stem",
+        "age": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_stem_red_1"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "part": "stem",
+        "age": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_stem_red_1",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "part": "stem",
+        "age": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_stem_red_2"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "part": "stem",
+        "age": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_stem_red_2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "part": "stem",
+        "age": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_stem_red_3"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "part": "stem",
+        "age": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_stem_red_3",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "part": "small",
+        "age": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_small_red_0"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "part": "small",
+        "age": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_small_red_0",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "part": "small",
+        "age": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_small_red_1"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "part": "small",
+        "age": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_small_red_1",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "part": "small",
+        "age": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_small_red_2"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "part": "small",
+        "age": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_small_red_2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "part": "small",
+        "age": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_small_red_3"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "part": "small",
+        "age": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_small_red_3",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "part": "big",
+        "age": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_big_red_0"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "part": "big",
+        "age": "0"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_big_red_0",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "part": "big",
+        "age": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_big_red_1"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "part": "big",
+        "age": "1"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_big_red_1",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "part": "big",
+        "age": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_big_red_2"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "part": "big",
+        "age": "2"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_big_red_2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "part": "big",
+        "age": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_big_red_3"
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "part": "big",
+        "age": "3"
+      },
+      "apply": {
+        "model": "brewinandchewin:block/grape_big_red_3",
+        "y": 90
+      }
+    }
+  ]
+}

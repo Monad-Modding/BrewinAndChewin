@@ -1,5 +1,6 @@
 package umpaz.brewinandchewin.integration.emi.widget;
 
+import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.Bounds;
@@ -96,7 +97,7 @@ public class BnCFluidWidget extends SlotWidget {
                     return ItemStack.isSameItemSameComponents(itemDisplay, kegPouringRecipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
                 return ItemStack.isSameItem(itemDisplay, kegPouringRecipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
             }).findFirst();
-            int pourCount = pouringRecipe.map(kegPouringRecipe -> (int) (Math.min(FluidUnit.convert(BnCConfiguration.common().keg().capacity(), BnCConfiguration.common().keg().capacityUnit(), FluidUnit.getLoaderUnit()), fluidStack.amount()) / kegPouringRecipe.getLoaderAmount())).orElse(1);
+            int pourCount = pouringRecipe.map(kegPouringRecipe -> (int) (Math.min(KegBlockEntity.localizedCapacity(), fluidStack.amount()) / kegPouringRecipe.getLoaderAmount())).orElse(1);
             itemDisplay.setCount(pourCount);
             itemIngredient = EmiStack.of(itemDisplay);
             invalidateItemStack = false;

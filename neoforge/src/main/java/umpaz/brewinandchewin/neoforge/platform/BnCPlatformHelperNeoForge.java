@@ -45,12 +45,10 @@ import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.common.attachment.RagingAttachment;
 import umpaz.brewinandchewin.common.attachment.TipsyHeartsAttachment;
 import umpaz.brewinandchewin.common.block.entity.AgingCaskBlockEntity;
-import umpaz.brewinandchewin.common.block.entity.DistilleryBlockEntity;
 import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.container.AbstractedFluidTank;
 import umpaz.brewinandchewin.common.container.AbstractedItemHandler;
 import umpaz.brewinandchewin.common.block.entity.container.AgingCaskMenu;
-import umpaz.brewinandchewin.common.block.entity.container.DistilleryMenu;
 import umpaz.brewinandchewin.common.block.entity.container.KegMenu;
 import umpaz.brewinandchewin.common.block.entity.container.KegStackedContents;
 import umpaz.brewinandchewin.common.block.entity.container.SidedKegWrapper;
@@ -116,10 +114,6 @@ public class BnCPlatformHelperNeoForge implements BnCPlatformHelper {
         return IMenuTypeExtension.create((id, inv, data) -> new KegMenu(id, inv, data.readBlockPos()));
     }
 
-    @Override
-    public MenuType<DistilleryMenu> createDistilleryMenuType(BnCMenuConstructor<DistilleryMenu> constructor) {
-        return IMenuTypeExtension.create((id, inv, data) -> new DistilleryMenu(id, inv, data.readBlockPos()));
-    }
 
     @Override
     public MenuType<AgingCaskMenu> createAgingCaskMenuType(BnCMenuConstructor<AgingCaskMenu> constructor) {
@@ -197,10 +191,6 @@ public class BnCPlatformHelperNeoForge implements BnCPlatformHelper {
         return KegBlockEntity::new;
     }
 
-    @Override
-    public BlockEntityType.BlockEntitySupplier<DistilleryBlockEntity> supplyDistilleryBlockEntity() {
-        return DistilleryBlockEntity::new;
-    }
 
     @Override
     public BlockEntityType.BlockEntitySupplier<AgingCaskBlockEntity> supplyAgingCaskBlockEntity() {

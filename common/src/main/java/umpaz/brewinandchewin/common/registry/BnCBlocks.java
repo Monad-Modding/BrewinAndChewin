@@ -26,9 +26,26 @@ public class BnCBlocks {
     public static final Block BOTTLE_RACK = new BottleRackBlock(
             BlockBehaviour.Properties.ofFullCopy(Blocks.CHISELED_BOOKSHELF).noOcclusion());
 
-    public static final Block DISTILLERY = new DistilleryBlock(
-            BlockBehaviour.Properties.ofFullCopy(Blocks.BLAST_FURNACE).noOcclusion()
-                    .lightLevel(state -> state.getValue(DistilleryBlock.LIT) ? 13 : 0));
+    public static final Block RED_GRAPE_BUSH = new GrapeBushBlock(
+            GrapeColour.RED, BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT));
+    public static final Block WHITE_GRAPE_BUSH = new GrapeBushBlock(
+            GrapeColour.WHITE, BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT));
+
+    public static final Block RED_GRAPE_STEM = new GrapeStemBlock(
+            GrapeColour.RED, BlockBehaviour.Properties.ofFullCopy(Blocks.VINE).noOcclusion());
+    public static final Block WHITE_GRAPE_STEM = new GrapeStemBlock(
+            GrapeColour.WHITE, BlockBehaviour.Properties.ofFullCopy(Blocks.VINE).noOcclusion());
+
+    public static final Block RED_ROPE_GRAPE = new RopeGrapeBlock(
+            GrapeColour.RED, BlockBehaviour.Properties.ofFullCopy(Blocks.VINE).randomTicks());
+    public static final Block WHITE_ROPE_GRAPE = new RopeGrapeBlock(
+            GrapeColour.WHITE, BlockBehaviour.Properties.ofFullCopy(Blocks.VINE).randomTicks());
+
+    public static final Block TRELLIS = new TrellisBlock(
+            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR).noOcclusion());
+
+    public static final Block TRELLIS_GRAPE = new TrellisGrapeBlock(
+            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR).noOcclusion().randomTicks());
 
     public static final Block WILD_CORN = new WildCornBlock(
             BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS));
@@ -36,11 +53,7 @@ public class BnCBlocks {
     public static final Block CORN_CROP = new CornCropBlock(
             BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT));
 
-    public static final Block RED_GRAPE_VINE = new GrapeVineBlock(
-            () -> BnCItems.RED_GRAPES, BlockBehaviour.Properties.ofFullCopy(Blocks.VINE).randomTicks());
 
-    public static final Block WHITE_GRAPE_VINE = new GrapeVineBlock(
-            () -> BnCItems.WHITE_GRAPES, BlockBehaviour.Properties.ofFullCopy(Blocks.VINE).randomTicks());
 
     //Cheese
     public static final Block UNRIPE_FLAXEN_CHEESE_WHEEL = new
@@ -86,11 +99,16 @@ public class BnCBlocks {
 
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("aging_cask"), AGING_CASK);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("bottle_rack"), BOTTLE_RACK);
-        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("distillery"), DISTILLERY);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("red_grape_bush"), RED_GRAPE_BUSH);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("white_grape_bush"), WHITE_GRAPE_BUSH);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("red_grape_stem"), RED_GRAPE_STEM);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("white_grape_stem"), WHITE_GRAPE_STEM);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("red_rope_grape"), RED_ROPE_GRAPE);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("white_rope_grape"), WHITE_ROPE_GRAPE);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("trellis"), TRELLIS);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("trellis_grape"), TRELLIS_GRAPE);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("corn_crop"), CORN_CROP);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("wild_corn"), WILD_CORN);
-        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("red_grape_vine"), RED_GRAPE_VINE);
-        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("white_grape_vine"), WHITE_GRAPE_VINE);
 
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("unripe_flaxen_cheese_wheel"), UNRIPE_FLAXEN_CHEESE_WHEEL);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("flaxen_cheese_wheel"), FLAXEN_CHEESE_WHEEL);

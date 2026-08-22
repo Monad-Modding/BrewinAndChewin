@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "brewinandchewin:block/grape_bush_white_0"
+    },
+    "age=1": {
+      "model": "brewinandchewin:block/grape_bush_white_1"
+    },
+    "age=2": {
+      "model": "brewinandchewin:block/grape_bush_white_2"
+    }
+  }
+}

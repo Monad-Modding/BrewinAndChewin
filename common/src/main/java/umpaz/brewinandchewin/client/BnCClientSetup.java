@@ -116,11 +116,16 @@ public class BnCClientSetup {
     public static void registerRenderTypes(BiConsumer<Block, RenderType> consumer) {
         consumer.accept(BnCBlocks.AGING_CASK, RenderType.cutout());
         consumer.accept(BnCBlocks.BOTTLE_RACK, RenderType.cutout());
-        consumer.accept(BnCBlocks.DISTILLERY, RenderType.cutout());
         consumer.accept(BnCBlocks.CORN_CROP, RenderType.cutout());
         consumer.accept(BnCBlocks.WILD_CORN, RenderType.cutout());
-        consumer.accept(BnCBlocks.RED_GRAPE_VINE, RenderType.cutout());
-        consumer.accept(BnCBlocks.WHITE_GRAPE_VINE, RenderType.cutout());
+        consumer.accept(BnCBlocks.TRELLIS, RenderType.cutout());
+        consumer.accept(BnCBlocks.TRELLIS_GRAPE, RenderType.cutout());
+        consumer.accept(BnCBlocks.RED_GRAPE_BUSH, RenderType.cutout());
+        consumer.accept(BnCBlocks.WHITE_GRAPE_BUSH, RenderType.cutout());
+        consumer.accept(BnCBlocks.RED_GRAPE_STEM, RenderType.cutout());
+        consumer.accept(BnCBlocks.WHITE_GRAPE_STEM, RenderType.cutout());
+        consumer.accept(BnCBlocks.RED_ROPE_GRAPE, RenderType.cutout());
+        consumer.accept(BnCBlocks.WHITE_ROPE_GRAPE, RenderType.cutout());
     }
 
     public static void registerParticles(BiConsumer<ParticleType<?>, ParticleEngine.SpriteParticleRegistration> consumer) {

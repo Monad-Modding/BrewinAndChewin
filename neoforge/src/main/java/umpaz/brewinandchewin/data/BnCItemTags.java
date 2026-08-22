@@ -68,7 +68,6 @@ public class BnCItemTags extends ItemTagsProvider {
                 .add(BnCItems.GLOW_BERRY_MARMALADE)
                 .add(BnCItems.APPLE_JELLY);
         tag(BnCTags.Items.HAGGIS_MEAT)
-                .add(BnCItems.COOKED_SAUSAGE)
                 .add(BnCItems.RAW_SAUSAGE)
                 .addOptionalTag(CommonTags.Items.FOODS_RAW_MUTTON);
         tag(BnCTags.Items.HAGGIS_VEGETABLE)

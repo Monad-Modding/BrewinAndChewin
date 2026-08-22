@@ -19,7 +19,6 @@ import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import umpaz.brewinandchewin.client.BnCClientSetup;
 import umpaz.brewinandchewin.client.BrewinAndChewinClient;
 import umpaz.brewinandchewin.client.gui.AgingCaskScreen;
-import umpaz.brewinandchewin.client.gui.DistilleryScreen;
 import umpaz.brewinandchewin.client.gui.KegScreen;
 import umpaz.brewinandchewin.client.gui.KegTooltip;
 import umpaz.brewinandchewin.common.mixin.client.ModelBakeryAccessor;
@@ -56,7 +55,6 @@ public class BrewinAndChewinNeoForgeClient {
         @SubscribeEvent
         public static void registerMenuScreens(RegisterMenuScreensEvent event) {
             event.register(BnCMenuTypes.KEG, KegScreen::new);
-            event.register(BnCMenuTypes.DISTILLERY, DistilleryScreen::new);
             event.register(BnCMenuTypes.AGING_CASK, AgingCaskScreen::new);
         }
 

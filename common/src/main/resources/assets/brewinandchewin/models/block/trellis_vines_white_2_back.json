@@ -1,0 +1,52 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": false,
+  "textures": {
+    "2": "brewinandchewin:block/trellis/grapevine_white_2",
+    "particle": "brewinandchewin:block/trellis/grapevine_white_2"
+  },
+  "elements": [
+    {
+      "name": "grapevine_back",
+      "from": [
+        0,
+        0,
+        8.25
+      ],
+      "to": [
+        16,
+        16,
+        8.25
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          0,
+          6.25
+        ]
+      },
+      "faces": {
+        "south": {
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ],
+          "texture": "#2"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#2"
+        }
+      }
+    }
+  ]
+}

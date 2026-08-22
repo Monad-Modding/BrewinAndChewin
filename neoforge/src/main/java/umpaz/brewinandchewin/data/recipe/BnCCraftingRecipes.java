@@ -20,6 +20,14 @@ public class BnCCraftingRecipes {
     }
 
     private static void recipes(RecipeOutput consumer) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BnCItems.TRELLIS, 4)
+                .pattern("sss")
+                .pattern("s s")
+                .pattern("sss")
+                .define('s', Items.STICK)
+                .unlockedBy("has_stick", InventoryChangeTrigger.TriggerInstance.hasItems(Items.STICK))
+                .save(consumer, BrewinAndChewin.asResource("trellis"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, BnCItems.RICH_CHOCOLATE_CAKE)
                 .pattern("msm")
                 .pattern("ccc")
@@ -265,16 +273,6 @@ public class BnCCraftingRecipes {
                 .unlockedBy("has_honeycomb", InventoryChangeTrigger.TriggerInstance.hasItems(Items.HONEYCOMB))
                 .save(consumer, BrewinAndChewin.asResource("bottle_rack"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BnCItems.DISTILLERY, 1)
-                .pattern("cc ")
-                .pattern("chc")
-                .pattern("f b")
-                .define('c', Items.COPPER_INGOT)
-                .define('h', Items.HONEYCOMB)
-                .define('f', Items.FURNACE)
-                .define('b', Items.BUCKET)
-                .unlockedBy("has_honeycomb", InventoryChangeTrigger.TriggerInstance.hasItems(Items.HONEYCOMB))
-                .save(consumer, BrewinAndChewin.asResource("distillery"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, BnCItems.LABEL, 3)
                 .requires(Items.PAPER)

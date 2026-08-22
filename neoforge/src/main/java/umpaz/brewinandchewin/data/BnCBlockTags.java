@@ -35,16 +35,23 @@ public class BnCBlockTags extends BlockTagsProvider
 
     protected void registerBlockMineables() {
         tag(BlockTags.MINEABLE_WITH_AXE).add(
+                BnCBlocks.TRELLIS,
+                BnCBlocks.TRELLIS_GRAPE,
                 BnCBlocks.KEG,
                 BnCBlocks.HEATING_CASK,
                 BnCBlocks.ICE_CRATE,
-                BnCBlocks.COASTER
+                BnCBlocks.COASTER,
+                BnCBlocks.AGING_CASK,
+                BnCBlocks.BOTTLE_RACK
         );
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
                 BnCBlocks.FIERY_FONDUE_POT
         );
         tag(ModTags.Blocks.MINEABLE_WITH_KNIFE).add(
                 BnCBlocks.COASTER,
+                BnCBlocks.RICH_CHOCOLATE_CAKE,
+                BnCBlocks.PUMPKIN_ROLL,
+                BnCBlocks.GLOW_BERRY_MERINGUE_PIE,
                 BnCBlocks.UNRIPE_FLAXEN_CHEESE_WHEEL,
                 BnCBlocks.FLAXEN_CHEESE_WHEEL,
                 BnCBlocks.UNRIPE_SCARLET_CHEESE_WHEEL,

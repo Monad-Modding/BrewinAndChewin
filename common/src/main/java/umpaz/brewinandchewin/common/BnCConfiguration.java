@@ -94,45 +94,14 @@ public class BnCConfiguration {
             );
         }
 
-        public record Keg(FluidUnit capacityUnit, long capacity,
-                          int cold, int chilly, int warm, int hot,
+        public record Keg(int cold, int chilly, int warm, int hot,
                           boolean biomeTemp, boolean dimTemp) {
             public static final Keg DEFAULT = new Keg(
-                    platformSpecificValue(FluidUnit.MILLIBUCKET, FluidUnit.DROPLET),
-                    platformSpecificValue(4000L, 324000L),
                     2, 1, 1, 2,
                     true, true
             );
 
-            /**
-             * The fluid capacity localized for the mod loader.
-             */
-            public long localizedCapacity() {
-                return capacityUnit.convertToLoader(capacity);
-            }
-
             public static final Codec<Keg> CODEC = OrderCorrectedRecordCodec.wrap(RecordCodecBuilder.create(inst -> inst.group(
-                    DefaultFieldUtil.codecWithComments(
-                            FluidUnit.CODEC,
-                            "kegCapacityUnit",
-                            DEFAULT.capacityUnit(),
-                            "Which unit the capacity field should use.",
-                            "Should be 'liters', 'millibuckets' or 'droplets'",
-                            "1 L = 1 mB = 81 d",
-                            "Default: " + DEFAULT.capacityUnit().getSerializedName()
-                    ).forGetter(Keg::capacityUnit),
-                    DefaultFieldUtil.codecWithComments(
-                            Codec.LONG.validate(l -> {
-                                if (l < 0)
-                                    return DataResult.error(() -> "Keg capacity cannot be below 0.");
-                                return DataResult.success(l);
-                            }),
-                            "kegCapacity",
-                            DEFAULT.capacity(),
-                            "How much fluid (unit specified by capacityUnit) can the Keg hold?",
-                            "Range: 1 ~ "  + FluidUnit.convert(10000L, FluidUnit.MILLIBUCKET, DEFAULT.capacityUnit()),
-                            "Default: " + DEFAULT.capacity() + "(" + DEFAULT.capacityUnit().getSerializedName() + ")"
-                    ).forGetter(Keg::capacity),
                     DefaultFieldUtil.codecWithComments(
                             ExtraCodecs.POSITIVE_INT,
                             "kegCold",
@@ -180,15 +149,12 @@ public class BnCConfiguration {
 
             public Keg(ByteBuf buf) {
                 this(
-                        FluidUnit.STREAM_CODEC.decode(buf), buf.readLong(),
                         buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(),
                         buf.readBoolean(), buf.readBoolean()
                 );
             }
 
             public static void encode(ByteBuf buf, Keg keg) {
-                FluidUnit.STREAM_CODEC.encode(buf, keg.capacityUnit());
-                buf.writeLong(keg.capacity);
                 buf.writeInt(keg.cold);
                 buf.writeInt(keg.chilly);
                 buf.writeInt(keg.warm);

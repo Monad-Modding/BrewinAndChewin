@@ -1,41 +1,129 @@
 {
-	"format_version": "1.21.11",
-	"credit": "Made with Blockbench",
-	"textures": {
-		"0": "trellis_top",
-		"1": "trellis_boards",
-		"particle": "trellis_top"
-	},
-	"elements": [
-		{
-			"from": [0, 0, 8],
-			"to": [16, 16, 8],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 6]},
-			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#0"}
-			}
-		},
-		{
-			"from": [0, 14, 7],
-			"to": [16, 16, 9],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 14, 7]},
-			"faces": {
-				"north": {"uv": [0, 2, 16, 4], "texture": "#1"},
-				"east": {"uv": [10, 11, 12, 13], "texture": "#1"},
-				"south": {"uv": [16, 2, 0, 4], "texture": "#1"},
-				"west": {"uv": [10, 11, 12, 13], "texture": "#1"},
-				"up": {"uv": [16, 2, 0, 0], "texture": "#1"},
-				"down": {"uv": [16, 3, 0, 5], "texture": "#1"}
-			}
-		}
-	],
-	"groups": [
-		{
-			"name": "group",
-			"origin": [8, 8, 8],
-			"scope": 0,
-			"color": 0,
-			"children": [0, 1]
-		}
-	]
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": false,
+  "textures": {
+    "0": "brewinandchewin:block/trellis/trellis_top",
+    "1": "brewinandchewin:block/trellis/trellis_boards",
+    "particle": "brewinandchewin:block/trellis/trellis_top"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        8
+      ],
+      "to": [
+        16,
+        16,
+        8
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          0,
+          6
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        14,
+        7
+      ],
+      "to": [
+        16,
+        16,
+        9
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          14,
+          7
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            2,
+            16,
+            4
+          ],
+          "texture": "#1"
+        },
+        "east": {
+          "uv": [
+            10,
+            11,
+            12,
+            13
+          ],
+          "texture": "#1"
+        },
+        "south": {
+          "uv": [
+            16,
+            2,
+            0,
+            4
+          ],
+          "texture": "#1"
+        },
+        "west": {
+          "uv": [
+            10,
+            11,
+            12,
+            13
+          ],
+          "texture": "#1"
+        },
+        "up": {
+          "uv": [
+            16,
+            2,
+            0,
+            0
+          ],
+          "texture": "#1"
+        },
+        "down": {
+          "uv": [
+            16,
+            3,
+            0,
+            5
+          ],
+          "texture": "#1"
+        }
+      }
+    }
+  ]
 }

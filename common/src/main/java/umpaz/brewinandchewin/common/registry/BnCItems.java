@@ -10,6 +10,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.BrewinAndChewin;
+import umpaz.brewinandchewin.common.item.GrapeSeedsItem;
+import umpaz.brewinandchewin.common.block.GrapeColour;
 import umpaz.brewinandchewin.common.compat.nomansland.BnCNMLItems;
 import umpaz.brewinandchewin.common.compat.nomansland.NMLIntegration;
 import umpaz.brewinandchewin.common.item.BoozeItem;
@@ -44,7 +46,6 @@ public class BnCItems {
 
     public static final Item AGING_CASK = new BlockItem(BnCBlocks.AGING_CASK, new Item.Properties());
     public static final Item BOTTLE_RACK = new BlockItem(BnCBlocks.BOTTLE_RACK, new Item.Properties());
-    public static final Item DISTILLERY = new BlockItem(BnCBlocks.DISTILLERY, new Item.Properties());
 
     public static final Item TANKARD = new Item(new Item.Properties());
 
@@ -52,8 +53,8 @@ public class BnCItems {
 
     public static final Item RED_GRAPES = new Item(new Item.Properties().food(BnCFoods.GRAPES));
     public static final Item WHITE_GRAPES = new Item(new Item.Properties().food(BnCFoods.GRAPES));
-    public static final Item RED_GRAPE_SEEDS = new ItemNameBlockItem(BnCBlocks.RED_GRAPE_VINE, new Item.Properties());
-    public static final Item WHITE_GRAPE_SEEDS = new ItemNameBlockItem(BnCBlocks.WHITE_GRAPE_VINE, new Item.Properties());
+    public static final Item RED_GRAPE_SEEDS = new GrapeSeedsItem(BnCBlocks.RED_GRAPE_BUSH, GrapeColour.RED, new Item.Properties());
+    public static final Item WHITE_GRAPE_SEEDS = new GrapeSeedsItem(BnCBlocks.WHITE_GRAPE_BUSH, GrapeColour.WHITE, new Item.Properties());
 
     public static final Item RED_WINE = new WineItem(WineType.RED, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
     public static final Item WHITE_WINE = new WineItem(WineType.WHITE, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
@@ -155,6 +156,7 @@ public class BnCItems {
     public static final Item CANDIED_CORN = new Item(new Item.Properties().food(BnCFoods.CANDIED_CORN));
     public static final Item CORN_KERNELS = new ItemNameBlockItem(BnCBlocks.CORN_CROP, new Item.Properties());
     public static final Item WILD_CORN = new BlockItem(BnCBlocks.WILD_CORN, new Item.Properties());
+    public static final Item TRELLIS = new BlockItem(BnCBlocks.TRELLIS, new Item.Properties());
     public static final Item CORNMEAL = new Item(new Item.Properties());
     public static final Item CORN_DOUGH = new ConsumableItem(new Item.Properties().food(BnCFoods.CORN_DOUGH));
     public static final Item RAW_MUFFIN = new ConsumableItem(new Item.Properties().food(BnCFoods.RAW_MUFFIN));
@@ -179,7 +181,6 @@ public class BnCItems {
         registerWithTab("coaster", COASTER);
         registerWithTab("aging_cask", AGING_CASK);
         registerWithTab("bottle_rack", BOTTLE_RACK);
-        registerWithTab("distillery", DISTILLERY);
 
         registerWithTab("tankard", TANKARD);
 
@@ -276,6 +277,7 @@ public class BnCItems {
         registerWithTab("candied_corn", CANDIED_CORN);
         registerWithTab("corn_kernels", CORN_KERNELS);
         registerWithTab("wild_corn", WILD_CORN);
+        registerWithTab("trellis", TRELLIS);
         registerWithTab("cornmeal", CORNMEAL);
         registerWithTab("corn_dough", CORN_DOUGH);
         registerWithTab("raw_muffin", RAW_MUFFIN);

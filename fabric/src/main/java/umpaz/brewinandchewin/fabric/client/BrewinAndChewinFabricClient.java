@@ -28,7 +28,6 @@ import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.client.BnCClientSetup;
 import umpaz.brewinandchewin.client.BrewinAndChewinClient;
 import umpaz.brewinandchewin.client.gui.AgingCaskScreen;
-import umpaz.brewinandchewin.client.gui.DistilleryScreen;
 import umpaz.brewinandchewin.client.gui.KegScreen;
 import umpaz.brewinandchewin.client.gui.KegTooltip;
 import umpaz.brewinandchewin.client.utility.BnCClientTextUtils;
@@ -58,7 +57,6 @@ public class BrewinAndChewinFabricClient implements ClientModInitializer {
             IntoxicationAppleSkinCompatFabric.init();
 
         MenuScreens.register(BnCMenuTypes.KEG, KegScreen::new);
-        MenuScreens.register(BnCMenuTypes.DISTILLERY, DistilleryScreen::new);
         MenuScreens.register(BnCMenuTypes.AGING_CASK, AgingCaskScreen::new);
         BnCClientSetup.registerBlockEntityRenderers(BlockEntityRenderers::register);
         BnCClientSetup.registerItemProperties();

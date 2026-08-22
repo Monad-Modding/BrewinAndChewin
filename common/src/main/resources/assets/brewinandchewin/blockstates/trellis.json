@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=north,part=single": {
+      "model": "brewinandchewin:block/trellis_single"
+    },
+    "facing=east,part=single": {
+      "model": "brewinandchewin:block/trellis_single",
+      "y": 90
+    },
+    "facing=south,part=single": {
+      "model": "brewinandchewin:block/trellis_single",
+      "y": 180
+    },
+    "facing=west,part=single": {
+      "model": "brewinandchewin:block/trellis_single",
+      "y": 270
+    },
+    "facing=north,part=bottom": {
+      "model": "brewinandchewin:block/trellis_bottom"
+    },
+    "facing=east,part=bottom": {
+      "model": "brewinandchewin:block/trellis_bottom",
+      "y": 90
+    },
+    "facing=south,part=bottom": {
+      "model": "brewinandchewin:block/trellis_bottom",
+      "y": 180
+    },
+    "facing=west,part=bottom": {
+      "model": "brewinandchewin:block/trellis_bottom",
+      "y": 270
+    },
+    "facing=north,part=middle": {
+      "model": "brewinandchewin:block/trellis_middle"
+    },
+    "facing=east,part=middle": {
+      "model": "brewinandchewin:block/trellis_middle",
+      "y": 90
+    },
+    "facing=south,part=middle": {
+      "model": "brewinandchewin:block/trellis_middle",
+      "y": 180
+    },
+    "facing=west,part=middle": {
+      "model": "brewinandchewin:block/trellis_middle",
+      "y": 270
+    },
+    "facing=north,part=top": {
+      "model": "brewinandchewin:block/trellis_top"
+    },
+    "facing=east,part=top": {
+      "model": "brewinandchewin:block/trellis_top",
+      "y": 90
+    },
+    "facing=south,part=top": {
+      "model": "brewinandchewin:block/trellis_top",
+      "y": 180
+    },
+    "facing=west,part=top": {
+      "model": "brewinandchewin:block/trellis_top",
+      "y": 270
+    }
+  }
+}

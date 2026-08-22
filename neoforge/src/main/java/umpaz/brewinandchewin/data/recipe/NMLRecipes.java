@@ -47,7 +47,7 @@ public class NMLRecipes {
         KegFermentingRecipeBuilder.kegFermentingRecipe(FermentingBookCategory.MEALS, item(NMLIntegration.MAPLE_FUDGE_ITEM), 2, KegFermentingRecipes.MEDIUM_EXP, COLD_TIER)
                 .addFluidIngredient(Tags.Fluids.MILK, BOTTLE, FluidUnit.MILLIBUCKET)
                 .setFluidUnit(FluidUnit.MILLIBUCKET)
-                .addIngredient(Items.SUGAR)
+                .addIngredient(Ingredient.of(Items.SUGAR), 2)
                 .addIngredient(mapleSyrup)
                 .unlockedByItems("has_maple_syrup", mapleSyrup)
                 .build(conditional, BrewinAndChewin.asResource("fermenting/maple_fudge_from_milk"));

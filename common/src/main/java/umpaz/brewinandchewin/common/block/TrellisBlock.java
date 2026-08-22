@@ -24,7 +24,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
@@ -40,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TrellisBlock extends Block implements SimpleWaterloggedBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
     public static final EnumProperty<TrellisPart> PART = EnumProperty.create("part", TrellisPart.class);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
@@ -52,32 +51,33 @@ public class TrellisBlock extends Block implements SimpleWaterloggedBlock {
     public TrellisBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
-                .setValue(FACING, Direction.NORTH)
+                .setValue(AXIS, Direction.Axis.Z)
                 .setValue(PART, TrellisPart.SINGLE)
                 .setValue(WATERLOGGED, false));
     }
 
     private static VoxelShape[] buildShapes() {
-        VoxelShape[] shapes = new VoxelShape[4];
-        for (Direction facing : Direction.Plane.HORIZONTAL)
-            shapes[facing.get2DDataValue()] = BnCShapeUtils.rotate(NORTH_SHAPE, facing);
-        return shapes;
+        return new VoxelShape[]{BnCShapeUtils.rotate(NORTH_SHAPE, Direction.EAST), NORTH_SHAPE};
     }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPES[state.getValue(FACING).get2DDataValue()];
+        return SHAPES[state.getValue(AXIS) == Direction.Axis.X ? 0 : 1];
     }
 
     @Override
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction clicked = context.getClickedFace();
-        Direction facing = clicked.getAxis().isHorizontal() ? clicked : context.getHorizontalDirection().getOpposite();
+        BlockPos pos = context.getClickedPos();
+        BlockState against = context.getLevel().getBlockState(pos.relative(clicked.getOpposite()));
+        Direction.Axis axis = against.getBlock() instanceof TrellisBlock
+                ? against.getValue(AXIS)
+                : clicked.getAxis().isHorizontal() ? clicked.getAxis() : context.getHorizontalDirection().getAxis();
         return this.defaultBlockState()
-                .setValue(FACING, facing)
-                .setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER)
-                .setValue(PART, getPart(context.getLevel(), context.getClickedPos(), facing));
+                .setValue(AXIS, axis)
+                .setValue(WATERLOGGED, context.getLevel().getFluidState(pos).getType() == Fluids.WATER)
+                .setValue(PART, getPart(context.getLevel(), pos, axis));
     }
 
 
@@ -86,13 +86,13 @@ public class TrellisBlock extends Block implements SimpleWaterloggedBlock {
         if (state.getValue(WATERLOGGED))
             level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         if (direction.getAxis().isVertical())
-            return state.setValue(PART, getPart(level, pos, state.getValue(FACING)));
+            return state.setValue(PART, getPart(level, pos, state.getValue(AXIS)));
         return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
     }
 
-    protected static TrellisPart getPart(LevelReader level, BlockPos pos, Direction facing) {
-        boolean above = connectsTo(level.getBlockState(pos.above()), facing);
-        boolean below = connectsTo(level.getBlockState(pos.below()), facing);
+    protected static TrellisPart getPart(LevelReader level, BlockPos pos, Direction.Axis axis) {
+        boolean above = connectsTo(level.getBlockState(pos.above()), axis);
+        boolean below = connectsTo(level.getBlockState(pos.below()), axis);
         if (above && below)
             return TrellisPart.MIDDLE;
         if (above)
@@ -102,13 +102,13 @@ public class TrellisBlock extends Block implements SimpleWaterloggedBlock {
         return TrellisPart.SINGLE;
     }
 
-    protected static boolean connectsTo(BlockState state, Direction facing) {
-        return state.getBlock() instanceof TrellisBlock && state.getValue(FACING) == facing;
+    protected static boolean connectsTo(BlockState state, Direction.Axis axis) {
+        return state.getBlock() instanceof TrellisBlock && state.getValue(AXIS) == axis;
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, PART, WATERLOGGED);
+        builder.add(AXIS, PART, WATERLOGGED);
     }
 
     @Override

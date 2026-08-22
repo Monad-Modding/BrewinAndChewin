@@ -95,10 +95,7 @@ public class BnCBlockLoot extends BlockLootSubProvider {
     }
 
     private LootTable.Builder createCornCropDrops(Block block) {
-        AnyOfCondition.Builder unripe = AnyOfCondition.anyOf();
         AnyOfCondition.Builder harvestable = AnyOfCondition.anyOf();
-        for (int age = 0; age < CORN_HARVESTABLE_AGE; ++age)
-            unripe = unripe.or(cornAgeIs(block, age));
         for (int age = CORN_HARVESTABLE_AGE; age <= CornCropBlock.MAX_AGE; ++age)
             harvestable = harvestable.or(cornAgeIs(block, age));
 
@@ -114,7 +111,7 @@ public class BnCBlockLoot extends BlockLootSubProvider {
         return LootTable.lootTable()
                 .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(BnCItems.CORN_KERNELS))
-                        .when(unripe)))
+                        .when(cornAgeIs(block, 0))))
                 .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
                         .add(LootItem.lootTableItem(BnCItems.CORN))
                         .when(harvestable)))
@@ -128,7 +125,10 @@ public class BnCBlockLoot extends BlockLootSubProvider {
     private LootTable.Builder createGrapeBushDrops(Block block, Item seeds) {
         return LootTable.lootTable()
                 .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(seeds))));
+                        .add(LootItem.lootTableItem(seeds))
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                        .hasProperty(GrapeBushBlock.AGE, 0)))));
     }
 
     @Override

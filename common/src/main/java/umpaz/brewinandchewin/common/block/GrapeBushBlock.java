@@ -19,6 +19,7 @@ import umpaz.brewinandchewin.common.registry.BnCBlocks;
 public class GrapeBushBlock extends CropBlock {
     public static final IntegerProperty AGE = BlockStateProperties.AGE_2;
     public static final int BUSH_MAX_AGE = 2;
+    public static final int CLIMB_CHANCE_IN = 7;
 
     private static final VoxelShape[] SHAPES = {
             Block.box(5.0D, 0.0D, 5.0D, 11.0D, 5.0D, 11.0D),
@@ -63,12 +64,17 @@ public class GrapeBushBlock extends CropBlock {
     }
 
     @Override
+    public boolean isRandomlyTicking(BlockState state) {
+        return true;
+    }
+
+    @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (state.getValue(AGE) < BUSH_MAX_AGE) {
             super.randomTick(state, level, pos, random);
             return;
         }
-        if (RopeGrapeBlock.canClimbInto(level, pos) && random.nextFloat() < RopeGrapeBlock.GROW_CHANCE)
+        if (RopeGrapeBlock.canClimbInto(level, pos, this.colour) && random.nextInt(CLIMB_CHANCE_IN) == 0)
             RopeGrapeBlock.climb(level, pos, this.colour);
     }
 
@@ -79,13 +85,13 @@ public class GrapeBushBlock extends CropBlock {
             super.growCrops(level, pos, state);
             return;
         }
-        if (level instanceof ServerLevel serverLevel && RopeGrapeBlock.canClimbInto(level, pos))
+        if (level instanceof ServerLevel serverLevel && RopeGrapeBlock.canClimbInto(level, pos, this.colour))
             RopeGrapeBlock.climb(serverLevel, pos, this.colour);
     }
 
     @Override
     public boolean isValidBonemealTarget(net.minecraft.world.level.LevelReader level, BlockPos pos, BlockState state) {
-        return state.getValue(AGE) < BUSH_MAX_AGE || RopeGrapeBlock.canClimbInto(level, pos);
+        return state.getValue(AGE) < BUSH_MAX_AGE || RopeGrapeBlock.canClimbInto(level, pos, this.colour);
     }
 
     public static Block of(GrapeColour colour) {

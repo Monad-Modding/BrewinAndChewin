@@ -2,10 +2,7 @@ package umpaz.brewinandchewin.common.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -61,9 +58,16 @@ public class GrapeStemBlock extends Block {
     }
 
     @Override
+    public boolean skipRendering(BlockState state, BlockState adjacentState, Direction side) {
+        Direction.Axis axis = state.getValue(AXIS);
+        return side.getAxis() == axis && adjacentState.getBlock() instanceof GrapeStemBlock
+                && adjacentState.getValue(AXIS) == axis;
+    }
+
+    @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockState above = level.getBlockState(pos.above());
-        return above.is(RopeGrapeBlock.of(this.colour))
+        return RopeGrapeBlock.isAnyGrape(above)
                 && above.getValue(RopeGrapeBlock.PART) == RopeGrapeBlock.GrapePart.STEM;
     }
 
@@ -75,17 +79,10 @@ public class GrapeStemBlock extends Block {
     }
 
     @Override
-    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (!level.isClientSide() && !player.getAbilities().instabuild)
-            popResource(level, pos, new ItemStack(GrapeColour.seedsOf(this.colour)));
-        return super.playerWillDestroy(level, pos, state, player);
-    }
-
-    @Override
     public void destroy(LevelAccessor level, BlockPos pos, BlockState state) {
         BlockPos stem = pos.above();
         BlockState above = level.getBlockState(stem);
-        if (above.is(RopeGrapeBlock.of(this.colour)))
+        if (RopeGrapeBlock.isAnyGrape(above))
             level.setBlock(stem, RopeGrapeBlock.toRope(above), Block.UPDATE_ALL);
     }
 

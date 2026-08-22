@@ -3,6 +3,15 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "brewinandchewin:white_grape_bush",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "age": "0"
+          }
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",

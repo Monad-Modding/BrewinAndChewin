@@ -95,6 +95,22 @@ public class KegFermentingRecipe implements Recipe<KegRecipeWrapper> {
         return FluidUnit.convertToLoader(ingredient.amount(), ingredient.unit().orElse(getUnit()));
     }
 
+    public boolean isFluidConversion() {
+        return this.fluidIngredient.isPresent() && this.result.left().isPresent();
+    }
+
+    public FluidUnit getFluidIngredientUnit() {
+        return this.fluidIngredient.isPresent() ? this.fluidIngredient.get().unit().orElse(getUnit()) : getUnit();
+    }
+
+    public boolean fluidFits(AbstractedFluidStack tankFluid) {
+        long required = getLoaderFluidAmount();
+        if (required <= 0L)
+            return true;
+        long available = FluidUnit.convertToLoader(tankFluid.amount(), tankFluid.unit());
+        return isFluidConversion() ? available % required == 0L : available >= required;
+    }
+
     public long getBatchCount(AbstractedFluidStack tankFluid) {
         long required = getLoaderFluidAmount();
         if (required <= 0L)
@@ -151,7 +167,7 @@ public class KegFermentingRecipe implements Recipe<KegRecipeWrapper> {
         }
         CraftingInput input = CraftingInput.of(2, 2, inputs);
         return input.size() == 1 && inputItems.size() == 1 ? inputItems.getFirst().test(input.getItem(0)) : input.stackedContents().canCraft(this, null) &&
-                (fluidIngredient.isEmpty() && inv.getFluid().isEmpty() || fluidIngredient.isPresent() && !inv.getFluid().isEmpty() && fluidIngredient.get().ingredient().matches(inv.getFluid()) && FluidUnit.convertToLoader(inv.getFluid().amount(), inv.getFluid().unit()) % getLoaderFluidAmount() == 0);
+                (fluidIngredient.isEmpty() && inv.getFluid().isEmpty() || fluidIngredient.isPresent() && !inv.getFluid().isEmpty() && fluidIngredient.get().ingredient().matches(inv.getFluid()) && fluidFits(inv.getFluid()));
     }
 
     @Override

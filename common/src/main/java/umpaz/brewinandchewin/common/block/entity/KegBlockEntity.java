@@ -58,7 +58,6 @@ import vectorwing.farmersdelight.common.tag.ModTags;
 import vectorwing.farmersdelight.common.utility.ItemUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -81,7 +80,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
     private int fermentTime;
     private int fermentTimeTotal;
     private long fermentFluid = -1L;
-    private final int[] fermentCounts = new int[CONTAINER_SLOT];
+    private int fermentBatches = 1;
     private Component customName;
 
     private boolean deferFluidExtraction = false;
@@ -115,9 +114,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         fermentTime = compound.getInt("FermentTime");
         fermentTimeTotal = compound.getInt("FermentTimeTotal");
         fermentFluid = compound.contains("FermentFluid", Tag.TAG_LONG) ? compound.getLong("FermentFluid") : -1L;
-        int[] storedCounts = compound.getIntArray("FermentCounts");
-        for (int i = 0; i < CONTAINER_SLOT; ++i)
-            fermentCounts[i] = i < storedCounts.length ? storedCounts[i] : 0;
+        fermentBatches = Math.max(1, compound.getInt("FermentBatches"));
         if (compound.contains("CustomName", 8)) {
             customName = Component.Serializer.fromJson(compound.getString("CustomName"), provider);
         }
@@ -170,7 +167,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         compound.putInt("FermentTime", fermentTime);
         compound.putInt("FermentTimeTotal", fermentTimeTotal);
         compound.putLong("FermentFluid", fermentFluid);
-        compound.putIntArray("FermentCounts", fermentCounts.clone());
+        compound.putInt("FermentBatches", fermentBatches);
         if (customName != null) {
             compound.putString("CustomName", Component.Serializer.toJson(customName, provider));
         }
@@ -218,6 +215,10 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
     }
 
     protected boolean canFerment(KegFermentingRecipe recipe, KegBlockEntity keg) {
+        return canFerment(recipe, keg, getFluidBatches(recipe, keg));
+    }
+
+    protected boolean canFerment(KegFermentingRecipe recipe, KegBlockEntity keg, int batches) {
         if (!hasInput()) return false;
         if (level == null) return false;
         if (!isValidTemp(keg.getTemperature(), recipe.getTemperature()))
@@ -225,14 +226,15 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
 
 
         if (recipe.getFluidIngredient().isEmpty()) { // if the recipe does not require a fluid
-            return keg.fluidTank.isEmpty(); // make sure the fluid is empty
+            if (!keg.fluidTank.isEmpty()) // make sure the fluid is empty
+                return false;
+        } else {
+            AbstractedFluidStack tankFluid = keg.fluidTank.getAbstractedFluid();
+            if (!recipe.getFluidIngredient().get().ingredient().matches(tankFluid))
+                return false; // make sure the fluid is the same
+            if (!recipe.fluidFits(tankFluid))
+                return false;
         }
-        if (!recipe.getFluidIngredient().get().ingredient().matches(keg.fluidTank.getAbstractedFluid()))
-            return false; // make sure the fluid is the same
-        AbstractedFluidStack tankFluid = keg.fluidTank.getAbstractedFluid();
-        if (FluidUnit.convertToLoader(tankFluid.amount(), tankFluid.unit()) % recipe.getLoaderFluidAmount() != 0)
-            return false; // make sure the fluid amount is a multiple of the recipe amount
-        int batches = getFluidBatches(recipe, keg);
         return hasIngredientsForBatches(keg, batches) && resultFitsInKeg(recipe, keg, batches);
     }
 
@@ -250,12 +252,11 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         }
 
 
-        if (keg.fermentingWasDisturbed())
-            keg.clearFermenting();
-
         if (keg.hasInput()) {
             Optional<RecipeHolder<KegFermentingRecipe>> recipe = keg.getMatchingRecipe(keg.recipeWrapper);
             if (recipe.isPresent()) {
+                if (keg.fermentingWasDisturbed(recipe.get().value()))
+                    keg.clearFermenting();
                 if (keg.canFerment(recipe.get().value(), keg)) {
                     didInventoryChange = keg.processFermenting(recipe.get().value(), keg);
                 } else {
@@ -286,7 +287,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
             if (!recipe.get().value().getFluidIngredient().get().ingredient().matches(fluidTank.getAbstractedFluid()))
                 return Optional.empty(); // make sure the fluid is the same
             AbstractedFluidStack tankFluid = fluidTank.getAbstractedFluid();
-            if (FluidUnit.convertToLoader(tankFluid.amount(), tankFluid.unit()) % recipe.get().value().getLoaderFluidAmount() != 0) // make sure the fluid amount is a multiple of the recipe amount
+            if (!recipe.get().value().fluidFits(tankFluid))
                 return Optional.empty();
         }
         return recipe;
@@ -327,7 +328,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
     }
 
     private static int getFluidBatches(KegFermentingRecipe recipe, KegBlockEntity keg) {
-        if (recipe.getResult().left().isEmpty())
+        if (!recipe.isFluidConversion())
             return 1;
         return (int) Math.max(1L, recipe.getBatchCount(keg.fluidTank.getAbstractedFluid()));
     }
@@ -360,28 +361,23 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
         return tankFluid.isEmpty() ? 0L : FluidUnit.convertToLoader(tankFluid.amount(), tankFluid.unit());
     }
 
-    private void snapshotFermenting() {
+    private void snapshotFermenting(int batches) {
+        this.fermentBatches = Math.max(1, batches);
         this.fermentFluid = currentFluidAmount();
-        for (int i = 0; i < CONTAINER_SLOT; ++i)
-            this.fermentCounts[i] = this.inventory.getStackInSlot(i).getCount();
     }
 
     private void clearFermenting() {
         this.fermentTime = 0;
         this.fermentFluid = -1L;
-        Arrays.fill(this.fermentCounts, 0);
+        this.fermentBatches = 1;
     }
 
-    private boolean fermentingWasDisturbed() {
-        if (this.fermentFluid < 0L)
+    private boolean fermentingWasDisturbed(KegFermentingRecipe recipe) {
+        if (this.fermentTime <= 0 || this.fermentFluid < 0L)
             return false;
-        if (currentFluidAmount() != this.fermentFluid)
+        if (recipe.isFluidConversion() && currentFluidAmount() != this.fermentFluid)
             return true;
-        for (int i = 0; i < CONTAINER_SLOT; ++i) {
-            if (this.inventory.getStackInSlot(i).getCount() < this.fermentCounts[i])
-                return true;
-        }
-        return false;
+        return !canFerment(recipe, this, this.fermentBatches);
     }
 
     private boolean processFermenting(KegFermentingRecipe recipe, KegBlockEntity keg) {
@@ -392,9 +388,9 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
             return false;
         }
 
-        int batches = getFluidBatches(recipe, keg);
         if (fermentTime == 0)
-            snapshotFermenting();
+            snapshotFermenting(getFluidBatches(recipe, keg));
+        int batches = this.fermentBatches;
 
         ++fermentTime;
         fermentTimeTotal = recipe.getFermentTime(batches);
@@ -416,7 +412,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
 
         if (recipe.getResult().right().isPresent()) {
             if (recipe.getFluidIngredient().isPresent())
-                keg.fluidTank.drain(recipe.getFluidIngredient().get().amount(), recipe.getUnit(),false);
+                keg.fluidTank.drain(recipe.getFluidIngredient().get().amount() * batches, recipe.getFluidIngredientUnit(), false);
             keg.inventory.insertItem(OUTPUT_SLOT, recipe.getResult().right().get().copy(), false);
         }
 

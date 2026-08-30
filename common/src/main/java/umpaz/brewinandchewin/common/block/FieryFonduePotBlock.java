@@ -123,8 +123,8 @@ public class FieryFonduePotBlock extends Block {
         return true;
     }
 
-    // NeoForge:
-    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType path) {
+    @Override
+    public boolean isPathfindable(BlockState state, PathComputationType path) {
         return false;
     }
 

@@ -8,6 +8,8 @@ import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.registry.BnCBlocks;
+import net.minecraft.resources.ResourceLocation;
+import umpaz.brewinandchewin.common.compat.nomansland.NMLIntegration;
 import umpaz.brewinandchewin.common.tag.BnCTags;
 import vectorwing.farmersdelight.common.tag.ModTags;
 
@@ -24,6 +26,7 @@ public class BnCBlockTags extends BlockTagsProvider
     protected void addTags(HolderLookup.Provider provider) {
         this.registerModTags();
         this.registerBlockMineables();
+        this.registerWildGrapeSupports();
         this.registerFarmersDelightTags();
     }
 
@@ -31,6 +34,12 @@ public class BnCBlockTags extends BlockTagsProvider
         tag(ModTags.Blocks.PIES).add(BnCBlocks.GLOW_BERRY_MERINGUE_PIE);
         tag(BlockTags.CROPS).add(BnCBlocks.CORN_CROP);
         tag(BlockTags.MAINTAINS_FARMLAND).add(BnCBlocks.CORN_CROP);
+    }
+
+    protected void registerWildGrapeSupports() {
+        tag(BnCTags.Blocks.WILD_GRAPES_GROW_ON)
+                .addTag(BlockTags.SPRUCE_LOGS)
+                .addOptionalTag(ResourceLocation.fromNamespaceAndPath(NMLIntegration.MOD_ID, "coniferous_logs"));
     }
 
     protected void registerBlockMineables() {

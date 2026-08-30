@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.common.registry.BnCBlocks;
 
 import java.util.ArrayList;
@@ -39,6 +38,7 @@ public class TrellisGrapeBlock extends TrellisBlock implements BonemealableBlock
     public static final float GROW_CHANCE = 0.2F;
     public static final float SPREAD_CHANCE = 0.08F;
     public static final float VINE_HARDNESS = 0.2F;
+    public static final int BONEMEAL_ADVANCES = 3;
 
     public TrellisGrapeBlock(Properties properties) {
         super(properties);
@@ -79,13 +79,6 @@ public class TrellisGrapeBlock extends TrellisBlock implements BonemealableBlock
                 .setValue(AXIS, grape.getValue(AXIS))
                 .setValue(PART, grape.getValue(PART))
                 .setValue(WATERLOGGED, grape.getValue(WATERLOGGED));
-    }
-
-    private static void setOrRevert(Level level, BlockPos pos, BlockState state) {
-        if (state.getValue(VINE_FRONT) == GrapeColour.NONE && state.getValue(VINE_BACK) == GrapeColour.NONE)
-            level.setBlock(pos, toTrellis(state), Block.UPDATE_ALL);
-        else
-            level.setBlock(pos, state, Block.UPDATE_ALL);
     }
 
     @Override
@@ -134,27 +127,27 @@ public class TrellisGrapeBlock extends TrellisBlock implements BonemealableBlock
     @Override
     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         super.playerWillDestroy(level, pos, state, player);
-        if (!hasVine(state))
-            return state;
+        if (!hasVine(state)) return state;
         boolean front = sideFacingPlayer(state, pos, player);
         if (state.getValue(vineOf(front)) != GrapeColour.NONE) {
             if (!level.isClientSide())
                 dropVine(state, level, pos, player, front);
             return state.setValue(vineOf(front), GrapeColour.NONE).setValue(ageOf(front), 0);
         }
-        if (!level.isClientSide()) {
+        if (!level.isClientSide())
             dropVine(state, level, pos, player, !front);
-            if (!player.getAbilities().instabuild)
-                popResource(level, pos, new ItemStack(BnCBlocks.TRELLIS));
-        }
         return toTrellis(state);
     }
 
     @Override
     public void destroy(LevelAccessor level, BlockPos pos, BlockState state) {
-        if (!state.is(this))
-            return;
+        if (!state.is(this)) return;
         level.setBlock(pos, hasVine(state) ? state : toTrellis(state), Block.UPDATE_ALL);
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
     private static boolean sideFacingPlayer(BlockState state, BlockPos pos, Player player) {
@@ -224,10 +217,22 @@ public class TrellisGrapeBlock extends TrellisBlock implements BonemealableBlock
 
     @Override
     public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
-        for (boolean front : new boolean[]{true, false})
-            if (state.getValue(vineOf(front)) != GrapeColour.NONE
-                    && (state.getValue(ageOf(front)) < MAX_AGE || hasSpreadRoom(level, pos, state, front)))
+        for (boolean front : new boolean[]{true, false}) {
+            if (state.getValue(vineOf(front)) == GrapeColour.NONE)
+                continue;
+            if (state.getValue(ageOf(front)) < MAX_AGE)
                 return true;
+            Direction.Axis axis = state.getValue(AXIS);
+            for (BlockPos next : neighbours(pos, axis)) {
+                BlockState neighbour = level.getBlockState(next);
+                if (!(neighbour.getBlock() instanceof TrellisBlock) || neighbour.getValue(AXIS) != axis)
+                    continue;
+                if (!(neighbour.getBlock() instanceof TrellisGrapeBlock) || neighbour.getValue(vineOf(front)) == GrapeColour.NONE)
+                    return true;
+                if (neighbour.getValue(ageOf(front)) < MAX_AGE)
+                    return true;
+            }
+        }
         return false;
     }
 
@@ -238,31 +243,55 @@ public class TrellisGrapeBlock extends TrellisBlock implements BonemealableBlock
 
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
-        for (boolean front : new boolean[]{true, false}) {
-            GrapeColour colour = state.getValue(vineOf(front));
-            if (colour == GrapeColour.NONE)
-                continue;
-            int age = state.getValue(ageOf(front));
-            if (age < MAX_AGE) {
-                level.setBlock(pos, state.setValue(ageOf(front), Math.min(MAX_AGE, age + 1 + random.nextInt(2))), Block.UPDATE_CLIENTS);
+        for (int advance = 0; advance < BONEMEAL_ADVANCES; ++advance) {
+            BlockState current = level.getBlockState(pos);
+            if (!(current.getBlock() instanceof TrellisGrapeBlock))
                 return;
-            }
-            if (hasSpreadRoom(level, pos, state, front)) {
-                spread(level, pos, state.getValue(AXIS), colour, front, random);
+            List<Runnable> options = new ArrayList<>();
+            for (boolean front : new boolean[]{true, false})
+                collectAdvances(level, pos, current, front, options);
+            if (options.isEmpty())
                 return;
-            }
+            options.get(random.nextInt(options.size())).run();
         }
     }
 
-    private static boolean hasSpreadRoom(LevelReader level, BlockPos pos, BlockState state, boolean front) {
+    private static void collectAdvances(ServerLevel level, BlockPos pos, BlockState state, boolean front, List<Runnable> options) {
+        GrapeColour colour = state.getValue(vineOf(front));
+        if (colour == GrapeColour.NONE)
+            return;
+        if (state.getValue(ageOf(front)) < MAX_AGE)
+            options.add(() -> growVine(level, pos, front));
         Direction.Axis axis = state.getValue(AXIS);
         for (BlockPos next : neighbours(pos, axis)) {
             BlockState neighbour = level.getBlockState(next);
             if (!(neighbour.getBlock() instanceof TrellisBlock) || neighbour.getValue(AXIS) != axis)
                 continue;
             if (!(neighbour.getBlock() instanceof TrellisGrapeBlock) || neighbour.getValue(vineOf(front)) == GrapeColour.NONE)
-                return true;
+                options.add(() -> plantVine(level, next, front, colour));
+            else if (neighbour.getValue(ageOf(front)) < MAX_AGE)
+                options.add(() -> growVine(level, next, front));
         }
-        return false;
     }
+
+    private static void growVine(ServerLevel level, BlockPos pos, boolean front) {
+        BlockState state = level.getBlockState(pos);
+        if (!(state.getBlock() instanceof TrellisGrapeBlock) || state.getValue(vineOf(front)) == GrapeColour.NONE)
+            return;
+        int age = state.getValue(ageOf(front));
+        if (age < MAX_AGE)
+            level.setBlock(pos, state.setValue(ageOf(front), age + 1), Block.UPDATE_CLIENTS);
+    }
+
+    private static void plantVine(ServerLevel level, BlockPos pos, boolean front, GrapeColour colour) {
+        BlockState state = level.getBlockState(pos);
+        if (!(state.getBlock() instanceof TrellisBlock))
+            return;
+        if (state.getBlock() instanceof TrellisGrapeBlock && state.getValue(vineOf(front)) != GrapeColour.NONE)
+            return;
+        BlockState grown = (state.getBlock() instanceof TrellisGrapeBlock ? state : fromTrellis(state))
+                .setValue(vineOf(front), colour).setValue(ageOf(front), 0);
+        level.setBlock(pos, grown, Block.UPDATE_ALL);
+    }
+
 }

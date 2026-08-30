@@ -71,8 +71,8 @@ public class UnripeCheeseWheelBlock extends Block {
         }
     }
 
-    // NeoForge:
-    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
+    @Override
+    public boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
     }
 }

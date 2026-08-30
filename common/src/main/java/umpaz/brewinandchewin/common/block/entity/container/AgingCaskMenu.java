@@ -20,10 +20,10 @@ import java.util.Objects;
 
 public class AgingCaskMenu extends AbstractContainerMenu {
     public static final int GRID_X = 35;
-    public static final int GRID_Y = 16;
+    public static final int GRID_Y = 23;
     public static final int SLOT_SIZE = 18;
     public static final int OUTPUT_X = 137;
-    public static final int OUTPUT_Y = 34;
+    public static final int OUTPUT_Y = 41;
 
     private static final int[] DISTILLATE_COLUMNS = {1, 2, 2, 2, 1, 0, 0, 0};
     private static final int[] DISTILLATE_ROWS = {0, 0, 1, 2, 2, 2, 1, 0};
@@ -80,11 +80,11 @@ public class AgingCaskMenu extends AbstractContainerMenu {
 
         for (int row = 0; row < 3; ++row) {
             for (int column = 0; column < 9; ++column) {
-                this.addSlot(new Slot(playerInventory, 9 + (row * 9) + column, 8 + (column * SLOT_SIZE), 84 + (row * SLOT_SIZE)));
+                this.addSlot(new Slot(playerInventory, 9 + (row * 9) + column, 8 + (column * SLOT_SIZE), 96 + (row * SLOT_SIZE)));
             }
         }
         for (int column = 0; column < 9; ++column) {
-            this.addSlot(new Slot(playerInventory, column, 8 + (column * SLOT_SIZE), 142));
+            this.addSlot(new Slot(playerInventory, column, 8 + (column * SLOT_SIZE), 154));
         }
 
         this.addDataSlots(caskData);

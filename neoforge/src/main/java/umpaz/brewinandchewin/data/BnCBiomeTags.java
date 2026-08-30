@@ -21,5 +21,8 @@ public class BnCBiomeTags extends BiomeTagsProvider {
         tag(BnCBiomeFeatures.HAS_WILD_CORN)
                 .addTag(Tags.Biomes.IS_PLAINS)
                 .addOptional(NMLIntegration.PRAIRIE);
+        tag(BnCBiomeFeatures.HAS_WILD_GRAPES)
+                .addTag(Tags.Biomes.IS_COLD)
+                .addTag(Tags.Biomes.IS_TEMPERATE);
     }
 }

@@ -21,7 +21,9 @@ import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.BiomeModifiers;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import umpaz.brewinandchewin.BrewinAndChewin;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import umpaz.brewinandchewin.common.registry.BnCBlocks;
+import umpaz.brewinandchewin.common.registry.BnCFeatures;
 import umpaz.brewinandchewin.common.world.BnCBiomeFeatures;
 
 import java.util.List;
@@ -29,12 +31,16 @@ import java.util.List;
 public class BnCWildCropGeneration {
     public static final ResourceKey<BiomeModifier> ADD_WILD_CORN =
             ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, BrewinAndChewin.asResource("add_wild_corn"));
+    public static final ResourceKey<BiomeModifier> ADD_WILD_GRAPES =
+            ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, BrewinAndChewin.asResource("add_wild_grapes"));
 
     public static void bootstrapConfiguredFeatures(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         context.register(BnCBiomeFeatures.PATCH_WILD_CORN, new ConfiguredFeature<>(Feature.RANDOM_PATCH,
                 new RandomPatchConfiguration(BnCBiomeFeatures.WILD_CORN_TRIES, 6, 2,
                         PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                                 new SimpleBlockConfiguration(BlockStateProvider.simple(BnCBlocks.WILD_CORN))))));
+        context.register(BnCBiomeFeatures.PATCH_WILD_GRAPES,
+                new ConfiguredFeature<>(BnCFeatures.WILD_GRAPES, NoneFeatureConfiguration.INSTANCE));
     }
 
     public static void bootstrapPlacedFeatures(BootstrapContext<PlacedFeature> context) {
@@ -45,6 +51,12 @@ public class BnCWildCropGeneration {
                         InSquarePlacement.spread(),
                         HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),
                         BiomeFilter.biome())));
+        context.register(BnCBiomeFeatures.PLACED_WILD_GRAPES, new PlacedFeature(
+                features.getOrThrow(BnCBiomeFeatures.PATCH_WILD_GRAPES),
+                List.of(RarityFilter.onAverageOnceEvery(BnCBiomeFeatures.WILD_GRAPES_RARITY),
+                        InSquarePlacement.spread(),
+                        HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING),
+                        BiomeFilter.biome())));
     }
 
     public static void bootstrapBiomeModifiers(BootstrapContext<BiomeModifier> context) {
@@ -52,6 +64,11 @@ public class BnCWildCropGeneration {
                 context.lookup(Registries.BIOME).getOrThrow(BnCBiomeFeatures.HAS_WILD_CORN),
                 net.minecraft.core.HolderSet.direct(
                         (Holder<PlacedFeature>) context.lookup(Registries.PLACED_FEATURE).getOrThrow(BnCBiomeFeatures.PLACED_WILD_CORN)),
+                net.minecraft.world.level.levelgen.GenerationStep.Decoration.VEGETAL_DECORATION));
+        context.register(ADD_WILD_GRAPES, new BiomeModifiers.AddFeaturesBiomeModifier(
+                context.lookup(Registries.BIOME).getOrThrow(BnCBiomeFeatures.HAS_WILD_GRAPES),
+                net.minecraft.core.HolderSet.direct(
+                        (Holder<PlacedFeature>) context.lookup(Registries.PLACED_FEATURE).getOrThrow(BnCBiomeFeatures.PLACED_WILD_GRAPES)),
                 net.minecraft.world.level.levelgen.GenerationStep.Decoration.VEGETAL_DECORATION));
     }
 }

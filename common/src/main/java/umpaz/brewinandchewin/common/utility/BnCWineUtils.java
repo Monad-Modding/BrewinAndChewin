@@ -31,7 +31,7 @@ import java.util.Optional;
 public class BnCWineUtils {
     public static final int BASE_DISTILLATE_DURATION = 3600;
     public static final int OLD_WINE_MIN_TIPSY_DURATION = 1200;
-    public static final int OLD_WINE_MAX_TIPSY_DURATION = 12000;
+    public static final int OLD_WINE_MAX_TIPSY_DURATION = 4800;
     public static final float OLD_WINE_STRONG_EFFECT_CHANCE = 0.2F;
 
     private static final String[] POTION_STRENGTH_PREFIXES = {"strong_", "long_"};
@@ -185,7 +185,7 @@ public class BnCWineUtils {
             effects.add(new FortifiedEffect(createInstance(effect.get(), duration, strong ? 1 : 0), strong ? 1 : 0));
         }
         effects.add(FortifiedEffect.finished(new MobEffectInstance(BnCEffects.TIPSY,
-                random.nextInt(OLD_WINE_MIN_TIPSY_DURATION, OLD_WINE_MAX_TIPSY_DURATION),
+                random.nextInt(OLD_WINE_MIN_TIPSY_DURATION, OLD_WINE_MAX_TIPSY_DURATION + 1),
                 WineType.OLD.getTipsyAmplifier())));
         return new WineContents(List.copyOf(effects), WineType.OLD.getDistillateCapacity(), 1, 0, false, false,
                 random.nextInt(WineType.OLD_WINE_VARIANTS));

@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
@@ -38,7 +39,6 @@ import vectorwing.farmersdelight.common.block.RopeBlock;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class RopeGrapeBlock extends Block implements SimpleWaterloggedBlock, BonemealableBlock {
@@ -49,6 +49,7 @@ public class RopeGrapeBlock extends Block implements SimpleWaterloggedBlock, Bon
     public static final int MAX_AGE = 3;
     public static final int MAX_REACH = 2;
     public static final int SUPPORT_SCAN = 16;
+    public static final int BONEMEAL_ADVANCES = 3;
     public static final float GROW_CHANCE = 0.2F;
     public static final float SPREAD_CHANCE = 0.1F;
     public static final float DEMOTE_CHANCE = 0.2F;
@@ -197,11 +198,13 @@ public class RopeGrapeBlock extends Block implements SimpleWaterloggedBlock, Bon
                 .setValue(WATERLOGGED, rope.getValue(WATERLOGGED));
     }
 
-    public static BlockState toRope(BlockState grape) {
-        Direction.Axis axis = grape.getValue(AXIS);
-        BlockState rope = ModBlocks.ROPE.get().defaultBlockState().setValue(WATERLOGGED, grape.getValue(WATERLOGGED));
+    public static BlockState toRope(BlockGetter level, BlockPos pos, BlockState grape) {
+        BlockState rope = ModBlocks.ROPE.get().defaultBlockState()
+                .setValue(WATERLOGGED, grape.getValue(WATERLOGGED))
+                .setValue(RopeBlock.TIED_TO_BELL, level.getBlockState(pos.above()).is(Blocks.BELL));
         for (Direction direction : Direction.Plane.HORIZONTAL)
-            rope = rope.setValue(PipeBlock.PROPERTY_BY_DIRECTION.get(direction), direction.getAxis() == axis);
+            rope = rope.setValue(PipeBlock.PROPERTY_BY_DIRECTION.get(direction),
+                    RopeBlock.tieToRopeAndWalls(level.getBlockState(pos.relative(direction))));
         return rope;
     }
 
@@ -265,12 +268,12 @@ public class RopeGrapeBlock extends Block implements SimpleWaterloggedBlock, Bon
             return;
         BlockPos base = pos.below();
         BlockState baseState = level.getBlockState(base);
-        if (baseState.is(GrapeStemBlock.of(this.colour)))
+        if (baseState.getBlock() instanceof GrapeStemBlock)
             level.setBlock(base, baseState.setValue(GrapeStemBlock.AGE, age), Block.UPDATE_CLIENTS);
     }
 
     public void breakToRope(LevelAccessor level, BlockPos pos, BlockState state) {
-        level.setBlock(pos, toRope(state), Block.UPDATE_ALL);
+        level.setBlock(pos, toRope(level, pos, state), Block.UPDATE_ALL);
         if (state.getValue(PART) != GrapePart.STEM)
             return;
         BlockPos base = pos.below();
@@ -308,9 +311,6 @@ public class RopeGrapeBlock extends Block implements SimpleWaterloggedBlock, Bon
         GrapePart part = state.getValue(PART);
         Direction.Axis axis = state.getValue(AXIS);
 
-        if (part == GrapePart.STEM)
-            this.restoreBase(level, pos, state);
-
         if (part == GrapePart.BIG && !nextToStem(level, pos, axis)) {
             if (random.nextFloat() < DEMOTE_CHANCE)
                 level.setBlock(pos, state.setValue(PART, GrapePart.SMALL).setValue(AGE, 0), Block.UPDATE_ALL);
@@ -331,36 +331,31 @@ public class RopeGrapeBlock extends Block implements SimpleWaterloggedBlock, Bon
             this.spread(level, pos, state, random);
     }
 
-    private void restoreBase(ServerLevel level, BlockPos pos, BlockState state) {
-        BlockPos base = pos.below();
-        BlockState baseState = level.getBlockState(base);
-        Block stem = GrapeStemBlock.of(this.colour);
-        if (baseState.is(stem) || !baseState.canBeReplaced())
+    private List<BlockPos> spreadTargets(BlockGetter level, BlockPos pos, BlockState state) {
+        Direction.Axis axis = state.getValue(AXIS);
+        List<BlockPos> targets = new ArrayList<>();
+        BlockPos stem = findStem(level, pos, axis);
+        if (stem == null)
+            return targets;
+        for (Direction direction : along(axis)) {
+            BlockPos target = pos.relative(direction);
+            if (Math.abs(distanceAlong(stem, target, axis)) <= MAX_REACH && ropePlaneAt(level, target) == axis)
+                targets.add(target);
+        }
+        return targets;
+    }
+
+    private void spreadTo(ServerLevel level, BlockPos target, Direction.Axis axis) {
+        if (ropePlaneAt(level, target) != axis)
             return;
-        level.setBlock(base, stem.defaultBlockState()
-                .setValue(GrapeStemBlock.AGE, state.getValue(AGE))
-                .setValue(GrapeStemBlock.AXIS, state.getValue(AXIS)), Block.UPDATE_ALL);
+        level.setBlock(target, this.fromRope(level.getBlockState(target), axis)
+                .setValue(PART, GrapePart.SMALL).setValue(AGE, 0), Block.UPDATE_ALL);
     }
 
     private void spread(ServerLevel level, BlockPos pos, BlockState state, RandomSource random) {
-        Direction.Axis axis = state.getValue(AXIS);
-        BlockPos stem = findStem(level, pos, axis);
-        if (stem == null)
-            return;
-        List<Direction> directions = new ArrayList<>(along(axis));
-        if (random.nextBoolean())
-            Collections.reverse(directions);
-        for (Direction direction : directions) {
-            BlockPos target = pos.relative(direction);
-            if (Math.abs(distanceAlong(stem, target, axis)) > MAX_REACH)
-                continue;
-            BlockState rope = level.getBlockState(target);
-            if (ropePlaneAt(level, target) != axis)
-                continue;
-            level.setBlock(target, this.fromRope(rope, axis)
-                    .setValue(PART, GrapePart.SMALL).setValue(AGE, 0), Block.UPDATE_ALL);
-            return;
-        }
+        List<BlockPos> targets = spreadTargets(level, pos, state);
+        if (!targets.isEmpty())
+            spreadTo(level, targets.get(random.nextInt(targets.size())), state.getValue(AXIS));
     }
 
     private static BlockPos findStem(BlockGetter level, BlockPos pos, Direction.Axis axis) {
@@ -378,25 +373,21 @@ public class RopeGrapeBlock extends Block implements SimpleWaterloggedBlock, Bon
     }
 
     private boolean hasSpreadRoom(LevelReader level, BlockPos pos, BlockState state) {
-        Direction.Axis axis = state.getValue(AXIS);
-        BlockPos stem = findStem(level, pos, axis);
-        if (stem == null)
-            return false;
-        for (Direction direction : along(axis)) {
-            BlockPos target = pos.relative(direction);
-            if (Math.abs(distanceAlong(stem, target, axis)) <= MAX_REACH && ropePlaneAt(level, target) == axis)
-                return true;
-        }
-        return false;
+        return !spreadTargets(level, pos, state).isEmpty();
     }
 
     @Override
     public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
-        GrapePart part = state.getValue(PART);
-        Direction.Axis axis = state.getValue(AXIS);
-        if (part == GrapePart.SMALL)
-            return state.getValue(AGE) < MAX_AGE || nextToStem(level, pos, axis);
-        return state.getValue(AGE) < MAX_AGE || this.hasSpreadRoom(level, pos, state);
+        if (canAdvanceSelf(level, pos, state))
+            return true;
+        if (state.getValue(PART) != GrapePart.SMALL && this.hasSpreadRoom(level, pos, state))
+            return true;
+        for (Direction direction : along(state.getValue(AXIS))) {
+            BlockState neighbour = level.getBlockState(pos.relative(direction));
+            if (isAnyGrape(neighbour) && neighbour.getValue(AGE) < MAX_AGE)
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -406,17 +397,54 @@ public class RopeGrapeBlock extends Block implements SimpleWaterloggedBlock, Bon
 
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+        for (int advance = 0; advance < BONEMEAL_ADVANCES; ++advance) {
+            BlockState current = level.getBlockState(pos);
+            if (!current.is(this))
+                return;
+            List<Runnable> options = new ArrayList<>();
+            if (canAdvanceSelf(level, pos, current))
+                options.add(() -> this.advanceSelf(level, pos));
+            Direction.Axis axis = current.getValue(AXIS);
+            if (current.getValue(PART) != GrapePart.SMALL)
+                for (BlockPos target : spreadTargets(level, pos, current))
+                    options.add(() -> this.spreadTo(level, target, axis));
+            for (Direction direction : along(axis)) {
+                BlockPos neighbour = pos.relative(direction);
+                BlockState neighbourState = level.getBlockState(neighbour);
+                if (isAnyGrape(neighbourState) && neighbourState.getValue(AGE) < MAX_AGE)
+                    options.add(() -> growGrape(level, neighbour));
+            }
+            if (options.isEmpty())
+                return;
+            options.get(random.nextInt(options.size())).run();
+        }
+    }
+
+    private boolean canAdvanceSelf(BlockGetter level, BlockPos pos, BlockState state) {
+        return state.getValue(AGE) < MAX_AGE
+                || state.getValue(PART) == GrapePart.SMALL && nextToStem(level, pos, state.getValue(AXIS));
+    }
+
+    private void advanceSelf(ServerLevel level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        if (!state.is(this))
+            return;
+        if (state.getValue(PART) == GrapePart.SMALL && nextToStem(level, pos, state.getValue(AXIS))) {
+            level.setBlock(pos, state.setValue(PART, GrapePart.BIG).setValue(AGE, 0), Block.UPDATE_ALL);
+            return;
+        }
         int age = state.getValue(AGE);
-        if (age < MAX_AGE) {
-            this.setAge(level, pos, state, Math.min(MAX_AGE, age + 1 + random.nextInt(2)));
+        if (age < MAX_AGE)
+            this.setAge(level, pos, state, age + 1);
+    }
+
+    private static void growGrape(ServerLevel level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        if (!(state.getBlock() instanceof RopeGrapeBlock grape))
             return;
-        }
-        if (state.getValue(PART) == GrapePart.SMALL) {
-            if (nextToStem(level, pos, state.getValue(AXIS)))
-                level.setBlock(pos, state.setValue(PART, GrapePart.BIG).setValue(AGE, 0), Block.UPDATE_ALL);
-            return;
-        }
-        this.spread(level, pos, state, random);
+        int age = state.getValue(AGE);
+        if (age < MAX_AGE)
+            grape.setAge(level, pos, state, age + 1);
     }
 
     private int grapeCount(RandomSource random, BlockState state) {

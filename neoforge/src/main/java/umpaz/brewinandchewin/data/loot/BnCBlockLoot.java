@@ -62,6 +62,7 @@ public class BnCBlockLoot extends BlockLootSubProvider {
         dropSelf(BnCBlocks.BOTTLE_RACK);
         add(BnCBlocks.CORN_CROP, this::createCornCropDrops);
         add(BnCBlocks.WILD_CORN, this::createWildCornDrops);
+        dropOther(BnCBlocks.WILD_GRAPES, BnCItems.RED_GRAPES);
         add(BnCBlocks.RED_GRAPE_BUSH, (block) -> this.createGrapeBushDrops(block, BnCItems.RED_GRAPE_SEEDS));
         add(BnCBlocks.WHITE_GRAPE_BUSH, (block) -> this.createGrapeBushDrops(block, BnCItems.WHITE_GRAPE_SEEDS));
         add(BnCBlocks.RED_ROPE_GRAPE, noDrop());
@@ -70,7 +71,6 @@ public class BnCBlockLoot extends BlockLootSubProvider {
         add(BnCBlocks.WHITE_GRAPE_STEM, noDrop());
     }
 
-    private static final float WILD_CORN_DROP_CHANCE = 0.25F;
     private static final int CORN_HARVESTABLE_AGE = 5;
     private static final float[] CORN_SECOND_DROP_CHANCE = {1.0F / 3.0F, 2.0F / 3.0F, 1.0F};
 
@@ -86,12 +86,8 @@ public class BnCBlockLoot extends BlockLootSubProvider {
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER));
         return LootTable.lootTable()
                 .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(BnCItems.CORN_KERNELS).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
-                        .when(lowerHalf)))
-                .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(BnCItems.CORN))
-                        .when(lowerHalf)
-                        .when(LootItemRandomChanceCondition.randomChance(WILD_CORN_DROP_CHANCE))));
+                        .add(LootItem.lootTableItem(BnCItems.CORN).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+                        .when(lowerHalf)));
     }
 
     private LootTable.Builder createCornCropDrops(Block block) {

@@ -26,34 +26,6 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "brewinandchewin:corn_kernels"
-        }
-      ],
-      "functions": [
-        {
-          "function": "minecraft:explosion_decay"
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "block": "brewinandchewin:wild_corn",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "half": "lower"
-          }
-        },
-        {
-          "chance": 0.25,
-          "condition": "minecraft:random_chance"
-        }
-      ],
-      "entries": [
-        {
-          "type": "minecraft:item",
           "name": "brewinandchewin:corn"
         }
       ],

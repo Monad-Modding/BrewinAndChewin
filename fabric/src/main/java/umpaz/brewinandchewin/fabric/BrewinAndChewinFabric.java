@@ -28,6 +28,7 @@ import umpaz.brewinandchewin.common.registry.BnCBlocks;
 import umpaz.brewinandchewin.common.registry.BnCCreativeTabs;
 import umpaz.brewinandchewin.common.registry.BnCDataComponents;
 import umpaz.brewinandchewin.common.registry.BnCEffects;
+import umpaz.brewinandchewin.common.registry.BnCFeatures;
 import umpaz.brewinandchewin.common.registry.BnCFluids;
 import umpaz.brewinandchewin.common.registry.BnCItems;
 import umpaz.brewinandchewin.common.registry.BnCLootConditions;
@@ -101,6 +102,7 @@ public class BrewinAndChewinFabric implements ModInitializer {
         BnCCreativeTabs.registerAll();
         BnCDataComponents.registerAll();
         BnCEffects.registerAll();
+        BnCFeatures.registerAll();
         BnCFluids.registerAll();
         BnCItems.registerAll();
         BnCLootConditions.registerAll();
@@ -136,6 +138,8 @@ public class BrewinAndChewinFabric implements ModInitializer {
     private static void registerWorldGeneration() {
         BiomeModifications.addFeature(BiomeSelectors.tag(BnCBiomeFeatures.HAS_WILD_CORN),
                 GenerationStep.Decoration.VEGETAL_DECORATION, BnCBiomeFeatures.PLACED_WILD_CORN);
+        BiomeModifications.addFeature(BiomeSelectors.tag(BnCBiomeFeatures.HAS_WILD_GRAPES),
+                GenerationStep.Decoration.VEGETAL_DECORATION, BnCBiomeFeatures.PLACED_WILD_GRAPES);
     }
 
     private static void registerCompostables() {

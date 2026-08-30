@@ -38,6 +38,7 @@ public class BnCTags {
         public static final TagKey<Block> CHEESE_WHEELS_RIPE = modBlockTag("cheese_wheels/ripe");
         public static final TagKey<Block> FREEZE_SOURCES = modBlockTag("freeze_sources");
         public static final TagKey<Block> PLAYER_WORKSTATIONS_KEGS = modBlockTag("player_workstations/kegs");
+        public static final TagKey<Block> WILD_GRAPES_GROW_ON = modBlockTag("wild_grapes_grow_on");
 
         private static TagKey<Block> modBlockTag(String path) {
             return TagKey.create(Registries.BLOCK, BrewinAndChewin.asResource(path));

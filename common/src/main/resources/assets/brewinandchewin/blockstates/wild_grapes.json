@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "brewinandchewin:block/wild_grapes"
+    },
+    "facing=east": {
+      "model": "brewinandchewin:block/wild_grapes",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "brewinandchewin:block/wild_grapes",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "brewinandchewin:block/wild_grapes",
+      "y": 270
+    }
+  }
+}

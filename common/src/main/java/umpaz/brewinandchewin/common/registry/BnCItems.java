@@ -156,6 +156,7 @@ public class BnCItems {
     public static final Item CANDIED_CORN = new Item(new Item.Properties().food(BnCFoods.CANDIED_CORN));
     public static final Item CORN_KERNELS = new ItemNameBlockItem(BnCBlocks.CORN_CROP, new Item.Properties());
     public static final Item WILD_CORN = new BlockItem(BnCBlocks.WILD_CORN, new Item.Properties());
+    public static final Item WILD_GRAPES = new BlockItem(BnCBlocks.WILD_GRAPES, new Item.Properties());
     public static final Item TRELLIS = new BlockItem(BnCBlocks.TRELLIS, new Item.Properties());
     public static final Item CORNMEAL = new Item(new Item.Properties());
     public static final Item CORN_DOUGH = new ConsumableItem(new Item.Properties().food(BnCFoods.CORN_DOUGH));
@@ -277,6 +278,7 @@ public class BnCItems {
         registerWithTab("candied_corn", CANDIED_CORN);
         registerWithTab("corn_kernels", CORN_KERNELS);
         registerWithTab("wild_corn", WILD_CORN);
+        registerWithTab("wild_grapes", WILD_GRAPES);
         registerWithTab("trellis", TRELLIS);
         registerWithTab("cornmeal", CORNMEAL);
         registerWithTab("corn_dough", CORN_DOUGH);

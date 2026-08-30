@@ -1,0 +1,19 @@
+{
+  "ambientocclusion": false,
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "grapes": "brewinandchewin:block/wild_grapes",
+    "particle": "brewinandchewin:block/wild_grapes"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0.8],
+      "to": [16, 16, 0.8],
+      "shade": false,
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#grapes"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#grapes"}
+      }
+    }
+  ]
+}

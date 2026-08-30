@@ -83,7 +83,7 @@ public class GrapeStemBlock extends Block {
         BlockPos stem = pos.above();
         BlockState above = level.getBlockState(stem);
         if (RopeGrapeBlock.isAnyGrape(above))
-            level.setBlock(stem, RopeGrapeBlock.toRope(above), Block.UPDATE_ALL);
+            level.setBlock(stem, RopeGrapeBlock.toRope(level, stem, above), Block.UPDATE_ALL);
     }
 
     @Override

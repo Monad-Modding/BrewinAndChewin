@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#brewinandchewin:has_wild_grapes",
+  "features": "brewinandchewin:patch_wild_grapes",
+  "step": "vegetal_decoration"
+}

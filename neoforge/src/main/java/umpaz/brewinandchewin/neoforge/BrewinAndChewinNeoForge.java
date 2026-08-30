@@ -54,6 +54,7 @@ public class BrewinAndChewinNeoForge {
             register(event, Registries.BLOCK_ENTITY_TYPE, BnCBlockEntityTypes::registerAll);
             register(event, Registries.CREATIVE_MODE_TAB, BnCCreativeTabs::registerAll);
             register(event, Registries.DATA_COMPONENT_TYPE, BnCDataComponents::registerAll);
+            register(event, Registries.FEATURE, BnCFeatures::registerAll);
             register(event, Registries.FLUID, BnCFluids::registerAll);
             register(event, NeoForgeRegistries.Keys.FLUID_TYPES, BnCFluidTypes::registerAll);
 

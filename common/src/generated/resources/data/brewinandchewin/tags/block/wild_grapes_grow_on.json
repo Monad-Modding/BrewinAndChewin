@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#minecraft:spruce_logs",
+    {
+      "id": "#nomansland:coniferous_logs",
+      "required": false
+    }
+  ]
+}

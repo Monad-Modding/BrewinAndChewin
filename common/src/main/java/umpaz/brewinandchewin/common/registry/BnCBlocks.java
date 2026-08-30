@@ -31,6 +31,9 @@ public class BnCBlocks {
     public static final Block WHITE_GRAPE_BUSH = new GrapeBushBlock(
             GrapeColour.WHITE, BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT));
 
+    public static final Block WILD_GRAPES = new WildGrapesBlock(
+            BlockBehaviour.Properties.ofFullCopy(Blocks.VINE).noOcclusion());
+
     public static final Block RED_GRAPE_STEM = new GrapeStemBlock(
             GrapeColour.RED, BlockBehaviour.Properties.ofFullCopy(Blocks.VINE).noOcclusion());
     public static final Block WHITE_GRAPE_STEM = new GrapeStemBlock(
@@ -101,6 +104,7 @@ public class BnCBlocks {
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("bottle_rack"), BOTTLE_RACK);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("red_grape_bush"), RED_GRAPE_BUSH);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("white_grape_bush"), WHITE_GRAPE_BUSH);
+        Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("wild_grapes"), WILD_GRAPES);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("red_grape_stem"), RED_GRAPE_STEM);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("white_grape_stem"), WHITE_GRAPE_STEM);
         Registry.register(BuiltInRegistries.BLOCK, BrewinAndChewin.asResource("red_rope_grape"), RED_ROPE_GRAPE);

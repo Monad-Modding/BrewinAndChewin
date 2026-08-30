@@ -28,24 +28,24 @@ public class AgingCaskScreen extends AbstractContainerScreen<AgingCaskMenu> {
 
     private static final int BUBBLES_U = 177;
     private static final int BUBBLES_V = 57;
-    private static final int BUBBLES_X = 13;
-    private static final int BUBBLES_Y = 29;
+    private static final int BUBBLES_X = 14;
+    private static final int BUBBLES_Y = 36;
     private static final int BUBBLES_WIDTH = 9;
     private static final int BUBBLES_HEIGHT = 24;
 
     private static final int ARROW_U = 177;
     private static final int ARROW_V = 82;
     private static final int ARROW_X = 101;
-    private static final int ARROW_Y = 34;
+    private static final int ARROW_Y = 41;
     private static final int ARROW_WIDTH = 24;
     private static final int ARROW_HEIGHT = 16;
 
     public AgingCaskScreen(AgingCaskMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
         this.imageWidth = 176;
-        this.imageHeight = 166;
+        this.imageHeight = 178;
         this.titleLabelY = 3;
-        this.inventoryLabelY = 75;
+        this.inventoryLabelY = 87;
     }
 
     private void blitSheet(GuiGraphics graphics, int x, int y, int u, int v, int width, int height) {

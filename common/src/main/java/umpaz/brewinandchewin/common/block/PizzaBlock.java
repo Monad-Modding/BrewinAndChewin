@@ -104,8 +104,8 @@ public class PizzaBlock extends Block
         return true;
     }
 
-    // NeoForge:
-    public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) {
+    @Override
+    public boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
     }
 }

@@ -35,7 +35,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 import umpaz.brewinandchewin.BrewinAndChewin;
+import umpaz.brewinandchewin.client.particle.DrunkBubbleParticleOptions;
 import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.container.AbstractedItemHandler;
 import umpaz.brewinandchewin.common.registry.BnCBlockEntityTypes;
@@ -45,8 +47,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
-    private static final float FERMENTING_PARTICLE_CHANCE = 0.35F;
-    private static final float FERMENTING_SOUND_CHANCE = 0.02F;
+    private static final float FERMENTING_SOUND_CHANCE = 0.08F; //see line 137 for info ~Oska
     public static final MapCodec<KegBlock> CODEC = simpleCodec(KegBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty VERTICAL = BooleanProperty.create("vertical");
@@ -104,18 +105,41 @@ public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
         if (!(level.getBlockEntity(pos) instanceof KegBlockEntity keg) || !keg.isFermenting())
             return;
 
-        if (random.nextFloat() < FERMENTING_PARTICLE_CHANCE) {
-            double x = pos.getX() + 0.25D + random.nextDouble() * 0.5D;
-            double y = pos.getY() + (state.getValue(VERTICAL) ? 1.0D : 0.9D);
-            double z = pos.getZ() + 0.25D + random.nextDouble() * 0.5D;
-            level.addParticle(ParticleTypes.BUBBLE_POP, x, y, z, 0.0D, 0.02D, 0.0D);
-            level.addParticle(ParticleTypes.SPLASH, x, y, z, 0.0D, 0.0D, 0.0D);
-        }
+        if (random.nextInt(15) == 0) {
+            Direction facing = state.getValue(FACING);
+            boolean vertical = state.getValue(VERTICAL);
 
-        if (random.nextFloat() < FERMENTING_SOUND_CHANCE)
-            level.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D,
-                    SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS,
-                    0.4F, 0.7F + random.nextFloat() * 0.2F, false);
+            // Base pixel offsets, all values are divided by 16 to match with block size.
+            double xOffset = 8 / 16.0; // X = 8 px
+            double yOffset = vertical ? -1 / 16.0 : 2 / 16.0; // Y = -1 px if vertical, else 2 px, particles spawn for some reason 2 px higher than desired
+            double zOffset = vertical ? 0 / 16.0 : -1 / 16.0; // Z = 0 px if vertical, else -1 px, a little offsetted up front to make the particles appear visually more.
+
+            // Rotate offsets based on facing
+            Vec3 offset = switch (facing) {
+                case NORTH -> new Vec3(xOffset, yOffset, zOffset);
+                case SOUTH -> new Vec3(xOffset, yOffset, 1.0 - zOffset);
+                case WEST -> new Vec3(zOffset, yOffset, xOffset);
+                case EAST -> new Vec3(1.0 - zOffset, yOffset, xOffset);
+                default -> Vec3.ZERO;
+            };
+
+            // Slight randomisation for natural bubbling
+            double dx = (random.nextDouble() - 0.5) * 0.02;
+            double dy = random.nextDouble() * 0.02;
+            double dz = (random.nextDouble() - 0.5) * 0.02;
+
+            level.addParticle(new DrunkBubbleParticleOptions(new Vector3f(0.8784f, 0.5725f, 0.1921f), 0.25f),
+                    pos.getX() + offset.x + dx,
+                    pos.getY() + offset.y + dy,
+                    pos.getZ() + offset.z + dz,
+                    0.0, 0.02, 0.0);
+// 31/08/2026 Oska: From playtesting it may appear that the fermenting sound appears to be less common than before these changes. Values have been tweaked. The Sound is changed to BUBBLE_COLUMN_BUBBLE_POP to prevent confusion with when a keg finishes brewing playing sound BREWING_STAND_BREW, SEE → KeBlockEntity.java → processfermenting → line 421.
+// P.S playtest the sound event once more using BELL_BLOCK to see if the frequency still requires tweaking
+            if (random.nextFloat() < FERMENTING_SOUND_CHANCE)
+                level.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D,
+                        SoundEvents.BUBBLE_COLUMN_BUBBLE_POP, SoundSource.BLOCKS,
+                        0.4F, 0.7F + random.nextFloat() * 0.2F, false);
+        }
     }
 
     @Override

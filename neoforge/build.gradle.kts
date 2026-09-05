@@ -94,6 +94,7 @@ dependencies {
     runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${Versions.MINECRAFT}:${Versions.FLYWHEEL}")
     implementation("com.tterrag.registrate:Registrate:${Versions.REGISTRATE}")  { isTransitive = false }
     runtimeOnly("top.theillusivec4.curios:curios-neoforge:${Versions.CURIOS}")
+    implementation(project(":common"))
 }
 
 tasks {

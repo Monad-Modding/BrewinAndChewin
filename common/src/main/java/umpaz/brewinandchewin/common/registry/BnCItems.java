@@ -10,22 +10,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.BrewinAndChewin;
-import umpaz.brewinandchewin.common.item.GrapeSeedsItem;
+import umpaz.brewinandchewin.common.item.*;
 import umpaz.brewinandchewin.common.block.GrapeColour;
 import umpaz.brewinandchewin.common.compat.nomansland.BnCNMLItems;
 import umpaz.brewinandchewin.common.compat.nomansland.NMLIntegration;
-import umpaz.brewinandchewin.common.item.BoozeItem;
-import umpaz.brewinandchewin.common.item.DistillateItem;
-import umpaz.brewinandchewin.common.item.DreadNogItem;
-import umpaz.brewinandchewin.common.item.JamJarItem;
-import umpaz.brewinandchewin.common.item.KegItem;
-import umpaz.brewinandchewin.common.item.LabelItem;
-import umpaz.brewinandchewin.common.item.WineItem;
-import umpaz.brewinandchewin.common.item.WineType;
 import vectorwing.farmersdelight.common.item.ConsumableItem;
 
 import java.util.LinkedHashSet;
-
 public class BnCItems {
     public static LinkedHashSet<Item> CREATIVE_TAB_ITEMS = Sets.newLinkedHashSet();
 
@@ -47,7 +38,7 @@ public class BnCItems {
     public static final Item AGING_CASK = new BlockItem(BnCBlocks.AGING_CASK, new Item.Properties());
     public static final Item BOTTLE_RACK = new BlockItem(BnCBlocks.BOTTLE_RACK, new Item.Properties());
 
-    public static final Item TANKARD = new Item(new Item.Properties());
+    public static Item TANKARD = new Item(new Item.Properties());
 
     public static final Item RENNET = new Item(new Item.Properties().food(BnCFoods.RENNET));
 
@@ -63,6 +54,7 @@ public class BnCItems {
     public static final Item TWISTED_WINE = new WineItem(WineType.TWISTED, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
     public static final Item RICE_WINE = new WineItem(WineType.RICE, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
     public static final Item VODKA = new WineItem(WineType.VODKA, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
+    // ↑ @tazer, currently vodka stacks to one, I believe this should be 16 like all the other brews considering that on the neoforge side the brew is still stored in a tankard. ~Oska
     public static final Item OLD_WINE = new WineItem(WineType.OLD, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE).rarity(Rarity.UNCOMMON));
 
     public static final Item BRANDY = new DistillateItem(2, 4800, false, false, new Item.Properties().stacksTo(16));
@@ -229,7 +221,7 @@ public class BnCItems {
         registerWithTab("unripe_scarlet_cheese_wheel", UNRIPE_SCARLET_CHEESE_WHEEL);
         registerWithTab("scarlet_cheese_wheel", SCARLET_CHEESE_WHEEL);
         registerWithTab("scarlet_cheese_wedge", SCARLET_CHEESE_WEDGE);
-        
+
         registerWithTab("vegetable_omelet", VEGETABLE_OMELET);
         registerWithTab("creamy_onion_soup", CREAMY_ONION_SOUP);
         registerWithTab("cheesy_pasta", CHEESY_PASTA);

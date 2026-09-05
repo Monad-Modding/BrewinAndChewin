@@ -24,6 +24,8 @@ import umpaz.brewinandchewin.common.registry.*;
 import umpaz.brewinandchewin.common.registry.BnCCreativeTabs;
 import umpaz.brewinandchewin.neoforge.container.KegFluidTankNeoForge;
 import umpaz.brewinandchewin.neoforge.container.SidedKegWrapperNeoForge;
+import umpaz.brewinandchewin.neoforge.container.TankardItemFluidHandlerNeoForge;
+import umpaz.brewinandchewin.neoforge.item.TankardItem;
 import umpaz.brewinandchewin.neoforge.registry.BnCAttachments;
 import umpaz.brewinandchewin.neoforge.registry.BnCFluidTypes;
 import umpaz.brewinandchewin.neoforge.registry.BnCLootModifiers;
@@ -43,8 +45,25 @@ public class BrewinAndChewinNeoForge {
     public static class RegistryEvents {
         @SubscribeEvent
         public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-            event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BnCBlockEntityTypes.KEG, (blockEntity, direction) -> (SidedKegWrapperNeoForge)blockEntity.getSidedHandler(direction));
-            event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, BnCBlockEntityTypes.KEG, (blockEntity, direction) -> (KegFluidTankNeoForge)blockEntity.getFluidTank());
+            event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BnCBlockEntityTypes.KEG, (blockEntity, direction) -> (SidedKegWrapperNeoForge) blockEntity.getSidedHandler(direction));
+            event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, BnCBlockEntityTypes.KEG, (blockEntity, direction) -> (KegFluidTankNeoForge) blockEntity.getFluidTank());
+            event.registerItem(Capabilities.FluidHandler.ITEM,(stack, ctx) -> new TankardItemFluidHandlerNeoForge(stack, TankardItem.CAPACITY),
+                    BnCItems.TANKARD,
+                    BnCItems.BEER,
+                    BnCItems.VODKA,
+                    BnCItems.MEAD,
+                    BnCItems.PALE_JANE,
+                    BnCItems.EGG_GROG,
+                    BnCItems.GLITTERING_GRENADINE,
+                    BnCItems.SACCHARINE_RUM,
+                    BnCItems.SALTY_FOLLY,
+                    BnCItems.BLOODY_MARY,
+                    BnCItems.RED_RUM,
+                    BnCItems.STRONGROOT_ALE,
+                    BnCItems.STEEL_TOE_STOUT,
+                    BnCItems.DREAD_NOG,
+                    BnCItems.WITHERING_DROSS
+            );
         }
 
         @SubscribeEvent
@@ -97,6 +116,10 @@ public class BrewinAndChewinNeoForge {
             float[] innards = BnCInnardsDrops.DROPS.get(event.getName());
             if (innards != null)
                 event.getTable().addPool(BnCInnardsDrops.pool(innards[0], innards[1]).build());
+        }
+        @SubscribeEvent
+        public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+
         }
     }
 

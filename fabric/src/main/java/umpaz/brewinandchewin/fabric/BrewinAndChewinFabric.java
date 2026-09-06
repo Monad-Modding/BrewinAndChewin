@@ -58,12 +58,8 @@ public class BrewinAndChewinFabric implements ModInitializer {
         registerCompostables();
         registerWorldGeneration();
         registerFluidAttributeHandlers();
-        ServerLifecycleEvents.SERVER_STARTING.register(server -> {
-            BrewinAndChewinFabric.server = server;
-        });
-        ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
-            BrewinAndChewinFabric.server = null;
-        });
+        ServerLifecycleEvents.SERVER_STARTING.register(server -> BrewinAndChewinFabric.server = server);
+        ServerLifecycleEvents.SERVER_STOPPED.register(server -> BrewinAndChewinFabric.server = null);
 
         EntityTrackingEvents.START_TRACKING.register((entity, player) -> {
             if (entity instanceof LivingEntity living) {

@@ -57,7 +57,7 @@ public class CheeseRecipeCategory implements IRecipeCategory<CheeseAgingRecipe> 
 
    @Override
    public void setRecipe( IRecipeLayoutBuilder builder, CheeseAgingRecipe recipe, IFocusGroup focusGroup ) {
-      builder.addSlot(RecipeIngredientRole.INPUT, 9, 26).addItemStack(recipe.getIngredients().get(0).getItems()[0]);
+      builder.addSlot(RecipeIngredientRole.INPUT, 9, 26).addItemStack(recipe.getIngredients().getFirst().getItems()[0]);
       builder.addSlot(RecipeIngredientRole.OUTPUT, 93, 26).addItemStack(RecipeUtils.getResultItem(recipe));
    }
 }

@@ -211,8 +211,6 @@ public record FluidItemComponentRemapper(ItemStack baseItem,
                     else
                         BrewinAndChewin.LOG.error("Failed to decode remap value within fluid to item remapping: {}", dataResult.error().get().message());
                 }
-            } else {
-
             }
 
             return DataResult.success(Pair.of(Pair.of(componentType, references), input));

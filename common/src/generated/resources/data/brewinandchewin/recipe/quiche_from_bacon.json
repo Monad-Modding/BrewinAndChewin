@@ -12,7 +12,7 @@
       "tag": "brewinandchewin:foods/cheese_wedge"
     },
     "e": {
-      "item": "minecraft:egg"
+      "tag": "c:eggs"
     },
     "l": {
       "tag": "c:crops/cabbage"

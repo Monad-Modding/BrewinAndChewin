@@ -161,7 +161,7 @@ public class BnCCraftingRecipes {
                 .define('l', CommonTags.Items.CROPS_CABBAGE)
                 .define('m', Tags.Items.DRINKS_MILK)
                 .define('c', BnCTags.Items.FOOD_CHEESE_WEDGE)
-                .define('e', Items.EGG)
+                .define('e', Tags.Items.EGGS)
                 .define('C', ModItems.PIE_CRUST.get())
                 .unlockedBy("has_crust", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.PIE_CRUST.get()))
                 .save(consumer, BrewinAndChewin.asResource("quiche_from_bacon"));
@@ -173,7 +173,7 @@ public class BnCCraftingRecipes {
                 .define('l', ModItems.CABBAGE_LEAF.get())
                 .define('m', Tags.Items.DRINKS_MILK)
                 .define('c', BnCTags.Items.FOOD_CHEESE_WEDGE)
-                .define('e', Items.EGG)
+                .define('e', Tags.Items.EGGS)
                 .define('C', ModItems.PIE_CRUST.get())
                 .unlockedBy("has_crust", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.PIE_CRUST.get()))
                 .save(consumer, BrewinAndChewin.asResource("quiche_from_mushroom"));

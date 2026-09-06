@@ -45,6 +45,11 @@ public class CreatePotionPouringRecipe extends KegPouringRecipe {
     }
 
     @Override
+    public boolean isSpecial() {
+        return true;
+    }
+    
+    @Override
     @SuppressWarnings("DataFlowIssue")
     public RecipeSerializer<?> getSerializer() {
         return BnCRecipeSerializers.CREATE_POTION_POURING;

@@ -36,12 +36,12 @@ public class KegTooltip implements ClientTooltipComponent {
    public int getWidth( Font font ) {
       if ( !mealStack.isEmpty() ) {
          MutableComponent textServingsOf = mealStack.amount() == FluidUnit.MILLIBUCKET.convertToLoader(250)
-                 ? TextUtils.getTranslation("tooltip.cooking_pot.single_serving")
-                 : TextUtils.getTranslation("tooltip.cooking_pot.many_servings", mealStack.amount() / FluidUnit.MILLIBUCKET.convertToLoader(250));
+                 ? TextUtils.tooltip("cooking_pot.single_serving")
+                 : TextUtils.tooltip("cooking_pot.many_servings", mealStack.amount() / FluidUnit.MILLIBUCKET.convertToLoader(250));
          return Math.max(font.width(textServingsOf), font.width(BrewinAndChewin.getHelper().getFluidDisplayName(mealStack)) + 20);
       }
       else {
-         return font.width(TextUtils.getTranslation("tooltip.cooking_pot.empty"));
+         return font.width(TextUtils.tooltip("cooking_pot.empty"));
       }
    }
 
@@ -60,14 +60,14 @@ public class KegTooltip implements ClientTooltipComponent {
 
       if (!mealStack.isEmpty()) {
          MutableComponent textServingsOf = mealStack.amount() == FluidUnit.MILLIBUCKET.convertToLoader(250)
-                 ? TextUtils.getTranslation("tooltip.cooking_pot.single_serving")
-                 : TextUtils.getTranslation("tooltip.cooking_pot.many_servings", mealStack.amount() / FluidUnit.MILLIBUCKET.convertToLoader(250));
+                 ? TextUtils.tooltip("cooking_pot.single_serving")
+                 : TextUtils.tooltip("cooking_pot.many_servings", mealStack.amount() / FluidUnit.MILLIBUCKET.convertToLoader(250));
 
          font.drawInBatch(textServingsOf, (float) x, (float) y, gray, true, matrix4f, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
          font.drawInBatch(BrewinAndChewin.getHelper().getFluidDisplayName(mealStack), x + ITEM_SIZE + MARGIN, y + textSpacing + MARGIN, -1, true, matrix4f, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
       }
       else {
-         MutableComponent textEmpty = TextUtils.getTranslation("tooltip.cooking_pot.empty");
+         MutableComponent textEmpty = TextUtils.tooltip("cooking_pot.empty");
          font.drawInBatch(textEmpty, x, y, gray, true, matrix4f, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
       }
    }

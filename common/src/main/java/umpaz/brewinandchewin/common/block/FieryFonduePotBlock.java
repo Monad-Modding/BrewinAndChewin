@@ -31,6 +31,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import umpaz.brewinandchewin.common.registry.BnCItems;
 import vectorwing.farmersdelight.common.registry.ModParticleTypes;
 import vectorwing.farmersdelight.common.registry.ModSounds;
+import vectorwing.farmersdelight.common.utility.TextUtils;
 
 
 public class FieryFonduePotBlock extends Block {
@@ -104,7 +105,7 @@ public class FieryFonduePotBlock extends Block {
             level.playSound(null, pos, SoundEvents.ARMOR_EQUIP_GENERIC.value(), SoundSource.BLOCKS, 1.0F, 1.0F);
             return ItemInteractionResult.SUCCESS;
         }
-        player.displayClientMessage(Component.translatable("farmersdelight.block.feast.use_container", bowl.getHoverName()), true);
+        player.displayClientMessage(TextUtils.block("feast.use_container", bowl.getHoverName()), true);
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 

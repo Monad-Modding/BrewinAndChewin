@@ -587,21 +587,26 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
     }
 
     public void updateTemperature() {
-        ArrayList<BlockState> states = new ArrayList<>();
+        int heat = 0;
+        int cold = 0;
+        BlockPos.MutableBlockPos scan = new BlockPos.MutableBlockPos();
         for (int x = -RANGE; x <= RANGE; x++) {
             for (int y = -RANGE; y <= RANGE; y++) {
                 for (int z = -RANGE; z <= RANGE; z++) {
-                    states.add(level.getBlockState(worldPosition.offset(x, y, z)));
+                    scan.setWithOffset(worldPosition, x, y, z);
+                    if (!level.isLoaded(scan))
+                        continue;
+
+                    BlockState state = level.getBlockState(scan);
+                    if (state.hasProperty(BlockStateProperties.LIT) && !state.getValue(BlockStateProperties.LIT))
+                        continue;
+                    if (state.is(ModTags.Blocks.HEAT_SOURCES))
+                        ++heat;
+                    if (state.is(BnCTags.Blocks.FREEZE_SOURCES))
+                        ++cold;
                 }
             }
         }
-
-        int heat = states.stream().filter(s -> s.is(ModTags.Blocks.HEAT_SOURCES) && s.hasProperty(BlockStateProperties.LIT)).filter(s -> s.getValue(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
-        heat += states.stream().filter(s -> s.is(ModTags.Blocks.HEAT_SOURCES) && !s.hasProperty(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
-
-        // Compat with mods that have lit states, such as a future Pug FD addon.
-        int cold = states.stream().filter(s -> s.is(BnCTags.Blocks.FREEZE_SOURCES) && s.hasProperty(BlockStateProperties.LIT)).filter(s -> s.hasProperty(BlockStateProperties.LIT)).filter(s -> s.getValue(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
-        cold += states.stream().filter(s -> s.is(BnCTags.Blocks.FREEZE_SOURCES) && !s.hasProperty(BlockStateProperties.LIT)).mapToInt(s -> 1).sum();
 
         if (BnCConfiguration.common().keg().biomeTemp()) {
             Holder<Biome> biome = level.getBiome(worldPosition);

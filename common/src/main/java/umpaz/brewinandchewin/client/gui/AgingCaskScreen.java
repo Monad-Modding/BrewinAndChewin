@@ -64,7 +64,7 @@ public class AgingCaskScreen extends AbstractContainerScreen<AgingCaskMenu> {
         }
 
         for (int i = 0; i < AgingCaskBlockEntity.DISTILLATE_SLOTS; ++i) {
-            if (this.menu.isDistillateSlotOpen(i))
+            if (this.menu.isDistillateSlotVisible(i))
                 continue;
             this.blitSheet(graphics,
                     this.leftPos + AgingCaskMenu.GRID_X + AgingCaskMenu.distillateSlotColumn(i) * AgingCaskMenu.SLOT_SIZE - 1,

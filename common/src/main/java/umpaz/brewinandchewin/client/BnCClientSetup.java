@@ -146,7 +146,11 @@ public class BnCClientSetup {
         consumer.accept((state, level, pos, pTintIndex) -> {
             if (level != null && pos != null && level.getBlockEntity(pos) instanceof CoasterBlockEntity blockEntity) {
                 int tintIndex = -1;
-                int count = (int) blockEntity.getItems().stream().filter(i -> !i.isEmpty()).count();
+                int count = 0;
+                for (ItemStack item : blockEntity.getItems()) {
+                    if (!item.isEmpty())
+                        ++count;
+                }
                 for (int i = 0; i < count; i++) {
                     ItemStack stack = blockEntity.getItems().get(i);
                     ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
@@ -155,10 +159,8 @@ public class BnCClientSetup {
                     if (modelEntries != null) {
                         for (CoasterBlockEntityRenderer.ModelEntry modelEntry : modelEntries) {
                             int color = 0XFFFFFFFF;
-                            for (int j = 0; j < modelEntry.modifiers().size(); ++j) {
-                                for (TextureModifier modifier : modelEntry.modifiers()) {
-                                    color = modifier.color(level, state, pos, stack, color);
-                                }
+                            for (TextureModifier modifier : modelEntry.modifiers()) {
+                                color = modifier.color(level, state, pos, stack, color);
                             }
                             if (color != -1) {
                                 ++tintIndex;

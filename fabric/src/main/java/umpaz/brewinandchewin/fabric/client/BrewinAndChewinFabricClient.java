@@ -25,6 +25,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
 import umpaz.brewinandchewin.BrewinAndChewin;
+import umpaz.brewinandchewin.fabric.client.model.CoasterWrappedModel;
 import umpaz.brewinandchewin.client.BnCClientSetup;
 import umpaz.brewinandchewin.client.BrewinAndChewinClient;
 import umpaz.brewinandchewin.client.gui.AgingCaskScreen;
@@ -37,7 +38,6 @@ import umpaz.brewinandchewin.common.registry.BnCFluids;
 import umpaz.brewinandchewin.common.registry.BnCMenuTypes;
 import umpaz.brewinandchewin.fabric.client.gui.BnCHUDOverlays;
 import umpaz.brewinandchewin.fabric.client.integration.IntoxicationAppleSkinCompatFabric;
-import umpaz.brewinandchewin.fabric.client.model.CoasterWrappedModel;
 import umpaz.brewinandchewin.fabric.client.platform.BnCClientPlatformHelperFabric;
 import umpaz.brewinandchewin.fabric.registry.BnCFluidsImpl;
 import umpaz.brewinandchewin.fabric.registry.BnCLootModificationEvents;
@@ -88,17 +88,17 @@ public class BrewinAndChewinFabricClient implements ClientModInitializer {
             context.addModels(data.stream().map(resourceLocation -> resourceLocation.withPath(path -> "brewinandchewin/coaster/" + path)).toList());
             context.addModels(BrewinAndChewin.asResource("block/coaster"), BrewinAndChewin.asResource("block/coaster_tray"));
             context.addModels(BnCClientSetup.getBottleRackModels());
-            context.resolveModel().register(context1 -> {
-                if (context1.id().getPath().startsWith("brewinandchewin/coaster/") && BnCClientSetup.MODELS.contains(context1.id().withPath(string -> string.substring(24)))) {
-                    return context1.getOrLoadModel(context1.id().withPath(string -> string.substring(24)));
-                }
-                return null;
-            });
             context.modifyModelAfterBake().register((model, context1) -> {
                 if (context1.resourceId() != null && context1.resourceId().getPath().startsWith("brewinandchewin/coaster/") && BnCClientSetup.MODELS.contains(context1.resourceId().withPath(string -> string.substring(24)))) {
                     return new CoasterWrappedModel(model);
                 }
                 return model;
+            });
+            context.resolveModel().register(context1 -> {
+                if (context1.id().getPath().startsWith("brewinandchewin/coaster/") && BnCClientSetup.MODELS.contains(context1.id().withPath(string -> string.substring(24)))) {
+                    return context1.getOrLoadModel(context1.id().withPath(string -> string.substring(24)));
+                }
+                return null;
             });
         });
         ClientReceiveMessageEvents.ALLOW_CHAT.register((message, chatMessage, profile, bound, timestamp) -> {

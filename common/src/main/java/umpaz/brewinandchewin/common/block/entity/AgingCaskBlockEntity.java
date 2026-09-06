@@ -11,13 +11,14 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.Containers;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -113,10 +114,18 @@ public class AgingCaskBlockEntity extends BaseContainerBlockEntity implements Wo
     public int countDistillates() {
         int count = 0;
         for (int i = FIRST_DISTILLATE_SLOT; i < OUTPUT_SLOT; ++i) {
-            if (!this.inventory.get(i).isEmpty())
+            if (BnCWineUtils.isDistillate(this.inventory.get(i)))
                 ++count;
         }
         return count;
+    }
+
+    public boolean areDistillateSlotsEmpty() {
+        for (int i = FIRST_DISTILLATE_SLOT; i < OUTPUT_SLOT; ++i) {
+            if (!this.inventory.get(i).isEmpty())
+                return false;
+        }
+        return true;
     }
 
     public static void agingTick(Level level, BlockPos pos, BlockState state, AgingCaskBlockEntity cask) {
@@ -124,8 +133,6 @@ public class AgingCaskBlockEntity extends BaseContainerBlockEntity implements Wo
         if (state.getValue(AgingCaskBlock.OCCUPIED) != occupied) {
             level.setBlock(pos, state.setValue(AgingCaskBlock.OCCUPIED, occupied), Block_UPDATE_ALL);
         }
-
-        cask.ejectLockedDistillates(level, pos);
 
         if (cask.snapshotInputs() && cask.agingTime != 0) {
             cask.agingTime = 0;
@@ -151,18 +158,6 @@ public class AgingCaskBlockEntity extends BaseContainerBlockEntity implements Wo
     }
 
     private static final int Block_UPDATE_ALL = 3;
-
-    private void ejectLockedDistillates(Level level, BlockPos pos) {
-        ItemStack wine = this.getWine();
-        for (int i = FIRST_DISTILLATE_SLOT; i < OUTPUT_SLOT; ++i) {
-            ItemStack stack = this.inventory.get(i);
-            if (stack.isEmpty() || isDistillateSlotUnlocked(wine, i))
-                continue;
-            this.inventory.set(i, ItemStack.EMPTY);
-            Containers.dropItemStack(level, pos.getX() + 0.5D, pos.getY() + 1.0D, pos.getZ() + 0.5D, stack);
-            this.setChanged();
-        }
-    }
 
     private boolean snapshotInputs() {
         boolean changed = false;
@@ -194,7 +189,7 @@ public class AgingCaskBlockEntity extends BaseContainerBlockEntity implements Wo
 
         List<ItemStack> distillates = new ArrayList<>();
         for (int i = FIRST_DISTILLATE_SLOT; i < OUTPUT_SLOT; ++i) {
-            if (!this.inventory.get(i).isEmpty())
+            if (BnCWineUtils.isDistillate(this.inventory.get(i)))
                 distillates.add(this.inventory.get(i));
         }
 
@@ -205,10 +200,24 @@ public class AgingCaskBlockEntity extends BaseContainerBlockEntity implements Wo
         this.inventory.set(OUTPUT_SLOT, aged);
         this.inventory.set(WINE_SLOT, ItemStack.EMPTY);
         for (int i = FIRST_DISTILLATE_SLOT; i < OUTPUT_SLOT; ++i) {
-            this.inventory.set(i, ItemStack.EMPTY);
+            ItemStack distillate = this.inventory.get(i);
+            if (!BnCWineUtils.isDistillate(distillate))
+                continue;
+            ItemStack container = getContainerItem(distillate);
+            if (!container.isEmpty())
+                container.setCount(Math.min(distillate.getCount(), container.getMaxStackSize()));
+            this.inventory.set(i, container);
         }
         level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 0.6F, 0.7F);
         this.setChanged();
+    }
+
+    public static ItemStack getContainerItem(ItemStack stack) {
+        if (stack.getItem() instanceof PotionItem)
+            return new ItemStack(Items.GLASS_BOTTLE);
+        if (stack.getItem().hasCraftingRemainingItem())
+            return new ItemStack(stack.getItem().getCraftingRemainingItem());
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -243,7 +252,7 @@ public class AgingCaskBlockEntity extends BaseContainerBlockEntity implements Wo
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
         if (slot == WINE_SLOT)
-            return stack.getItem() instanceof WineItem;
+            return stack.getItem() instanceof WineItem && this.areDistillateSlotsEmpty();
         if (slot == OUTPUT_SLOT)
             return false;
         return BnCWineUtils.isDistillate(stack) && isDistillateSlotUnlocked(this.getWine(), slot);
@@ -265,7 +274,9 @@ public class AgingCaskBlockEntity extends BaseContainerBlockEntity implements Wo
 
     @Override
     public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction direction) {
-        return slot == OUTPUT_SLOT;
+        if (slot == OUTPUT_SLOT)
+            return true;
+        return slot >= FIRST_DISTILLATE_SLOT && slot < OUTPUT_SLOT && !isDistillateSlotUnlocked(this.getWine(), slot);
     }
 
     @Override

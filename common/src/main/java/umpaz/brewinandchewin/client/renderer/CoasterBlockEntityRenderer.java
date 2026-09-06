@@ -9,14 +9,17 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.phys.AABB;
 import org.joml.Quaternionf;
@@ -51,6 +54,8 @@ public class CoasterBlockEntityRenderer implements BlockEntityRenderer<CoasterBl
     public static void addToModelMap(ResourceLocation itemId, List<ModelEntry> models) {
         ITEM_TO_MODELS.put(itemId, models);
     }
+
+    private final RandomSource random = new LegacyRandomSource(0L);
 
     public CoasterBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
     }
@@ -121,15 +126,32 @@ public class CoasterBlockEntityRenderer implements BlockEntityRenderer<CoasterBl
 
     @Override
     public void render(CoasterBlockEntity entity, float tickDelta, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-        int count = (int) entity.getItems().stream().filter(i -> !i.isEmpty()).count();
-        poseStack.rotateAround(new Quaternionf().fromAxisAngleDeg(0, 1, 0, -(360f / 16f) * entity.getBlockState().getValue(CoasterBlock.ROTATION)), 0.5f, 0, 0.5f);
+        ModelBlockRenderer.enableCaching();
+        try {
+            this.renderCoaster(entity, poseStack, buffer, combinedLight, combinedOverlay);
+        } finally {
+            ModelBlockRenderer.clearCache();
+        }
+    }
 
-        RandomSource random = new LegacyRandomSource(entity.getBlockPos().asLong());
+    private void renderCoaster(CoasterBlockEntity entity, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+        int count = 0;
+        for (ItemStack item : entity.getItems()) {
+            if (!item.isEmpty())
+                ++count;
+        }
 
-        if (!entity.getBlockState().getValue(CoasterBlock.INVISIBLE) || count == 0) {
+        BlockState state = entity.getBlockState();
+        BlockPos pos = entity.getBlockPos();
+        long seed = pos.asLong();
+        poseStack.rotateAround(new Quaternionf().fromAxisAngleDeg(0, 1, 0, -(360f / 16f) * state.getValue(CoasterBlock.ROTATION)), 0.5f, 0, 0.5f);
+
+        this.random.setSeed(seed);
+
+        if (!state.getValue(CoasterBlock.INVISIBLE) || count == 0) {
             poseStack.pushPose();
-            ResourceLocation modelId = entity.getBlockState().getValue(CoasterBlock.SIZE) > 1 ? BrewinAndChewin.asResource("block/coaster_tray") : BrewinAndChewin.asResource("block/coaster");
-            BrewinAndChewinClient.getHelper().tesselateModel(entity.getLevel(), modelId, entity.getBlockState(), entity.getBlockPos(), poseStack, buffer, random, entity.getBlockPos().asLong(), combinedOverlay, -1, RenderType.cutout());
+            ResourceLocation modelId = state.getValue(CoasterBlock.SIZE) > 1 ? BrewinAndChewin.asResource("block/coaster_tray") : BrewinAndChewin.asResource("block/coaster");
+            BrewinAndChewinClient.getHelper().tesselateModel(entity.getLevel(), modelId, state, pos, poseStack, buffer, this.random, seed, combinedOverlay, -1, RenderType.cutout());
             poseStack.popPose();
         }
 
@@ -140,33 +162,31 @@ public class CoasterBlockEntityRenderer implements BlockEntityRenderer<CoasterBl
             List<ModelEntry> modelEntries = getModelEntries(itemId);
             poseStack.pushPose();
 
-            poseUtil(poseStack, count, i, random, entity.getBlockState().getValue(CoasterBlock.INVISIBLE));
+            poseUtil(poseStack, count, i, this.random, state.getValue(CoasterBlock.INVISIBLE));
 
             if (modelEntries != null) {
                 for (ModelEntry modelEntry : modelEntries) {
                     ResourceLocation modelPath = modelEntry.model.withPath(path -> "brewinandchewin/coaster/" + path);
                     if (!checkModel(modelPath))
-                        continue;;
+                        continue;
                     int color = 0XFFFFFFFF;
                     RenderType renderType = RenderType.cutout();
-                    for (int j = 0; j < modelEntry.modifiers().size(); ++j) {
-                        for (TextureModifier modifier : modelEntry.modifiers()) {
-                            color = modifier.color(entity.getLevel(), entity.getBlockState(), entity.getBlockPos(), stack, color);
-                            renderType = modifier.renderType(entity.getLevel(), entity.getBlockState(), entity.getBlockPos(), stack, renderType);
-                        }
+                    for (TextureModifier modifier : modelEntry.modifiers()) {
+                        color = modifier.color(entity.getLevel(), state, pos, stack, color);
+                        renderType = modifier.renderType(entity.getLevel(), state, pos, stack, renderType);
                     }
                     int finalTintIndex = -1;
                     if (color != 0XFFFFFFFF) {
                         ++tintIndex;
                         finalTintIndex = tintIndex;
                     }
-                    BrewinAndChewinClient.getHelper().tesselateModel(entity.getLevel(), modelPath, entity.getBlockState(), entity.getBlockPos(), poseStack, buffer, random, entity.getBlockPos().asLong(), combinedOverlay, finalTintIndex, renderType);
+                    BrewinAndChewinClient.getHelper().tesselateModel(entity.getLevel(), modelPath, state, pos, poseStack, buffer, this.random, seed, combinedOverlay, finalTintIndex, renderType);
                 }
             } else {
                 poseStack.translate(0.51, 0.05, 0.5);
                 poseStack.mulPose(Axis.XP.rotationDegrees(90));
                 poseStack.scale(0.5F, 0.5F, 0.5F);
-                Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, combinedLight, combinedOverlay, poseStack, buffer, entity.getLevel(), (int) entity.getBlockPos().asLong());
+                Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, combinedLight, combinedOverlay, poseStack, buffer, entity.getLevel(), (int) seed);
             }
             poseStack.popPose();
         }

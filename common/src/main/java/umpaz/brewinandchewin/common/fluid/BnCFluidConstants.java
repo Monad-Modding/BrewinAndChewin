@@ -22,7 +22,6 @@ public class BnCFluidConstants {
         public static final int DEFAULT = 0xFFFFFFFF;
 
         public static final int BEER = 0xFFFBB117;
-        public static final int VODKA = 0xFFE7FDF6;
         public static final int MEAD = 0xFFFFD32D;
         public static final int EGG_GROG = 0xFFFFFFFF;
         public static final int STRONGROOT_ALE = 0xFFBC4A4F;
@@ -43,5 +42,6 @@ public class BnCFluidConstants {
         public static final int CURRANT_WINE = 0xFF6E2A55;
         public static final int VERRUCA_WINE = 0xFF8E2F2F;
         public static final int TWISTED_WINE = 0xFF2F8F86;
+        public static final int VODKA = 0xFFE7FDF6;
     }
 }

@@ -66,7 +66,8 @@ public class AgingCaskMenu extends AbstractContainerMenu {
 
                 @Override
                 public boolean isActive() {
-                    return AgingCaskBlockEntity.isDistillateSlotUnlocked(container.getItem(AgingCaskBlockEntity.WINE_SLOT), slot);
+                    return AgingCaskBlockEntity.isDistillateSlotUnlocked(container.getItem(AgingCaskBlockEntity.WINE_SLOT), slot)
+                            || !container.getItem(slot).isEmpty();
                 }
             });
         }
@@ -113,6 +114,11 @@ public class AgingCaskMenu extends AbstractContainerMenu {
                 AgingCaskBlockEntity.FIRST_DISTILLATE_SLOT + index);
     }
 
+    public boolean isDistillateSlotVisible(int index) {
+        return this.isDistillateSlotOpen(index)
+                || !this.container.getItem(AgingCaskBlockEntity.FIRST_DISTILLATE_SLOT + index).isEmpty();
+    }
+
     public boolean hasWine() {
         return !this.container.getItem(AgingCaskBlockEntity.WINE_SLOT).isEmpty();
     }
@@ -124,6 +130,23 @@ public class AgingCaskMenu extends AbstractContainerMenu {
     public int getAgingProgressScaled(int pixels) {
         int total = this.caskData.get(1);
         return total == 0 ? 0 : this.caskData.get(0) * pixels / total;
+    }
+
+    private boolean moveIntoCask(ItemStack stack) {
+        if (this.slots.get(AgingCaskBlockEntity.WINE_SLOT).mayPlace(stack)
+                && this.moveItemStackTo(stack, AgingCaskBlockEntity.WINE_SLOT, AgingCaskBlockEntity.FIRST_DISTILLATE_SLOT, false))
+            return true;
+
+        boolean moved = false;
+        for (int slot = AgingCaskBlockEntity.FIRST_DISTILLATE_SLOT; slot < AgingCaskBlockEntity.OUTPUT_SLOT; ++slot) {
+            if (!this.slots.get(slot).mayPlace(stack))
+                continue;
+            if (this.moveItemStackTo(stack, slot, slot + 1, false))
+                moved = true;
+            if (stack.isEmpty())
+                return true;
+        }
+        return moved;
     }
 
     @Override
@@ -146,7 +169,7 @@ public class AgingCaskMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
                 slot.onQuickCraft(slotStack, copy);
-            } else if (!this.moveItemStackTo(slotStack, AgingCaskBlockEntity.WINE_SLOT, AgingCaskBlockEntity.OUTPUT_SLOT, false)) {
+            } else if (!this.moveIntoCask(slotStack)) {
                 return ItemStack.EMPTY;
             }
 

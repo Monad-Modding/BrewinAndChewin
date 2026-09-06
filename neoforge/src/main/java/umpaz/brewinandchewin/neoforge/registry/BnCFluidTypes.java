@@ -10,7 +10,6 @@ public class BnCFluidTypes {
     public static final FluidType HONEY = new BnCFluidType();
     
     public static final FluidType BEER = new BnCFluidType();
-    public static final FluidType VODKA = new BnCFluidType();
     public static final FluidType MEAD = new BnCFluidType();
     public static final FluidType EGG_GROG = new BnCFluidType();
     public static final FluidType STRONGROOT_ALE = new BnCFluidType();
@@ -31,6 +30,7 @@ public class BnCFluidTypes {
     public static final FluidType CURRANT_WINE = new BnCFluidType();
     public static final FluidType VERRUCA_WINE = new BnCFluidType();
     public static final FluidType TWISTED_WINE = new BnCFluidType();
+    public static final FluidType VODKA = new BnCFluidType();
     public static final FluidType FLAXEN_CHEESE = new BnCFluidType();
     public static final FluidType SCARLET_CHEESE = new BnCFluidType();
 
@@ -38,7 +38,6 @@ public class BnCFluidTypes {
         Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("honey"), HONEY);
         
         Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("beer"), BEER);
-        Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("vodka"), VODKA);
         Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("mead"), MEAD);
         Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("egg_grog"), EGG_GROG);
         Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("strongroot_ale"), STRONGROOT_ALE);
@@ -59,6 +58,7 @@ public class BnCFluidTypes {
         Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("currant_wine"), CURRANT_WINE);
         Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("verruca_wine"), VERRUCA_WINE);
         Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("twisted_wine"), TWISTED_WINE);
+        Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("vodka"), VODKA);
         Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("flaxen_cheese"), FLAXEN_CHEESE);
         Registry.register(NeoForgeRegistries.FLUID_TYPES, BrewinAndChewin.asResource("scarlet_cheese"), SCARLET_CHEESE);
     }

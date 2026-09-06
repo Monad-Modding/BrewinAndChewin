@@ -11,10 +11,7 @@ public class BnCFluids {
     
     public static FlowingFluid BEER;
     public static FlowingFluid FLOWING_BEER;
-    
-    public static FlowingFluid VODKA;
-    public static FlowingFluid FLOWING_VODKA;
-    
+
     public static FlowingFluid MEAD;
     public static FlowingFluid FLOWING_MEAD;
 
@@ -72,6 +69,9 @@ public class BnCFluids {
 
     public static FlowingFluid TWISTED_WINE;
     public static FlowingFluid FLOWING_TWISTED_WINE;
+
+    public static FlowingFluid VODKA;
+    public static FlowingFluid FLOWING_VODKA;
 
     public static FlowingFluid FLAXEN_CHEESE;
     public static FlowingFluid FLOWING_FLAXEN_CHEESE;

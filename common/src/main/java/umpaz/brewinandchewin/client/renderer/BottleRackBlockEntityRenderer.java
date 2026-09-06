@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
@@ -52,6 +53,15 @@ public class BottleRackBlockEntityRenderer implements BlockEntityRenderer<Bottle
 
     @Override
     public void render(BottleRackBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
+        ModelBlockRenderer.enableCaching();
+        try {
+            this.renderRack(blockEntity, poseStack, buffer, packedOverlay);
+        } finally {
+            ModelBlockRenderer.clearCache();
+        }
+    }
+
+    private void renderRack(BottleRackBlockEntity blockEntity, PoseStack poseStack, MultiBufferSource buffer, int packedOverlay) {
         BlockState state = blockEntity.getBlockState();
         if (!(state.getBlock() instanceof BottleRackBlock) || blockEntity.getLevel() == null)
             return;

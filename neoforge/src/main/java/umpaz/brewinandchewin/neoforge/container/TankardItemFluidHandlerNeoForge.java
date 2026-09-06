@@ -25,9 +25,6 @@ public class TankardItemFluidHandlerNeoForge implements IFluidHandlerItem {
         if (fluid.getFluid() == BnCFluids.BEER) {
             return new ItemStack(BnCItems.BEER);
         }
-        if (fluid.getFluid() == BnCFluids.VODKA) {
-            return new ItemStack(BnCItems.VODKA);
-        }
         if (fluid.getFluid() == BnCFluids.MEAD) {
             return new ItemStack(BnCItems.MEAD);
         }
@@ -70,7 +67,6 @@ public class TankardItemFluidHandlerNeoForge implements IFluidHandlerItem {
     private FluidStack getFluidFromBrew(ItemStack stack){
         Item item = stack.getItem();
         if (item == BnCItems.BEER) return new FluidStack(BnCFluids.BEER, capacity);
-        if (item == BnCItems.VODKA) return new FluidStack(BnCFluids.VODKA, capacity);
         if (item == BnCItems.MEAD) return new FluidStack(BnCFluids.MEAD, capacity);
         if (item == BnCItems.BLOODY_MARY) return new FluidStack(BnCFluids.BLOODY_MARY, capacity);
         if (item == BnCItems.DREAD_NOG) return new FluidStack(BnCFluids.DREAD_NOG, capacity);

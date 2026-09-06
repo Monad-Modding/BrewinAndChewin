@@ -55,7 +55,6 @@ public class BnCTags {
 
     public static class Fluids {
         public static final TagKey<Fluid> BEER = modFluidTag("beer");
-        public static final TagKey<Fluid> VODKA = modFluidTag("vodka");
         public static final TagKey<Fluid> MEAD = modFluidTag("mead");
         public static final TagKey<Fluid> RICE_WINE = modFluidTag("rice_wine");
         public static final TagKey<Fluid> PALE_JANE = modFluidTag("pale_jane");
@@ -76,6 +75,7 @@ public class BnCTags {
         public static final TagKey<Fluid> CURRANT_WINE = modFluidTag("currant_wine");
         public static final TagKey<Fluid> VERRUCA_WINE = modFluidTag("verruca_wine");
         public static final TagKey<Fluid> TWISTED_WINE = modFluidTag("twisted_wine");
+        public static final TagKey<Fluid> VODKA = modFluidTag("vodka");
 
         public static final TagKey<Fluid> FLAXEN_CHEESE = modFluidTag("flaxen_cheese");
         public static final TagKey<Fluid> SCARLET_CHEESE = modFluidTag("scarlet_cheese");

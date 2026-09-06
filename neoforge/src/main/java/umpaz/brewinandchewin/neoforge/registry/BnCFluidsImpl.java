@@ -7,7 +7,6 @@ import umpaz.brewinandchewin.common.registry.BnCFluids;
 public class BnCFluidsImpl {
     public static final BaseFlowingFluid.Properties HONEY_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.HONEY, () -> BnCFluids.HONEY, () -> BnCFluids.FLOWING_HONEY);
     public static final BaseFlowingFluid.Properties BEER_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.BEER, () -> BnCFluids.BEER, () -> BnCFluids.FLOWING_BEER);
-    public static final BaseFlowingFluid.Properties VODKA_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.VODKA, () -> BnCFluids.VODKA, () -> BnCFluids.FLOWING_VODKA);
     public static final BaseFlowingFluid.Properties MEAD_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.MEAD, () -> BnCFluids.MEAD, () -> BnCFluids.FLOWING_MEAD);
     public static final BaseFlowingFluid.Properties EGG_GROG_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.EGG_GROG, () -> BnCFluids.EGG_GROG, () -> BnCFluids.FLOWING_EGG_GROG);
     public static final BaseFlowingFluid.Properties STRONGROOT_ALE_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.STRONGROOT_ALE, () -> BnCFluids.STRONGROOT_ALE, () -> BnCFluids.FLOWING_STRONGROOT_ALE);
@@ -28,6 +27,7 @@ public class BnCFluidsImpl {
     public static final BaseFlowingFluid.Properties CURRANT_WINE_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.CURRANT_WINE, () -> BnCFluids.CURRANT_WINE, () -> BnCFluids.FLOWING_CURRANT_WINE);
     public static final BaseFlowingFluid.Properties VERRUCA_WINE_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.VERRUCA_WINE, () -> BnCFluids.VERRUCA_WINE, () -> BnCFluids.FLOWING_VERRUCA_WINE);
     public static final BaseFlowingFluid.Properties TWISTED_WINE_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.TWISTED_WINE, () -> BnCFluids.TWISTED_WINE, () -> BnCFluids.FLOWING_TWISTED_WINE);
+    public static final BaseFlowingFluid.Properties VODKA_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.VODKA, () -> BnCFluids.VODKA, () -> BnCFluids.FLOWING_VODKA);
 
     public static final BaseFlowingFluid.Properties FLAXEN_CHEESE_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.FLAXEN_CHEESE, () -> BnCFluids.FLAXEN_CHEESE, () -> BnCFluids.FLOWING_FLAXEN_CHEESE);
     public static final BaseFlowingFluid.Properties SCARLET_CHEESE_FLUID_PROPERTIES = new BaseFlowingFluid.Properties(() -> BnCFluidTypes.SCARLET_CHEESE, () -> BnCFluids.SCARLET_CHEESE, () -> BnCFluids.FLOWING_SCARLET_CHEESE);
@@ -37,8 +37,6 @@ public class BnCFluidsImpl {
         BnCFluids.FLOWING_HONEY = new BaseFlowingFluid.Flowing(BnCFluidsImpl.HONEY_FLUID_PROPERTIES);
         BnCFluids.BEER = new BaseFlowingFluid.Source(BnCFluidsImpl.BEER_FLUID_PROPERTIES);
         BnCFluids.FLOWING_BEER = new BaseFlowingFluid.Flowing(BnCFluidsImpl.BEER_FLUID_PROPERTIES);
-        BnCFluids.VODKA = new BaseFlowingFluid.Source(BnCFluidsImpl.VODKA_FLUID_PROPERTIES);
-        BnCFluids.FLOWING_VODKA = new BaseFlowingFluid.Flowing(BnCFluidsImpl.VODKA_FLUID_PROPERTIES);
         BnCFluids.MEAD = new BaseFlowingFluid.Source(BnCFluidsImpl.MEAD_FLUID_PROPERTIES);
         BnCFluids.FLOWING_MEAD = new BaseFlowingFluid.Flowing(BnCFluidsImpl.MEAD_FLUID_PROPERTIES);
         BnCFluids.EGG_GROG = new BaseFlowingFluid.Source(BnCFluidsImpl.EGG_GROG_FLUID_PROPERTIES);
@@ -77,6 +75,8 @@ public class BnCFluidsImpl {
         BnCFluids.FLOWING_VERRUCA_WINE = new BaseFlowingFluid.Flowing(BnCFluidsImpl.VERRUCA_WINE_FLUID_PROPERTIES);
         BnCFluids.TWISTED_WINE = new BaseFlowingFluid.Source(BnCFluidsImpl.TWISTED_WINE_FLUID_PROPERTIES);
         BnCFluids.FLOWING_TWISTED_WINE = new BaseFlowingFluid.Flowing(BnCFluidsImpl.TWISTED_WINE_FLUID_PROPERTIES);
+        BnCFluids.VODKA = new BaseFlowingFluid.Source(BnCFluidsImpl.VODKA_FLUID_PROPERTIES);
+        BnCFluids.FLOWING_VODKA = new BaseFlowingFluid.Flowing(BnCFluidsImpl.VODKA_FLUID_PROPERTIES);
         BnCFluids.FLAXEN_CHEESE = new BaseFlowingFluid.Source(BnCFluidsImpl.FLAXEN_CHEESE_FLUID_PROPERTIES);
         BnCFluids.FLOWING_FLAXEN_CHEESE = new BaseFlowingFluid.Flowing(BnCFluidsImpl.FLAXEN_CHEESE_FLUID_PROPERTIES);
         BnCFluids.SCARLET_CHEESE = new BaseFlowingFluid.Source(BnCFluidsImpl.SCARLET_CHEESE_FLUID_PROPERTIES);

@@ -54,7 +54,6 @@ public class BnCItems {
     public static final Item TWISTED_WINE = new WineItem(WineType.TWISTED, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
     public static final Item RICE_WINE = new WineItem(WineType.RICE, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
     public static final Item VODKA = new WineItem(WineType.VODKA, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE));
-    // ↑ @tazer, currently vodka stacks to one, I believe this should be 16 like all the other brews considering that on the neoforge side the brew is still stored in a tankard. ~Oska
     public static final Item OLD_WINE = new WineItem(WineType.OLD, new Item.Properties().stacksTo(1).craftRemainder(Items.GLASS_BOTTLE).rarity(Rarity.UNCOMMON));
 
     public static final Item BRANDY = new DistillateItem(2, 4800, false, false, new Item.Properties().stacksTo(16));

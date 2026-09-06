@@ -24,7 +24,9 @@ import umpaz.brewinandchewin.common.registry.*;
 import umpaz.brewinandchewin.common.registry.BnCCreativeTabs;
 import umpaz.brewinandchewin.neoforge.container.KegFluidTankNeoForge;
 import umpaz.brewinandchewin.neoforge.container.SidedKegWrapperNeoForge;
+import net.minecraft.world.item.Items;
 import umpaz.brewinandchewin.neoforge.container.TankardItemFluidHandlerNeoForge;
+import umpaz.brewinandchewin.neoforge.container.WineBottleItemFluidHandlerNeoForge;
 import umpaz.brewinandchewin.neoforge.item.TankardItem;
 import umpaz.brewinandchewin.neoforge.registry.BnCAttachments;
 import umpaz.brewinandchewin.neoforge.registry.BnCFluidTypes;
@@ -50,7 +52,6 @@ public class BrewinAndChewinNeoForge {
             event.registerItem(Capabilities.FluidHandler.ITEM,(stack, ctx) -> new TankardItemFluidHandlerNeoForge(stack, TankardItem.CAPACITY),
                     BnCItems.TANKARD,
                     BnCItems.BEER,
-                    BnCItems.VODKA,
                     BnCItems.MEAD,
                     BnCItems.PALE_JANE,
                     BnCItems.EGG_GROG,
@@ -63,6 +64,9 @@ public class BrewinAndChewinNeoForge {
                     BnCItems.STEEL_TOE_STOUT,
                     BnCItems.DREAD_NOG,
                     BnCItems.WITHERING_DROSS
+            );
+            event.registerItem(Capabilities.FluidHandler.ITEM, (stack, ctx) -> new WineBottleItemFluidHandlerNeoForge(stack),
+                    Items.GLASS_BOTTLE
             );
         }
 

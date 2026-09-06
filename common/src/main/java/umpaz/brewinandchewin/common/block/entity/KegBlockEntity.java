@@ -698,6 +698,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider, N
     public void clearContent() {
         for (int slot = 0; slot < INVENTORY_SIZE; ++slot)
             this.inventory.setStackInSlot(slot, ItemStack.EMPTY);
+        this.fluidTank.setAbstractedFluid(AbstractedFluidStack.EMPTY);
         clearFermenting();
         inventoryChanged();
     }

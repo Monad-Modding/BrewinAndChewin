@@ -11,11 +11,6 @@ public class BnCFoods {
             .effect(new MobEffectInstance(BnCEffects.INTOXICATION, 1800, 0, true, false), 1.0F)
             .alwaysEdible()
             .build();
-    public static final FoodProperties VODKA = (new FoodProperties.Builder())
-            .effect(new MobEffectInstance(BnCEffects.TIPSY, 3600, 0), 1.0F)
-            .effect(new MobEffectInstance(BnCEffects.INTOXICATION, 3000, 0, false, false), 1.0F)
-            .alwaysEdible()
-            .build();
     public static final FoodProperties MEAD = (new FoodProperties.Builder())
             .effect(new MobEffectInstance(BnCEffects.TIPSY, 2400, 0), 1.0F)
             .effect(new MobEffectInstance(BnCEffects.INTOXICATION, 1800, 0, false, false), 1.0F)

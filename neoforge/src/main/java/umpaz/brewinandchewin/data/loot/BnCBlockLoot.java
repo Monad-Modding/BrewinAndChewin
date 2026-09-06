@@ -5,11 +5,13 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
 import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
@@ -18,6 +20,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.neoforged.neoforge.common.Tags;
 import umpaz.brewinandchewin.common.block.CornCropBlock;
 import vectorwing.farmersdelight.common.registry.ModItems;
 import vectorwing.farmersdelight.common.tag.ModTags;
@@ -62,7 +65,7 @@ public class BnCBlockLoot extends BlockLootSubProvider {
         dropSelf(BnCBlocks.BOTTLE_RACK);
         add(BnCBlocks.CORN_CROP, this::createCornCropDrops);
         add(BnCBlocks.WILD_CORN, this::createWildCornDrops);
-        dropOther(BnCBlocks.WILD_GRAPES, BnCItems.RED_GRAPES);
+        add(BnCBlocks.WILD_GRAPES, this::createWildGrapesDrops);
         add(BnCBlocks.RED_GRAPE_BUSH, (block) -> this.createGrapeBushDrops(block, BnCItems.RED_GRAPE_SEEDS));
         add(BnCBlocks.WHITE_GRAPE_BUSH, (block) -> this.createGrapeBushDrops(block, BnCItems.WHITE_GRAPE_SEEDS));
         add(BnCBlocks.RED_ROPE_GRAPE, noDrop());
@@ -81,12 +84,29 @@ public class BnCBlockLoot extends BlockLootSubProvider {
                         .hasProperty(CornCropBlock.SECTION, 0));
     }
 
+    private static LootItemCondition.Builder shears() {
+        return AnyOfCondition.anyOf(
+                MatchTool.toolMatches(ItemPredicate.Builder.item().of(Tags.Items.TOOLS_SHEAR)),
+                MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS)));
+    }
+
+    private LootTable.Builder createWildGrapesDrops(Block block) {
+        return LootTable.lootTable()
+                .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                        .add(AlternativesEntry.alternatives(
+                                LootItem.lootTableItem(block).when(shears()),
+                                LootItem.lootTableItem(BnCItems.RED_GRAPES)))));
+    }
+
     private LootTable.Builder createWildCornDrops(Block block) {
         LootItemCondition.Builder lowerHalf = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER));
         return LootTable.lootTable()
                 .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(BnCItems.CORN).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+                        .add(AlternativesEntry.alternatives(
+                                LootItem.lootTableItem(block).when(shears()),
+                                LootItem.lootTableItem(BnCItems.CORN)
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))))
                         .when(lowerHalf)));
     }
 

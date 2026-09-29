@@ -41,8 +41,12 @@ object Versions {
     const val MIXIN_EXTRAS = "0.4.1"
 
     const val CREATE = "6.0.1-18"
+    //desired to have 6.0.10-218
     const val FLYWHEEL = "1.0.1-11"
+    //desired to have 1.0.6-44
     const val PONDER = "1.0.43"
+    //desired to have 1.0.82
+    //TODO perform research into why the maven repository of Ponder NeoForge 1 21 1 cuts short at version 1.0.69. (https://mvnrepository.com/artifact/net.createmod.ponder/Ponder-NeoForge-1.21.1/versions)
     const val REGISTRATE = "MC1.21-1.3.0+62"
     const val CURIOS = "9.2.3+1.21.1"
 

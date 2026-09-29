@@ -1,0 +1,23 @@
+{
+  "type": "create:milling",
+  "ingredients": [
+    {
+      "item": "brewinandchewin:corn_kernels"
+    }
+  ],
+  "results": [
+    {
+      "id": "brewinandchewin:cornmeal"
+    },
+    {
+      "chance": 0.25,
+      "count": 2,
+      "id": "brewinandchewin:cornmeal"
+    },
+    {
+      "id": "brewinandchewin:corn_kernels",
+      "chance": 0.25
+    }
+  ],
+  "processing_time": 150
+}

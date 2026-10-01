@@ -52,8 +52,8 @@ public class GuiMixin {
                                                    @Local(argsOnly = true, ordinal = 4) int currentHealth,
                                                    @Local(argsOnly = true, ordinal = 5) int displayHealth,
                                                    @Local(argsOnly = true, ordinal = 6) int absorptionAmount,
-                                                   @Local(ordinal = 10) int heartIndex,
-                                                   @Local(ordinal = 15) int fullHeart) {
+                                                   @Local(name = "l") int heartIndex,
+                                                   @Local(name = "i2") int fullHeart) {
         if (absorptionAmount <= 0)
             brewinandchewin$completedAbsorption = false;
 

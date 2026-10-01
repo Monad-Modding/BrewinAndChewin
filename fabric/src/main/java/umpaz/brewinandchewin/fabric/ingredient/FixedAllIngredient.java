@@ -32,7 +32,7 @@ public class FixedAllIngredient implements CustomIngredient {
 
     @Override
     public List<ItemStack> getMatchingStacks() {
-        List<ItemStack> previewStacks = new ArrayList<>(Arrays.asList(ingredients.get(0).getItems()));
+        List<ItemStack> previewStacks = new ArrayList<>(Arrays.asList(ingredients.getFirst().getItems()));
 
         for (int i = 1; i < ingredients.size(); ++i) {
             Ingredient ing = ingredients.get(i);

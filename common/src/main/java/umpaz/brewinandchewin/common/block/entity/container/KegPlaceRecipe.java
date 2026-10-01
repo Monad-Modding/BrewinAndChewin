@@ -175,7 +175,7 @@ public class KegPlaceRecipe extends ServerPlaceRecipe<KegRecipeWrapper, KegFerme
                         for (int i = 0; i < itemCount; ++i) {
                             if (itemCount % fermentingRecipe.getFluidIngredient().get().amount() == 0)
                                 break;
-                            insertItems.remove(insertItems.size() - 1);
+                            insertItems.removeLast();
                             --itemCount;
                         }
                     }

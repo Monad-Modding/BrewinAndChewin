@@ -23,7 +23,7 @@ public class TipsyDrunkRendererMixin {
     @Shadow @Final
     Minecraft minecraft;
 
-    @ModifyVariable(method = "renderLevel", at = @At(value = "INVOKE", target = "Lorg/joml/Matrix4f;mul(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;"))
+    @ModifyVariable(method = "renderLevel", at = @At(value = "INVOKE", target = "Lorg/joml/Matrix4f;mul(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;"), name = "posestack")
     private PoseStack brewinandchewin$renderTipsySpin(PoseStack pose, @Local(argsOnly = true) DeltaTracker delta) {
         Player player = Minecraft.getInstance().player;
         if (player != null && player.hasEffect(BnCEffects.TIPSY)) {

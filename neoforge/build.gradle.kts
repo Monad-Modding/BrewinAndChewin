@@ -89,7 +89,7 @@ dependencies {
     implementation("squeek.appleskin:appleskin-neoforge:${Versions.APPLESKIN}")
 
     implementation("com.simibubi.create:create-${Versions.MINECRAFT}:${Versions.CREATE}") { isTransitive = false }
-    implementation("net.createmod.ponder:Ponder-NeoForge-${Versions.MINECRAFT}:${Versions.PONDER}") { isTransitive = false }
+    implementation("net.createmod.ponder:ponder-neoforge:${Versions.PONDER}") { isTransitive = false }
     compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${Versions.MINECRAFT}:${Versions.FLYWHEEL}")
     runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${Versions.MINECRAFT}:${Versions.FLYWHEEL}")
     implementation("com.tterrag.registrate:Registrate:${Versions.REGISTRATE}")  { isTransitive = false }

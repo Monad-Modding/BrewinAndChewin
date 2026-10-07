@@ -205,5 +205,7 @@ public class BnCItemTags extends ItemTagsProvider {
                 .add(BnCItems.HAM_AND_CHEESE_SANDWICH);
         tag(BnCCompatTags.ORIGINS_IGNORE_DIET)
                 .addTag(BnCTags.Items.FERMENTED_DRINKS);
+        tag(BnCCompatTags.CREATE_UPRIGHT_ON_BELT)
+                .addTag(BnCTags.Items.FERMENTED_DRINKS);
     }
 }

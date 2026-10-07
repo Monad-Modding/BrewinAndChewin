@@ -10,6 +10,7 @@ public class BnCCompatTags {
 
     public static final TagKey<Item> ORIGINS_IGNORE_DIET = compatItemTag("origins", "ignore_diet");
     public static final TagKey<Item> ORIGINS_MEAT = compatItemTag("origins", "meat");
+    public static final TagKey<Item> CREATE_UPRIGHT_ON_BELT = compatItemTag("create", "upright_on_belt");
 
     private static TagKey<Item> compatItemTag(String namespace, String path) {
         return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(namespace, path));

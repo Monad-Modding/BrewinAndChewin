@@ -15,7 +15,7 @@ import umpaz.brewinandchewin.common.registry.BnCItems;
 
 
 public class TankardItem extends Item {
-    public static final int CAPACITY = 250;
+    public static final int CAPACITY = 500;
 
     public TankardItem(Properties properties) {
         super(properties);

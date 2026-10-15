@@ -13,7 +13,7 @@ import java.util.Random;
 
 @Mixin(targets = "squeek.appleskin.client.HUDOverlayHandler$OffsetsCache")
 public class HUDOverlayHandlerMixin {
-    @ModifyVariable(method = "generate", at = @At(value = "INVOKE", target = "Ljava/util/Vector;get(I)Ljava/lang/Object;", ordinal = 1), ordinal = 7)
+    @ModifyVariable(method = "generate", at = @At(value = "INVOKE", target = "Ljava/util/Vector;get(I)Ljava/lang/Object;", ordinal = 1), name = "x")
     private int brewinandchewin$drawIntoxicationSaturationX(int x, int guiTicks, Player player, @Local(ordinal = 6) int i) {
         if (BnCConfiguration.client().intoxicationFoodOverlay() && player.hasEffect(BnCEffects.INTOXICATION)) {
             Random rand = new Random();

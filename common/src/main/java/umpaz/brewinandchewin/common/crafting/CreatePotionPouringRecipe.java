@@ -48,7 +48,7 @@ public class CreatePotionPouringRecipe extends KegPouringRecipe {
     public boolean isSpecial() {
         return true;
     }
-
+    
     @Override
     @SuppressWarnings("DataFlowIssue")
     public RecipeSerializer<?> getSerializer() {

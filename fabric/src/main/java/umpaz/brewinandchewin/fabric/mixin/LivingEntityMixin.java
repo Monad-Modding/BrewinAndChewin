@@ -89,7 +89,7 @@ public abstract class LivingEntityMixin {
         return original;
     }
 
-    @ModifyVariable(method = "updateSynchronizedMobEffectParticles", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/stream/Stream;toList()Ljava/util/List;"))
+    @ModifyVariable(method = "updateSynchronizedMobEffectParticles", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/stream/Stream;toList()Ljava/util/List;"), name = "list")
     private List<ParticleOptions> brewinandchewin$setToRagingParticles(List<ParticleOptions> original) {
         LivingEntity living = (LivingEntity)(Object)this;
         return original.stream().map(particleOptions -> {

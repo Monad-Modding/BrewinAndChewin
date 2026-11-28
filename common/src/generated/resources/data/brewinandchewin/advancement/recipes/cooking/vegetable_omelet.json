@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:cooking/vegetable_omelet"
+        "recipes": [
+          "brewinandchewin:cooking/vegetable_omelet"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

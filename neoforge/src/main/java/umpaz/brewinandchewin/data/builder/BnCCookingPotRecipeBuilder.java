@@ -36,7 +36,7 @@ public class BnCCookingPotRecipeBuilder{
         this.result = new ItemStack(resultIn, count);
         this.cookingTime = cookingTime;
         this.experience = experience;
-        this.container = container != null ? new ItemStack(container) : null;
+        this.container = container != null ? new ItemStack(container) : ItemStack.EMPTY;
         this.tab = null;
     }
 

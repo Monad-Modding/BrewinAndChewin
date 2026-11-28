@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:fermenting/cocoa_fudge_from_milk"
+        "recipes": [
+          "brewinandchewin:fermenting/cocoa_fudge_from_milk"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -11,7 +11,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.registry.BnCItems;
@@ -22,7 +22,7 @@ import vectorwing.farmersdelight.common.utility.ClientRenderUtils;
 import vectorwing.farmersdelight.common.utility.RecipeUtils;
 
 public class CheeseRecipeCategory implements IRecipeCategory<CheeseAgingRecipe> {
-   public static final ResourceLocation UID = BrewinAndChewin.asResource("cheese");
+   public static final Identifier UID = BrewinAndChewin.asResource("cheese");
    private final Component title;
    private final IDrawable background;
    private final IDrawable icon;
@@ -30,7 +30,7 @@ public class CheeseRecipeCategory implements IRecipeCategory<CheeseAgingRecipe> 
 
    public CheeseRecipeCategory( IGuiHelper helper ) {
       title = BnCTextUtils.getTranslation("jei.aging");
-      ResourceLocation backgroundImage = BrewinAndChewin.asResource("textures/gui/jei/cheese_ripening.png");
+      Identifier backgroundImage = BrewinAndChewin.asResource("textures/gui/jei/cheese_ripening.png");
       background = helper.createDrawable(backgroundImage, 0, 0, 118, 58);
       icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BnCItems.FLAXEN_CHEESE_WHEEL));
    }

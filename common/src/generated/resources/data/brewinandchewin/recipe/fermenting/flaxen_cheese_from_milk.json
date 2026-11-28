@@ -10,16 +10,9 @@
   "category": "meals",
   "experience": 1.0,
   "ingredients": [
-    {
-      "item": "minecraft:brown_mushroom"
-    },
-    {
-      "item": "minecraft:pumpkin_seeds"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    []
+    "minecraft:brown_mushroom",
+    "minecraft:pumpkin_seeds",
+    "minecraft:sugar"
   ],
   "result": {
     "amount": 1000,

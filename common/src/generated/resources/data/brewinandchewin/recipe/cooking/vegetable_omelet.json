@@ -6,21 +6,11 @@
   },
   "experience": 1.0,
   "ingredients": [
-    {
-      "tag": "brewinandchewin:foods/cheese_wedge"
-    },
-    {
-      "tag": "c:eggs"
-    },
-    {
-      "tag": "c:eggs"
-    },
-    {
-      "tag": "c:foods/onion"
-    },
-    {
-      "tag": "c:crops/carrot"
-    }
+    "#brewinandchewin:foods/cheese_wedge",
+    "#c:eggs",
+    "#c:eggs",
+    "#c:foods/onion",
+    "#c:crops/carrot"
   ],
   "recipe_book_tab": "meals",
   "result": {

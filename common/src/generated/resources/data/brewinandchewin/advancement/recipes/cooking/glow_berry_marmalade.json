@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:cooking/glow_berry_marmalade"
+        "recipes": [
+          "brewinandchewin:cooking/glow_berry_marmalade"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

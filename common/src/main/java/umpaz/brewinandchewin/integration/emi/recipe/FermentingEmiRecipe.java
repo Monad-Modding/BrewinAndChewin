@@ -10,7 +10,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.BrewinAndChewin;
@@ -22,9 +22,9 @@ import vectorwing.farmersdelight.common.utility.ClientRenderUtils;
 import java.util.*;
 
 public class FermentingEmiRecipe implements KegEmiRecipe {
-    public static final ResourceLocation BACKGROUND = BrewinAndChewin.asResource("textures/gui/emi/fermenting.png");
+    public static final Identifier BACKGROUND = BrewinAndChewin.asResource("textures/gui/emi/fermenting.png");
 
-    private final ResourceLocation id;
+    private final Identifier id;
     private final List<EmiIngredient> itemInputs;
     @Nullable
     private final EmiIngredient itemFluidInput;
@@ -39,7 +39,7 @@ public class FermentingEmiRecipe implements KegEmiRecipe {
 
     private static final Random RANDOM = new Random();
 
-    public FermentingEmiRecipe(ResourceLocation id, List<EmiIngredient> itemInputs,
+    public FermentingEmiRecipe(Identifier id, List<EmiIngredient> itemInputs,
                                @Nullable EmiIngredient itemFluidInput,
                                @Nullable EmiIngredient fluidInput, EmiStack output,
                                int temperature,
@@ -60,7 +60,7 @@ public class FermentingEmiRecipe implements KegEmiRecipe {
     }
 
     @Override
-    public @Nullable ResourceLocation getId() {
+    public @Nullable Identifier getId() {
         return id;
     }
 

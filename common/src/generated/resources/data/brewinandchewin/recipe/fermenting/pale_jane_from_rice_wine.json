@@ -10,18 +10,10 @@
   "experience": 1.0,
   "fermenting_time": 4800,
   "ingredients": [
-    {
-      "item": "minecraft:honey_bottle"
-    },
-    {
-      "item": "farmersdelight:tree_bark"
-    },
-    {
-      "item": "minecraft:lily_of_the_valley"
-    },
-    {
-      "item": "minecraft:sugar"
-    }
+    "minecraft:honey_bottle",
+    "farmersdelight:tree_bark",
+    "minecraft:lily_of_the_valley",
+    "minecraft:sugar"
   ],
   "result": {
     "amount": 1000,

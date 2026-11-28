@@ -10,16 +10,9 @@
   "experience": 1.0,
   "fermenting_time": 4800,
   "ingredients": [
-    {
-      "item": "minecraft:sweet_berries"
-    },
-    {
-      "item": "minecraft:sugar_cane"
-    },
-    {
-      "item": "minecraft:melon"
-    },
-    []
+    "minecraft:sweet_berries",
+    "minecraft:sugar_cane",
+    "minecraft:melon"
   ],
   "result": {
     "amount": 1000,

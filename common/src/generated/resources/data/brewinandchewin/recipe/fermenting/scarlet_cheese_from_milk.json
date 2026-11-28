@@ -10,16 +10,9 @@
   "category": "meals",
   "experience": 1.0,
   "ingredients": [
-    {
-      "item": "minecraft:crimson_fungus"
-    },
-    {
-      "item": "minecraft:nether_wart"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    []
+    "minecraft:crimson_fungus",
+    "minecraft:nether_wart",
+    "minecraft:sugar"
   ],
   "result": {
     "amount": 1000,

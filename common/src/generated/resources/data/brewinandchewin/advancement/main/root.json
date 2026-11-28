@@ -6,7 +6,7 @@
   },
   "display": {
     "announce_to_chat": false,
-    "background": "minecraft:textures/block/spruce_planks.png",
+    "background": "minecraft:block/spruce_planks",
     "description": {
       "translate": "brewinandchewin.advancement.root.desc"
     },

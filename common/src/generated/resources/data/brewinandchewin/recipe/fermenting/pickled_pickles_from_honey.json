@@ -10,16 +10,9 @@
   "category": "meals",
   "experience": 1.0,
   "ingredients": [
-    {
-      "item": "minecraft:sea_pickle"
-    },
-    {
-      "item": "minecraft:sea_pickle"
-    },
-    {
-      "item": "minecraft:glow_berries"
-    },
-    []
+    "minecraft:sea_pickle",
+    "minecraft:sea_pickle",
+    "minecraft:glow_berries"
   ],
   "result": {
     "count": 2,

@@ -4,15 +4,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,6 +31,7 @@ import java.util.function.Supplier;
 
 public class CheeseWheelBlock extends Block {
     public static final IntegerProperty SERVINGS = IntegerProperty.create("servings", 0, 3);
+    public static final int WEDGES_PER_SERVING = 2;
     protected static final VoxelShape[] SHAPES = new VoxelShape[]{
             Block.box(2.0D, 0.0D, 2.0D, 8.0D, 6.0D, 8.0D),
             Block.box(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 8.0D),
@@ -51,8 +53,8 @@ public class CheeseWheelBlock extends Block {
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos pos, BlockPos facingPos) {
-        return facing == Direction.DOWN && !this.canSurvive(state, level, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, facing, facingState, level, pos, facingPos);
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
+        return facing == Direction.DOWN && !this.canSurvive(state, level, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, level, scheduledTickAccess, pos, facing, facingPos, facingState, random);
     }
 
     @Override
@@ -61,20 +63,20 @@ public class CheeseWheelBlock extends Block {
     }
 
     @Override
-    public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         int servings = state.getValue(SERVINGS);
-        if (stack.is(ModTags.Items.KNIVES)) {
+        if (stack.is(ModTags.KNIVES)) {
             level.playSound(null, pos, SoundEvents.WOOL_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F);
-            popResource(level, pos, new ItemStack(cheeseWedgeType.get(), 1));
+            popResource(level, pos, new ItemStack(cheeseWedgeType.get(), WEDGES_PER_SERVING));
             if (servings > 0) {
                 level.setBlock(pos, state.setValue(SERVINGS, servings - 1), 3);
             } else if (servings == 0) {
                 level.destroyBlock(pos, false);
             }
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        player.displayClientMessage(BnCTextUtils.getTranslation("block.feast.use_knife"), true);
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        player.sendOverlayMessage(BnCTextUtils.getTranslation("block.feast.use_knife"));
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     @Override
@@ -83,7 +85,7 @@ public class CheeseWheelBlock extends Block {
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos, Direction direction) {
         return blockState.getValue(SERVINGS);
     }
 
@@ -92,8 +94,8 @@ public class CheeseWheelBlock extends Block {
         return true;
     }
 
-    // NeoForge:
-    public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) {
+    @Override
+    public boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
     }
 }

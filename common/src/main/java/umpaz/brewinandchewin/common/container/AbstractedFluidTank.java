@@ -1,7 +1,8 @@
 package umpaz.brewinandchewin.common.container;
 
 import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.item.ItemStack;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidStack;
 import umpaz.brewinandchewin.common.utility.FluidUnit;
@@ -22,10 +23,8 @@ public interface AbstractedFluidTank {
 
     boolean isEmpty();
 
-    default void readFromNbt(CompoundTag tag, HolderLookup.Provider provider) {}
-    default CompoundTag writeToNbt(HolderLookup.Provider provider) {
-        return new CompoundTag();
-    }
+    default void readFromValue(ValueInput input) {}
+    default void writeToValue(ValueOutput output) {}
 
     // Item Tank Fields
     // TODO: Maybe separate into a separate interface that extends this one.

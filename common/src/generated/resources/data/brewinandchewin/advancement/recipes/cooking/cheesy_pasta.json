@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:cooking/cheesy_pasta"
+        "recipes": [
+          "brewinandchewin:cooking/cheesy_pasta"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

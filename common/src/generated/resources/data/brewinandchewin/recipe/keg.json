@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "h": {
-      "item": "minecraft:honeycomb"
-    },
-    "i": {
-      "item": "minecraft:iron_ingot"
-    },
-    "p": {
-      "tag": "minecraft:planks"
-    }
+    "h": "minecraft:honeycomb",
+    "i": "minecraft:iron_ingot",
+    "p": "#minecraft:planks"
   },
   "pattern": [
     "ipi",

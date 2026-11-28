@@ -1,7 +1,6 @@
 package umpaz.brewinandchewin.common.mixin;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.level.Level;
@@ -17,7 +16,7 @@ public class PlayerMixin {
     @Shadow protected FoodData foodData;
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void brewinandchewin$storePlayerIntoFoodData(Level level, BlockPos pos, float yRot, GameProfile gameProfile, CallbackInfo ci) {
+    private void brewinandchewin$storePlayerIntoFoodData(Level level, GameProfile gameProfile, CallbackInfo ci) {
         ((FoodDataEntityAccess)foodData).brewinandchewin$setEntity((Player)(Object)this);
     }
 }

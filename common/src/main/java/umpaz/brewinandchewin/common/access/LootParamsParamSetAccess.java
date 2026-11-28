@@ -1,8 +1,8 @@
 package umpaz.brewinandchewin.common.access;
 
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
+import net.minecraft.util.context.ContextKeySet;
 
 public interface LootParamsParamSetAccess {
-    LootContextParamSet brewinandchewin$getParamSet();
-    void brewinandchewin$setParamSet(LootContextParamSet value);
+    ContextKeySet brewinandchewin$getParamSet();
+    void brewinandchewin$setParamSet(ContextKeySet value);
 }

@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:fermenting/strongroot_ale_from_beer"
+        "recipes": [
+          "brewinandchewin:fermenting/strongroot_ale_from_beer"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

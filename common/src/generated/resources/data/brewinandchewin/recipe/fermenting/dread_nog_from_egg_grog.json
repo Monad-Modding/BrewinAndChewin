@@ -10,16 +10,9 @@
   "experience": 1.0,
   "fermenting_time": 4800,
   "ingredients": [
-    {
-      "item": "minecraft:ominous_bottle"
-    },
-    {
-      "item": "minecraft:turtle_egg"
-    },
-    {
-      "item": "minecraft:fermented_spider_eye"
-    },
-    []
+    "minecraft:ominous_bottle",
+    "minecraft:turtle_egg",
+    "minecraft:fermented_spider_eye"
   ],
   "result": {
     "amount": 1000,

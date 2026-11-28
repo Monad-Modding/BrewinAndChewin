@@ -10,18 +10,10 @@
   "experience": 1.0,
   "fermenting_time": 4800,
   "ingredients": [
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:crimson_fungus"
-    },
-    {
-      "item": "minecraft:nether_wart"
-    },
-    {
-      "item": "minecraft:wheat"
-    }
+    "minecraft:iron_ingot",
+    "minecraft:crimson_fungus",
+    "minecraft:nether_wart",
+    "minecraft:wheat"
   ],
   "result": {
     "amount": 1000,

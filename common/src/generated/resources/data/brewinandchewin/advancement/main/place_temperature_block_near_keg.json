@@ -3,189 +3,204 @@
   "criteria": {
     "placed_freeze_source_near_keg": {
       "conditions": {
-        "location": [
-          {
-            "condition": "minecraft:location_check",
-            "predicate": {
-              "block": {
-                "blocks": "#brewinandchewin:freeze_sources"
-              }
-            }
-          },
-          {
-            "condition": "brewinandchewin:null_true_block_state",
-            "state": {
-              "lit": "true"
-            }
-          },
-          {
-            "condition": "brewinandchewin:area_location_check",
-            "range": 2,
-            "terms": [
-              {
-                "condition": "minecraft:location_check",
-                "predicate": {
-                  "block": {
-                    "blocks": "brewinandchewin:keg"
-                  }
+        "location": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "type": "minecraft:location_check",
+              "predicate": {
+                "block": {
+                  "blocks": "#brewinandchewin:freeze_sources"
                 }
               }
-            ]
-          }
-        ]
+            },
+            {
+              "type": "brewinandchewin:null_true_block_state",
+              "state": {
+                "lit": "true"
+              }
+            },
+            {
+              "type": "brewinandchewin:area_location_check",
+              "range": 2,
+              "terms": [
+                {
+                  "type": "minecraft:location_check",
+                  "predicate": {
+                    "block": {
+                      "blocks": "brewinandchewin:keg"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       "trigger": "minecraft:placed_block"
     },
     "placed_heat_source_near_keg": {
       "conditions": {
-        "location": [
-          {
-            "condition": "minecraft:location_check",
-            "predicate": {
-              "block": {
-                "blocks": "#farmersdelight:heat_sources"
-              }
-            }
-          },
-          {
-            "condition": "brewinandchewin:null_true_block_state",
-            "state": {
-              "lit": "true"
-            }
-          },
-          {
-            "condition": "brewinandchewin:area_location_check",
-            "range": 2,
-            "terms": [
-              {
-                "condition": "minecraft:location_check",
-                "predicate": {
-                  "block": {
-                    "blocks": "brewinandchewin:keg"
-                  }
+        "location": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "type": "minecraft:location_check",
+              "predicate": {
+                "block": {
+                  "blocks": "#farmersdelight:heat_sources"
                 }
               }
-            ]
-          }
-        ]
+            },
+            {
+              "type": "brewinandchewin:null_true_block_state",
+              "state": {
+                "lit": "true"
+              }
+            },
+            {
+              "type": "brewinandchewin:area_location_check",
+              "range": 2,
+              "terms": [
+                {
+                  "type": "minecraft:location_check",
+                  "predicate": {
+                    "block": {
+                      "blocks": "brewinandchewin:keg"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       "trigger": "minecraft:placed_block"
     },
     "placed_keg_near_source": {
       "conditions": {
-        "location": [
-          {
-            "condition": "minecraft:location_check",
-            "predicate": {
-              "block": {
-                "blocks": "brewinandchewin:keg"
-              }
-            }
-          },
-          {
-            "condition": "brewinandchewin:area_location_check",
-            "range": 2,
-            "terms": [
-              {
-                "condition": "minecraft:any_of",
-                "terms": [
-                  {
-                    "condition": "minecraft:location_check",
-                    "predicate": {
-                      "block": {
-                        "blocks": "#farmersdelight:heat_sources"
-                      }
-                    }
-                  },
-                  {
-                    "condition": "minecraft:location_check",
-                    "predicate": {
-                      "block": {
-                        "blocks": "#brewinandchewin:freeze_sources"
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                "condition": "brewinandchewin:null_true_block_state",
-                "state": {
-                  "lit": "true"
+        "location": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "type": "minecraft:location_check",
+              "predicate": {
+                "block": {
+                  "blocks": "brewinandchewin:keg"
                 }
               }
-            ]
-          }
-        ]
+            },
+            {
+              "type": "brewinandchewin:area_location_check",
+              "range": 2,
+              "terms": [
+                {
+                  "type": "minecraft:any_of",
+                  "terms": [
+                    {
+                      "type": "minecraft:location_check",
+                      "predicate": {
+                        "block": {
+                          "blocks": "#farmersdelight:heat_sources"
+                        }
+                      }
+                    },
+                    {
+                      "type": "minecraft:location_check",
+                      "predicate": {
+                        "block": {
+                          "blocks": "#brewinandchewin:freeze_sources"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "brewinandchewin:null_true_block_state",
+                  "state": {
+                    "lit": "true"
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       "trigger": "minecraft:placed_block"
     },
     "updated_freeze_source_near_keg": {
       "conditions": {
-        "location": [
-          {
-            "condition": "minecraft:location_check",
-            "predicate": {
-              "block": {
-                "blocks": "#brewinandchewin:freeze_sources"
-              }
-            }
-          },
-          {
-            "condition": "brewinandchewin:null_true_block_state",
-            "state": {
-              "lit": "true"
-            }
-          },
-          {
-            "condition": "brewinandchewin:area_location_check",
-            "range": 2,
-            "terms": [
-              {
-                "condition": "minecraft:location_check",
-                "predicate": {
-                  "block": {
-                    "blocks": "brewinandchewin:keg"
-                  }
+        "location": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "type": "minecraft:location_check",
+              "predicate": {
+                "block": {
+                  "blocks": "#brewinandchewin:freeze_sources"
                 }
               }
-            ]
-          }
-        ]
+            },
+            {
+              "type": "brewinandchewin:null_true_block_state",
+              "state": {
+                "lit": "true"
+              }
+            },
+            {
+              "type": "brewinandchewin:area_location_check",
+              "range": 2,
+              "terms": [
+                {
+                  "type": "minecraft:location_check",
+                  "predicate": {
+                    "block": {
+                      "blocks": "brewinandchewin:keg"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       "trigger": "minecraft:item_used_on_block"
     },
     "updated_heat_source_near_keg": {
       "conditions": {
-        "location": [
-          {
-            "condition": "minecraft:location_check",
-            "predicate": {
-              "block": {
-                "blocks": "#farmersdelight:heat_sources"
-              }
-            }
-          },
-          {
-            "condition": "brewinandchewin:null_true_block_state",
-            "state": {
-              "lit": "true"
-            }
-          },
-          {
-            "condition": "brewinandchewin:area_location_check",
-            "range": 2,
-            "terms": [
-              {
-                "condition": "minecraft:location_check",
-                "predicate": {
-                  "block": {
-                    "blocks": "brewinandchewin:keg"
-                  }
+        "location": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "type": "minecraft:location_check",
+              "predicate": {
+                "block": {
+                  "blocks": "#farmersdelight:heat_sources"
                 }
               }
-            ]
-          }
-        ]
+            },
+            {
+              "type": "brewinandchewin:null_true_block_state",
+              "state": {
+                "lit": "true"
+              }
+            },
+            {
+              "type": "brewinandchewin:area_location_check",
+              "range": 2,
+              "terms": [
+                {
+                  "type": "minecraft:location_check",
+                  "predicate": {
+                    "block": {
+                      "blocks": "brewinandchewin:keg"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
       },
       "trigger": "minecraft:item_used_on_block"
     }

@@ -8,8 +8,9 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -20,7 +21,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
@@ -31,13 +32,14 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import umpaz.brewinandchewin.common.registry.BnCItems;
 import vectorwing.farmersdelight.common.registry.ModParticleTypes;
 import vectorwing.farmersdelight.common.registry.ModSounds;
+import vectorwing.farmersdelight.common.utility.TextUtils;
 
 
 public class FieryFonduePotBlock extends Block {
     public static final VoxelShape INSIDE = box(2.0D, 4.0D, 2.0D, 14.0D, 16.0D, 14.0D);
     public static final VoxelShape SHAPE = Shapes.join(Shapes.block(), Shapes.or(box(0.0D, 0.0D, 4.0D, 16.0D, 3.0D, 12.0D), box(4.0D, 0.0D, 0.0D, 12.0D, 3.0D, 16.0D), box(2.0D, 0.0D, 2.0D, 14.0D, 3.0D, 14.0D), INSIDE), BooleanOp.ONLY_FIRST);
     public static final IntegerProperty LEVEL = BlockStateProperties.LEVEL_CAULDRON;
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
 
 
@@ -55,14 +57,14 @@ public class FieryFonduePotBlock extends Block {
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier applier, boolean inside) {
         if (this.isEntityInsideContent(state, pos, entity)) {
             entity.lavaHurt();
         }
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         return state.getValue(LEVEL);
     }
 
@@ -77,13 +79,13 @@ public class FieryFonduePotBlock extends Block {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(
+    protected InteractionResult useItemOn(
             ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult
     ) {
         return this.takeServing(level, pos, state, player, hand);
     }
 
-    private ItemInteractionResult takeServing(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn) {
+    private InteractionResult takeServing(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn) {
         int servings = state.getValue(LEVEL);
         ItemStack bowl = new ItemStack(Items.BOWL);
         ItemStack fondue = new ItemStack(BnCItems.FIERY_FONDUE);
@@ -93,7 +95,7 @@ public class FieryFonduePotBlock extends Block {
                 heldStack.shrink(1);
             }
             if (!player.getInventory().add(fondue)) {
-                player.drop(fondue, false);
+                Containers.dropItemStack(level, player.getX(), player.getY(), player.getZ(), fondue);
             }
             BlockState newState = level.getBlockState(pos).getValue(LEVEL) > 1 ? state.setValue(LEVEL, servings - 1) : Blocks.CAULDRON.defaultBlockState();
             level.setBlock(pos, newState, 3);
@@ -102,10 +104,10 @@ public class FieryFonduePotBlock extends Block {
             }
 
             level.playSound(null, pos, SoundEvents.ARMOR_EQUIP_GENERIC.value(), SoundSource.BLOCKS, 1.0F, 1.0F);
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        player.displayClientMessage(Component.translatable("farmersdelight.block.feast.use_container", bowl.getHoverName()), true);
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        player.sendOverlayMessage(TextUtils.block("feast.use_container", bowl.getHoverName()));
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     @Override
@@ -123,15 +125,15 @@ public class FieryFonduePotBlock extends Block {
         return true;
     }
 
-    // NeoForge:
-    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType path) {
+    @Override
+    public boolean isPathfindable(BlockState state, PathComputationType path) {
         return false;
     }
 
     @Override
     public void animateTick(BlockState stateIn, Level level, BlockPos pos, RandomSource rand) {
         super.animateTick(stateIn, level, pos, rand);
-        RandomSource random = level.random;
+        RandomSource random = level.getRandom();
         if (random.nextFloat() < 0.8F) {
             double x = (double) pos.getX() + 0.5D + (random.nextDouble() * 0.6D - 0.3D);
             double y = (double) pos.getY() + this.getContentHeight(stateIn);

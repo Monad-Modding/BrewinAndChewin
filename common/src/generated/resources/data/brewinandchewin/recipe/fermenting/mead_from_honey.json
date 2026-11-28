@@ -9,16 +9,9 @@
   },
   "experience": 1.0,
   "ingredients": [
-    {
-      "item": "minecraft:wheat"
-    },
-    {
-      "item": "minecraft:wheat_seeds"
-    },
-    {
-      "item": "minecraft:sweet_berries"
-    },
-    []
+    "minecraft:wheat",
+    "minecraft:wheat_seeds",
+    "minecraft:sweet_berries"
   ],
   "result": {
     "amount": 1000,

@@ -7,7 +7,7 @@ import umpaz.brewinandchewin.common.loot.function.CopyDrinkFunction;
 
 public class BnCLootFunctions {
     public static void registerAll() {
-        Registry.register(BuiltInRegistries.LOOT_FUNCTION_TYPE, CopyDrinkFunction.ID, CopyDrinkFunction.TYPE);
-        Registry.register(BuiltInRegistries.LOOT_FUNCTION_TYPE, BnCCopyMealFunction.ID, BnCCopyMealFunction.TYPE);
+        Registry.register(BuiltInRegistries.LOOT_FUNCTION_TYPE, CopyDrinkFunction.ID, CopyDrinkFunction.CODEC);
+        Registry.register(BuiltInRegistries.LOOT_FUNCTION_TYPE, BnCCopyMealFunction.ID, BnCCopyMealFunction.CODEC);
     }
 }

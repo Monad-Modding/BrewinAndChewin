@@ -10,18 +10,10 @@
   "experience": 1.0,
   "fermenting_time": 4800,
   "ingredients": [
-    {
-      "item": "minecraft:crimson_fungus"
-    },
-    {
-      "item": "minecraft:nether_wart"
-    },
-    {
-      "item": "minecraft:fermented_spider_eye"
-    },
-    {
-      "item": "minecraft:shroomlight"
-    }
+    "minecraft:crimson_fungus",
+    "minecraft:nether_wart",
+    "minecraft:fermented_spider_eye",
+    "minecraft:shroomlight"
   ],
   "result": {
     "amount": 1000,

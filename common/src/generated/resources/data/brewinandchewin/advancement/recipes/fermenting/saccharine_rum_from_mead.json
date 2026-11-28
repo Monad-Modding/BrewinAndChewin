@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:fermenting/saccharine_rum_from_mead"
+        "recipes": [
+          "brewinandchewin:fermenting/saccharine_rum_from_mead"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

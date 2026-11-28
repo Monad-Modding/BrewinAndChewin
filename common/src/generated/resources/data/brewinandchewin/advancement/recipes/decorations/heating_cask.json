@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:heating_cask"
+        "recipes": [
+          "brewinandchewin:heating_cask"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

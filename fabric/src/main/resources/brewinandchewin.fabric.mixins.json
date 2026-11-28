@@ -2,22 +2,15 @@
   "required": true,
   "minVersion": "0.8",
   "package": "umpaz.brewinandchewin.fabric.mixin",
-  "refmap": "${mod_id}.refmap.json",
+  "refmap": "brewinandchewin.refmap.json",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "LivingEntityMixin",
-    "PlayerMixin",
-    "PreventTaggedEffectRemovalMixin$HotCocoa",
-    "PreventTaggedEffectRemovalMixin$MilkBottle",
-    "RecipeBookSettingsMixin",
-    "RecipeBookTypeMixin"
+    "PlayerMixin"
   ],
   "client": [
-    "client.ClientRecipeBookMixin",
     "client.EntityRendererMixin",
-    "client.GameRendererMixin",
     "client.GuiMixin",
-    "client.RecipeBookCategoriesMixin",
     "client.TipsyMouseHandlerMixin"
   ],
   "injectors": {

@@ -7,24 +7,12 @@
   "cookingtime": 400,
   "experience": 2.0,
   "ingredients": [
-    {
-      "item": "farmersdelight:tomato_sauce"
-    },
-    {
-      "tag": "c:crops/potato"
-    },
-    {
-      "tag": "c:drinks/milk"
-    },
-    {
-      "item": "brewinandchewin:scarlet_cheese_wheel"
-    },
-    {
-      "item": "farmersdelight:ham"
-    },
-    {
-      "tag": "c:foods/bread"
-    }
+    "farmersdelight:tomato_sauce",
+    "#c:crops/potato",
+    "#c:drinks/milk",
+    "brewinandchewin:scarlet_cheese_wheel",
+    "farmersdelight:ham",
+    "#c:foods/bread"
   ],
   "recipe_book_tab": "meals",
   "result": {

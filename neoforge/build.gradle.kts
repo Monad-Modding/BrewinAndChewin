@@ -79,6 +79,8 @@ dependencies {
 
     implementation("maven.modrinth:farmers-delight:${Versions.FARMERS_DELIGHT}")
 
+    runtimeOnly("maven.modrinth:no-mans-land:${Versions.NO_MANS_LAND}")
+
     compileOnly("mezz.jei:jei-${Versions.MINECRAFT}-neoforge-api:${Versions.JEI}")
     runtimeOnly("mezz.jei:jei-${Versions.MINECRAFT}-neoforge:${Versions.JEI}")
     compileOnly("dev.emi:emi-neoforge:${Versions.EMI}:api")
@@ -87,11 +89,12 @@ dependencies {
     implementation("squeek.appleskin:appleskin-neoforge:${Versions.APPLESKIN}")
 
     implementation("com.simibubi.create:create-${Versions.MINECRAFT}:${Versions.CREATE}") { isTransitive = false }
-    implementation("net.createmod.ponder:Ponder-NeoForge-${Versions.MINECRAFT}:${Versions.PONDER}") { isTransitive = false }
+    implementation("net.createmod.ponder:ponder-neoforge:${Versions.PONDER}") { isTransitive = false }
     compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${Versions.MINECRAFT}:${Versions.FLYWHEEL}")
     runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${Versions.MINECRAFT}:${Versions.FLYWHEEL}")
     implementation("com.tterrag.registrate:Registrate:${Versions.REGISTRATE}")  { isTransitive = false }
     runtimeOnly("top.theillusivec4.curios:curios-neoforge:${Versions.CURIOS}")
+    implementation(project(":common"))
 }
 
 tasks {

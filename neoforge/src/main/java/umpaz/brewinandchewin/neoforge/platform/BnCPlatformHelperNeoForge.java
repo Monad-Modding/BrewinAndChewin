@@ -17,6 +17,7 @@ import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -43,9 +44,11 @@ import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.common.attachment.RagingAttachment;
 import umpaz.brewinandchewin.common.attachment.TipsyHeartsAttachment;
+import umpaz.brewinandchewin.common.block.entity.AgingCaskBlockEntity;
 import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.container.AbstractedFluidTank;
 import umpaz.brewinandchewin.common.container.AbstractedItemHandler;
+import umpaz.brewinandchewin.common.block.entity.container.AgingCaskMenu;
 import umpaz.brewinandchewin.common.block.entity.container.KegMenu;
 import umpaz.brewinandchewin.common.block.entity.container.KegStackedContents;
 import umpaz.brewinandchewin.common.block.entity.container.SidedKegWrapper;
@@ -111,6 +114,12 @@ public class BnCPlatformHelperNeoForge implements BnCPlatformHelper {
         return IMenuTypeExtension.create((id, inv, data) -> new KegMenu(id, inv, data.readBlockPos()));
     }
 
+
+    @Override
+    public MenuType<AgingCaskMenu> createAgingCaskMenuType(BnCMenuConstructor<AgingCaskMenu> constructor) {
+        return IMenuTypeExtension.create((id, inv, data) -> new AgingCaskMenu(id, inv, data.readBlockPos()));
+    }
+
     @Override
     public AbstractedItemHandler createKegInventory(int size, BiConsumer<AbstractedItemHandler, Integer> onContentsChanged) {
         return new KegItemHandlerNeoForge(size) {
@@ -173,8 +182,19 @@ public class BnCPlatformHelperNeoForge implements BnCPlatformHelper {
     }
 
     @Override
+    public void openBlockPosMenu(Player player, MenuProvider menuProvider, BlockPos pos) {
+        player.openMenu(menuProvider, pos);
+    }
+
+    @Override
     public BlockEntityType.BlockEntitySupplier<KegBlockEntity> supplyBlockEntity() {
         return KegBlockEntity::new;
+    }
+
+
+    @Override
+    public BlockEntityType.BlockEntitySupplier<AgingCaskBlockEntity> supplyAgingCaskBlockEntity() {
+        return AgingCaskBlockEntity::new;
     }
 
     @Override
@@ -307,6 +327,6 @@ public class BnCPlatformHelperNeoForge implements BnCPlatformHelper {
 
     @Override
     public boolean hasFoodEffectTooltip() {
-        return Configuration.FOOD_EFFECT_TOOLTIP.get();
+        return Configuration.ENABLE_FOOD_EFFECT_TOOLTIP.get();
     }
 }

@@ -38,8 +38,12 @@ public class ChatListenerMixin {
 
     @Inject(method = "showMessageToPlayer", at = @At("RETURN"))
     public void brewinandchewin$modifyTipsyMessageWhileFiltering(ChatType.Bound bound, PlayerChatMessage playerChatMessage, Component component, GameProfile gameProfile, boolean bl, Instant instant, CallbackInfoReturnable<Boolean> cir) {
-        BnCClientTextUtils.tipsyMessageLevel = 0;
-        BnCClientTextUtils.randomSeed = 0L;
-        BnCClientTextUtils.generatedRandom = false;
+        if (BnCClientTextUtils.clearDelayAmount <= 0) {
+            BnCClientTextUtils.tipsyMessageLevel = 0;
+            BnCClientTextUtils.randomSeed = 0L;
+            BnCClientTextUtils.generatedRandom = false;
+        } else {
+            --BnCClientTextUtils.clearDelayAmount;
+        }
     }
 }

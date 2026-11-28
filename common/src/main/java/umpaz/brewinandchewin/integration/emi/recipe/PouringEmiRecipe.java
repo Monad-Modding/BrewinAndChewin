@@ -7,7 +7,7 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.SlotWidget;
 import dev.emi.emi.api.widget.WidgetHolder;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.integration.emi.BnCRecipeCategories;
@@ -17,16 +17,16 @@ import java.util.List;
 import java.util.Random;
 
 public class PouringEmiRecipe implements KegEmiRecipe {
-    public static final ResourceLocation BACKGROUND = BrewinAndChewin.asResource("textures/gui/emi/pouring.png");
+    public static final Identifier BACKGROUND = BrewinAndChewin.asResource("textures/gui/emi/pouring.png");
 
-    private final ResourceLocation id;
+    private final Identifier id;
     private final EmiIngredient fluid;
     private final EmiStack container;
     private final EmiStack output;
 
     private static final Random RANDOM = new Random();
 
-    public PouringEmiRecipe(ResourceLocation id, EmiIngredient fluid,
+    public PouringEmiRecipe(Identifier id, EmiIngredient fluid,
                             EmiStack container, EmiStack output) {
         this.id = id;
         this.fluid = fluid;
@@ -40,7 +40,7 @@ public class PouringEmiRecipe implements KegEmiRecipe {
     }
 
     @Override
-    public @Nullable ResourceLocation getId() {
+    public @Nullable Identifier getId() {
         return id;
     }
 

@@ -3,10 +3,11 @@ package umpaz.brewinandchewin.common.mixin.client;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.Hud;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Final;
@@ -22,7 +23,7 @@ import umpaz.brewinandchewin.common.registry.BnCEffects;
 
 import java.util.Random;
 
-@Mixin(Gui.class)
+@Mixin(Hud.class)
 public class GuiMixin {
     @Shadow @Final
     private Minecraft minecraft;
@@ -37,10 +38,10 @@ public class GuiMixin {
     private boolean brewinandchewin$completedAbsorption = false;
 
     // TODO: Create an event for this overlay.
-    @WrapOperation(method = "renderHearts", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;renderHeart(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/gui/Gui$HeartType;IIZZZ)V", ordinal = 3))
-    private void brewinandchewin$renderTipsyHearts(Gui instance,
-                                                   GuiGraphics graphics,
-                                                   Gui.HeartType heartType,
+    @WrapOperation(method = "extractHearts", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Hud;extractHeart(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/gui/Hud$HeartType;IIZZZ)V", ordinal = 3))
+    private void brewinandchewin$renderTipsyHearts(Hud instance,
+                                                   GuiGraphicsExtractor graphics,
+                                                   Hud.HeartType heartType,
                                                    int heartX,
                                                    int heartY,
                                                    boolean hardcore,
@@ -66,7 +67,7 @@ public class GuiMixin {
             return;
         }
 
-        int ticks = minecraft.gui.getGuiTicks();
+        int ticks = minecraft.gui.hud.getGuiTicks();
         Random rand = new Random();
         rand.setSeed(ticks * 312871L);
 
@@ -91,7 +92,7 @@ public class GuiMixin {
         if (brewinandchewin$remainingHealth <= 0)
             return;
 
-        if (BnCConfiguration.CLIENT_CONFIG.get().numbedHeartFlickering() && attachment.getNumbedHealth() > 1 && attachment.getTicksUntilDamage() < 80 && heartIndex == healthStart && absorptionAmount == 0) {
+        if (BnCConfiguration.client().numbedHeartFlickering() && attachment.getNumbedHealth() > 1 && attachment.getTicksUntilDamage() < 80 && heartIndex == healthStart && absorptionAmount == 0) {
             if (!Minecraft.getInstance().isPaused()) {
                 float increase = Mth.lerp((float) (80 - attachment.getTicksUntilDamage()) / 80, 0.0F, 0.06F);
                 brewinandchewin$numbedAlpha = Mth.clamp(brewinandchewin$numbedAlpha + (brewinandchewin$increaseNumbedAlpha ? increase : -increase), -0.01F, 1.01F);
@@ -104,32 +105,24 @@ public class GuiMixin {
             brewinandchewin$numbedAlpha = 1.0F;
             brewinandchewin$increaseNumbedAlpha = true;
         }
-        RenderSystem.disableDepthTest();
-        RenderSystem.depthMask(false);
-        RenderSystem.enableBlend();
-        graphics.setColor(1.0F, 1.0F, 1.0F, brewinandchewin$numbedAlpha);
+        int color = ARGB.colorFromFloat(brewinandchewin$numbedAlpha, 1.0F, 1.0F, 1.0F);
 
         if (heartIndex == healthStart && halfHeart) {
-            graphics.blitSprite(BnCHudIcons.getTipsyHalfHeartTexture(false, hardcore), heartX, heartY, 9, 9);
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BnCHudIcons.getTipsyHalfHeartTexture(false, hardcore), heartX, heartY, 9, 9, color);
             brewinandchewin$remainingHealth -= 1;
         } else if (heartIndex == healthStart && renderHealth % 2 < 1 && brewinandchewin$remainingHealth == 1 || heartIndex == healthEnd && brewinandchewin$remainingHealth == 1) {
-            graphics.blitSprite(BnCHudIcons.getTipsyRightHeartTexture(false, hardcore), heartX, heartY, 9, 9);
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BnCHudIcons.getTipsyRightHeartTexture(false, hardcore), heartX, heartY, 9, 9, color);
             brewinandchewin$remainingHealth -= 1;
         } else {
-            graphics.blitSprite(BnCHudIcons.getTipsyFullHeartTexture(false, hardcore), heartX, heartY, 9, 9);
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BnCHudIcons.getTipsyFullHeartTexture(false, hardcore), heartX, heartY, 9, 9, color);
             brewinandchewin$remainingHealth -= 2;
         }
-
-        RenderSystem.disableBlend();
-        RenderSystem.depthMask(true);
-        RenderSystem.enableDepthTest();
-        graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    @WrapOperation(method = "renderHearts", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;renderHeart(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/gui/Gui$HeartType;IIZZZ)V", ordinal = 1))
-    private void brewinandchewin$renderAbsorbingTipsyHearts(Gui instance,
-                                                            GuiGraphics graphics,
-                                                            Gui.HeartType heartType,
+    @WrapOperation(method = "extractHearts", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Hud;extractHeart(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/gui/Hud$HeartType;IIZZZ)V", ordinal = 1))
+    private void brewinandchewin$renderAbsorbingTipsyHearts(Hud instance,
+                                                            GuiGraphicsExtractor graphics,
+                                                            Hud.HeartType heartType,
                                                             int heartX,
                                                             int heartY,
                                                             boolean hardcore,
@@ -152,7 +145,7 @@ public class GuiMixin {
             return;
         }
 
-        int ticks = minecraft.gui.getGuiTicks();
+        int ticks = minecraft.gui.hud.getGuiTicks();
         Random rand = new Random();
         rand.setSeed(ticks * 312871L);
 
@@ -180,7 +173,7 @@ public class GuiMixin {
 
         operation.call(instance, graphics, heartType, heartX, heartY, hardcore, blinking, halfHeart);
 
-        if (BnCConfiguration.CLIENT_CONFIG.get().numbedHeartFlickering() && attachment.getNumbedHealth() > 1 && attachment.getTicksUntilDamage() < 80 && heartIndex == healthStart) {
+        if (BnCConfiguration.client().numbedHeartFlickering() && attachment.getNumbedHealth() > 1 && attachment.getTicksUntilDamage() < 80 && heartIndex == healthStart) {
             if (!Minecraft.getInstance().isPaused()) {
                 float increase = Mth.lerp((float) (80 - attachment.getTicksUntilDamage()) / 80, 0.0F, 0.08F);
                 brewinandchewin$numbedAlpha = Mth.clamp(brewinandchewin$numbedAlpha + (brewinandchewin$increaseNumbedAlpha ? increase : -increase), -0.01F, 1.01F);
@@ -193,25 +186,17 @@ public class GuiMixin {
             brewinandchewin$numbedAlpha = 1.0F;
             brewinandchewin$increaseNumbedAlpha = true;
         }
-        RenderSystem.disableDepthTest();
-        RenderSystem.depthMask(false);
-        RenderSystem.enableBlend();
-        graphics.setColor(1.0F, 1.0F, 1.0F, brewinandchewin$numbedAlpha);
+        int color = ARGB.colorFromFloat(brewinandchewin$numbedAlpha, 1.0F, 1.0F, 1.0F);
 
         if (heartIndex == healthStart && halfHeart) {
-            graphics.blitSprite(BnCHudIcons.getTipsyHalfHeartTexture(true, hardcore), heartX, heartY, 9, 9);
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BnCHudIcons.getTipsyHalfHeartTexture(true, hardcore), heartX, heartY, 9, 9, color);
             brewinandchewin$remainingHealth -= 1;
         } else if (heartIndex == healthStart && renderHealth % 2 < 1 && brewinandchewin$remainingHealth == 1 || heartIndex == healthEnd && brewinandchewin$remainingHealth == 1) {
-            graphics.blitSprite(BnCHudIcons.getTipsyRightHeartTexture(true, hardcore), heartX, heartY, 9, 9);
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BnCHudIcons.getTipsyRightHeartTexture(true, hardcore), heartX, heartY, 9, 9, color);
             brewinandchewin$remainingHealth -= 1;
         } else {
-            graphics.blitSprite(BnCHudIcons.getTipsyFullHeartTexture(true, hardcore), heartX, heartY, 9, 9);
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BnCHudIcons.getTipsyFullHeartTexture(true, hardcore), heartX, heartY, 9, 9, color);
             brewinandchewin$remainingHealth -= 2;
         }
-
-        RenderSystem.disableBlend();
-        RenderSystem.depthMask(true);
-        RenderSystem.enableDepthTest();
-        graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 }

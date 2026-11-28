@@ -1,21 +1,22 @@
 package umpaz.brewinandchewin.common.block.entity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Clearable;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import umpaz.brewinandchewin.common.block.CoasterBlock;
@@ -27,7 +28,7 @@ import vectorwing.farmersdelight.common.block.entity.SyncedBlockEntity;
 import static umpaz.brewinandchewin.common.block.CoasterBlock.INVISIBLE;
 import static umpaz.brewinandchewin.common.block.CoasterBlock.SIZE;
 
-public class CoasterBlockEntity extends SyncedBlockEntity {
+public class CoasterBlockEntity extends SyncedBlockEntity implements Clearable {
 
     public final NonNullList<ItemStack> inventory = NonNullList.withSize(4, ItemStack.EMPTY);
 
@@ -35,19 +36,19 @@ public class CoasterBlockEntity extends SyncedBlockEntity {
       super(BnCBlockEntityTypes.COASTER, pos, state);
    }
 
-    public ItemInteractionResult useItemOn(ItemStack stack, Level level, BlockState state, BlockPos pos, Player player, InteractionHand hand) {
+    public InteractionResult useItemOn(ItemStack stack, Level level, BlockState state, BlockPos pos, Player player, InteractionHand hand) {
         if (!player.getAbilities().mayBuild)
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
         if (state.getValue(CoasterBlock.INVISIBLE) && stack.is(BnCItems.COASTER)) {
             if (!player.getAbilities().instabuild)
                 stack.shrink(1);
             level.playSound(null, pos, SoundEvents.WOOL_PLACE, SoundSource.BLOCKS);
             level.setBlockAndUpdate(pos, state.setValue(CoasterBlock.INVISIBLE, false));
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         } if (state.getValue(CoasterBlock.SIZE) < 4 && (addItem(level, pos, state, stack, player.getAbilities().instabuild, state.getValue(CoasterBlock.SIZE)))) {
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
@@ -57,7 +58,7 @@ public class CoasterBlockEntity extends SyncedBlockEntity {
             if (player.isShiftKeyDown() && !state.getValue(INVISIBLE)) {
                 ItemStack coaster = new ItemStack(BnCItems.COASTER);
                 if (!player.getAbilities().instabuild && !player.addItem(coaster)) {
-                    player.drop(coaster, false);
+                    net.minecraft.world.Containers.dropItemStack(level, player.getX(), player.getY(), player.getZ(), coaster);
                 }
                 level.playSound(null, pos, SoundEvents.WOOL_BREAK, SoundSource.BLOCKS);
                 level.setBlockAndUpdate(pos, state.setValue(CoasterBlock.INVISIBLE, true));
@@ -65,7 +66,7 @@ public class CoasterBlockEntity extends SyncedBlockEntity {
             }
             int count = state.getValue(CoasterBlock.SIZE);
             if (!player.getAbilities().instabuild && !player.addItem(inventory.get(count - 1))) {
-                player.drop(inventory.get(count - 1), false);
+                net.minecraft.world.Containers.dropItemStack(level, player.getX(), player.getY(), player.getZ(), inventory.get(count - 1));
             }
             BlockState replaceWith = Blocks.AIR.defaultBlockState();
             if (!state.getValue(INVISIBLE) || count > 1) {
@@ -92,22 +93,36 @@ public class CoasterBlockEntity extends SyncedBlockEntity {
     }
 
    @Override
-   public void loadAdditional(CompoundTag nbt, HolderLookup.Provider provider) {
-       super.loadAdditional(nbt, provider);
+   public void loadAdditional(ValueInput input) {
+       super.loadAdditional(input);
        inventory.clear();
-       ContainerHelper.loadAllItems(nbt, inventory, provider);
+       ContainerHelper.loadAllItems(input, inventory);
    }
 
    @Override
-   protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider provider) {
-       super.saveAdditional(nbt, provider);
-       ContainerHelper.saveAllItems(nbt, inventory, provider);
+   protected void saveAdditional(ValueOutput output) {
+       super.saveAdditional(output);
+       ContainerHelper.saveAllItems(output, inventory);
+   }
+
+   @Override
+   public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+       if (this.level != null) {
+           Containers.dropContents(this.level, pos, this.inventory);
+       }
+       super.preRemoveSideEffects(pos, state);
    }
 
    // Implement through method override in renderer.
    public AABB getRenderBoundingBox() {
         BlockPos pos = getBlockPos();
         return AABB.of(BoundingBox.fromCorners(pos, pos.above()));
+   }
+
+   @Override
+   public void clearContent() {
+      this.inventory.clear();
+      this.inventoryChanged();
    }
 
    public NonNullList<ItemStack> getItems() {

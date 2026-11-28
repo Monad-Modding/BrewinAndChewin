@@ -1,26 +1,26 @@
 package umpaz.brewinandchewin.client.utility;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import umpaz.brewinandchewin.BrewinAndChewin;
 
 public class BnCHudIcons {
-    public static final ResourceLocation TIPSY_HALF = BrewinAndChewin.asResource("hud/heart/tipsy_half");
-    public static final ResourceLocation TIPSY_FULL = BrewinAndChewin.asResource("hud/heart/tipsy_full");
-    public static final ResourceLocation TIPSY_RIGHT = BrewinAndChewin.asResource("hud/heart/tipsy_right");
+    public static final Identifier TIPSY_HALF = BrewinAndChewin.asResource("hud/heart/tipsy_half");
+    public static final Identifier TIPSY_FULL = BrewinAndChewin.asResource("hud/heart/tipsy_full");
+    public static final Identifier TIPSY_RIGHT = BrewinAndChewin.asResource("hud/heart/tipsy_right");
 
-    public static final ResourceLocation ABSORBING_TIPSY_HALF = BrewinAndChewin.asResource("hud/heart/absorbing_tipsy_half");
-    public static final ResourceLocation ABSORBING_TIPSY_FULL = BrewinAndChewin.asResource("hud/heart/absorbing_tipsy_full");
-    public static final ResourceLocation ABSORBING_TIPSY_RIGHT = BrewinAndChewin.asResource("hud/heart/absorbing_tipsy_right");
+    public static final Identifier ABSORBING_TIPSY_HALF = BrewinAndChewin.asResource("hud/heart/absorbing_tipsy_half");
+    public static final Identifier ABSORBING_TIPSY_FULL = BrewinAndChewin.asResource("hud/heart/absorbing_tipsy_full");
+    public static final Identifier ABSORBING_TIPSY_RIGHT = BrewinAndChewin.asResource("hud/heart/absorbing_tipsy_right");
 
-    public static final ResourceLocation TIPSY_HARDCORE_HALF = BrewinAndChewin.asResource("hud/heart/tipsy_hardcore_half");
-    public static final ResourceLocation TIPSY_HARDCORE_FULL = BrewinAndChewin.asResource("hud/heart/tipsy_hardcore_full");
-    public static final ResourceLocation TIPSY_HARDCORE_RIGHT = BrewinAndChewin.asResource("hud/heart/tipsy_hardcore_right");
+    public static final Identifier TIPSY_HARDCORE_HALF = BrewinAndChewin.asResource("hud/heart/tipsy_hardcore_half");
+    public static final Identifier TIPSY_HARDCORE_FULL = BrewinAndChewin.asResource("hud/heart/tipsy_hardcore_full");
+    public static final Identifier TIPSY_HARDCORE_RIGHT = BrewinAndChewin.asResource("hud/heart/tipsy_hardcore_right");
 
-    public static final ResourceLocation ABSORBING_TIPSY_HARDCORE_HALF = BrewinAndChewin.asResource("hud/heart/absorbing_tipsy_hardcore_half");
-    public static final ResourceLocation ABSORBING_TIPSY_HARDCORE_FULL = BrewinAndChewin.asResource("hud/heart/absorbing_tipsy_hardcore_full");
-    public static final ResourceLocation ABSORBING_TIPSY_HARDCORE_RIGHT = BrewinAndChewin.asResource("hud/heart/absorbing_tipsy_hardcore_right");
+    public static final Identifier ABSORBING_TIPSY_HARDCORE_HALF = BrewinAndChewin.asResource("hud/heart/absorbing_tipsy_hardcore_half");
+    public static final Identifier ABSORBING_TIPSY_HARDCORE_FULL = BrewinAndChewin.asResource("hud/heart/absorbing_tipsy_hardcore_full");
+    public static final Identifier ABSORBING_TIPSY_HARDCORE_RIGHT = BrewinAndChewin.asResource("hud/heart/absorbing_tipsy_hardcore_right");
 
-    public static ResourceLocation getTipsyFullHeartTexture(boolean absorption, boolean hardcore) {
+    public static Identifier getTipsyFullHeartTexture(boolean absorption, boolean hardcore) {
         if (hardcore) {
             if (absorption)
                 return ABSORBING_TIPSY_HARDCORE_FULL;
@@ -31,7 +31,7 @@ public class BnCHudIcons {
         return TIPSY_FULL;
     }
 
-    public static ResourceLocation getTipsyHalfHeartTexture(boolean absorption, boolean hardcore) {
+    public static Identifier getTipsyHalfHeartTexture(boolean absorption, boolean hardcore) {
         if (hardcore) {
             if (absorption)
                 return ABSORBING_TIPSY_HARDCORE_HALF;
@@ -42,7 +42,7 @@ public class BnCHudIcons {
         return TIPSY_HALF;
     }
 
-    public static ResourceLocation getTipsyRightHeartTexture(boolean absorption, boolean hardcore) {
+    public static Identifier getTipsyRightHeartTexture(boolean absorption, boolean hardcore) {
         if (hardcore) {
             if (absorption)
                 return ABSORBING_TIPSY_HARDCORE_RIGHT;

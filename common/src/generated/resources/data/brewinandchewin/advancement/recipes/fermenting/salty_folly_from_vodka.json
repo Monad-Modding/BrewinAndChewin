@@ -3,7 +3,9 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:fermenting/salty_folly_from_vodka"
+        "recipes": [
+          "brewinandchewin:fermenting/salty_folly_from_vodka"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     },

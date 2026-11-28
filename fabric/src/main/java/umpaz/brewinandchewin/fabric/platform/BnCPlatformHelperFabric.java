@@ -3,10 +3,9 @@ package umpaz.brewinandchewin.fabric.platform;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.menu.v1.ExtendedMenuType;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
@@ -25,9 +24,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.RegistryOps;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -45,7 +45,6 @@ import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.container.AbstractedFluidTank;
 import umpaz.brewinandchewin.common.container.AbstractedItemHandler;
 import umpaz.brewinandchewin.common.block.entity.container.KegMenu;
-import umpaz.brewinandchewin.common.block.entity.container.KegStackedContents;
 import umpaz.brewinandchewin.common.block.entity.container.SidedKegWrapper;
 import umpaz.brewinandchewin.common.utility.*;
 import umpaz.brewinandchewin.fabric.BrewinAndChewinFabric;
@@ -54,7 +53,6 @@ import umpaz.brewinandchewin.fabric.container.KegFluidItemStorageFabric;
 import umpaz.brewinandchewin.fabric.container.KegFluidTankFabric;
 import umpaz.brewinandchewin.fabric.container.KegItemHandlerFabric;
 import umpaz.brewinandchewin.fabric.container.SidedKegWrapperFabric;
-import umpaz.brewinandchewin.fabric.ingredient.FixedAllIngredient;
 import umpaz.brewinandchewin.fabric.registry.BnCAttachments;
 import umpaz.brewinandchewin.fabric.registry.BnCCreativeTabsImpl;
 import umpaz.brewinandchewin.fabric.registry.BnCFluidsImpl;
@@ -87,14 +85,14 @@ public class BnCPlatformHelperFabric implements BnCPlatformHelper {
 
     @Override
     public void sendClientbound(ServerPlayer player, CustomPacketPayload payload) {
-        if (player.level().isClientSide)
+        if (player.level().isClientSide())
             return;
         ServerPlayNetworking.send(player, payload);
     }
 
     @Override
     public void sendClientboundTracking(Entity tracked, CustomPacketPayload payload) {
-        if (tracked.level().isClientSide)
+        if (tracked.level().isClientSide())
             return;
         for (ServerPlayer other : PlayerLookup.tracking(tracked))
             ServerPlayNetworking.send(other, payload);
@@ -119,13 +117,18 @@ public class BnCPlatformHelperFabric implements BnCPlatformHelper {
     }
 
     @Override
+    public void openBlockPosMenu(Player player, MenuProvider menuProvider, BlockPos pos) {
+        player.openMenu(menuProvider);
+    }
+
+    @Override
     public BlockEntityType.BlockEntitySupplier<KegBlockEntity> supplyBlockEntity() {
         return KegBlockEntityFabric::new;
     }
 
     @Override
     public MenuType<KegMenu> createMenuType(BnCMenuConstructor<KegMenu> constructor) {
-        return new ExtendedScreenHandlerType<>(KegMenu::new, BlockPos.STREAM_CODEC);
+        return new ExtendedMenuType<>(KegMenu::new, BlockPos.STREAM_CODEC);
     }
 
     @Override
@@ -151,7 +154,7 @@ public class BnCPlatformHelperFabric implements BnCPlatformHelper {
     }
 
     @Override
-    public Slot createKegSlot(AbstractedItemHandler inventory, int slot, int x, int y, boolean canInsert, @Nullable Pair<ResourceLocation, ResourceLocation> noItemIcon) {
+    public Slot createKegSlot(AbstractedItemHandler inventory, int slot, int x, int y, boolean canInsert, @Nullable Identifier noItemIcon) {
         return new ItemHandlerSlot((ItemHandler) inventory, slot, x, y) {
             @Override
             public boolean mayPlace(ItemStack stack) {
@@ -159,19 +162,10 @@ public class BnCPlatformHelperFabric implements BnCPlatformHelper {
             }
 
             @Override
-            public @Nullable Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+            public @Nullable Identifier getNoItemIcon() {
                 return noItemIcon;
             }
         };
-    }
-
-    @Override
-    public Ingredient createStrictFillPickerIngredient(List<KegStackedContents.PouringEntry> fluidOutputStacks) {
-        return new FixedAllIngredient(fluidOutputStacks.stream().map(p -> {
-            if (p.strict())
-                return DefaultCustomIngredients.components(p.stack());
-            return Ingredient.of(p.stack().getItem());
-        }).toList()).toVanilla();
     }
 
     @Override
@@ -207,14 +201,15 @@ public class BnCPlatformHelperFabric implements BnCPlatformHelper {
     @Override
     public AbstractedFluidStack deserializeTankFluidStack(CompoundTag tag, HolderLookup.Provider provider) {
         var fluidVariant = FluidVariant.CODEC.decode(RegistryOps.create(NbtOps.INSTANCE, provider), tag.get("variant")).mapOrElse(Pair::getFirst, pairError -> FluidVariant.blank());
-        var amount = tag.getLong("amount");
+        var amount = tag.getLongOr("amount", 0L);
 
-        return new AbstractedFluidStack(fluidVariant.getFluid(), amount, fluidVariant.getComponentMap(), FluidUnit.DROPLET);
+        return new AbstractedFluidStack(fluidVariant.getFluid(), amount, fluidVariant.getComponents(), FluidUnit.DROPLET);
     }
 
     @Override
     public ItemStack getCraftingRemainingItem(ItemStack stack) {
-        return stack.getRecipeRemainder();
+        net.minecraft.world.item.ItemStackTemplate remainder = stack.getItem().getCraftingRemainder();
+        return remainder != null ? remainder.create() : ItemStack.EMPTY;
     }
 
     @Override
@@ -305,9 +300,6 @@ public class BnCPlatformHelperFabric implements BnCPlatformHelper {
 
     @Override
     public Fluid getCreatePotionFluid() {
-        if (isModLoaded("create")) {
-            return BnCCreateDelegate.getPotionSource();
-        }
         return null;
     }
 

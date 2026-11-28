@@ -1,9 +1,10 @@
 package umpaz.brewinandchewin.common.registry;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
+import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.core.Registry;
-import net.minecraft.core.particles.*;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -12,7 +13,7 @@ import umpaz.brewinandchewin.client.particle.DrunkBubbleParticleOptions;
 import umpaz.brewinandchewin.client.particle.RagingParticleOptions;
 
 public class BnCParticleTypes {
-    public static final SimpleParticleType FOG = new SimpleParticleType(true);
+    public static final SimpleParticleType FOG = FabricParticleTypes.simple(true);
     public static final ParticleType<RagingParticleOptions.StageOne> RAGING_STAGE_1 = new ParticleType<>(false) {
         @Override
         public MapCodec<RagingParticleOptions.StageOne> codec() {
@@ -57,7 +58,6 @@ public class BnCParticleTypes {
             return RagingParticleOptions.StageFour.STREAM_CODEC;
         }
     };
-
 
     public static final ParticleType<DrunkBubbleParticleOptions> DRUNK_BUBBLE = new ParticleType<>(false) {
         @Override

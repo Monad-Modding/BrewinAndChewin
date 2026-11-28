@@ -9,16 +9,9 @@
   },
   "experience": 1.0,
   "ingredients": [
-    {
-      "item": "minecraft:glow_berries"
-    },
-    {
-      "item": "minecraft:glowstone_dust"
-    },
-    {
-      "item": "minecraft:glow_ink_sac"
-    },
-    []
+    "minecraft:glow_berries",
+    "minecraft:glowstone_dust",
+    "minecraft:glow_ink_sac"
   ],
   "result": {
     "amount": 1000,

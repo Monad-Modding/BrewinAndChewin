@@ -6,12 +6,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.PatchedDataComponentMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -88,7 +88,7 @@ public class KegFluidIngredient {
 
     public static class Tag implements AbstractedFluidIngredient {
         public static final Codec<Tag> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-                RegistryCodecs.homogeneousList(Registries.FLUID).fieldOf("tag").forGetter(tag -> tag.fluidTag),
+                RegistryCodecs.holderSet(Registries.FLUID).fieldOf("tag").forGetter(tag -> tag.fluidTag),
                 DataComponentPatch.CODEC.optionalFieldOf("components", DataComponentPatch.EMPTY).forGetter(tag -> tag.components instanceof PatchedDataComponentMap patched ? patched.asPatch() : DataComponentPatch.EMPTY)
         ).apply(inst, Tag::new));
         public static final StreamCodec<RegistryFriendlyByteBuf, Tag> STREAM_CODEC = StreamCodec.composite(

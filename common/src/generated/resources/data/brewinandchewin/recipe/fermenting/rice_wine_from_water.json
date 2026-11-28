@@ -9,14 +9,8 @@
   },
   "experience": 1.0,
   "ingredients": [
-    {
-      "tag": "c:crops/rice"
-    },
-    {
-      "item": "minecraft:brown_mushroom"
-    },
-    [],
-    []
+    "#c:crops/rice",
+    "minecraft:brown_mushroom"
   ],
   "result": {
     "amount": 1000,

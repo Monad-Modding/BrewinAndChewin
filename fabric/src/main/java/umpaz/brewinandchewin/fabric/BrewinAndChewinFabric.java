@@ -10,14 +10,13 @@ import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.block.ComposterBlock;
+import net.fabricmc.fabric.api.recipe.v1.sync.RecipeSynchronization;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.attachment.RagingAttachment;
 import umpaz.brewinandchewin.common.attachment.TipsyHeartsAttachment;
+import umpaz.brewinandchewin.common.crafting.display.KegFermentingRecipeDisplay;
 import umpaz.brewinandchewin.common.network.clientbound.*;
-import umpaz.brewinandchewin.common.network.serverbound.EMIFillFermentingRecipeServerboundPacket;
-import umpaz.brewinandchewin.common.network.serverbound.EMIFillPouringRecipeServerboundPacket;
-import umpaz.brewinandchewin.common.network.serverbound.JEITransferKegRecipeServerboundPacket;
+import umpaz.brewinandchewin.common.registry.BnCCommonRecipeBookCategories;
 import umpaz.brewinandchewin.common.registry.BnCBlockEntityTypes;
 import umpaz.brewinandchewin.common.registry.BnCBlocks;
 import umpaz.brewinandchewin.common.registry.BnCCreativeTabs;
@@ -100,34 +99,35 @@ public class BrewinAndChewinFabric implements ModInitializer {
         BnCLootModificationEvents.init();
         BnCMenuTypes.registerAll();
         BnCParticleTypes.registerAll();
+        BnCCommonRecipeBookCategories.registerAll();
+        KegFermentingRecipeDisplay.registerAll();
         BnCRecipeTypes.registerAll();
         BnCRecipeSerializers.registerAll();
+        RecipeSynchronization.synchronizeRecipeSerializer(BnCRecipeSerializers.FERMENTING);
+        RecipeSynchronization.synchronizeRecipeSerializer(BnCRecipeSerializers.KEG_POURING);
 
         ItemStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> (SidedKegWrapperFabric)blockEntity.getSidedHandler(direction), BnCBlockEntityTypes.KEG);
         FluidStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> (KegFluidTankFabric)blockEntity.getFluidTank(), BnCBlockEntityTypes.KEG);
     }
 
     private static void registerNetwork() {
-        PayloadTypeRegistry.playS2C().register(ClearKegFluidContainerComponentsClientboundPacket.TYPE, ClearKegFluidContainerComponentsClientboundPacket.STREAM_CODEC);
-        PayloadTypeRegistry.playS2C().register(MakeNextPlayerChatTipsyClientboundPacket.TYPE, MakeNextPlayerChatTipsyClientboundPacket.STREAM_CODEC);
-        PayloadTypeRegistry.playS2C().register(SendRecipeBookValuesClientboundPacket.TYPE, SendRecipeBookValuesClientboundPacket.STREAM_CODEC);
-        PayloadTypeRegistry.playS2C().register(SyncNumbedHeartsClientboundPacket.TYPE, SyncNumbedHeartsClientboundPacket.STREAM_CODEC);
-        PayloadTypeRegistry.playS2C().register(SyncRagingStacksClientboundPacket.TYPE, SyncRagingStacksClientboundPacket.STREAM_CODEC);
-
-        PayloadTypeRegistry.playC2S().register(JEITransferKegRecipeServerboundPacket.TYPE, JEITransferKegRecipeServerboundPacket.STREAM_CODEC);
-        PayloadTypeRegistry.playC2S().register(EMIFillFermentingRecipeServerboundPacket.TYPE, EMIFillFermentingRecipeServerboundPacket.STREAM_CODEC);
-        PayloadTypeRegistry.playC2S().register(EMIFillPouringRecipeServerboundPacket.TYPE, EMIFillPouringRecipeServerboundPacket.STREAM_CODEC);
-
-        ServerPlayNetworking.registerGlobalReceiver(JEITransferKegRecipeServerboundPacket.TYPE, (payload, context) -> payload.handle(context.player()));
-        ServerPlayNetworking.registerGlobalReceiver(EMIFillFermentingRecipeServerboundPacket.TYPE, (payload, context) -> payload.handle(context.player()));
-        ServerPlayNetworking.registerGlobalReceiver(EMIFillPouringRecipeServerboundPacket.TYPE, (payload, context) -> payload.handle(context.player()));
+        PayloadTypeRegistry.clientboundPlay().register(ClearKegFluidContainerComponentsClientboundPacket.TYPE, ClearKegFluidContainerComponentsClientboundPacket.STREAM_CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(MakeNextPlayerChatTipsyClientboundPacket.TYPE, MakeNextPlayerChatTipsyClientboundPacket.STREAM_CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(SendRecipeBookValuesClientboundPacket.TYPE, SendRecipeBookValuesClientboundPacket.STREAM_CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(SyncNumbedHeartsClientboundPacket.TYPE, SyncNumbedHeartsClientboundPacket.STREAM_CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(SyncRagingStacksClientboundPacket.TYPE, SyncRagingStacksClientboundPacket.STREAM_CODEC);
     }
 
     private static void registerCompostables() {
-        ComposterBlock.COMPOSTABLES.put(BnCItems.KIMCHI, 0.5F);
-        ComposterBlock.COMPOSTABLES.put(BnCItems.PICKLED_PICKLES, 0.5F);
-        ComposterBlock.COMPOSTABLES.put(BnCItems.QUICHE_SLICE, 0.85F);
-        ComposterBlock.COMPOSTABLES.put(BnCItems.QUICHE, 1.0F);
+        net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents.MODIFY.register(context -> {
+            var cLowMed = new net.minecraft.world.item.component.Compostable(net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+            var cMedHigh = new net.minecraft.world.item.component.Compostable(net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders.COMPOSTABLE_MEDIUM_HIGH);
+            var cFull = new net.minecraft.world.item.component.Compostable(net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders.COMPOSTABLE_ALWAYS_ADD_ONE);
+
+            context.modify(java.util.List.of(BnCItems.KIMCHI, BnCItems.PICKLED_PICKLES), (b, i) -> b.set(net.minecraft.core.component.DataComponents.COMPOSTABLE, cLowMed));
+            context.modify(java.util.List.of(BnCItems.QUICHE_SLICE), (b, i) -> b.set(net.minecraft.core.component.DataComponents.COMPOSTABLE, cMedHigh));
+            context.modify(java.util.List.of(BnCItems.QUICHE), (b, i) -> b.set(net.minecraft.core.component.DataComponents.COMPOSTABLE, cFull));
+        });
     }
 
     private static void registerFluidAttributeHandlers() {

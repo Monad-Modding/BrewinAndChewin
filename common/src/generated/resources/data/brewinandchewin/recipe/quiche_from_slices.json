@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "p": {
-      "item": "brewinandchewin:quiche_slice"
-    }
+    "p": "brewinandchewin:quiche_slice"
   },
   "pattern": [
     "pp",

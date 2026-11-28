@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:fermenting/steel_toe_stout_from_strongroot_ale"
+        "recipes": [
+          "brewinandchewin:fermenting/steel_toe_stout_from_strongroot_ale"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

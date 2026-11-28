@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:fermenting/pale_jane_from_rice_wine"
+        "recipes": [
+          "brewinandchewin:fermenting/pale_jane_from_rice_wine"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

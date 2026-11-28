@@ -36,7 +36,7 @@ public record BnCDataFixer(DataFixer fixer) {
     private static DataFixer registerFixers() {
         DataFixerBuilder builder = new DataFixerBuilder(CURRENT_VERSION);
         builder.addSchema(0, (integer, schema) -> new Schema(integer, DataFixers.getDataFixer()
-                .getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion()))));
+                .getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().dataVersion().version()))));
 
         builder.addSchema(1, BnCSchemaV1::new);
         Schema schema2 = builder.addSchema(2, SAME_NAMESPACED);
@@ -64,7 +64,7 @@ public record BnCDataFixer(DataFixer fixer) {
     }
 
     public static int getModDataVersion(CompoundTag tag) {
-        return tag.getInt("brewinandchewin:data_version");
+        return tag.getIntOr("brewinandchewin:data_version", 0);
     }
 
     public static CompoundTag setModDataVersion(CompoundTag tag) {

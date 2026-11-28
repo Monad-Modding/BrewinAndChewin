@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:quiche_from_slices"
+        "recipes": [
+          "brewinandchewin:quiche_from_slices"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

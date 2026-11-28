@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:flaxen_cheese_wheel_from_wedges"
+        "recipes": [
+          "brewinandchewin:flaxen_cheese_wheel_from_wedges"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

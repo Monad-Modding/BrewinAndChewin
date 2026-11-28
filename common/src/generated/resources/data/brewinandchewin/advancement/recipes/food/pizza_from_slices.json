@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:pizza_from_slices"
+        "recipes": [
+          "brewinandchewin:pizza_from_slices"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

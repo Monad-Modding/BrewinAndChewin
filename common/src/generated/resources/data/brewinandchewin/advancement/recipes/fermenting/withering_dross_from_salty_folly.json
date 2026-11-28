@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:fermenting/withering_dross_from_salty_folly"
+        "recipes": [
+          "brewinandchewin:fermenting/withering_dross_from_salty_folly"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

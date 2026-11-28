@@ -31,6 +31,16 @@ public class BnCFluidTags extends FluidTagsProvider {
                 .add(BnCFluids.VODKA, BnCFluids.FLOWING_VODKA);
         tag(BnCTags.Fluids.MEAD)
                 .add(BnCFluids.MEAD, BnCFluids.FLOWING_MEAD);
+        tag(BnCTags.Fluids.RED_WINE)
+                .add(BnCFluids.RED_WINE, BnCFluids.FLOWING_RED_WINE);
+        tag(BnCTags.Fluids.WHITE_WINE)
+                .add(BnCFluids.WHITE_WINE, BnCFluids.FLOWING_WHITE_WINE);
+        tag(BnCTags.Fluids.CURRANT_WINE)
+                .add(BnCFluids.CURRANT_WINE, BnCFluids.FLOWING_CURRANT_WINE);
+        tag(BnCTags.Fluids.VERRUCA_WINE)
+                .add(BnCFluids.VERRUCA_WINE, BnCFluids.FLOWING_VERRUCA_WINE);
+        tag(BnCTags.Fluids.TWISTED_WINE)
+                .add(BnCFluids.TWISTED_WINE, BnCFluids.FLOWING_TWISTED_WINE);
         tag(BnCTags.Fluids.RICE_WINE)
                 .add(BnCFluids.RICE_WINE, BnCFluids.FLOWING_RICE_WINE);
         tag(BnCTags.Fluids.PALE_JANE)

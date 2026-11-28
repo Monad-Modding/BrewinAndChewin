@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "c": {
-      "item": "farmersdelight:canvas"
-    }
+    "c": "farmersdelight:canvas"
   },
   "pattern": [
     "cc"

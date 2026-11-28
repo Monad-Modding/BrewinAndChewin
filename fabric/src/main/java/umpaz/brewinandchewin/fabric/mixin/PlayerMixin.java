@@ -17,7 +17,7 @@ public abstract class PlayerMixin implements PlayerPreHurtAttackStrengthAccess {
     @Unique
     private float brewinandchewin$preHurtAttackStrengthScale;
 
-    @Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;resetAttackStrengthTicker()V"))
+    @Inject(method = "attack", at = @At("HEAD"))
     private void brewinandchewin$storeAttackStrengthScale(Entity entity, CallbackInfo ci) {
         brewinandchewin$preHurtAttackStrengthScale = getAttackStrengthScale(0.0F);
     }

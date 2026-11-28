@@ -6,8 +6,9 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.TypedEntityData;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import umpaz.brewinandchewin.client.gui.KegTooltip;
 import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidStack;
@@ -15,14 +16,14 @@ import umpaz.brewinandchewin.common.utility.AbstractedFluidStack;
 import java.util.Optional;
 
 public class KegItem extends BlockItem {
-   private static final int BAR_COLOR = Mth.color(0.4F, 0.4F, 1.0F);
+   private static final int BAR_COLOR = 0x6666FF;
 
-   public KegItem( Block block, Properties properties ) {
+   public KegItem(Block block, Properties properties) {
       super(block, properties);
    }
 
    @Override
-   public boolean isBarVisible( ItemStack stack ) {
+   public boolean isBarVisible(ItemStack stack) {
       return getServingCount(stack) > 0;
    }
 
@@ -38,16 +39,20 @@ public class KegItem extends BlockItem {
 
    @Override
    public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
-      AbstractedFluidStack mealStack = KegBlockEntity.getMealFromItem(stack, Minecraft.getInstance().level.registryAccess());
+      if (Minecraft.getInstance().level == null)
+         return Optional.empty();
+      AbstractedFluidStack mealStack = KegBlockEntity.getMealFromItem(stack,
+            Minecraft.getInstance().level.registryAccess());
       return Optional.of(new KegTooltip.KegTooltipComponent(mealStack));
    }
 
-   private static long getServingCount( ItemStack stack ) {
-      CustomData nbt = stack.get(DataComponents.BLOCK_ENTITY_DATA);
-      if (nbt == null) {
+   private static long getServingCount(ItemStack stack) {
+      TypedEntityData<BlockEntityType<?>> nbt = stack.get(DataComponents.BLOCK_ENTITY_DATA);
+      if (nbt == null || Minecraft.getInstance().level == null) {
          return 0;
       } else {
-         AbstractedFluidStack mealStack = KegBlockEntity.getMealFromItem(stack, Minecraft.getInstance().level.registryAccess());
+         AbstractedFluidStack mealStack = KegBlockEntity.getMealFromItem(stack,
+               Minecraft.getInstance().level.registryAccess());
          return mealStack.amount();
       }
    }

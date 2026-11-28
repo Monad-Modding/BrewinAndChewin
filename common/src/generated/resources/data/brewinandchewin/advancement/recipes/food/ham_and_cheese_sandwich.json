@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:ham_and_cheese_sandwich"
+        "recipes": [
+          "brewinandchewin:ham_and_cheese_sandwich"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

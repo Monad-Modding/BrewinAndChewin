@@ -3,7 +3,9 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:fermenting/bloody_mary_from_vodka"
+        "recipes": [
+          "brewinandchewin:fermenting/bloody_mary_from_vodka"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     },

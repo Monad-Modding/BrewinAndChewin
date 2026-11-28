@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:quiche_from_bacon"
+        "recipes": [
+          "brewinandchewin:quiche_from_bacon"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:cooking/creamy_onion_soup"
+        "recipes": [
+          "brewinandchewin:cooking/creamy_onion_soup"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

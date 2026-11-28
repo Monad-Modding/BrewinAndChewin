@@ -1,6 +1,7 @@
 package umpaz.brewinandchewin.common.effect;
 
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -8,6 +9,7 @@ import org.joml.Vector3f;
 import umpaz.brewinandchewin.client.particle.DrunkBubbleParticleOptions;
 
 public class TipsyEffect extends MobEffect {
+    public static final int FREEZE_IMMUNITY_AMPLIFIER = 2;
 
     public TipsyEffect() {
         super(MobEffectCategory.NEUTRAL, 13208334, getParticle(13208334));
@@ -19,6 +21,13 @@ public class TipsyEffect extends MobEffect {
 
     @Override
     public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+        return true;
+    }
+
+    @Override
+    public boolean applyEffectTick(ServerLevel level, LivingEntity entity, int amplifier) {
+        if (amplifier >= FREEZE_IMMUNITY_AMPLIFIER && entity.getTicksFrozen() > 0)
+            entity.setTicksFrozen(0);
         return true;
     }
 }

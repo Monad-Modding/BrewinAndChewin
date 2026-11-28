@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:fermenting/red_rum_from_bloody_mary"
+        "recipes": [
+          "brewinandchewin:fermenting/red_rum_from_bloody_mary"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

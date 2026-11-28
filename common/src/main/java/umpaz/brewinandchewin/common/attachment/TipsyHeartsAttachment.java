@@ -2,11 +2,11 @@ package umpaz.brewinandchewin.common.attachment;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import umpaz.brewinandchewin.BrewinAndChewin;
 
 public class TipsyHeartsAttachment {
-    public static final ResourceLocation ID = BrewinAndChewin.asResource("tipsy_hearts");
+    public static final Identifier ID = BrewinAndChewin.asResource("tipsy_hearts");
     public static final Codec<TipsyHeartsAttachment> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             Codec.FLOAT.fieldOf("numbed_health").forGetter(TipsyHeartsAttachment::getNumbedHealth),
             Codec.INT.fieldOf("ticks_until_damage").forGetter(TipsyHeartsAttachment::getTicksUntilDamage)

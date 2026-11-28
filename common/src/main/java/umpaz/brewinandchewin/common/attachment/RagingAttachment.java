@@ -3,7 +3,7 @@ package umpaz.brewinandchewin.common.attachment;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -19,7 +19,7 @@ import java.util.Optional;
 
 public class RagingAttachment {
     public static final float RESET_TICK_MULTIPLIER = 2.5F;
-    public static final ResourceLocation ID = BrewinAndChewin.asResource("raging");
+    public static final Identifier ID = BrewinAndChewin.asResource("raging");
     public static final Codec<RagingAttachment> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             Codec.INT.fieldOf("stacks").forGetter(RagingAttachment::getStacks),
             Codec.INT.fieldOf("ticks_until_reset").forGetter(RagingAttachment::getTicksUntilReset)
@@ -50,7 +50,7 @@ public class RagingAttachment {
         ticksUntilReset = value;
     }
 
-    private static final ResourceLocation RAGING_ATTRIBUTE_ID = BrewinAndChewin.asResource("raging");
+    private static final Identifier RAGING_ATTRIBUTE_ID = BrewinAndChewin.asResource("raging");
 
     public static void tick(LivingEntity living) {
         RagingAttachment attachment = BrewinAndChewin.getHelper().getRagingAttachment(living);

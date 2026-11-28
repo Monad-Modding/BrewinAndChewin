@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:fermenting/mead_from_honey"
+        "recipes": [
+          "brewinandchewin:fermenting/mead_from_honey"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

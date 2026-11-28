@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "p": {
-      "item": "brewinandchewin:pizza_slice"
-    }
+    "p": "brewinandchewin:pizza_slice"
   },
   "pattern": [
     "pp",

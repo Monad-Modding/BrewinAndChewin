@@ -2,6 +2,8 @@ package umpaz.brewinandchewin.common.block;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -11,8 +13,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
@@ -33,7 +35,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 import umpaz.brewinandchewin.BrewinAndChewin;
+import umpaz.brewinandchewin.client.particle.DrunkBubbleParticleOptions;
 import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.container.AbstractedItemHandler;
 import umpaz.brewinandchewin.common.registry.BnCBlockEntityTypes;
@@ -43,8 +47,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
-    public static final MapCodec<KegBlock> CODEC = simpleCodec(KegBlock::new);
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    private static final float FERMENTING_SOUND_CHANCE = 0.08F; //see line 137 for info ~Oska
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty VERTICAL = BooleanProperty.create("vertical");
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
@@ -59,15 +63,10 @@ public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
     }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
-
-    @Override
-    public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         BlockEntity tileEntity = level.getBlockEntity(pos);
         if (level.isClientSide())
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         if (tileEntity instanceof KegBlockEntity kegBE) {
             List<ItemStack> itms = stack.isEmpty() ? List.of() : kegBE.extractInWorld(stack, 1, player.getAbilities().instabuild);
             if (!itms.isEmpty()) {
@@ -76,23 +75,74 @@ public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
                         if (stack.isEmpty()) {
                             player.setItemInHand(hand, itm);
                         } else if (!player.getInventory().add(itm)) {
-                            player.drop(itm, false);
+                            net.minecraft.world.Containers.dropItemStack(level, player.getX(), player.getY(), player.getZ(), itm);
                         }
                     }
                 });
                 level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1, 1);
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
             kegBE.updateTemperature();
             BrewinAndChewin.getHelper().openKegMenu(player, kegBE, pos);
         }
-        return ItemInteractionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof KegBlockEntity kegBE) {
+            kegBE.updateTemperature();
+            BrewinAndChewin.getHelper().openKegMenu(player, kegBE, pos);
+        }
+        return InteractionResult.SUCCESS;
     }
 
 
     @Override
     public RenderShape getRenderShape(BlockState pState) {
         return RenderShape.MODEL;
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (!(level.getBlockEntity(pos) instanceof KegBlockEntity keg) || !keg.isFermenting())
+            return;
+
+        if (random.nextInt(15) == 0) {
+            Direction facing = state.getValue(FACING);
+            boolean vertical = state.getValue(VERTICAL);
+
+            // Base pixel offsets, all values are divided by 16 to match with block size.
+            double xOffset = 8 / 16.0; // X = 8 px
+            double yOffset = vertical ? -1 / 16.0 : 2 / 16.0; // Y = -1 px if vertical, else 2 px, particles spawn for some reason 2 px higher than desired
+            double zOffset = vertical ? 0 / 16.0 : -1 / 16.0; // Z = 0 px if vertical, else -1 px, a little offsetted up front to make the particles appear visually more.
+
+            // Rotate offsets based on facing
+            Vec3 offset = switch (facing) {
+                case NORTH -> new Vec3(xOffset, yOffset, zOffset);
+                case SOUTH -> new Vec3(xOffset, yOffset, 1.0 - zOffset);
+                case WEST -> new Vec3(zOffset, yOffset, xOffset);
+                case EAST -> new Vec3(1.0 - zOffset, yOffset, xOffset);
+                default -> Vec3.ZERO;
+            };
+
+            // Slight randomisation for natural bubbling
+            double dx = (random.nextDouble() - 0.5) * 0.02;
+            double dy = random.nextDouble() * 0.02;
+            double dz = (random.nextDouble() - 0.5) * 0.02;
+
+            level.addParticle(new DrunkBubbleParticleOptions(new Vector3f(0.8784f, 0.5725f, 0.1921f), 0.25f),
+                    pos.getX() + offset.x + dx,
+                    pos.getY() + offset.y + dy,
+                    pos.getZ() + offset.z + dz,
+                    0.0, 0.02, 0.0);
+// 31/08/2026 Oska: From playtesting it may appear that the fermenting sound appears to be less common than before these changes. Values have been tweaked. The Sound is changed to BUBBLE_COLUMN_BUBBLE_POP to prevent confusion with when a keg finishes brewing playing sound BREWING_STAND_BREW, SEE → KeBlockEntity.java → processfermenting → line 421.
+// P.S playtest the sound event once more using BELL_BLOCK to see if the frequency still requires tweaking
+            if (random.nextFloat() < FERMENTING_SOUND_CHANCE)
+                level.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D,
+                        SoundEvents.BUBBLE_COLUMN_BUBBLE_POP, SoundSource.BLOCKS,
+                        0.4F, 0.7F + random.nextFloat() * 0.2F, false);
+        }
     }
 
     @Override
@@ -118,33 +168,27 @@ public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos currentPos, Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
         if (state.getValue(WATERLOGGED)) {
-            level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+            scheduledTickAccess.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
         return state;
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
-        ItemStack stack = super.getCloneItemStack(level, pos, state);
-        Optional<KegBlockEntity> kegBE = level.getBlockEntity(pos, BnCBlockEntityTypes.KEG);
-        kegBE.ifPresent(blockEntity -> stack.applyComponents(blockEntity.collectComponents()));
+    protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
+        ItemStack stack = super.getCloneItemStack(level, pos, state, includeData);
+        if (includeData) {
+            Optional<KegBlockEntity> kegBE = level.getBlockEntity(pos, BnCBlockEntityTypes.KEG);
+            kegBE.ifPresent(blockEntity -> stack.applyComponents(blockEntity.collectComponents()));
+        }
         return stack;
     }
 
     @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
-            BlockEntity tileEntity = level.getBlockEntity(pos);
-            if (tileEntity instanceof KegBlockEntity kegEntity) {
-                Containers.dropContents(level, pos, kegEntity.getDroppableInventory());
-                kegEntity.getUsedRecipesAndPopExperience(level, Vec3.atCenterOf(pos));
-                level.updateNeighbourForOutputSignal(pos, this);
-            }
-
-            super.onRemove(state, level, pos, newState, isMoving);
-        }
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean isMoving) {
+        level.updateNeighbourForOutputSignal(pos, this);
+        super.affectNeighborsAfterRemoval(state, level, pos, isMoving);
     }
 
     @Override
@@ -159,7 +203,7 @@ public class KegBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos, Direction direction) {
         BlockEntity tileEntity = level.getBlockEntity(pos);
         if (tileEntity instanceof KegBlockEntity) {
             AbstractedItemHandler inventory = ((KegBlockEntity) tileEntity).getInventory();

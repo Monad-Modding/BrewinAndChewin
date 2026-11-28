@@ -1,14 +1,15 @@
 package umpaz.brewinandchewin.common;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import house.greenhouse.greenhouseconfig.api.GreenhouseConfigHolder;
-import house.greenhouse.greenhouseconfig.api.OrderCorrectedRecordCodec;
-import house.greenhouse.greenhouseconfig.api.util.DefaultFieldUtil;
-import house.greenhouse.greenhouseconfig.toml.TomlLang;
 import io.netty.buffer.ByteBuf;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
@@ -18,22 +19,51 @@ import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.utility.FluidUnit;
 import umpaz.brewinandchewin.platform.BnCPlatform;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 public class BnCConfiguration {
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private static Common commonInstance = Common.DEFAULT;
+    private static Client clientInstance = Client.DEFAULT;
 
-    public static final GreenhouseConfigHolder<Common> COMMON_CONFIG = GreenhouseConfigHolder.common("brewinandchewin-common",
-                    BnCConfiguration.Common.CODEC,
-                    BnCConfiguration.Common.DEFAULT,
-                    TomlLang.INSTANCE)
-            .networkSynchronized(BnCConfiguration.Common.STREAM_CODEC.cast())
-            .build();
+    public static Common common() {
+        return commonInstance;
+    }
 
-    public static final GreenhouseConfigHolder<BnCConfiguration.Client> CLIENT_CONFIG = GreenhouseConfigHolder.client("brewinandchewin-client",
-                    BnCConfiguration.Client.CODEC,
-                    BnCConfiguration.Client.DEFAULT,
-                    TomlLang.INSTANCE)
-            .build();
+    public static Client client() {
+        return clientInstance;
+    }
 
-    public static void init() {}
+    public static void init() {
+        commonInstance = loadOrCreate("brewinandchewin-common.json", Common.CODEC, Common.DEFAULT);
+        clientInstance = loadOrCreate("brewinandchewin-client.json", Client.CODEC, Client.DEFAULT);
+    }
+
+    private static <T> T loadOrCreate(String fileName, Codec<T> codec, T def) {
+        try {
+            Path configPath = FabricLoader.getInstance().getConfigDir().resolve(fileName);
+            if (Files.exists(configPath)) {
+                JsonElement json = JsonParser.parseString(Files.readString(configPath));
+                return codec.parse(JsonOps.INSTANCE, json).resultOrPartial(err ->
+                        BrewinAndChewin.LOG.warn("Failed to parse config {}: {}", fileName, err)
+                ).orElse(def);
+            } else {
+                Files.createDirectories(configPath.getParent());
+                codec.encodeStart(JsonOps.INSTANCE, def).result().ifPresent(el -> {
+                    try {
+                        Files.writeString(configPath, GSON.toJson(el));
+                    } catch (IOException e) {
+                        BrewinAndChewin.LOG.warn("Failed to write default config {}", fileName, e);
+                    }
+                });
+            }
+        } catch (Exception e) {
+            BrewinAndChewin.LOG.warn("Error loading config {}, using defaults", fileName, e);
+        }
+        return def;
+    }
 
     public record Common(Root root, Keg keg, RecipeBook recipeBook) {
         public static final Common DEFAULT = new Common(Root.DEFAULT, Keg.DEFAULT, RecipeBook.DEFAULT);
@@ -53,27 +83,9 @@ public class BnCConfiguration {
             public static final Root DEFAULT = new Root(3, 3, 3);
 
             public static final MapCodec<Root> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-                    DefaultFieldUtil.codecWithComments(
-                            Codec.intRange(1, 10),
-                            "levelChatScramble",
-                            DEFAULT.levelChatScramble(),
-                            "At what amplifier of Tipsy should the chat scramble?",
-                            "Default: " + DEFAULT.levelChatScramble()
-                    ).forGetter(Root::levelChatScramble),
-                    DefaultFieldUtil.codecWithComments(
-                            Codec.intRange(1, 10),
-                            "levelSignScramble",
-                            DEFAULT.levelSignScramble(),
-                            "At what amplifier of Tipsy should signs scramble?",
-                            "Default: " + DEFAULT.levelSignScramble()
-                    ).forGetter(Root::levelSignScramble),
-                    DefaultFieldUtil.codecWithComments(
-                            Codec.intRange(1, 10),
-                            "levelNameScramble",
-                            DEFAULT.levelNameScramble(),
-                            "At what amplifier of Tipsy should nametags scramble?",
-                            "Default: " + DEFAULT.levelNameScramble()
-                    ).forGetter(Root::levelNameScramble)
+                    Codec.intRange(1, 10).optionalFieldOf("levelChatScramble", DEFAULT.levelChatScramble()).forGetter(Root::levelChatScramble),
+                    Codec.intRange(1, 10).optionalFieldOf("levelSignScramble", DEFAULT.levelSignScramble()).forGetter(Root::levelSignScramble),
+                    Codec.intRange(1, 10).optionalFieldOf("levelNameScramble", DEFAULT.levelNameScramble()).forGetter(Root::levelNameScramble)
             ).apply(inst, Root::new));
 
             public static final StreamCodec<ByteBuf, Root> STREAM_CODEC = StreamCodec.composite(
@@ -84,101 +96,25 @@ public class BnCConfiguration {
             );
         }
 
-        public record Keg(FluidUnit capacityUnit, long capacity,
-                          int cold, int chilly, int warm, int hot,
+        public record Keg(int cold, int chilly, int warm, int hot,
                           boolean biomeTemp, boolean dimTemp) {
-            public static final Keg DEFAULT = new Keg(
-                    platformSpecificValue(FluidUnit.MILLIBUCKET, FluidUnit.DROPLET),
-                    platformSpecificValue(1000L, 81000L),
-                    2, 1, 1, 2,
-                    true, true
-            );
+            public static final Keg DEFAULT = new Keg(2, 1, 1, 2, true, true);
 
-            /**
-             * The fluid capacity localized for the mod loader.
-             */
-            public long localizedCapacity() {
-                return capacityUnit.convertToLoader(capacity);
-            }
-
-            public static final Codec<Keg> CODEC = OrderCorrectedRecordCodec.wrap(RecordCodecBuilder.create(inst -> inst.group(
-                    DefaultFieldUtil.codecWithComments(
-                            FluidUnit.CODEC,
-                            "kegCapacityUnit",
-                            DEFAULT.capacityUnit(),
-                            "Which unit the capacity field should use.",
-                            "Should be 'liters', 'millibuckets' or 'droplets'",
-                            "1 L = 1 mB = 81 d",
-                            "Default: " + DEFAULT.capacityUnit().getSerializedName()
-                    ).forGetter(Keg::capacityUnit),
-                    DefaultFieldUtil.codecWithComments(
-                            Codec.LONG.validate(l -> {
-                                if (l < 0)
-                                    return DataResult.error(() -> "Keg capacity cannot be below 0.");
-                                return DataResult.success(l);
-                            }),
-                            "kegCapacity",
-                            DEFAULT.capacity(),
-                            "How much fluid (unit specified by capacityUnit) can the Keg hold?",
-                            "Range: 1 ~ "  + FluidUnit.convert(10000L, FluidUnit.MILLIBUCKET, DEFAULT.capacityUnit()),
-                            "Default: " + DEFAULT.capacity() + "(" + DEFAULT.capacityUnit().getSerializedName() + ")"
-                    ).forGetter(Keg::capacity),
-                    DefaultFieldUtil.codecWithComments(
-                            ExtraCodecs.POSITIVE_INT,
-                            "kegCold",
-                            DEFAULT.cold(),
-                            "How many cold blocks are required for a cold temperature in the Keg?",
-                            "Default: " + DEFAULT.cold()
-                    ).forGetter(Keg::cold),
-                    DefaultFieldUtil.codecWithComments(
-                            ExtraCodecs.POSITIVE_INT,
-                            "kegChilly",
-                            DEFAULT.chilly(),
-                            "How many cold blocks are required for a chilly temperature in the Keg?",
-                            "Default: " + DEFAULT.chilly()
-                    ).forGetter(Keg::chilly),
-                    DefaultFieldUtil.codecWithComments(
-                            ExtraCodecs.POSITIVE_INT,
-                            "kegWarm",
-                            DEFAULT.warm(),
-                            "How many hot blocks are required for a warm temperature in the Keg?",
-                            "Default: " + DEFAULT.warm()
-                    ).forGetter(Keg::warm),
-                    DefaultFieldUtil.codecWithComments(
-                            ExtraCodecs.POSITIVE_INT,
-                            "kegHot",
-                            DEFAULT.hot(),
-                            "How many hot blocks are required for a hot temperature in the Keg?",
-                            "Default: " + DEFAULT.hot()
-                    ).forGetter(Keg::hot),
-                    DefaultFieldUtil.codecWithComments(
-                            Codec.BOOL,
-                            "kegBiomeTemp",
-                            DEFAULT.biomeTemp(),
-                            "Should the biome temperature influence the temperature in the Keg?",
-                            "Default: " + DEFAULT.biomeTemp()
-                    ).forGetter(Keg::biomeTemp),
-                    DefaultFieldUtil.codecWithComments(
-                            Codec.BOOL,
-                            "kegDimTemp",
-                            DEFAULT.dimTemp(),
-                            "Should the dimension temperature influence the temperature in the Keg?",
-                            "Default: " + DEFAULT.dimTemp()
-                    ).forGetter(Keg::dimTemp)
-            ).apply(inst, Keg::new)));
+            public static final Codec<Keg> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+                    ExtraCodecs.POSITIVE_INT.optionalFieldOf("kegCold", DEFAULT.cold()).forGetter(Keg::cold),
+                    ExtraCodecs.POSITIVE_INT.optionalFieldOf("kegChilly", DEFAULT.chilly()).forGetter(Keg::chilly),
+                    ExtraCodecs.POSITIVE_INT.optionalFieldOf("kegWarm", DEFAULT.warm()).forGetter(Keg::warm),
+                    ExtraCodecs.POSITIVE_INT.optionalFieldOf("kegHot", DEFAULT.hot()).forGetter(Keg::hot),
+                    Codec.BOOL.optionalFieldOf("kegBiomeTemp", DEFAULT.biomeTemp()).forGetter(Keg::biomeTemp),
+                    Codec.BOOL.optionalFieldOf("kegDimTemp", DEFAULT.dimTemp()).forGetter(Keg::dimTemp)
+            ).apply(inst, Keg::new));
             public static final StreamCodec<ByteBuf, Keg> STREAM_CODEC = StreamCodec.of(Keg::encode, Keg::new);
 
             public Keg(ByteBuf buf) {
-                this(
-                        FluidUnit.STREAM_CODEC.decode(buf), buf.readLong(),
-                        buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(),
-                        buf.readBoolean(), buf.readBoolean()
-                );
+                this(buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readBoolean(), buf.readBoolean());
             }
 
             public static void encode(ByteBuf buf, Keg keg) {
-                FluidUnit.STREAM_CODEC.encode(buf, keg.capacityUnit());
-                buf.writeLong(keg.capacity);
                 buf.writeInt(keg.cold);
                 buf.writeInt(keg.chilly);
                 buf.writeInt(keg.warm);
@@ -191,18 +127,11 @@ public class BnCConfiguration {
         public record RecipeBook(boolean enabled) {
             public static final RecipeBook DEFAULT = new RecipeBook(true);
             public static final Codec<RecipeBook> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-                    DefaultFieldUtil.codecWithComments(
-                            Codec.BOOL,
-                            "enableRecipeBookKeg",
-                            DEFAULT.enabled(),
-                            "Should the Keg have a Recipe Book available on its interface?",
-                            "Default: " + DEFAULT.enabled()
-                    ).forGetter(RecipeBook::enabled)
+                    Codec.BOOL.optionalFieldOf("enableRecipeBookKeg", DEFAULT.enabled()).forGetter(RecipeBook::enabled)
             ).apply(inst, RecipeBook::new));
             public static final StreamCodec<ByteBuf, RecipeBook> STREAM_CODEC = ByteBufCodecs.BOOL.map(RecipeBook::new, RecipeBook::enabled);
         }
     }
-
 
     public record Client(FluidUnit displayUnit, DisplaySettings oppositeFluidDisplay,
                          boolean numbedHeartFlickering, boolean intoxicationFoodOverlay,
@@ -215,67 +144,16 @@ public class BnCConfiguration {
                 true, true, true,
                 true
         );
-        private static final Codec<Client> CODEC = OrderCorrectedRecordCodec.wrap(RecordCodecBuilder.create(inst -> inst.group(
-                 DefaultFieldUtil.codecWithComments(
-                         FluidUnit.CODEC,
-                         "fluidDisplayUnit",
-                         DEFAULT.displayUnit(),
-                         "Which unit the fluid display in the keg should use.",
-                         "Should be 'liters', 'millibuckets' or 'droplets'",
-                         "1 L = 1 mB = 81 d",
-                         "Default: " + DEFAULT.displayUnit().getSerializedName()
-                 ).forGetter(Client::displayUnit),
-                DefaultFieldUtil.codecWithComments(
-                        DisplaySettings.CODEC,
-                        "oppositeFluidDisplay",
-                        DEFAULT.oppositeFluidDisplay(),
-                        "When the opposite fluid display unit should be shown.",
-                        "Should be one of 'never', 'advanced_tooltips' or 'always'",
-                        "Default: " + DEFAULT.oppositeFluidDisplay().getSerializedName()
-                ).forGetter(Client::oppositeFluidDisplay),
-                DefaultFieldUtil.codecWithComments(
-                        Codec.BOOL,
-                        "numbedHeartFlickering",
-                        DEFAULT.numbedHeartFlickering(),
-                        "Should the numbed hearts obtained from being damaged when Tipsy flicker when you are about to take damage?",
-                        "Default: " + DEFAULT.numbedHeartFlickering()
-                ).forGetter(Client::numbedHeartFlickering),
-                DefaultFieldUtil.codecWithComments(
-                        Codec.BOOL,
-                        "intoxicationFoodOverlay",
-                        DEFAULT.intoxicationFoodOverlay(),
-                        "Should the food bar have a yellow overlay when the player has the Intoxication effect?",
-                        "Default: " + DEFAULT.intoxicationFoodOverlay()
-                ).forGetter(Client::intoxicationFoodOverlay),
-                DefaultFieldUtil.codecWithComments(
-                        Codec.BOOL,
-                        "scrambleChat",
-                        DEFAULT.scrambleChat(),
-                        "Should the chat scramble when the player has the Tipsy effect?",
-                        "Default: " + DEFAULT.scrambleChat()
-                ).forGetter(Client::scrambleChat),
-                DefaultFieldUtil.codecWithComments(
-                        Codec.BOOL,
-                        "scrambleName",
-                        DEFAULT.scrambleName(),
-                        "Should other player's nametags scramble when the player has the Tipsy effect?",
-                        "Default: " + DEFAULT.scrambleName()
-                ).forGetter(Client::scrambleName),
-                DefaultFieldUtil.codecWithComments(
-                        Codec.BOOL,
-                        "scrambleSign",
-                        DEFAULT.scrambleSign(),
-                        "Should signs scramble when the player has the Tipsy effect?",
-                        "Default: " + DEFAULT.scrambleSign()
-                ).forGetter(Client::scrambleSign),
-                DefaultFieldUtil.codecWithComments(
-                        Codec.BOOL,
-                        "renderFluidInKeg",
-                        DEFAULT.renderFluidInKeg(),
-                        "Should kegs render the fluid texture in the background of the fluid slot?",
-                        "Default: " + DEFAULT.renderFluidInKeg()
-                ).forGetter(Client::scrambleSign)
-        ).apply(inst, Client::new)));
+        private static final Codec<Client> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+                FluidUnit.CODEC.optionalFieldOf("fluidDisplayUnit", DEFAULT.displayUnit()).forGetter(Client::displayUnit),
+                DisplaySettings.CODEC.optionalFieldOf("oppositeFluidDisplay", DEFAULT.oppositeFluidDisplay()).forGetter(Client::oppositeFluidDisplay),
+                Codec.BOOL.optionalFieldOf("numbedHeartFlickering", DEFAULT.numbedHeartFlickering()).forGetter(Client::numbedHeartFlickering),
+                Codec.BOOL.optionalFieldOf("intoxicationFoodOverlay", DEFAULT.intoxicationFoodOverlay()).forGetter(Client::intoxicationFoodOverlay),
+                Codec.BOOL.optionalFieldOf("scrambleChat", DEFAULT.scrambleChat()).forGetter(Client::scrambleChat),
+                Codec.BOOL.optionalFieldOf("scrambleName", DEFAULT.scrambleName()).forGetter(Client::scrambleName),
+                Codec.BOOL.optionalFieldOf("scrambleSign", DEFAULT.scrambleSign()).forGetter(Client::scrambleSign),
+                Codec.BOOL.optionalFieldOf("renderFluidInKeg", DEFAULT.renderFluidInKeg()).forGetter(Client::renderFluidInKeg)
+        ).apply(inst, Client::new));
 
         public enum DisplaySettings implements StringRepresentable {
             NEVER("never"),
@@ -283,7 +161,6 @@ public class BnCConfiguration {
             ALWAYS("always");
 
             public static final Codec<DisplaySettings> CODEC = StringRepresentable.fromEnum(DisplaySettings::values);
-
             final String name;
 
             DisplaySettings(String name) {
@@ -298,6 +175,6 @@ public class BnCConfiguration {
     }
 
     private static <T> T platformSpecificValue(T neoForge, T fabric) {
-        return BrewinAndChewin.getHelper().getPlatform() == BnCPlatform.NEOFORGE ? neoForge : fabric;
+        return BrewinAndChewin.getHelper() != null && BrewinAndChewin.getHelper().getPlatform() == BnCPlatform.NEOFORGE ? neoForge : fabric;
     }
 }

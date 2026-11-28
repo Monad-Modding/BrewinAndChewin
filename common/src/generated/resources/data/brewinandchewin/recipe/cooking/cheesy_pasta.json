@@ -6,18 +6,10 @@
   },
   "experience": 1.0,
   "ingredients": [
-    {
-      "item": "brewinandchewin:flaxen_cheese_wedge"
-    },
-    {
-      "tag": "c:foods/pasta"
-    },
-    {
-      "tag": "c:foods/tomato"
-    },
-    {
-      "tag": "c:foods/safe_raw_fish"
-    }
+    "brewinandchewin:flaxen_cheese_wedge",
+    "#c:foods/pasta",
+    "#c:foods/tomato",
+    "#c:foods/safe_raw_fish"
   ],
   "recipe_book_tab": "meals",
   "result": {

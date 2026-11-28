@@ -1,13 +1,14 @@
 package umpaz.brewinandchewin.common.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -26,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.BrewinAndChewin;
 
 public class HeatingCaskBlock extends Block {
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape STEAM_AREA = Block.box(3.0, 0.0, 3.0, 13.0, 1.0, 13.0);
 
     public HeatingCaskBlock(Properties properties) {
@@ -34,9 +35,9 @@ public class HeatingCaskBlock extends Block {
     }
 
     @Override
-    public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ItemStack heldStack = player.getItemInHand(hand);
-        if (isSpaceAbove(level, pos) && (heldStack.is(Items.WATER_BUCKET) || (heldStack.is(Items.POTION) && heldStack.get(DataComponents.POTION_CONTENTS).potion().isPresent() && heldStack.get(DataComponents.POTION_CONTENTS).potion().get().is(Potions.WATER)))) {
+        if (isSpaceAbove(level, pos) && (heldStack.is(Items.WATER_BUCKET) || (heldStack.is(Items.POTION) && heldStack.get(DataComponents.POTION_CONTENTS) != null && heldStack.get(DataComponents.POTION_CONTENTS).potion().isPresent() && heldStack.get(DataComponents.POTION_CONTENTS).potion().get().is(Potions.WATER)))) {
             for (int i = 0; i < 20; i++) {
                 RandomSource randomsource = level.getRandom();
                 level.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5D + randomsource.nextDouble() / 4.0D * (randomsource.nextBoolean() ? 1 : -1), pos.getY() + 1.1D, pos.getZ() + 0.5D + randomsource.nextDouble() / 4.0D * (randomsource.nextBoolean() ? 1 : -1), randomsource.nextDouble() / 4.0D * (randomsource.nextBoolean() ? 1 : -1), 0.15D, randomsource.nextDouble() / 4.0D * (randomsource.nextBoolean() ? 1 : -1));
@@ -47,14 +48,13 @@ public class HeatingCaskBlock extends Block {
             if (!player.isCreative()) {
                 if (heldStack.is(Items.WATER_BUCKET)) {
                     player.setItemInHand(hand, BrewinAndChewin.getHelper().getCraftingRemainingItem(heldStack));
-                }
-                else {
+                } else {
                     player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
                 }
             }
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     @Override

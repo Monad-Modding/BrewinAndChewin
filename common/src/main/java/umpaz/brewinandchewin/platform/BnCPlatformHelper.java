@@ -10,11 +10,12 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -31,7 +32,6 @@ import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import umpaz.brewinandchewin.common.container.AbstractedFluidTank;
 import umpaz.brewinandchewin.common.container.AbstractedItemHandler;
 import umpaz.brewinandchewin.common.block.entity.container.KegMenu;
-import umpaz.brewinandchewin.common.block.entity.container.KegStackedContents;
 import umpaz.brewinandchewin.common.block.entity.container.SidedKegWrapper;
 import umpaz.brewinandchewin.common.utility.BnCMenuConstructor;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidIngredient;
@@ -61,6 +61,8 @@ public interface BnCPlatformHelper {
 
     void openKegMenu(Player player, KegBlockEntity blockEntity, BlockPos pos);
 
+    void openBlockPosMenu(Player player, MenuProvider menuProvider, BlockPos pos);
+
     BlockEntityType.BlockEntitySupplier<KegBlockEntity> supplyBlockEntity();
     MenuType<KegMenu> createMenuType(BnCMenuConstructor<KegMenu> constructor);
 
@@ -72,14 +74,12 @@ public interface BnCPlatformHelper {
         return createKegSlot(inventory, slot, x, y, true, null);
     }
     default Slot createKegContainerSlot(AbstractedItemHandler inventory, int slot, int x, int y) {
-        return createKegSlot(inventory, slot, x, y, true, Pair.of(InventoryMenu.BLOCK_ATLAS, KegMenu.EMPTY_CONTAINER_SLOT_TANKARD));
+        return createKegSlot(inventory, slot, x, y, true, KegMenu.EMPTY_CONTAINER_SLOT_TANKARD);
     }
     default Slot createKegResultSlot(AbstractedItemHandler inventory, int slot, int x, int y) {
         return createKegSlot(inventory, slot, x, y, false, null);
     }
-    Slot createKegSlot(AbstractedItemHandler inventory, int slot, int x, int y, boolean canInsert, @Nullable Pair<ResourceLocation, ResourceLocation> noItemIcon);
-
-    Ingredient createStrictFillPickerIngredient(List<KegStackedContents.PouringEntry> fluidOutputStacks);
+    Slot createKegSlot(AbstractedItemHandler inventory, int slot, int x, int y, boolean canInsert, @Nullable Identifier noItemIcon);
 
     KegRecipeWrapper createRecipeWrapper(AbstractedItemHandler itemHandler, AbstractedFluidTank fluidTank);
 

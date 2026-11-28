@@ -9,16 +9,9 @@
   },
   "experience": 1.0,
   "ingredients": [
-    {
-      "item": "minecraft:wheat"
-    },
-    {
-      "item": "minecraft:wheat_seeds"
-    },
-    {
-      "item": "minecraft:brown_mushroom"
-    },
-    []
+    "minecraft:wheat",
+    "minecraft:wheat_seeds",
+    "minecraft:brown_mushroom"
   ],
   "result": {
     "amount": 1000,

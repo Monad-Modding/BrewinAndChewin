@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:scarlet_cheese_wheel_from_wedges"
+        "recipes": [
+          "brewinandchewin:scarlet_cheese_wheel_from_wedges"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

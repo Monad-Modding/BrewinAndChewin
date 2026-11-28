@@ -2,12 +2,12 @@ package umpaz.brewinandchewin.integration.emi;
 
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiRenderable;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import vectorwing.farmersdelight.FarmersDelight;
 
 public class BnCRecipeCategories {
-    private static final ResourceLocation SIMPLIFIED_TEXTURES = BrewinAndChewin.asResource("textures/gui/emi/simplified.png");
+    private static final Identifier SIMPLIFIED_TEXTURES = BrewinAndChewin.asResource("textures/gui/emi/simplified.png");
 
     public static final EmiRecipeCategory FERMENTING = new EmiRecipeCategory(BrewinAndChewin.asResource("fermenting"), BnCRecipeWorkstations.KEG, simplifiedRenderer(0, 0));
     public static final EmiRecipeCategory POURING = new EmiRecipeCategory(BrewinAndChewin.asResource("pouring"), BnCRecipeWorkstations.KEG, simplifiedRenderer(16, 0));

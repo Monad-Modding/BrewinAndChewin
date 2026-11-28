@@ -23,7 +23,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:fermenting/vodka_from_water"
+        "recipes": [
+          "brewinandchewin:fermenting/vodka_from_water"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

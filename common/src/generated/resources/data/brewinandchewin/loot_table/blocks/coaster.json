@@ -5,9 +5,9 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "block": "brewinandchewin:coaster",
-          "condition": "minecraft:block_state_property",
-          "properties": {
+          "type": "minecraft:match_block",
+          "blocks": "brewinandchewin:coaster",
+          "state": {
             "invisible": "false"
           }
         },

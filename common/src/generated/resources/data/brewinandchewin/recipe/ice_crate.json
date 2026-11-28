@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "S": {
-      "item": "minecraft:string"
-    },
-    "i": {
-      "item": "minecraft:packed_ice"
-    },
-    "p": {
-      "tag": "minecraft:planks"
-    },
-    "s": {
-      "tag": "minecraft:wooden_slabs"
-    }
+    "S": "minecraft:string",
+    "i": "minecraft:packed_ice",
+    "p": "#minecraft:planks",
+    "s": "#minecraft:wooden_slabs"
   },
   "pattern": [
     "pSp",

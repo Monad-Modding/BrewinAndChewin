@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:keg"
+        "recipes": [
+          "brewinandchewin:keg"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

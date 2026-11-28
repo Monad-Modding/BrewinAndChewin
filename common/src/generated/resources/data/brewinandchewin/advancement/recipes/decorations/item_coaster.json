@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:item_coaster"
+        "recipes": [
+          "brewinandchewin:item_coaster"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

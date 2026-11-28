@@ -9,16 +9,9 @@
   },
   "experience": 1.0,
   "ingredients": [
-    {
-      "tag": "c:eggs"
-    },
-    {
-      "tag": "c:crops/cabbage"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    []
+    "#c:eggs",
+    "#c:crops/cabbage",
+    "minecraft:sugar"
   ],
   "result": {
     "amount": 1000,

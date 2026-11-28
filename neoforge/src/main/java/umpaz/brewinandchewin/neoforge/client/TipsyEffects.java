@@ -47,7 +47,12 @@ public class TipsyEffects {
     }
 
     private static Component getChatMessage(Component component) {
-        return (Component)((TranslatableContents)component.getContents()).getArgs()[1];
+        if (component.getContents() instanceof TranslatableContents translatable) {
+            Object[] args = translatable.getArgs();
+            if (args.length > 1 && args[1] instanceof Component content)
+                return content;
+        }
+        return component;
     }
 
     static {

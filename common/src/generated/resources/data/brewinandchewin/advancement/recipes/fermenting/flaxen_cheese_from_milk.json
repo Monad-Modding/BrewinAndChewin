@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:fermenting/flaxen_cheese_from_milk"
+        "recipes": [
+          "brewinandchewin:fermenting/flaxen_cheese_from_milk"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

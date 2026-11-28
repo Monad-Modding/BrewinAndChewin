@@ -50,8 +50,8 @@ public abstract class LivingEntityMixin {
         RagingAttachment.tick(living);
     }
 
-    @ModifyVariable(method = "hurt", at = @At("RETURN"), argsOnly = true)
-    private float brewinandchewin$hurtLiving(float original, DamageSource source) {
+    @ModifyVariable(method = "hurtServer", at = @At("HEAD"), argsOnly = true)
+    private float brewinandchewin$hurtLiving(float original, ServerLevel serverLevel, DamageSource source) {
         Entity attacker = source.getEntity();
         LivingEntity target = (LivingEntity) (Object) this;
         if (original > 0.0F) {
@@ -103,7 +103,7 @@ public abstract class LivingEntityMixin {
 
     @ModifyReturnValue(method = "canBeAffected", at = @At("RETURN"))
     private boolean brewinandchewin$intoxicationImmunity(boolean original, MobEffectInstance mobEffectInstance) {
-        if (((LivingEntity)(Object)this).getType().is(BnCTags.EntityTypes.IMMUNE_TO_INTOXICATION) && mobEffectInstance.getEffect().is(BnCEffects.INTOXICATION))
+        if (((LivingEntity)(Object)this).getType().builtInRegistryHolder().is(BnCTags.EntityTypes.IMMUNE_TO_INTOXICATION) && mobEffectInstance.getEffect().is(BnCEffects.INTOXICATION))
             return false;
         return original;
     }

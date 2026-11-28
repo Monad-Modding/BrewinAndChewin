@@ -52,3 +52,11 @@ mandatory=true
 versionRange="${neoforge_greenhouse_config_range}"
 ordering="NONE"
 side="BOTH"
+
+
+[[dependencies.${mod_id}]]
+modId="nomansland"
+type="optional"
+versionRange="${no_mans_land_range}"
+ordering="AFTER"
+side="BOTH"

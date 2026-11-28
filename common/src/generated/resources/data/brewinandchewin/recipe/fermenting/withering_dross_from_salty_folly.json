@@ -9,18 +9,10 @@
   },
   "experience": 2.0,
   "ingredients": [
-    {
-      "item": "minecraft:wither_rose"
-    },
-    {
-      "item": "minecraft:ink_sac"
-    },
-    {
-      "item": "minecraft:nether_wart"
-    },
-    {
-      "item": "minecraft:bone"
-    }
+    "minecraft:wither_rose",
+    "minecraft:ink_sac",
+    "minecraft:nether_wart",
+    "minecraft:bone"
   ],
   "result": {
     "amount": 1000,

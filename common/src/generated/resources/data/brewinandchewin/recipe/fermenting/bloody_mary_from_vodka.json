@@ -10,16 +10,9 @@
   "experience": 1.0,
   "fermenting_time": 4800,
   "ingredients": [
-    {
-      "tag": "c:crops/tomato"
-    },
-    {
-      "tag": "c:crops/cabbage"
-    },
-    {
-      "item": "minecraft:sweet_berries"
-    },
-    []
+    "#c:crops/tomato",
+    "#c:crops/cabbage",
+    "minecraft:sweet_berries"
   ],
   "result": {
     "amount": 1000,

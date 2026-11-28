@@ -15,16 +15,38 @@ public class KegPouringRecipes {
     }
 
     private static void cookMiscellaneous(RecipeOutput consumer) {
+        KegPouringRecipeBuilder.kegPouringRecipe(BnCFluids.RED_WINE, 250, BnCItems.RED_WINE)
+                .withContainer(Items.GLASS_BOTTLE)
+                .setFluidUnit(FluidUnit.MILLIBUCKET)
+                .build(consumer);
+        KegPouringRecipeBuilder.kegPouringRecipe(BnCFluids.WHITE_WINE, 250, BnCItems.WHITE_WINE)
+                .withContainer(Items.GLASS_BOTTLE)
+                .setFluidUnit(FluidUnit.MILLIBUCKET)
+                .build(consumer);
+        KegPouringRecipeBuilder.kegPouringRecipe(BnCFluids.CURRANT_WINE, 250, BnCItems.CURRANT_WINE)
+                .withContainer(Items.GLASS_BOTTLE)
+                .setFluidUnit(FluidUnit.MILLIBUCKET)
+                .build(consumer);
+        KegPouringRecipeBuilder.kegPouringRecipe(BnCFluids.VERRUCA_WINE, 250, BnCItems.VERRUCA_WINE)
+                .withContainer(Items.GLASS_BOTTLE)
+                .setFluidUnit(FluidUnit.MILLIBUCKET)
+                .build(consumer);
+        KegPouringRecipeBuilder.kegPouringRecipe(BnCFluids.TWISTED_WINE, 250, BnCItems.TWISTED_WINE)
+                .withContainer(Items.GLASS_BOTTLE)
+                .setFluidUnit(FluidUnit.MILLIBUCKET)
+                .build(consumer);
+        KegPouringRecipeBuilder.kegPouringRecipe(BnCFluids.RICE_WINE, 250, BnCItems.RICE_WINE)
+                .withContainer(Items.GLASS_BOTTLE)
+                .setFluidUnit(FluidUnit.MILLIBUCKET)
+                .build(consumer);
         KegPouringRecipeBuilder.kegPouringRecipe(BnCFluids.BEER, 250, BnCItems.BEER)
                 .setFluidUnit(FluidUnit.MILLIBUCKET)
                 .build(consumer);
         KegPouringRecipeBuilder.kegPouringRecipe(BnCFluids.VODKA, 250, BnCItems.VODKA)
+                .withContainer(Items.GLASS_BOTTLE)
                 .setFluidUnit(FluidUnit.MILLIBUCKET)
                 .build(consumer);
         KegPouringRecipeBuilder.kegPouringRecipe(BnCFluids.MEAD, 250, BnCItems.MEAD)
-                .setFluidUnit(FluidUnit.MILLIBUCKET)
-                .build(consumer);
-        KegPouringRecipeBuilder.kegPouringRecipe(BnCFluids.RICE_WINE, 250, BnCItems.RICE_WINE)
                 .setFluidUnit(FluidUnit.MILLIBUCKET)
                 .build(consumer);
         KegPouringRecipeBuilder.kegPouringRecipe(BnCFluids.EGG_GROG, 250, BnCItems.EGG_GROG)

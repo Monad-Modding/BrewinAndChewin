@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:fermenting/glittering_grenadine_from_water"
+        "recipes": [
+          "brewinandchewin:fermenting/glittering_grenadine_from_water"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

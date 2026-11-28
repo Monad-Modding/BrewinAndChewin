@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:fermenting/dread_nog_from_egg_grog"
+        "recipes": [
+          "brewinandchewin:fermenting/dread_nog_from_egg_grog"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

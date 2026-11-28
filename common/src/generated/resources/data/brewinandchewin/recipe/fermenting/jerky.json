@@ -3,16 +3,9 @@
   "category": "meals",
   "experience": 1.0,
   "ingredients": [
-    {
-      "tag": "brewinandchewin:foods/jerky_meat"
-    },
-    {
-      "tag": "brewinandchewin:foods/jerky_meat"
-    },
-    {
-      "tag": "brewinandchewin:foods/jerky_meat"
-    },
-    []
+    "#brewinandchewin:foods/jerky_meat",
+    "#brewinandchewin:foods/jerky_meat",
+    "#brewinandchewin:foods/jerky_meat"
   ],
   "result": {
     "count": 3,

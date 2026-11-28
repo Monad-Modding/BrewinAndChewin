@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:cooking/sweet_berry_jam"
+        "recipes": [
+          "brewinandchewin:cooking/sweet_berry_jam"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

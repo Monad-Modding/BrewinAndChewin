@@ -6,7 +6,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import umpaz.brewinandchewin.BrewinAndChewin;
@@ -15,7 +15,7 @@ import umpaz.brewinandchewin.common.attachment.RagingAttachment;
 import java.util.Optional;
 
 public record SyncRagingStacksClientboundPacket(int entityId, Optional<Integer> stacks) implements CustomPacketPayload {
-    public static final ResourceLocation ID = BrewinAndChewin.asResource("sync_raging_stacks");
+    public static final Identifier ID = BrewinAndChewin.asResource("sync_raging_stacks");
     public static final Type<SyncRagingStacksClientboundPacket> TYPE = new Type<>(ID);
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncRagingStacksClientboundPacket> STREAM_CODEC = StreamCodec.of(SyncRagingStacksClientboundPacket::encode, SyncRagingStacksClientboundPacket::new);
 

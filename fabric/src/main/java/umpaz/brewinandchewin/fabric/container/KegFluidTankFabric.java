@@ -6,7 +6,8 @@ import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.PatchedDataComponentMap;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.container.AbstractedFluidTank;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidStack;
@@ -32,15 +33,21 @@ public class KegFluidTankFabric extends SingleFluidStorage implements Abstracted
 
     @Override
     public AbstractedFluidStack getAbstractedFluid() {
-        return new AbstractedFluidStack(variant.getFluid(), getAmount(), variant.getComponentMap(), FluidUnit.DROPLET, new AmountedFluidVariant(variant, getAmount(), FluidUnit.DROPLET));
+        return new AbstractedFluidStack(variant.getFluid(), getAmount(), variant.getComponents(), FluidUnit.DROPLET, new AmountedFluidVariant(variant, getAmount(), FluidUnit.DROPLET));
     }
 
     @Override
     public void setAbstractedFluid(AbstractedFluidStack stack) {
         try (Transaction t = Transaction.openOuter()) {
-            extract(variant, capacity, t);
-            AmountedFluidVariant variant = unwrapFluid(stack);
-            insert(variant.variant(), FluidUnit.convertToLoader(stack.amount(), stack.unit()), t);
+            if (!variant.isBlank() && getAmount() > 0) {
+                extract(variant, getAmount(), t);
+            }
+            if (!stack.isEmpty()) {
+                AmountedFluidVariant wrapped = unwrapFluid(stack);
+                if (!wrapped.variant().isBlank()) {
+                    insert(wrapped.variant(), FluidUnit.convertToLoader(stack.amount(), stack.unit()), t);
+                }
+            }
             t.commit();
         }
     }
@@ -55,7 +62,7 @@ public class KegFluidTankFabric extends SingleFluidStorage implements Abstracted
             if (!simulate)
                 t.commit();
             t.close();
-            return new AbstractedFluidStack(variant.getFluid(), newFill, variant.getComponentMap(), FluidUnit.DROPLET, new AmountedFluidVariant(variant, newFill, FluidUnit.DROPLET));
+            return new AbstractedFluidStack(variant.getFluid(), newFill, variant.getComponents(), FluidUnit.DROPLET, new AmountedFluidVariant(variant, newFill, FluidUnit.DROPLET));
         } catch (Exception e) {
             BrewinAndChewin.LOG.error("Failed to fill keg with {} of fluid {}.", fluidStack.fluid(), fluidStack.unit().shortFormat(String.valueOf(fluidStack.unit().convertToLoader(fluidStack.amount()))));
         }
@@ -68,7 +75,7 @@ public class KegFluidTankFabric extends SingleFluidStorage implements Abstracted
         try {
             Transaction t = Transaction.openOuter();
             long extractedAmount = extract(variant, newMax, t);
-            AbstractedFluidStack stack = new AbstractedFluidStack(variant.getFluid(), extractedAmount, variant.getComponentMap(), FluidUnit.DROPLET, new AmountedFluidVariant(variant, extractedAmount, FluidUnit.DROPLET));
+            AbstractedFluidStack stack = new AbstractedFluidStack(variant.getFluid(), extractedAmount, variant.getComponents(), FluidUnit.DROPLET, new AmountedFluidVariant(variant, extractedAmount, FluidUnit.DROPLET));
             if (!simulate)
                 t.commit();
             t.close();
@@ -80,15 +87,13 @@ public class KegFluidTankFabric extends SingleFluidStorage implements Abstracted
     }
 
     @Override
-    public void readFromNbt(CompoundTag tag, HolderLookup.Provider provider) {
-        readNbt(tag, provider);
+    public void readFromValue(ValueInput input) {
+        readValue(input);
     }
 
     @Override
-    public CompoundTag writeToNbt(HolderLookup.Provider provider) {
-        CompoundTag tag = new CompoundTag();
-        writeNbt(tag, provider);
-        return tag;
+    public void writeToValue(ValueOutput output) {
+        writeValue(output);
     }
 
     @Override

@@ -6,8 +6,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,6 +22,7 @@ import java.util.function.Supplier;
 
 public class UnripeCheeseWheelBlock extends Block {
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 1);
+    public static final float RIPEN_CHANCE = 0.065F;
     protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 14.0D);
     public final Supplier<Block> ripeCheeseBlock;
 
@@ -42,8 +43,8 @@ public class UnripeCheeseWheelBlock extends Block {
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos pos, BlockPos facingPos) {
-        return facing == Direction.DOWN && !this.canSurvive(state, level, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, facing, facingState, level, pos, facingPos);
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
+        return facing == Direction.DOWN && !this.canSurvive(state, level, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, level, scheduledTickAccess, pos, facing, facingPos, facingState, random);
     }
 
     @Override
@@ -59,8 +60,8 @@ public class UnripeCheeseWheelBlock extends Block {
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (!level.isClientSide) {
-            if (level.getRandom().nextFloat() <= 0.1F) {
+        if (!level.isClientSide()) {
+            if (level.getRandom().nextFloat() <= RIPEN_CHANCE) {
                 if (state.getValue(AGE) == 0) {
                     level.setBlock(pos, state.setValue(AGE, 1), 3); // next stage
                 } else if (state.getValue(AGE) == 1) {
@@ -70,8 +71,8 @@ public class UnripeCheeseWheelBlock extends Block {
         }
     }
 
-    // NeoForge:
-    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
+    @Override
+    public boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
     }
 }

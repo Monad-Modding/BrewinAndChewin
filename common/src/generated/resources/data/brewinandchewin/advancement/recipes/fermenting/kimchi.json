@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:fermenting/kimchi"
+        "recipes": [
+          "brewinandchewin:fermenting/kimchi"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

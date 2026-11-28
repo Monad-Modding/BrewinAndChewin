@@ -6,16 +6,15 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.StateHolder;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import umpaz.brewinandchewin.BrewinAndChewin;
 
 import java.util.ArrayList;
@@ -33,8 +32,7 @@ public class NullTrueBlockStateCondition implements LootItemCondition {
             PropertyMatcher.LIST_CODEC.fieldOf("state").forGetter(cond -> cond.matchers)
     ).apply(inst, NullTrueBlockStateCondition::new));
 
-    public static final ResourceLocation ID = BrewinAndChewin.asResource("null_true_block_state");
-    public static final LootItemConditionType TYPE = new LootItemConditionType(CODEC);
+    public static final Identifier ID = BrewinAndChewin.asResource("null_true_block_state");
 
     private final List<PropertyMatcher> matchers;
 
@@ -42,12 +40,15 @@ public class NullTrueBlockStateCondition implements LootItemCondition {
         this.matchers = matchers;
     }
 
-    public LootItemConditionType getType() {
-        return TYPE;
+    @Override
+    public MapCodec<NullTrueBlockStateCondition> codec() {
+        return CODEC;
     }
 
     public boolean test(LootContext context) {
-        BlockState blockState = context.getParam(LootContextParams.BLOCK_STATE);
+        BlockState blockState = context.getOptional(LootContextParams.BLOCK_STATE);
+        if (blockState == null)
+            return false;
         return matchers.stream().allMatch(propertyMatcher -> propertyMatcher.match(blockState.getBlock().getStateDefinition(), blockState));
     }
 
@@ -56,7 +57,7 @@ public class NullTrueBlockStateCondition implements LootItemCondition {
     }
 
     @Override
-    public Set<LootContextParam<?>> getReferencedContextParams() {
+    public Set<ContextKey<?>> getReferencedContextParams() {
         return ImmutableSet.of(LootContextParams.BLOCK_STATE);
     }
 

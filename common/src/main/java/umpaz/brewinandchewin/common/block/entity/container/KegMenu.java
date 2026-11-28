@@ -1,14 +1,15 @@
 package umpaz.brewinandchewin.common.block.entity.container;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.recipebook.ServerPlaceRecipe;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import umpaz.brewinandchewin.BrewinAndChewin;
@@ -23,9 +24,9 @@ import umpaz.brewinandchewin.common.utility.KegRecipeWrapper;
 
 import java.util.Objects;
 
-public class KegMenu extends RecipeBookMenu<KegRecipeWrapper, KegFermentingRecipe>
+public class KegMenu extends RecipeBookMenu
 {
-    public static final ResourceLocation EMPTY_CONTAINER_SLOT_TANKARD = BrewinAndChewin.asResource("item/empty_container_slot_tankard");
+    public static final Identifier EMPTY_CONTAINER_SLOT_TANKARD = BrewinAndChewin.asResource("container/slot/tankard");
 
     public final KegBlockEntity blockEntity;
     public final AbstractedItemHandler inventory;
@@ -164,57 +165,61 @@ public class KegMenu extends RecipeBookMenu<KegRecipeWrapper, KegFermentingRecip
     }
 
     public boolean isFermenting() {
-        var recipe = blockEntity.getRecipeWithoutTemperature();
-        return recipe.isPresent() && KegBlockEntity.isValidTemp(getKegTemperature(), recipe.get().value().getTemperature());
+        return this.kegData.get(0) > 0 && this.kegData.get(1) > 0;
     }
 
     @Override
-    public void handlePlacement(boolean placeAll, RecipeHolder<?> recipe, ServerPlayer player) {
-        RecipeHolder<KegFermentingRecipe> recipeHolder = (RecipeHolder)recipe;
-        this.beginPlacingRecipe();
+    @SuppressWarnings("unchecked")
+    public PostPlaceAction handlePlacement(boolean useMaxItems, boolean isCreative, RecipeHolder<?> recipe, ServerLevel level, Inventory playerInventory) {
+        RecipeHolder<KegFermentingRecipe> recipeHolder = (RecipeHolder<KegFermentingRecipe>) recipe;
+        var inputSlots = this.slots.subList(0, 4);
+        return ServerPlaceRecipe.placeRecipe(new ServerPlaceRecipe.CraftingMenuAccess<>() {
+            @Override
+            public void fillCraftSlotsStackedContents(StackedItemContents stackedItemContents) {
+                KegMenu.this.fillCraftSlotsStackedContents(stackedItemContents);
+            }
 
-        try {
-            new KegPlaceRecipe(this, level.getRecipeManager()).recipeClicked(player, recipeHolder, placeAll);
-        } finally {
-            this.finishPlacingRecipe(recipeHolder);
-        }
+            @Override
+            public void clearCraftingContent() {
+                KegMenu.this.clearCraftingContent();
+            }
+
+            @Override
+            public boolean recipeMatches(RecipeHolder<KegFermentingRecipe> holder) {
+                return holder.value().matches(recipeWrapper, level);
+            }
+        }, 2, 2, inputSlots, inputSlots, playerInventory, recipeHolder, useMaxItems, isCreative);
     }
 
     @Override
-    public void fillCraftSlotsStackedContents(StackedContents helper) {
+    public void fillCraftSlotsStackedContents(StackedItemContents helper) {
         for (int i = 0; i < inventory.getSlotCount(); i++) {
             helper.accountSimpleStack(inventory.getStackInSlot(i));
         }
     }
 
-    @Override
     public void clearCraftingContent() {
         for (int i = 0; i < 4; i++) {
             this.inventory.setStackInSlot(i, ItemStack.EMPTY);
         }
     }
 
-    @Override
     public boolean recipeMatches(RecipeHolder<KegFermentingRecipe> recipe) {
         return recipe.value().matches(recipeWrapper, level);
     }
 
-    @Override
     public int getResultSlotIndex() {
         return 5;
     }
 
-    @Override
     public int getGridWidth() {
         return 2;
     }
 
-    @Override
     public int getGridHeight() {
         return 2;
     }
 
-    @Override
     public int getSize() {
         return 6;
     }
@@ -224,7 +229,6 @@ public class KegMenu extends RecipeBookMenu<KegRecipeWrapper, KegFermentingRecip
         return BnCRecipeBookTypes.FERMENTING;
     }
 
-    @Override
     public boolean shouldMoveToInventory(int slot) {
         return slot < (getGridWidth() * getGridHeight());
     }

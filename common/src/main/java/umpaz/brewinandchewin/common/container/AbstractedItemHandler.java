@@ -1,8 +1,9 @@
 package umpaz.brewinandchewin.common.container;
 
 import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public interface AbstractedItemHandler {
     int getSlotCount();
@@ -15,8 +16,6 @@ public interface AbstractedItemHandler {
     boolean isItemValid(int slot, ItemStack stack);
     int getSlotLimit(int slot);
 
-    default void readFromNbt(CompoundTag tag, HolderLookup.Provider provider) {}
-    default CompoundTag writeToNbt(HolderLookup.Provider provider) {
-        return new CompoundTag();
-    }
+    default void readFromValue(ValueInput input) {}
+    default void writeToValue(ValueOutput output) {}
 }

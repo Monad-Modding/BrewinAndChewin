@@ -1,4 +1,12 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "farmersrespite"
+      ]
+    }
+  ],
   "type": "brewinandchewin:fermenting",
   "base_fluid": {
     "amount": 1000,
@@ -10,34 +18,14 @@
   "fermentingtime": 9600,
   "experience": 1.0,
   "ingredients": [
-    {
-      "tag": "forge:crops/carrot"
-    },
-    {
-      "item": "minecraft:sweet_berries"
-    },
-    {
-      "item": "farmersrespite:black_tea_leaves"
-    }
+    "#forge:crops/carrot",
+    "minecraft:sweet_berries",
+    "farmersrespite:black_tea_leaves"
   ],
   "result": {
     "amount": 1000,
     "id": "brewinandchewin:kombucha"
   },
   "temperature": 3,
-  "unit": "millibuckets",
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "farmersrespite"
-    }
-  ],
-  "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "farmersrespite"
-      ]
-    }
-  ]
+  "unit": "millibuckets"
 }

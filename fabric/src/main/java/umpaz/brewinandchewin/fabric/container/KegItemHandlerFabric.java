@@ -1,7 +1,8 @@
 package umpaz.brewinandchewin.fabric.container;
 
 import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.item.ItemStack;
 import umpaz.brewinandchewin.common.container.AbstractedItemHandler;
 import vectorwing.farmersdelight.refabricated.inventory.ItemStackHandler;
@@ -11,10 +12,13 @@ public class KegItemHandlerFabric extends ItemStackHandler implements Abstracted
         super(size);
     }
 
-    public void readFromNbt(CompoundTag tag, HolderLookup.Provider provider) {
-        deserializeNBT(provider, tag);
+    @Override
+    public void readFromValue(ValueInput input) {
+        deserialize(input);
     }
-    public CompoundTag writeToNbt(HolderLookup.Provider provider) {
-        return serializeNBT(provider);
+
+    @Override
+    public void writeToValue(ValueOutput output) {
+        serialize(output);
     }
 }

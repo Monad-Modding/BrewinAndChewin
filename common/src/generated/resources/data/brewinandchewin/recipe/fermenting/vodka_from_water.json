@@ -9,16 +9,9 @@
   },
   "experience": 1.0,
   "ingredients": [
-    {
-      "tag": "c:crops/potato"
-    },
-    {
-      "item": "minecraft:wheat"
-    },
-    {
-      "item": "minecraft:wheat_seeds"
-    },
-    []
+    "#c:crops/potato",
+    "minecraft:wheat",
+    "minecraft:wheat_seeds"
   ],
   "result": {
     "amount": 1000,

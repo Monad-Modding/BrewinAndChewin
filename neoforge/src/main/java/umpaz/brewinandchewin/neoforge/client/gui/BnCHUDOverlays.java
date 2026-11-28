@@ -56,7 +56,7 @@ public class BnCHUDOverlays {
         if (mc.player == null)
             return;
 
-        if ((event.getName() == VanillaGuiLayers.FOOD_LEVEL || event.getName() == HUDOverlays.NourishmentOverlay.ID) && BnCConfiguration.CLIENT_CONFIG.get().intoxicationFoodOverlay() &&
+        if ((event.getName() == VanillaGuiLayers.FOOD_LEVEL || event.getName() == HUDOverlays.NourishmentOverlay.ID) && BnCConfiguration.client().intoxicationFoodOverlay() &&
                 mc.player.hasEffect(BnCEffects.INTOXICATION)) {
             event.setCanceled(true);
         }
@@ -99,7 +99,7 @@ public class BnCHUDOverlays {
 
         @Override
         public void render(GuiGraphics gui, DeltaTracker deltaTracker) {
-            if (!BnCConfiguration.CLIENT_CONFIG.get().intoxicationFoodOverlay())
+            if (!BnCConfiguration.client().intoxicationFoodOverlay())
                 return;
 
             Minecraft minecraft = Minecraft.getInstance();

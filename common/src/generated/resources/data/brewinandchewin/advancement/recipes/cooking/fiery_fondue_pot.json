@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:cooking/fiery_fondue_pot"
+        "recipes": [
+          "brewinandchewin:cooking/fiery_fondue_pot"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

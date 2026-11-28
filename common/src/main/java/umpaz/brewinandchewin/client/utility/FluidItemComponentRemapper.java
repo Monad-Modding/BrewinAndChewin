@@ -7,7 +7,6 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.MapLike;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentPatch;
@@ -16,6 +15,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.*;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.common.utility.AbstractedFluidStack;
 
@@ -25,16 +25,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public record FluidItemComponentRemapper(ItemStack baseItem,
+public record FluidItemComponentRemapper(ItemStackTemplate baseItem,
                                          Map<DataComponentType<?>, Pair<DataComponentType<?>, Map<List<TagReference>, List<TagReference>>>> map) {
     public static final Codec<FluidItemComponentRemapper> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-            ItemStack.STRICT_SINGLE_ITEM_CODEC.fieldOf("base").forGetter(FluidItemComponentRemapper::baseItem),
+            ItemStackTemplate.CODEC.fieldOf("base").forGetter(FluidItemComponentRemapper::baseItem),
             Codec.unboundedMap(BuiltInRegistries.DATA_COMPONENT_TYPE.byNameCodec(), ValueCodec.INSTANCE).optionalFieldOf("remaps", Map.of()).forGetter(FluidItemComponentRemapper::map)
     ).apply(inst, FluidItemComponentRemapper::new));
-    public static final Codec<FluidItemComponentRemapper> CODEC = Codec.withAlternative(DIRECT_CODEC, Codec.withAlternative(ItemStack.STRICT_SINGLE_ITEM_CODEC, BuiltInRegistries.ITEM.byNameCodec(), ItemStack::new), stack -> new FluidItemComponentRemapper(stack, Map.of()));
+    public static final Codec<FluidItemComponentRemapper> CODEC = Codec.withAlternative(DIRECT_CODEC, Codec.withAlternative(ItemStackTemplate.CODEC, BuiltInRegistries.ITEM.byNameCodec(), ItemStackTemplate::new), stack -> new FluidItemComponentRemapper(stack, Map.of()));
 
     public ItemStack convert(HolderLookup.Provider lookup, AbstractedFluidStack fluid) throws IllegalStateException {
-        ItemStack stack = baseItem.copy();
+        ItemStack stack = baseItem.create();
 
         if (fluid.components().isEmpty())
             return stack;

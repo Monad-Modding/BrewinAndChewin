@@ -8,7 +8,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
-import org.joml.Vector3f;
+import org.joml.Vector3fc;
 import umpaz.brewinandchewin.common.registry.BnCParticleTypes;
 
 public class DrunkBubbleParticleOptions extends ScalableParticleOptionsBase {
@@ -21,15 +21,15 @@ public class DrunkBubbleParticleOptions extends ScalableParticleOptionsBase {
            ByteBufCodecs.FLOAT, DrunkBubbleParticleOptions::getScale,
            DrunkBubbleParticleOptions::new
    );
-   private final Vector3f color;
+   private final Vector3fc color;
 
 
-   public DrunkBubbleParticleOptions(Vector3f color, float size) {
+   public DrunkBubbleParticleOptions(Vector3fc color, float size) {
       super(size);
       this.color = color;
    }
 
-   public Vector3f getColor() {
+   public Vector3fc getColor() {
        return color;
    }
 

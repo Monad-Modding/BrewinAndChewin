@@ -1,6 +1,8 @@
 {
-    "pack": {
-        "description": "Farmer's Delight resources",
-        "pack_format": 15
-    }
+  "pack": {
+    "pack_format": 121,
+    "min_format": 97,
+    "max_format": 999,
+    "description": "Brewin' and Chewin' resources"
+  }
 }

@@ -1,7 +1,7 @@
 package umpaz.brewinandchewin.fabric.loot.modifier;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -19,7 +19,7 @@ import vectorwing.farmersdelight.refabricated.LootModifier;
 @Deprecated
 public class BnCSlicingModifier extends LootModifier
 {
-    public static final ResourceLocation ID = BrewinAndChewin.asResource("slicing");
+    public static final Identifier ID = BrewinAndChewin.asResource("slicing");
     private final Item slice;
 
     protected BnCSlicingModifier(LootItemCondition[] conditionsIn, Item sliceIn) {
@@ -29,7 +29,7 @@ public class BnCSlicingModifier extends LootModifier
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
+        BlockState state = context.getOptional(LootContextParams.BLOCK_STATE);
         if (state != null) {
             Block targetBlock = state.getBlock();
             if (targetBlock instanceof PizzaBlock) {
@@ -37,7 +37,8 @@ public class BnCSlicingModifier extends LootModifier
                 generatedLoot.add(new ItemStack(slice, servings + 1));
             } else if (targetBlock instanceof CheeseWheelBlock) {
                 int servings = state.getValue(CheeseWheelBlock.SERVINGS);
-                if (servings == 3 && !context.getParam(LootContextParams.TOOL).is(CommonTags.Items.TOOLS_KNIFE)) {
+                var tool = context.getOptional(LootContextParams.TOOL);
+                if (servings == 3 && (tool == null || !tool.is(CommonTags.Items.TOOLS_KNIFE))) {
                     generatedLoot.add(new ItemStack(targetBlock.asItem()));
                 } else {
                     generatedLoot.add(new ItemStack(slice, servings + 1));

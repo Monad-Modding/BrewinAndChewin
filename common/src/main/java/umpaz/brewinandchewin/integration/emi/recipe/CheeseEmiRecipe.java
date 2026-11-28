@@ -7,7 +7,7 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.SlotWidget;
 import dev.emi.emi.api.widget.WidgetHolder;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Nullable;
 import umpaz.brewinandchewin.BrewinAndChewin;
 import umpaz.brewinandchewin.integration.emi.BnCRecipeCategories;
@@ -16,13 +16,13 @@ import vectorwing.farmersdelight.FarmersDelight;
 import java.util.List;
 
 public class CheeseEmiRecipe implements EmiRecipe {
-    private static final ResourceLocation BACKGROUND = BrewinAndChewin.asResource("textures/gui/jei/cheese_ripening.png");
+    private static final Identifier BACKGROUND = BrewinAndChewin.asResource("textures/gui/jei/cheese_ripening.png");
 
-    private final ResourceLocation id;
+    private final Identifier id;
     private final EmiStack input;
     private final EmiStack output;
 
-    public CheeseEmiRecipe(ResourceLocation id, EmiStack input, EmiStack output) {
+    public CheeseEmiRecipe(Identifier id, EmiStack input, EmiStack output) {
         this.id = id;
         this.input = input;
         this.output = output;
@@ -34,7 +34,7 @@ public class CheeseEmiRecipe implements EmiRecipe {
     }
 
     @Override
-    public @Nullable ResourceLocation getId() {
+    public @Nullable Identifier getId() {
         return id;
     }
 

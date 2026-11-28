@@ -13,7 +13,9 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "brewinandchewin:quiche_from_mushroom"
+        "recipes": [
+          "brewinandchewin:quiche_from_mushroom"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -4,20 +4,19 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import org.jetbrains.annotations.NotNull;
 
-public class RagingParticle extends TextureSheetParticle {
+public class RagingParticle extends SingleQuadParticle {
     private static final RandomSource RANDOM = RandomSource.create();
     private final SpriteSet sprites;
 
     protected RagingParticle(ClientLevel level, double x, double y, double z, double motionX, double motionY, double motionZ, float size, SpriteSet sprites) {
-        super(level, x, y, z, 0.5D - RANDOM.nextDouble(), motionY, 0.5D - RANDOM.nextDouble());
+        super(level, x, y, z, 0.5D - RANDOM.nextDouble(), motionY, 0.5D - RANDOM.nextDouble(), sprites.first());
         this.friction = 0.96F;
         this.gravity = -0.1F;
         this.speedUpWhenYMotionIsBlocked = true;
@@ -40,8 +39,8 @@ public class RagingParticle extends TextureSheetParticle {
 
     @Override
     @NotNull
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    protected SingleQuadParticle.Layer getLayer() {
+        return SingleQuadParticle.Layer.TRANSLUCENT;
     }
 
     public void tick() {
@@ -71,7 +70,7 @@ public class RagingParticle extends TextureSheetParticle {
         }
 
         @Override
-        public Particle createParticle(T typeIn, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(T typeIn, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
             return new RagingParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, typeIn.getScale(), spriteSet);
         }
     }

@@ -9,9 +9,11 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import umpaz.brewinandchewin.BrewinAndChewin;
+import umpaz.brewinandchewin.common.registry.BnCCommonRecipeBookCategories;
 import umpaz.brewinandchewin.common.registry.BnCItems;
 import umpaz.brewinandchewin.common.registry.BnCRecipeSerializers;
 import umpaz.brewinandchewin.common.registry.BnCRecipeTypes;
@@ -24,14 +26,14 @@ import java.util.Optional;
 
 public class KegPouringRecipe implements Recipe<KegRecipeWrapper> {
     private final AbstractedFluidStack fluid;
-    private final Optional<ItemStack> container;
-    private final ItemStack output;
+    private final Optional<ItemStackTemplate> container;
+    private final ItemStackTemplate output;
     private final Optional<FluidUnit> unit;
     private final boolean strict;
     private final boolean filling;
 
-    public KegPouringRecipe(AbstractedFluidStack fluid, Optional<ItemStack> container, ItemStack output, Optional<FluidUnit> unit, boolean strict, boolean filling) {
-        if (container.isEmpty() && BrewinAndChewin.getHelper().getCraftingRemainingItem(output).isEmpty())
+    public KegPouringRecipe(AbstractedFluidStack fluid, Optional<ItemStackTemplate> container, ItemStackTemplate output, Optional<FluidUnit> unit, boolean strict, boolean filling) {
+        if (container.isEmpty() && output.item().value().getCraftingRemainder() == null)
             throw new UnsupportedOperationException("'container' field must be specified as the output item stack doesn't have a crafting remainder item.");
         this.fluid = fluid;
         this.container = container;
@@ -41,34 +43,36 @@ public class KegPouringRecipe implements Recipe<KegRecipeWrapper> {
         this.filling = filling;
     }
 
-    @Override
     public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> ingredient = NonNullList.create();
-        ingredient.add(Ingredient.of(getContainer()));
+        ingredient.add(Ingredient.of(getContainer().getItem()));
         return ingredient;
     }
 
     @Override
     public boolean matches(KegRecipeWrapper inv, Level level) {
-        return Ingredient.of(getContainer()).test(inv.getItem(4));
+        return strict ? ItemStack.isSameItemSameComponents(getContainer(), inv.getItem(4)) : ItemStack.isSameItem(getContainer(), inv.getItem(4));
     }
 
     @Override
+    public ItemStack assemble(KegRecipeWrapper recipeWrapper) {
+        return this.output.create();
+    }
+
     public ItemStack assemble(KegRecipeWrapper recipeWrapper, HolderLookup.Provider provider) {
-        return this.output.copy();
+        return assemble(recipeWrapper);
     }
 
-    @Override
     public boolean canCraftInDimensions(int pWidth, int pHeight) {
         return true;
     }
 
     public ItemStack getContainer() {
-        return this.container.orElse(BrewinAndChewin.getHelper().getCraftingRemainingItem(output));
+        return this.container.map(ItemStackTemplate::create).orElseGet(() -> BrewinAndChewin.getHelper().getCraftingRemainingItem(getOutput()));
     }
 
     public ItemStack getContainer(ItemStack stack) {
-        return this.container.orElse(BrewinAndChewin.getHelper().getCraftingRemainingItem(stack));
+        return this.container.map(ItemStackTemplate::create).orElseGet(() -> BrewinAndChewin.getHelper().getCraftingRemainingItem(stack));
     }
 
     public Optional<FluidUnit> getRawUnit() {
@@ -84,16 +88,23 @@ public class KegPouringRecipe implements Recipe<KegRecipeWrapper> {
     }
 
     public Optional<ItemStack> getRawContainer(){
+        return this.container.map(ItemStackTemplate::create);
+    }
+
+    public Optional<ItemStackTemplate> getRawContainerTemplate() {
         return this.container;
     }
 
     public ItemStack getOutput(){
+        return this.output.create();
+    }
+
+    public ItemStackTemplate getOutputTemplate() {
         return this.output;
     }
 
-    @Override
     public ItemStack getResultItem(HolderLookup.Provider provider) {
-        return this.output;
+        return this.output.create();
     }
 
     public AbstractedFluidStack getFluid(ItemStack container) {
@@ -117,16 +128,35 @@ public class KegPouringRecipe implements Recipe<KegRecipeWrapper> {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends Recipe<KegRecipeWrapper>> getSerializer() {
         return BnCRecipeSerializers.KEG_POURING;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<? extends Recipe<KegRecipeWrapper>> getType() {
         return BnCRecipeTypes.KEG_POURING;
     }
 
     @Override
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
+    }
+
+    @Override
+    public RecipeBookCategory recipeBookCategory() {
+        return BnCCommonRecipeBookCategories.KEG_POURING;
+    }
+
+    @Override
+    public String group() {
+        return "";
+    }
+
+    @Override
+    public boolean showNotification() {
+        return false;
+    }
+
     public ItemStack getToastSymbol() {
         return new ItemStack(BnCItems.KEG);
     }
@@ -155,31 +185,21 @@ public class KegPouringRecipe implements Recipe<KegRecipeWrapper> {
         return filling == that.filling;
     }
 
-    public static class Serializer implements RecipeSerializer<KegPouringRecipe> {
+    public static class Serializer {
         public static final MapCodec<KegPouringRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
                 AbstractedFluidStack.CODEC.fieldOf("fluid").forGetter(KegPouringRecipe::getRawFluid),
-                ItemStack.CODEC.optionalFieldOf("container").forGetter(KegPouringRecipe::getRawContainer),
-                ItemStack.CODEC.fieldOf("output").forGetter(KegPouringRecipe::getOutput),
+                ItemStackTemplate.CODEC.optionalFieldOf("container").forGetter(KegPouringRecipe::getRawContainerTemplate),
+                ItemStackTemplate.CODEC.fieldOf("output").forGetter(KegPouringRecipe::getOutputTemplate),
                 FluidUnit.CODEC.optionalFieldOf("unit").forGetter(KegPouringRecipe::getRawUnit),
                 Codec.BOOL.optionalFieldOf("strict", false).forGetter(KegPouringRecipe::isStrict),
                 Codec.BOOL.optionalFieldOf("can_fill", true).forGetter(KegPouringRecipe::canFill)
         ).apply(inst, KegPouringRecipe::new));
         public static final StreamCodec<RegistryFriendlyByteBuf, KegPouringRecipe> STREAM_CODEC = StreamCodec.of(KegPouringRecipe.Serializer::toNetwork, KegPouringRecipe.Serializer::fromNetwork);
 
-        public Serializer() {}
-
-        public MapCodec<KegPouringRecipe> codec() {
-            return CODEC;
-        }
-
-        public StreamCodec<RegistryFriendlyByteBuf, KegPouringRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
-
         public static void toNetwork(RegistryFriendlyByteBuf buf, KegPouringRecipe recipe) {
             AbstractedFluidStack.STREAM_CODEC.encode(buf, recipe.getRawFluid());
-            ByteBufCodecs.optional(ItemStack.STREAM_CODEC).encode(buf, recipe.getRawContainer());
-            ItemStack.STREAM_CODEC.encode(buf, recipe.getOutput());
+            ByteBufCodecs.optional(ItemStackTemplate.STREAM_CODEC).encode(buf, recipe.getRawContainerTemplate());
+            ItemStackTemplate.STREAM_CODEC.encode(buf, recipe.getOutputTemplate());
             ByteBufCodecs.optional(FluidUnit.STREAM_CODEC).encode(buf, recipe.getRawUnit());
             ByteBufCodecs.BOOL.encode(buf, recipe.isStrict());
             ByteBufCodecs.BOOL.encode(buf, recipe.canFill());
@@ -187,8 +207,8 @@ public class KegPouringRecipe implements Recipe<KegRecipeWrapper> {
 
         public static KegPouringRecipe fromNetwork(RegistryFriendlyByteBuf buf) {
             AbstractedFluidStack fluid = AbstractedFluidStack.STREAM_CODEC.decode(buf);
-            Optional<ItemStack> container = ByteBufCodecs.optional(ItemStack.STREAM_CODEC).decode(buf);
-            ItemStack output = ItemStack.STREAM_CODEC.decode(buf);
+            Optional<ItemStackTemplate> container = ByteBufCodecs.optional(ItemStackTemplate.STREAM_CODEC).decode(buf);
+            ItemStackTemplate output = ItemStackTemplate.STREAM_CODEC.decode(buf);
             Optional<FluidUnit> unit = ByteBufCodecs.optional(FluidUnit.STREAM_CODEC).decode(buf);
             boolean strict = buf.readBoolean();
             boolean canFill = buf.readBoolean();

@@ -3,16 +3,9 @@
   "category": "meals",
   "experience": 1.0,
   "ingredients": [
-    {
-      "tag": "c:crops/cabbage"
-    },
-    {
-      "tag": "c:foods/vegetable"
-    },
-    {
-      "item": "minecraft:kelp"
-    },
-    []
+    "#c:crops/cabbage",
+    "#c:foods/vegetable",
+    "minecraft:kelp"
   ],
   "result": {
     "count": 2,

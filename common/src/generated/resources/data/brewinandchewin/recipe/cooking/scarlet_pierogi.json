@@ -6,21 +6,11 @@
   },
   "experience": 1.0,
   "ingredients": [
-    {
-      "item": "brewinandchewin:scarlet_cheese_wedge"
-    },
-    {
-      "tag": "c:crops/potato"
-    },
-    {
-      "tag": "c:foods/dough"
-    },
-    {
-      "item": "minecraft:nether_wart"
-    },
-    {
-      "tag": "c:foods/cabbage"
-    }
+    "brewinandchewin:scarlet_cheese_wedge",
+    "#c:crops/potato",
+    "#c:foods/dough",
+    "minecraft:nether_wart",
+    "#c:foods/cabbage"
   ],
   "recipe_book_tab": "meals",
   "result": {

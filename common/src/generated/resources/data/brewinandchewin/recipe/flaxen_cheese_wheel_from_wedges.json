@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "p": {
-      "item": "brewinandchewin:flaxen_cheese_wedge"
-    }
+    "p": "brewinandchewin:flaxen_cheese_wedge"
   },
   "pattern": [
     "pp",

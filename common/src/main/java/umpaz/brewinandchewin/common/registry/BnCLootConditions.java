@@ -7,7 +7,7 @@ import umpaz.brewinandchewin.common.loot.condition.NullTrueBlockStateCondition;
 
 public class BnCLootConditions {
     public static void registerAll() {
-        Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, AreaLocationCheckCondition.ID, AreaLocationCheckCondition.TYPE);
-        Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, NullTrueBlockStateCondition.ID, NullTrueBlockStateCondition.TYPE);
+        Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, AreaLocationCheckCondition.ID, AreaLocationCheckCondition.CODEC);
+        Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, NullTrueBlockStateCondition.ID, NullTrueBlockStateCondition.CODEC);
     }
 }

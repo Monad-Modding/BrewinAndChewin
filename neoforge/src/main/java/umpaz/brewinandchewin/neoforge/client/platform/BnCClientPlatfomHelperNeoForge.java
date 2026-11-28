@@ -1,19 +1,23 @@
 package umpaz.brewinandchewin.neoforge.client.platform;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import umpaz.brewinandchewin.common.block.entity.KegBlockEntity;
 import net.minecraft.client.Minecraft;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -29,7 +33,12 @@ public class BnCClientPlatfomHelperNeoForge implements BnCClientPlatformHelper {
     }
 
     @Override
-    public void tesselateCoasterModel(BlockAndTintGetter level, ResourceLocation modelId, BlockState state, BlockPos pos, PoseStack poseStack, MultiBufferSource buffer, RandomSource random, long seed, int packedOverlay, int tintIndex, RenderType renderType) {
+    public void registerItemProperty(Item item, ResourceLocation id, ClampedItemPropertyFunction function) {
+        ItemProperties.register(item, id, function);
+    }
+
+    @Override
+    public void tesselateModel(BlockAndTintGetter level, ResourceLocation modelId, BlockState state, BlockPos pos, PoseStack poseStack, MultiBufferSource buffer, RandomSource random, long seed, int packedOverlay, int tintIndex, RenderType renderType) {
         ModelData data = ModelData.EMPTY;
         if (tintIndex != -1) {
             data = ModelData.builder()
@@ -54,7 +63,7 @@ public class BnCClientPlatfomHelperNeoForge implements BnCClientPlatformHelper {
         float green = ((tintColor >> 8) & 0xFF) / 255f;
         float blue = (tintColor & 0xFF) / 255f;
 
-        float capacity = Math.min(BnCConfiguration.COMMON_CONFIG.get().keg().localizedCapacity(), stack.unit().convertToLoader(stack.amount())) / (float) BnCConfiguration.COMMON_CONFIG.get().keg().localizedCapacity();
+        float capacity = Math.min(KegBlockEntity.localizedCapacity(), stack.unit().convertToLoader(stack.amount())) / (float) KegBlockEntity.localizedCapacity();
         if (capacity > 0.57) {
             int y1 = y + (int) (12 * (1 - ((capacity - 0.57F) / .43F)));
             int y2 = y + 12;

@@ -1,18 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "${mod_id}",
-  "version": "${mod_version}",
-  "name": "${mod_name}",
-  "description": "${mod_description}",
+  "id": "brewinandchewin",
+  "version": "4.5.0+26.3",
+  "name": "Brewin' And Chewin'",
+  "description": "Fermenting addon for Farmer's Delight.",
   "authors": [
-    "${fabric_mod_authors}"
+    "Probleyes",
+    "Umpaz",
+    "MerchantCalico"
   ],
   "contact": {
-    "homepage": "${modrinth_page}",
-    "issues": "https://github.com/${sources}/issues",
-    "sources": "https://github.com/${sources}"
+    "homepage": "https://modrinth.com/mod/brewin-and-chewin/",
+    "issues": "https://github.com/ChefsDelights/BrewinAndChewin/issues",
+    "sources": "https://github.com/ChefsDelights/BrewinAndChewin"
   },
-  "license": "${mod_license}",
+  "license": "MIT",
   "icon": "assets/brewinandchewin/icon.png",
   "environment": "*",
   "entrypoints": {
@@ -21,33 +23,26 @@
     ],
     "client": [
       "umpaz.brewinandchewin.fabric.client.BrewinAndChewinFabricClient"
-    ],
-    "jei_mod_plugin": [
-      "umpaz.brewinandchewin.integration.jei.JEIPlugin"
-    ],
-    "emi": [
-      "umpaz.brewinandchewin.integration.emi.EMIPlugin"
     ]
   },
   "mixins": [
-    "${mod_id}.mixins.json",
-    "${mod_id}.fabric.mixins.json"
+    "brewinandchewin.mixins.json",
+    "brewinandchewin.fabric.mixins.json"
   ],
-  "accessWidener": "${mod_id}.classtweaker",
+  "accessWidener": "brewinandchewin.classtweaker",
   "depends": {
-    "fabricloader": "${fabric_loader_range}",
+    "fabricloader": ">=0.19.0",
     "fabric-api": "*",
-    "minecraft": "${fabric_minecraft_version_range}",
-    "java": ">=${java_version}",
-    "farmersdelight": "${farmers_delight_refabricated_range}",
-    "greenhouseconfig": "${fabric_greenhouse_config_range}"
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "farmersdelight": ">=3.6.0"
   },
   "custom": {
     "modmenu": {
       "links": {
-        "modmenu.curseforge": "${curseforge_page}",
-        "modmenu.modrinth": "${modrinth_page}",
-        "modmenu.github_releases": "https://github.com/${sources}/releases"
+        "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/brewin-and-chewin",
+        "modmenu.modrinth": "https://modrinth.com/mod/brewin-and-chewin/",
+        "modmenu.github_releases": "https://github.com/ChefsDelights/BrewinAndChewin/releases"
       }
     }
   }

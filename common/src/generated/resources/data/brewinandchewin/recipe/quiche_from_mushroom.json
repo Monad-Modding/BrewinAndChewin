@@ -2,24 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "C": {
-      "item": "farmersdelight:pie_crust"
-    },
-    "b": {
-      "item": "minecraft:brown_mushroom"
-    },
-    "c": {
-      "tag": "brewinandchewin:foods/cheese_wedge"
-    },
-    "e": {
-      "item": "minecraft:egg"
-    },
-    "l": {
-      "item": "farmersdelight:cabbage_leaf"
-    },
-    "m": {
-      "tag": "c:drinks/milk"
-    }
+    "C": "farmersdelight:pie_crust",
+    "b": "minecraft:brown_mushroom",
+    "c": "#brewinandchewin:foods/cheese_wedge",
+    "e": "minecraft:egg",
+    "l": "farmersdelight:cabbage_leaf",
+    "m": "#c:drinks/milk"
   },
   "pattern": [
     "blb",

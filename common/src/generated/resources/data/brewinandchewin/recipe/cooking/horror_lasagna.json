@@ -6,21 +6,11 @@
   },
   "experience": 1.0,
   "ingredients": [
-    {
-      "item": "brewinandchewin:scarlet_cheese_wedge"
-    },
-    {
-      "tag": "c:crops/beetroot"
-    },
-    {
-      "item": "farmersdelight:tomato_sauce"
-    },
-    {
-      "tag": "c:foods/pasta"
-    },
-    {
-      "tag": "brewinandchewin:foods/cheese_wedge"
-    }
+    "brewinandchewin:scarlet_cheese_wedge",
+    "#c:crops/beetroot",
+    "farmersdelight:tomato_sauce",
+    "#c:foods/pasta",
+    "#brewinandchewin:foods/cheese_wedge"
   ],
   "recipe_book_tab": "meals",
   "result": {
